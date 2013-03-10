@@ -4,7 +4,6 @@ use strictures 1;
 
 sub import {
   my ($class, @funcs) = @_;
-  my $pkg = caller;
   @funcs = qw/ array hash / unless @funcs;
 
   my @mods;
@@ -19,6 +18,7 @@ sub import {
     }
   }
 
+  my $pkg = caller;
   my @failed;
   for my $mod (@mods) {
     my $c = "package $pkg; use $mod;";
@@ -61,7 +61,7 @@ A small set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays. Derived from L<Data::Perl>.
 
 The most commonly used functions from L<List::Util>, L<List::MoreUtils>, and
-L<List::UtilsBy> are conveniently provided as chainable methods.
+L<List::UtilsBy> are conveniently provided as (frequently chainable) methods.
 
 For details on arrays, see L<List::Objects::WithUtils::Array> and
 L<List::Objects::WithUtils::Role::Array>.

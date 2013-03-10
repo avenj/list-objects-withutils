@@ -30,11 +30,25 @@ cmp_ok( $arr->get(2), '==', 3, 'get 2 ok' );
 ## set()
 ok( $arr->set(1, 4), 'set 1,4 ok' );
 cmp_ok( $arr->get(1), '==', 4, 'get idx 1 after set 4 ok' );
-ok( $arr->set(1, 2), 'set 1,2 ok' );
+my $set;
+ok( $set = $arr->set(1, 2), 'set 1,2 ok' );
+ok( $set == $arr, 'set returned self' );
 cmp_ok( $arr->get(1), '==', 2, 'get idx 1 after set 2 ok' );
 
-## pop()
 ## push()
+ok( $arr->push(4, 5), 'push 4,5 ok' );
+cmp_ok( $arr->get(4), '==', 5, 'get idx 4 after push ok' );
+my $pushed;
+ok( $pushed = $arr->push(6), 'push 6 ok' );
+ok( $pushed == $arr, 'push returned self' );
+is_deeply( [ $arr->all ], [1,2,3,4,5,6], 'all() after push ok' );
+
+## pop()
+my $popped;
+ok( $popped = $arr->pop, 'pop ok' );
+cmp_ok( $popped, '==', 6, 'popped value ok' );
+is_deeply( [ $arr->all ], [1,2,3,4,5], 'all() after pop ok' );
+
 ## shift()
 ## unshift()
 ## clear()
@@ -47,17 +61,17 @@ cmp_ok( $arr->get(1), '==', 2, 'get idx 1 after set 2 ok' );
 ## sliced()
 ## splice()
 ## has_any()
-## first
-## firstidx
-## reduce
-## natatime
-## items_after
-## items_before
-## shuffle
-## uniq
-## sort_by
-## nsort_by
-## uniq_by
+## first()
+## firstidx()
+## reduce()
+## natatime()
+## items_after()
+## items_before()
+## shuffle()
+## uniq()
+## sort_by()
+## nsort_by()
+## uniq_by()
 
 done_testing;
 

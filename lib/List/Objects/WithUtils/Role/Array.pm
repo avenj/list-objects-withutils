@@ -26,13 +26,13 @@ sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }
 
 sub all { @{ $_[0] } }
 sub get { $_[0]->[ $_[1] ] }
-sub set { $_[0]->[ $_[1] ] = $_[2] }
+sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
 sub pop  { CORE::pop @{ $_[0] } }
-sub push { CORE::push @{ $_[0] }, @_[1 .. $#_] }
+sub push { CORE::push @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
 
 sub shift   { CORE::shift @{ $_[0] } }
-sub unshift { CORE::unshift @{ $_[0] }, @_[1 .. $#_] }
+sub unshift { CORE::unshift @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
 
 sub clear  { @{ $_[0] } = () }
 sub delete { scalar( CORE::splice(@{ $_[0] }, $_[1], 1) ) }
@@ -72,7 +72,7 @@ sub sliced {
 
 sub splice {
   my @tmp = @{ $_[0] };
-  CORE::splice @tmp, $_[1], $_[2], @_[3 .. $#_]
+  CORE::splice @tmp, $_[1], $_[2], @_[3 .. $#_];
   blessed($_[0])->new( @tmp )
 }
 
@@ -212,6 +212,8 @@ Returns the array element corresponding to a specified index.
 
 Takes an array element and a new value to set.
 
+Returns the array object.
+
 =head2 pop
 
 Pops the last element off the array and returns it.
@@ -220,13 +222,17 @@ Pops the last element off the array and returns it.
 
 Pushes elements to the end of the array.
 
+Returns the array object.
+
 =head2 shift
 
-Shifts the first element off the beginning of the array.
+Shifts the first element off the beginning of the array and returns it.
 
 =head2 unshift
 
 Adds elements to the beginning of the array.
+
+Returns the array object.
 
 =head2 delete
 
