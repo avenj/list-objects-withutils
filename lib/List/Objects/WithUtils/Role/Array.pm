@@ -261,22 +261,24 @@ Defaults to ',' if no delimiter is specified.
 
   my $lowercased = $array->map(sub { lc $_[0] });
 
-Evaluates a given subroutine for each element of the array and returns a new
-array object.
+Evaluates a given subroutine for each element of the array, and returns a new
+array object. C<$_[0]> is the element being operated upon.
 
 =head2 grep
 
   my $matched = $array->grep(sub { $_[0] =~ /foo/ });
 
 Returns a new array object consisting of the list of elements for which the
-given subroutine evaluated to true.
+given subroutine evaluated to true. C<$_[0]> is the element being operated
+upon.
 
 =head2 sort
 
   my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
 
 Returns a new array object consisting of the list sorted by the given
-subroutine.
+subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
+normal sort() call.
 
 =head2 reverse
 
@@ -298,10 +300,15 @@ Performs a C<splice()> on the current list and returns a new array object.
 
 =head2 has_any
 
+  if ( $array->has_any(sub { $_ eq 'foo' }) ) {
+    ...
+  }
+
 If passed no arguments, returns the same thing as L</count>.
 
-If passed a BLOCK, returns boolean true if the BLOCK is true for any element
-of the array; see L<List::MoreUtils/"any">
+If passed a sub, returns boolean true if the sub is true for any element
+of the array; see L<List::MoreUtils/"any">. C<$_> is set to the element being
+operated upon.
 
 =head1 SEE ALSO
 

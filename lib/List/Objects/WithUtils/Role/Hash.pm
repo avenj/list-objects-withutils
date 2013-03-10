@@ -17,6 +17,8 @@ sub clear { %{ $_[0] } = () }
 sub defined { CORE::defined $_[0]->{ $_[1] } }
 sub exists  { CORE::exists  $_[0]->{ $_[1] } }
 
+sub is_empty { keys %{ $_[0] } ? 0 : 1 }
+
 sub get {
   if (@_ > 2) {
     return $_[0]->array_type->new(
@@ -40,7 +42,7 @@ sub set {
 
 sub delete {
   $_[0]->array_type->new(
-    CORE::delete @{ $_[0] }{ @_ }
+    CORE::delete @{ $_[0] }{ @_[1 .. $#_] }
   )
 }
 
@@ -124,6 +126,10 @@ objects.
 =head2 clear
 
 Clears the current hash entirely.
+
+=head2 is_empty
+
+Returns boolean true if the hash has no keys.
 
 =head2 defined
 
