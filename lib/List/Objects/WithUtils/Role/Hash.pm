@@ -195,6 +195,8 @@ Returns a raw key/value list.
 
 =head1 SEE ALSO
 
+L<List::Objects::WithUtils>
+
 L<Data::Perl>
 
 =head1 AUTHOR

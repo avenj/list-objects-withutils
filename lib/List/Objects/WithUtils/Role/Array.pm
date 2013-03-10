@@ -40,37 +40,6 @@ sub insert { scalar( CORE::splice(@{ $_[0] }, $_[1], 0, $_[2]) ) }
 
 sub join { CORE::join( (defined $_[1] ? $_[1] : ','), @{ $_[0] } ) }
 
-sub has_any {
-  unless (defined $_[1]) {
-    return CORE::scalar @{ $_[0] }
-  }
-
-  &List::MoreUtils::any( $_[1], @{ $_[0] } )
-}
-
-sub first { 
-  &List::Util::first( $_[1], @{ $_[0] } ) 
-}
-
-sub firstidx { 
-  &List::MoreUtils::firstidx( $_[1], @{ $_[0] } )
-}
-
-sub reduce {
-  List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
-}
-
-sub natatime {
-  my $itr = List::MoreUtils::natatime($_[1], @{ $_[0] } );
-  if ($_[2]) {
-    while (my @nxt = $itr->()) {
-      $_[2]->(@nxt)
-    }
-  } else { 
-    $itr 
-  }
-}
-
 sub map {
   blessed($_[0])->new(
     CORE::map { $_[1]->($_) } @{ $_[0] }
@@ -102,10 +71,40 @@ sub sliced {
 }
 
 sub splice {
-  blessed($_[0])->new(
-    CORE::splice @{ $_[0] },
-      $_[1], $_[2], @_[3 .. $#_]
-  )
+  my @tmp = @{ $_[0] };
+  CORE::splice @tmp, $_[1], $_[2], @_[3 .. $#_]
+  blessed($_[0])->new( @tmp )
+}
+
+sub has_any {
+  unless (defined $_[1]) {
+    return CORE::scalar @{ $_[0] }
+  }
+
+  &List::MoreUtils::any( $_[1], @{ $_[0] } )
+}
+
+sub first { 
+  &List::Util::first( $_[1], @{ $_[0] } ) 
+}
+
+sub firstidx { 
+  &List::MoreUtils::firstidx( $_[1], @{ $_[0] } )
+}
+
+sub reduce {
+  List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
+}
+
+sub natatime {
+  my $itr = List::MoreUtils::natatime($_[1], @{ $_[0] } );
+  if ($_[2]) {
+    while (my @nxt = $itr->()) {
+      $_[2]->(@nxt)
+    }
+  } else { 
+    $itr 
+  }
 }
 
 sub items_after {
@@ -175,7 +174,127 @@ List::Objects::WithUtils::Role::Array - Array manipulation methods
 A L<Role::Tiny> role defining methods for creating and manipulating ARRAY-type
 objects.
 
+=head2 new
+
+Constructs a new ARRAY-type object.
+
+=head2 copy
+
+Creates a shallow clone of the current object.
+
+=head2 clear
+
+Clears the array entirely.
+
+=head2 count
+
+Returns the number of elements in the array.
+
+=head2 scalar
+
+The same as calling L</count>.
+
+=head2 is_empty
+
+Returns boolean true if the array is empty.
+
+=head2 all
+
+Returns all elements in the array as a plain list.
+
+=head2 get
+
+Returns the array element corresponding to a specified index.
+
+=head2 set
+
+  $array->set( $index, $value );
+
+Takes an array element and a new value to set.
+
+=head2 pop
+
+Pops the last element off the array and returns it.
+
+=head2 push
+
+Pushes elements to the end of the array.
+
+=head2 shift
+
+Shifts the first element off the beginning of the array.
+
+=head2 unshift
+
+Adds elements to the beginning of the array.
+
+=head2 delete
+
+Splices a given index out of the array.
+
+=head2 insert
+
+  $array->insert( $position, $value );
+
+Inserts a value at a given position.
+
+=head2 join
+
+  my $str = $array->join(' ');
+
+Joins the array's elements and returns the joined string.
+
+Defaults to ',' if no delimiter is specified.
+
+=head2 map
+
+  my $lowercased = $array->map(sub { lc $_[0] });
+
+Evaluates a given subroutine for each element of the array and returns a new
+array object.
+
+=head2 grep
+
+  my $matched = $array->grep(sub { $_[0] =~ /foo/ });
+
+Returns a new array object consisting of the list of elements for which the
+given subroutine evaluated to true.
+
+=head2 sort
+
+  my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
+
+Returns a new array object consisting of the list sorted by the given
+subroutine.
+
+=head2 reverse
+
+Returns a new array object consisting of the reversed list of elements.
+
+=head2 sliced
+
+  my $slice = $array->sliced(1, 3, 5);
+
+Returns a new array object consisting of the elements retrived 
+from the specified indexes.
+
+=head2 splice
+
+  my $spliced = $array->splice(0, 1, 'abc');
+
+Performs a C<splice()> on the current list and returns a new array object.
+(The existing array is not modified.)
+
+=head2 has_any
+
+If passed no arguments, returns the same thing as L</count>.
+
+If passed a BLOCK, returns boolean true if the BLOCK is true for any element
+of the array; see L<List::MoreUtils/"any">
+
 =head1 SEE ALSO
+
+L<List::Objects::WithUtils>
 
 L<Data::Perl>
 
