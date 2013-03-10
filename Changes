@@ -1,5 +1,11 @@
 # Changes for List-Objects-WithUtils
 
+0.002002  (10 Mar 2013)
+
+  POD cleanups, some small fixes.
+
+  New release tests and rectify missing test for array->join
+
 0.002001  (10 Mar 2013)
 
   Missing dependency in dist.ini
