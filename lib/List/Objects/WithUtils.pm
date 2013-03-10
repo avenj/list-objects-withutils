@@ -83,8 +83,8 @@ arrays exclusively, with convenient access to common tools.
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Portions of this code are derived from L<Data::Perl> by Matthew Phillips
-(CPAN: MATTP) et al.
+Significant portions of this code are derived from L<Data::Perl> 
+by Matthew Phillips (CPAN: MATTP) et al
 
 Licensed under the same terms as Perl.
 

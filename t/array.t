@@ -142,7 +142,11 @@ my $sliced;
 ok( $sliced = $arr->sliced(0,2), 'sliced() ok' );
 is_deeply( [ $sliced->all ], [1,3], 'all() after sliced() ok' );
 
+undef $sliced;
+
 ## splice()
+my $spliced;
+
 ## has_any()
 ## first()
 ## firstidx()
