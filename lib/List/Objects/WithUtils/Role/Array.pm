@@ -185,6 +185,10 @@ List::Objects::WithUtils::Role::Array - Array manipulation methods
 
   my @upper = $array->map(sub { uc $_[0] })->all;
 
+  if ( $array->has_any(sub { $_ eq 'a' }) ) {
+    ...
+  }
+
   ## ...etc...
 
 =head1 DESCRIPTION
