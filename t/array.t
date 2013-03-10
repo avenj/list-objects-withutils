@@ -35,6 +35,9 @@ ok( $set = $arr->set(1, 2), 'set 1,2 ok' );
 ok( $set == $arr, 'set returned self' );
 cmp_ok( $arr->get(1), '==', 2, 'get idx 1 after set 2 ok' );
 
+undef $set;
+
+
 ## push()
 ok( $arr->push(4, 5), 'push 4,5 ok' );
 cmp_ok( $arr->get(4), '==', 5, 'get idx 4 after push ok' );
@@ -49,11 +52,36 @@ ok( $popped = $arr->pop, 'pop ok' );
 cmp_ok( $popped, '==', 6, 'popped value ok' );
 is_deeply( [ $arr->all ], [1,2,3,4,5], 'all() after pop ok' );
 
+undef $pushed;
+undef $popped;
+
+
 ## shift()
+my $shifted;
+ok( $shifted = $arr->shift, 'shift ok' );
+cmp_ok( $shifted, '==', 1, 'shifted value ok' );
+is_deeply( [ $arr->all ], [2,3,4,5], 'all() after shift ok' );
+
 ## unshift()
+my $unshifted;
+ok( $unshifted = $arr->unshift($shifted), 'unshift ok' );
+ok( $unshifted == $arr, 'unshift returned self' );
+is_deeply( [ $arr->all ], [1,2,3,4,5], 'all() after unshift ok' );
+
 ## clear()
-## delete()
+my $cleared;
+ok( $cleared = $arr->clear, 'clear() ok' );
+ok( $cleared == $arr, 'clear() returned self' );
+ok( $arr->is_empty, 'array is_empty after clear' );
+
+undef $shifted;
+undef $unshifted;
+undef $cleared;
+
+$arr = array(1,2,3);
+
 ## insert()
+## delete()
 ## map()
 ## grep()
 ## sort()

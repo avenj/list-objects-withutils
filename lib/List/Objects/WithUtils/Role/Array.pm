@@ -34,7 +34,7 @@ sub push { CORE::push @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
 sub shift   { CORE::shift @{ $_[0] } }
 sub unshift { CORE::unshift @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
 
-sub clear  { @{ $_[0] } = () }
+sub clear  { @{ $_[0] } = (); $_[0] }
 sub delete { scalar( CORE::splice(@{ $_[0] }, $_[1], 1) ) }
 sub insert { scalar( CORE::splice(@{ $_[0] }, $_[1], 0, $_[2]) ) }
 
