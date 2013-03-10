@@ -217,12 +217,57 @@ is_deeply( [ $uniq->sort->all ], [1,2,3,4,5], 'uniq() ok' );
 undef $uniq;
 
 ## sort_by()
-# FIXME
-## nsort_by()
-# FIXME
-## uniq_by()
-# FIXME
+$arr = array(
+  { id => 'c' },
+  { id => 'a' },
+  { id => 'b' },
+);
 
+my $hsorted = $arr->sort_by(sub { $_->{id} });
+is_deeply( [ $hsorted->all ],
+  [
+    { id => 'a' },
+    { id => 'b' },
+    { id => 'c' },
+  ],
+  'sort_by ok' 
+);
+
+## nsort_by()
+$arr = array(
+  { id => 3 },
+  { id => 1 },
+  { id => 2 },
+);
+
+$hsorted = $arr->nsort_by(sub { $_->{id} });
+is_deeply( [ $hsorted->all ],
+  [
+    { id => 1 },
+    { id => 2 },
+    { id => 3 },
+  ],
+  'nsort_by ok'
+);
+
+## uniq_by()
+$arr = array(
+  { id => 1 },
+  { id => 2 },
+  { id => 1 },
+  { id => 3 },
+  { id => 3 },
+);
+
+$hsorted = $arr->uniq_by(sub { $_->{id} });
+is_deeply( [ $hsorted->all ],
+  [
+    { id => 1 },
+    { id => 2 },
+    { id => 3 },
+  ],
+  'uniq_by ok'
+);
 
 done_testing;
 

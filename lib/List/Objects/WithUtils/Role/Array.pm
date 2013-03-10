@@ -374,8 +374,9 @@ Like L</first>, but return the index of the first successful match.
 If passed no arguments, returns the same thing as L</count>.
 
 If passed a sub, returns boolean true if the sub is true for any element
-of the array; see L<List::MoreUtils/"any">. C<$_> is set to the element being
-operated upon.
+of the array; see L<List::MoreUtils/"any">.
+
+C<$_> is set to the element being operated upon.
 
 =head3 items_after
 
@@ -384,7 +385,6 @@ operated upon.
 
 Returns a new array object consisting of the elements of the original list
 that occur after the first position for which the given sub evaluates to true.
-C<$_> is set to each element, in turn.
 
 =head3 items_after_incl
 
@@ -397,6 +397,35 @@ The opposite of L</items_after>.
 =head3 items_before_incl
 
 The opposite of L</items_after_incl>.
+
+=head3 sort_by
+
+  my $array = array(
+    { id => 'a' },
+    { id => 'c' },
+    { id => 'b' },
+  );
+  my $sorted = $array->sort_by(sub { $_->{id} });
+
+Returns a new array object consisting of the list of elements sorted via a
+stringy comparison using the given sub. 
+See L<List::UtilsBy>.
+
+=head3 nsort_by
+
+Like L</sort_by>, but using numerical comparison.
+
+=head3 uniq_by
+
+  my $array = array(
+    { id => 'a' },
+    { id => 'a' },
+    { id => 'b' },
+  );
+  my $unique = $array->uniq_by(sub { $_->{id} });
+
+Returns a new array object consisting of the list of elements for which the
+given sub returns unique values.
 
 =head1 SEE ALSO
 
