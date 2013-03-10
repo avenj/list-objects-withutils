@@ -118,9 +118,21 @@ sub items_after {
   )
 }
 
+sub items_after_incl {
+  blessed($_[0])->new(
+    &List::MoreUtils::after_incl( $_[1], @{ $_[0] } )
+  )
+}
+
 sub items_before {
   blessed($_[0])->new(
     &List::MoreUtils::before( $_[1], @{ $_[0] } )
+  )
+}
+
+sub items_before_incl {
+  blessed($_[0])->new(
+    &List::MoreUtils::before_incl( $_[1], @{ $_[0] } )
   )
 }
 

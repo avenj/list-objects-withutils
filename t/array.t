@@ -178,9 +178,20 @@ is_deeply( [ $itr->() ], [7], 'itr() 3 ok' );
 undef $itr;
 
 ## items_after()
-# FIXME
+my $after = $arr->items_after(sub { $_ == 3 });
+is_deeply( [ $after->all ], [4,5,6,7], 'items_after ok' );
+
+## items_after_incl()
+$after = $arr->items_after_incl(sub { $_ == 3 });
+is_deeply( [ $after->all ], [3,4,5,6,7], 'items_after_incl ok' );
+
 ## items_before()
-# FIXME
+my $before = $arr->items_before(sub { $_ == 4 });
+is_deeply( [ $before->all ], [1,2,3], 'items_before ok' );
+
+## items_before_incl()
+$before = $arr->items_before_incl(sub { $_ == 4 });
+is_deeply( [ $before->all ], [1,2,3,4], 'items_before_incl ok' );
 
 ## shuffle()
 my $shuffled = array(1,2,3)->shuffle;
@@ -206,6 +217,7 @@ undef $uniq;
 # FIXME
 ## uniq_by()
 # FIXME
+
 
 done_testing;
 
