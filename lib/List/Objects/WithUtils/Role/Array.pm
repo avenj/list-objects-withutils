@@ -272,10 +272,6 @@ Joins the array's elements and returns the joined string.
 
 Defaults to ',' if no delimiter is specified.
 
-=head3 reverse
-
-Returns a new array object consisting of the reversed list of elements.
-
 =head3 sliced
 
   my $slice = $array->sliced(1, 3, 5);
@@ -289,6 +285,33 @@ from the specified indexes.
 
 Performs a C<splice()> on the current list and returns a new array object 
 (the existing array is left untouched).
+
+=head3 natatime
+
+  my $iter = array( 1 .. 7 )->natatime(3);
+  $iter->();  ##  [ 1, 2, 3 ]
+  $iter->();  ##  [ 4, 5, 6 ]
+  $iter->();  ##  [ 7 ]
+
+Returns an iterator that, when called, produces an ARRAY containing the next
+'n' items.
+
+=head3 reverse
+
+Returns a new array object consisting of the reversed list of elements.
+
+=head3 shuffle
+
+  my $shuffled = $array->shuffle;
+
+Shuffles the original list and returns a new array object.
+
+=head3 uniq
+
+  my $unique = $array->uniq;
+
+Returns a new array object containing only unique elements from the original
+array.
 
 =head2 Methods that take subs with params
 
@@ -326,6 +349,19 @@ list. See L<List::Util/"reduce">.
 
 =head2 Methods that take subs with topicalizer
 
+=head3 first
+
+  my $arr = array( qw/ ab bc bd de / );
+  my $first = $arr->first(sub { $_ =~ /^b/ });  ## 'bc'
+
+Returns the first element of the list for which the given sub evaluates to
+true. C<$_> is set to each element, in turn, until a match is found (or we run
+out of possibles).
+
+=head3 firstidx
+
+Like L</first>, but return the index of the first successful match.
+
 =head3 has_any
 
   if ( $array->has_any(sub { $_ eq 'foo' }) ) {
@@ -337,6 +373,27 @@ If passed no arguments, returns the same thing as L</count>.
 If passed a sub, returns boolean true if the sub is true for any element
 of the array; see L<List::MoreUtils/"any">. C<$_> is set to the element being
 operated upon.
+
+=head3 items_after
+
+  my $after = array( 1 .. 10 )->items_after(sub { $_ == 5 });
+  ## $after contains [ 6, 7, 8, 9, 10 ]
+
+Returns a new array object consisting of the elements of the original list
+that occur after the first position for which the given sub evaluates to true.
+C<$_> is set to each element, in turn.
+
+=head3 items_after_incl
+
+Like L</items_after>, but include the item that evaluated to true.
+
+=head3 items_before
+
+The opposite of L</items_after>.
+
+=head3 items_before_incl
+
+The opposite of L</items_after_incl>.
 
 =head1 SEE ALSO
 

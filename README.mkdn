@@ -43,7 +43,7 @@ arrays exclusively, with convenient access to common tools.
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Portions of this code are derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl) by Matthew Phillips
-(CPAN: MATTP) et al.
+Significant portions of this code are derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl) 
+by Matthew Phillips (CPAN: MATTP) et al
 
 Licensed under the same terms as Perl.
