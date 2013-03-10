@@ -86,6 +86,7 @@ List::Objects::WithUtils::Role::Hash - Hash manipulation methods
 
 =head1 SYNOPSIS
 
+  ## Via List::Objects::WithUtils::Hash ->
   use List::Objects::WithUtils 'hash';
 
   my $hash = hash(foo => 'bar');
@@ -105,6 +106,10 @@ List::Objects::WithUtils::Role::Hash - Hash manipulation methods
   for my $pair ( $hash->kv->all ) {
     my ($key, $val) = @$pair;
   }
+
+  ## As a Role ->
+  use Role::Tiny::With;
+  with 'List::Objects::WithUtils::Role::Hash';
 
 =head1 DESCRIPTION
 
