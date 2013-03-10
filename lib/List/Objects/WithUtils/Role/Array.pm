@@ -76,9 +76,9 @@ sub sliced {
 }
 
 sub splice {
-  my @tmp = @{ $_[0] };
-  CORE::splice @tmp, $_[1], $_[2], @_[3 .. $#_];
-  blessed($_[0])->new( @tmp )
+  blessed($_[0])->new(
+    CORE::splice @{ $_[0] }, $_[1], $_[2], @_[3 .. $#_]
+  )
 }
 
 sub has_any {
@@ -281,10 +281,13 @@ from the specified indexes.
 
 =head3 splice
 
-  my $spliced = $array->splice(0, 1, 'abc');
+  ## 2-arg splice (remove elements):
+  my $spliced = $array->splice(0, 2)
+  ## 3-arg splice (replace):
+  $array->splice(0, 1, 'abc');
 
-Performs a C<splice()> on the current list and returns a new array object 
-(the existing array is left untouched).
+Performs a C<splice()> on the current list and returns a new array object
+consisting of the items returned from the splice.
 
 =head3 natatime
 
