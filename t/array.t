@@ -78,15 +78,70 @@ undef $shifted;
 undef $unshifted;
 undef $cleared;
 
-$arr = array(1,2,3);
+
+$arr = array(1,3,4);
+is_deeply( [ $arr->all ], [1,3,4], 'array reset' );
 
 ## insert()
+my $inserted;
+ok( $inserted = $arr->insert(1, 2), 'insert() ok' );
+is_deeply( [ $arr->all ], [1,2,3,4], 'all() after insert() ok' );
+ok( $inserted == $arr, 'insert returned self' );
+
 ## delete()
+my $deleted;
+ok( $deleted = $arr->delete(2), 'delete() ok' );
+cmp_ok( $deleted, '==', 3, 'deleted value ok' );
+is_deeply( [ $arr->all ], [1,2,4], 'all() after delete() ok' );
+
+undef $inserted;
+undef $deleted;
+undef $arr;
+
+
+$arr = array(qw/a b c/);
+is_deeply( [ $arr->all ], [qw/a b c/], 'array reset' );
+
 ## map()
+my $upper = $arr->map(sub { uc $_[0] });
+is_deeply( [ $upper->all ], [qw/A B C/], 'map() ok' );
+is_deeply( [ $arr->all ], [qw/a b c/], 'orig after map() ok' );
+
 ## grep()
+$arr->push('b');
+my $found = $arr->grep(sub { $_[0] eq 'b' });
+is_deeply( [ $found->all ], [qw/b b/], 'grep() ok' );
+is_deeply( [ $arr->all ], [qw/a b c b/], 'orig after grep() ok' );
+
+undef $upper;
+undef $found;
+
+$arr = array(4, 2, 3, 1);
+
 ## sort()
+my $sorted = $arr->sort(sub { $_[0] <=> $_[1] });
+my $lazysorted = $arr->sort;
+is_deeply( [ $sorted->all ], [1,2,3,4], 'sort() ok' );
+is_deeply( [ $lazysorted->all ], [ $sorted->all ], 'default sort() ok' );
+
+undef $sorted;
+undef $lazysorted;
+
+
 ## reverse()
+$arr = array(1,2,3);
+my $reverse;
+ok( $reverse = $arr->reverse, 'reverse() ok' );
+is_deeply( [ $reverse->all ], [3,2,1], 'all() after reverse() ok' );
+is_deeply( [ $arr->all ], [1,2,3], 'orig after reverse() ok' );
+
+undef $reverse;
+
 ## sliced()
+my $sliced;
+ok( $sliced = $arr->sliced(0,2), 'sliced() ok' );
+is_deeply( [ $sliced->all ], [1,3], 'all() after sliced() ok' );
+
 ## splice()
 ## has_any()
 ## first()

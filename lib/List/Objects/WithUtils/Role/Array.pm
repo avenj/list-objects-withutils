@@ -36,26 +36,30 @@ sub unshift { CORE::unshift @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
 
 sub clear  { @{ $_[0] } = (); $_[0] }
 sub delete { scalar( CORE::splice(@{ $_[0] }, $_[1], 1) ) }
-sub insert { scalar( CORE::splice(@{ $_[0] }, $_[1], 0, $_[2]) ) }
+sub insert { CORE::splice(@{ $_[0] }, $_[1], 0, $_[2]); $_[0] }
 
 sub join { CORE::join( (defined $_[1] ? $_[1] : ','), @{ $_[0] } ) }
 
 sub map {
   blessed($_[0])->new(
-    CORE::map { $_[1]->($_) } @{ $_[0] }
+    CORE::map {; $_[1]->($_) } @{ $_[0] }
   )
 }
 
 sub grep {
   blessed($_[0])->new(
-    CORE::grep { $_[1]->($_) } @{ $_[0] }
+    CORE::grep {; $_[1]->($_) } @{ $_[0] }
   )
 }
 
 sub sort {
-  blessed($_[0])->new(
-    CORE::sort { $_[1]->($a, $b) } @{ $_[0] }
-  )
+  my @sorted;
+  if (defined $_[1]) {
+    @sorted = CORE::sort {; $_[1]->($a, $b) } @{ $_[0] }
+  } else {
+    @sorted = CORE::sort @{ $_[0] }
+  }
+  blessed($_[0])->new(@sorted)
 }
 
 sub reverse {
@@ -65,8 +69,9 @@ sub reverse {
 }
 
 sub sliced {
+  my ($self, @pos) = @_;
   blessed($_[0])->new(
-    $_[0]->[ @_[1 .. $#_] ]
+    @{$_[0]}[ @_[1 .. $#_] ]
   )
 }
 
