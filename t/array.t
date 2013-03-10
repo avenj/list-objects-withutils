@@ -192,6 +192,10 @@ is_deeply( [ $itr->() ], [1,2,3], 'itr() 1 ok' );
 is_deeply( [ $itr->() ], [4,5,6], 'itr() 2 ok' );
 is_deeply( [ $itr->() ], [7], 'itr() 3 ok' );
 
+my $counted;
+$arr->natatime(3, sub { ++$counted if @_ });
+is( $counted, 3, 'natatime with coderef ok' );
+
 undef $itr;
 
 ## items_after()

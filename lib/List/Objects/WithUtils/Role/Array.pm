@@ -307,8 +307,13 @@ The existing array is modified in-place.
   $iter->();  ##  [ 4, 5, 6 ]
   $iter->();  ##  [ 7 ]
 
+  array( 1 .. 7 )->natatime(3, sub { ... });
+
 Returns an iterator that, when called, produces an ARRAY containing the next
 'n' items.
+
+If given a coderef as a second argument, it will be called against each
+bundled group.
 
 =head3 reverse
 
