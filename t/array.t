@@ -181,13 +181,24 @@ undef $itr;
 # FIXME
 ## items_before()
 # FIXME
+
 ## shuffle()
-# FIXME
+my $shuffled = array(1,2,3)->shuffle;
+ok(
+  (
+    $shuffled->grep(sub { $_[0] == 1 })
+    and $shuffled->grep(sub { $_[0] == 2 })
+    and $shuffled->grep(sub { $_[0] == 3 })
+  ),
+  'shuffle() ok'
+) or diag explain $shuffled;
 
 ## uniq()
 $arr = array( 1, 2, 2, 3, 4, 5, 5 );
 my $uniq = $arr->uniq;
 is_deeply( [ $uniq->sort->all ], [1,2,3,4,5], 'uniq() ok' );
+
+undef $uniq;
 
 ## sort_by()
 # FIXME
