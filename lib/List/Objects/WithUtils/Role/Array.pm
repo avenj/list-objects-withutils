@@ -289,6 +289,8 @@ from the specified indexes.
 Performs a C<splice()> on the current list and returns a new array object
 consisting of the items returned from the splice.
 
+The existing array is modified in-place.
+
 =head3 natatime
 
   my $iter = array( 1 .. 7 )->natatime(3);
@@ -444,7 +446,7 @@ L<List::UtilsBy>
 Jon Portnoy <avenj@cobaltirc.org>
 
 Portions of this code are derived from L<Data::Perl> by Matthew Phillips
-(CPAN: MATTP)
+(CPAN: MATTP), haarg et al
 
 Licensed under the same terms as Perl.
 

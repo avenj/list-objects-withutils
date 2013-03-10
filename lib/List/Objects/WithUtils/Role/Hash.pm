@@ -121,7 +121,10 @@ results of list-producing methods.
 Defaults to L<List::Objects::WithUtils::Array>.
 
 Subclasses can override C<array_type> to produce different types of array
-objects.
+objects; the method can also be queried to find out what kind of array object
+will be returned:
+
+  my $type = $hash->array_type;
 
 =head2 clear
 
@@ -210,7 +213,7 @@ L<Data::Perl>
 Jon Portnoy <avenj@cobaltirc.org>
 
 Portions of this code are derived from L<Data::Perl> by Matthew Phillips
-(CPAN: MATTP)
+(CPAN: MATTP), haarg et al
 
 Licensed under the same terms as Perl.
 
