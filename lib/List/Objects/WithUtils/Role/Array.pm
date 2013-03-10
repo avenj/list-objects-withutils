@@ -154,6 +154,7 @@ sub uniq_by {
   )
 }
 
+
 1;
 
 =pod
@@ -303,6 +304,13 @@ subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
 normal sort() call.
 
 The existing array is not modified.)
+
+=head3 reduce
+
+  my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
+
+Reduces the array by calling the given subroutine for each element of the
+list. See L<List::Util/"reduce">.
 
 =head2 Methods that take subs with topicalizer
 

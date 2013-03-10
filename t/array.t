@@ -166,7 +166,7 @@ ok( $first = $arr->firstidx(sub { $_ =~ /^b/ }), 'firstidx() ok' );
 cmp_ok( $first, '==', 1, 'firstidx() correct index ok' );
 
 ## reduce()
-# FIXME
+cmp_ok( array(1,2,3)->reduce(sub { $_[0] + $_[1] }), '==', 6, 'reduce() ok' );
 
 ## natatime()
 $arr = array(1 .. 7);
