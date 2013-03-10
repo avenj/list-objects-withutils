@@ -6,6 +6,8 @@ use Syntax::Keyword::Junction
   any => { -as => 'junction_any' },
   all => { -as => 'junction_all' };
 
+use namespace::clean;
+
 sub any_items {
   junction_any( @{ $_[0] } )
 }

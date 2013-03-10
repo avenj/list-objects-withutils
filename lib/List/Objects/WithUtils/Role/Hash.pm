@@ -5,6 +5,8 @@ use Role::Tiny;
 use Module::Runtime 'require_module';
 use Scalar::Util 'blessed';
 
+use namespace::clean;
+
 sub new {
   require_module( $_[0]->array_type );
   bless +{ @_[1 .. $#_] }, $_[0]

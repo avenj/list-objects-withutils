@@ -9,6 +9,8 @@ use List::UtilsBy ();
 
 use Scalar::Util 'blessed';
 
+use namespace::clean;
+
 sub new {
   bless [ @_[1 .. $#_] ], $_[0] 
 }
