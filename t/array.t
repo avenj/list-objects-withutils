@@ -145,20 +145,56 @@ is_deeply( [ $sliced->all ], [1,3], 'all() after sliced() ok' );
 undef $sliced;
 
 ## splice()
-my $spliced;
+# FIXME
 
 ## has_any()
+$arr = array();
+ok( !$arr->has_any, 'negative has_any ok' );
+$arr = array(qw/ a b c /);
+ok( $arr->has_any, 'has_any ok' );
+ok( $arr->has_any(sub { $_ eq 'b' }), 'has_any with param ok');
+ok( !$arr->has_any(sub { $_ eq 'd' }), 'negative has_any with param ok' );
+
 ## first()
+$arr = array(qw/ a ba bb c /);
+my $first;
+ok( $first = $arr->first(sub { $_ =~ /^b/ }), 'first() ok' );
+cmp_ok( $first, 'eq', 'ba', 'first() correct element ok' );
+
 ## firstidx()
+ok( $first = $arr->firstidx(sub { $_ =~ /^b/ }), 'firstidx() ok' );
+cmp_ok( $first, '==', 1, 'firstidx() correct index ok' );
+
 ## reduce()
+# FIXME
+
 ## natatime()
+$arr = array(1 .. 7);
+my $itr = $arr->natatime(3);
+is_deeply( [ $itr->() ], [1,2,3], 'itr() 1 ok' );
+is_deeply( [ $itr->() ], [4,5,6], 'itr() 2 ok' );
+is_deeply( [ $itr->() ], [7], 'itr() 3 ok' );
+
+undef $itr;
+
 ## items_after()
+# FIXME
 ## items_before()
+# FIXME
 ## shuffle()
+# FIXME
+
 ## uniq()
+$arr = array( 1, 2, 2, 3, 4, 5, 5 );
+my $uniq = $arr->uniq;
+is_deeply( [ $uniq->sort->all ], [1,2,3,4,5], 'uniq() ok' );
+
 ## sort_by()
+# FIXME
 ## nsort_by()
+# FIXME
 ## uniq_by()
+# FIXME
 
 done_testing;
 
