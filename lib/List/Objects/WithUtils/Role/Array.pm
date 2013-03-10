@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Role::Array;
+use strictures 1;
 
 use Role::Tiny;
 
