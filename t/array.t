@@ -3,7 +3,6 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
-## count()
 my $arr = array;
 
 ok( $arr->does( 'List::Objects::WithUtils::Role::Array' ),
@@ -13,11 +12,16 @@ ok( $arr->does( 'List::Objects::WithUtils::Role::WithJunctions' ),
   'does WithJunctions role'
 );
 
+## count()
 cmp_ok( $arr->count, '==', 0, 'size 0 ok' );
 $arr = array(1);
 cmp_ok( $arr->count, '==', 1, 'size 1 ok' );
 $arr = array(1,2,3);
 cmp_ok( $arr->count, '==', 3, 'size 3 ok' );
+
+## join()
+cmp_ok( $arr->join, 'eq', '1,2,3', 'join 1 ok' );
+cmp_ok( $arr->join('-'), 'eq', '1-2-3', 'join 2 ok' );
 
 ## copy()
 my $copy = $arr->copy;
@@ -277,10 +281,14 @@ is_deeply( [ $hsorted->all ],
   'uniq_by ok'
 );
 
-## junctions
+## WithJunctions
 $arr = array(1, 2, 3);
+
+## any_items()
 ok( $arr->any_items == 2, 'any == 2 ok' );
 ok( $arr->any_items == 3, 'any == 3 ok' );
+
+## all_items()
 ok( not($arr->all_items == 2), 'not all == 2 ok' );
 $arr = array(1, 1, 1);
 ok( $arr->all_items == 1, 'all == 1 ok' );

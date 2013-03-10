@@ -20,6 +20,8 @@ See:
 
 [List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array)
 
+[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions)
+
 [List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash)
 
 # DESCRIPTION

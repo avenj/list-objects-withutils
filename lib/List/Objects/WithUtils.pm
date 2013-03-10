@@ -60,6 +60,8 @@ See:
 
 L<List::Objects::WithUtils::Role::Array>
 
+L<List::Objects::WithUtils::Role::WithJunctions>
+
 L<List::Objects::WithUtils::Role::Hash>
 
 =head1 DESCRIPTION
