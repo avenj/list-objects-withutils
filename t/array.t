@@ -5,6 +5,14 @@ use List::Objects::WithUtils 'array';
 
 ## count()
 my $arr = array;
+
+ok( $arr->does( 'List::Objects::WithUtils::Role::Array' ),
+  'does Array role'
+);
+ok( $arr->does( 'List::Objects::WithUtils::Role::WithJunctions' ),
+  'does WithJunctions role'
+);
+
 cmp_ok( $arr->count, '==', 0, 'size 0 ok' );
 $arr = array(1);
 cmp_ok( $arr->count, '==', 1, 'size 1 ok' );

@@ -433,6 +433,10 @@ given sub returns unique values.
 
 L<List::Objects::WithUtils>
 
+L<List::Objects::WithUtils::Array>
+
+L<List::Objects::WithUtils::Role::WithJunctions>
+
 L<Data::Perl>
 
 L<List::Util>
