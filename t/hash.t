@@ -4,6 +4,10 @@ use strict; use warnings FATAL => 'all';
 use List::Objects::WithUtils 'hash';
 
 my $hr = hash();
+ok( $hr->does('List::Objects::WithUtils::Role::Hash'),
+  'hash obj does role'
+);
+
 ## array_type()
 cmp_ok( $hr->array_type, 'eq', 'List::Objects::WithUtils::Array' );
 
