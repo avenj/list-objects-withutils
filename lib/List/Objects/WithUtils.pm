@@ -88,7 +88,7 @@ stable API (and I don't need the other data types).
 This module aims to provide a consistent, natural interface to hashes and
 arrays exclusively, with convenient access to common tools. The interface is
 expected to remain stable; methods may be added but are
-not expected to be removed or see incompatible interface changes (barring
+not expected to be removed (or experience incompatible interface changes, barring
 serious bugs).
 
 =head1 AUTHOR
