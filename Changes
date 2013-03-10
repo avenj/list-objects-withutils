@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+0.002001  (10 Mar 2013)
+
+  Missing dependency in dist.ini
+
 0.002000  (10 Mar 2013)
 
   Add Junctions via Role::WithJunctions 
