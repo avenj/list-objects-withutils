@@ -179,39 +179,41 @@ List::Objects::WithUtils::Role::Array - Array manipulation methods
 A L<Role::Tiny> role defining methods for creating and manipulating ARRAY-type
 objects.
 
-=head2 new
+=head2 Basic Array Methods
+
+=head3 new
 
 Constructs a new ARRAY-type object.
 
-=head2 copy
+=head3 copy
 
 Creates a shallow clone of the current object.
 
-=head2 clear
+=head3 clear
 
 Clears the array entirely.
 
-=head2 count
+=head3 count
 
 Returns the number of elements in the array.
 
-=head2 scalar
+=head3 scalar
 
 The same as calling L</count>.
 
-=head2 is_empty
+=head3 is_empty
 
 Returns boolean true if the array is empty.
 
-=head2 all
+=head3 all
 
 Returns all elements in the array as a plain list.
 
-=head2 get
+=head3 get
 
 Returns the array element corresponding to a specified index.
 
-=head2 set
+=head3 set
 
   $array->set( $index, $value );
 
@@ -219,37 +221,37 @@ Takes an array element and a new value to set.
 
 Returns the array object.
 
-=head2 pop
+=head3 pop
 
 Pops the last element off the array and returns it.
 
-=head2 push
+=head3 push
 
 Pushes elements to the end of the array.
 
 Returns the array object.
 
-=head2 shift
+=head3 shift
 
 Shifts the first element off the beginning of the array and returns it.
 
-=head2 unshift
+=head3 unshift
 
 Adds elements to the beginning of the array.
 
 Returns the array object.
 
-=head2 delete
+=head3 delete
 
 Splices a given index out of the array.
 
-=head2 insert
+=head3 insert
 
   $array->insert( $position, $value );
 
 Inserts a value at a given position.
 
-=head2 join
+=head3 join
 
   my $str = $array->join(' ');
 
@@ -257,14 +259,34 @@ Joins the array's elements and returns the joined string.
 
 Defaults to ',' if no delimiter is specified.
 
-=head2 map
+=head3 reverse
+
+Returns a new array object consisting of the reversed list of elements.
+
+=head3 sliced
+
+  my $slice = $array->sliced(1, 3, 5);
+
+Returns a new array object consisting of the elements retrived 
+from the specified indexes.
+
+=head3 splice
+
+  my $spliced = $array->splice(0, 1, 'abc');
+
+Performs a C<splice()> on the current list and returns a new array object 
+(the existing array is left untouched).
+
+=head2 Methods that take subs with params
+
+=head3 map
 
   my $lowercased = $array->map(sub { lc $_[0] });
 
 Evaluates a given subroutine for each element of the array, and returns a new
 array object. C<$_[0]> is the element being operated upon.
 
-=head2 grep
+=head3 grep
 
   my $matched = $array->grep(sub { $_[0] =~ /foo/ });
 
@@ -272,7 +294,7 @@ Returns a new array object consisting of the list of elements for which the
 given subroutine evaluated to true. C<$_[0]> is the element being operated
 upon.
 
-=head2 sort
+=head3 sort
 
   my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
 
@@ -280,25 +302,11 @@ Returns a new array object consisting of the list sorted by the given
 subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
 normal sort() call.
 
-=head2 reverse
+The existing array is not modified.)
 
-Returns a new array object consisting of the reversed list of elements.
+=head2 Methods that take subs with topicalizer
 
-=head2 sliced
-
-  my $slice = $array->sliced(1, 3, 5);
-
-Returns a new array object consisting of the elements retrived 
-from the specified indexes.
-
-=head2 splice
-
-  my $spliced = $array->splice(0, 1, 'abc');
-
-Performs a C<splice()> on the current list and returns a new array object.
-(The existing array is not modified.)
-
-=head2 has_any
+=head3 has_any
 
   if ( $array->has_any(sub { $_ eq 'foo' }) ) {
     ...
@@ -315,6 +323,12 @@ operated upon.
 L<List::Objects::WithUtils>
 
 L<Data::Perl>
+
+L<List::Util>
+
+L<List::MoreUtils>
+
+L<List::UtilsBy>
 
 =head1 AUTHOR
 
