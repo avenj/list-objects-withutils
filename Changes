@@ -1,4 +1,10 @@
 # Changes for List-Objects-WithUtils
 
+0.002000  (10 Mar 2013)
+
+  Add Junctions via Role::WithJunctions 
+   ( array->any_items / array->all_items )
+
 0.001001
-   Initial release
+
+  Initial release
