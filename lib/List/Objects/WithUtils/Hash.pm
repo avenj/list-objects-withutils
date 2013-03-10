@@ -20,10 +20,7 @@ List::Objects::WithUtils::Hash - A hash container class
 
   use List::Objects::WithUtils 'hash';
 
-  my $hash = hash( foo => bar );
-
-See L<List::Objects::WithUtils::Role::Hash> for a description of available
-methods.
+  my $hash = hash( foo => 'bar' );
 
 =head1 DESCRIPTION
 

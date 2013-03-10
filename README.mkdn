@@ -13,16 +13,8 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
         sub { uc $_[0] }
     )->uniq->all;  # @upper = ( 'BB', 'BC' )
 
-    my $hash  = hash( foo => $bar, snacks => $cake );
+    my $hash  = hash( foo => 'bar', snacks => 'cake' );
     my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
-
-See:
-
-[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array)
-
-[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions)
-
-[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash)
 
 # DESCRIPTION
 
@@ -31,6 +23,14 @@ hashes and arrays. Derived from [Data::Perl](http://search.cpan.org/perldoc?Data
 
 Some commonly used functions from [List::Util](http://search.cpan.org/perldoc?List::Util), [List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils), and
 [List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy) are conveniently provided as methods.
+
+See:
+
+[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array)
+
+[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions)
+
+[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash)
 
 __array__ is imported from [List::Objects::WithUtils::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array) and creates a new
 ARRAY-type object. 
@@ -44,7 +44,7 @@ __Why another object-oriented list module?__
 
 There are a fair few object-oriented approaches to lists on CPAN, none of
 which were quite what I needed. [Data::Perl](http://search.cpan.org/perldoc?Data::Perl) comes the closest -- but is
-primarily targetting [MooX::HandlesVia](http://search.cpan.org/perldoc?MooX::HandlesVia) and cannot guarantee a reasonably
+primarily targetting MooX::HandlesVia and cannot guarantee a reasonably
 stable API (and I don't need the other data types).
 
 This module aims to provide a consistent, natural interface to hashes and

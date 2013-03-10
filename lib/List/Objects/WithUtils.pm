@@ -53,16 +53,8 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
       sub { uc $_[0] }
   )->uniq->all;  # @upper = ( 'BB', 'BC' )
 
-  my $hash  = hash( foo => $bar, snacks => $cake );
+  my $hash  = hash( foo => 'bar', snacks => 'cake' );
   my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
-
-See:
-
-L<List::Objects::WithUtils::Role::Array>
-
-L<List::Objects::WithUtils::Role::WithJunctions>
-
-L<List::Objects::WithUtils::Role::Hash>
 
 =head1 DESCRIPTION
 
@@ -71,6 +63,14 @@ hashes and arrays. Derived from L<Data::Perl>.
 
 Some commonly used functions from L<List::Util>, L<List::MoreUtils>, and
 L<List::UtilsBy> are conveniently provided as methods.
+
+See:
+
+L<List::Objects::WithUtils::Role::Array>
+
+L<List::Objects::WithUtils::Role::WithJunctions>
+
+L<List::Objects::WithUtils::Role::Hash>
 
 B<array> is imported from L<List::Objects::WithUtils::Array> and creates a new
 ARRAY-type object. 
@@ -84,7 +84,7 @@ B<Why another object-oriented list module?>
 
 There are a fair few object-oriented approaches to lists on CPAN, none of
 which were quite what I needed. L<Data::Perl> comes the closest -- but is
-primarily targetting L<MooX::HandlesVia> and cannot guarantee a reasonably
+primarily targetting MooX::HandlesVia and cannot guarantee a reasonably
 stable API (and I don't need the other data types).
 
 This module aims to provide a consistent, natural interface to hashes and

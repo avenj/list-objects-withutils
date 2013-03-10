@@ -71,7 +71,6 @@ sub reverse {
 }
 
 sub sliced {
-  my ($self, @pos) = @_;
   blessed($_[0])->new(
     @{$_[0]}[ @_[1 .. $#_] ]
   )
