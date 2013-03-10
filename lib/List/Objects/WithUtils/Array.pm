@@ -2,7 +2,8 @@ package List::Objects::WithUtils::Array;
 use strictures 1;
 
 use Role::Tiny::With;
-with 'List::Objects::WithUtils::Role::Array';
+with 'List::Objects::WithUtils::Role::Array',
+     'List::Objects::WithUtils::Role::WithJunctions';
 
 use Exporter 'import';
 our @EXPORT = 'array';
