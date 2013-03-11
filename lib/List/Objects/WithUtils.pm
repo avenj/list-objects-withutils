@@ -47,19 +47,28 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
   use List::Objects::WithUtils;
 
   my $array = array(qw/ aa Ab bb Bc bc /);
+
   my @upper = $array->grep(
       sub { $_[0] =~ /^b/i }
     )->map(
       sub { uc $_[0] }
   )->uniq->all;  # @upper = ( 'BB', 'BC' )
 
+
   my $hash  = hash( foo => 'bar', snacks => 'cake' );
+  
+  $hash->set( foobar => 'baz', pie => 'tasty' );
+
   my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
+
+  if ( $hash->keys->any_items eq 'snacks' ) {
+    ...    
+  }
 
 =head1 DESCRIPTION
 
 A small set of roles and classes defining an object-oriented interface to Perl
-hashes and arrays. Derived from L<Data::Perl>.
+hashes and arrays. Originally derived from L<Data::Perl>.
 
 Some commonly used functions from L<List::Util>, L<List::MoreUtils>, and
 L<List::UtilsBy> are conveniently provided as methods.
