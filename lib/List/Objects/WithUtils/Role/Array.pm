@@ -193,13 +193,16 @@ List::Objects::WithUtils::Role::Array - Array manipulation methods
 
   ## As a Role ->
   use Role::Tiny::With;
-  with 'List::Objects::WithUtils::Role::Array',
-       'List::Objects::WithUtils::Role::WithJunctions' ;
+  with 'List::Objects::WithUtils::Role::Array';
 
 =head1 DESCRIPTION
 
 A L<Role::Tiny> role defining methods for creating and manipulating ARRAY-type
 objects.
+
+L<List::Objects::WithUtils::Array> consumes this role (along with
+L<List::Objects::WithUtils::Role::WithJunctions>) to provide B<array()> object
+methods.
 
 =head2 Basic Array Methods
 
@@ -307,7 +310,7 @@ The existing array is modified in-place.
   $iter->();  ##  [ 4, 5, 6 ]
   $iter->();  ##  [ 7 ]
 
-  array( 1 .. 7 )->natatime(3, sub { ... });
+  array( 1 .. 7 )->natatime(3, sub { my @vals = @_; ... });
 
 Returns an iterator that, when called, produces an ARRAY containing the next
 'n' items.

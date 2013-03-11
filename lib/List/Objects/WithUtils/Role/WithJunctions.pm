@@ -26,6 +26,7 @@ List::Objects::WithUtils::Role::WithJunctions - Arrays with junctions
 
 =head1 SYNOPSIS
 
+  ## Via List::Objects::WithUtils::Array ->
   use List::Objects::WithUtils 'array';
 
   my $array = array(qw/ a b c /);
@@ -37,6 +38,11 @@ List::Objects::WithUtils::Role::WithJunctions - Arrays with junctions
   if ( $array->all_items eq 'a' ) {
     ...
   }
+
+  ## As a Role ->
+  use Role::Tiny::With;
+  with 'List::Objects::WithUtils::Role::Array',
+       'List::Objects::WithUtils::Role::WithJunctions';
 
 =head1 DESCRIPTION
 
