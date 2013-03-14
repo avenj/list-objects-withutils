@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+0.002004  (14 Mar 2013)
+
+  Documentation fixes.
+
 0.002003  (10 Mar 2013)
 
   Fix missing POD for array->natatime with coderef callback.
