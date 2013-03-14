@@ -196,7 +196,7 @@ Returns the list of values in the hash as an L</array_type> object.
 
 =head2 kv
 
-  for (my $pair = $hash->kv->all) {
+  for my $pair ($hash->kv->all) {
     my ($key, $val) = @$pair;
   }
 
