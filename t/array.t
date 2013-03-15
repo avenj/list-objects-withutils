@@ -221,6 +221,7 @@ ok(
     $shuffled->grep(sub { $_[0] == 1 })
     and $shuffled->grep(sub { $_[0] == 2 })
     and $shuffled->grep(sub { $_[0] == 3 })
+    and $shuffled->count == 3
   ),
   'shuffle() ok'
 ) or diag explain $shuffled;
@@ -289,13 +290,14 @@ is_deeply( [ $hsorted->all ],
 $arr = array(1, 2, 3);
 
 ## any_items()
-ok( $arr->any_items == 2, 'any == 2 ok' );
-ok( $arr->any_items == 3, 'any == 3 ok' );
+ok( $arr->any_items == 2, 'any_items == 2 ok' );
+ok( $arr->any_items == 3, 'any_items == 3 ok' );
+ok( not($arr->any_items == 4), 'negative any_items ok' );
 
 ## all_items()
-ok( not($arr->all_items == 2), 'not all == 2 ok' );
+ok( not($arr->all_items == 2), 'not all_items == 2 ok' );
 $arr = array(1, 1, 1);
-ok( $arr->all_items == 1, 'all == 1 ok' );
+ok( $arr->all_items == 1, 'all_items == 1 ok' );
 
 done_testing;
 
