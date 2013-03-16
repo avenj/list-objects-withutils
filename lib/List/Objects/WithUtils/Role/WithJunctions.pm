@@ -45,6 +45,10 @@ List::Objects::WithUtils::Role::WithJunctions - Arrays with junctions
     ...
   }
 
+  if ( $array->no_items eq 'd' ) {
+    ...
+  }
+
   ## As a Role ->
   use Role::Tiny::With;
   with 'List::Objects::WithUtils::Role::Array',
