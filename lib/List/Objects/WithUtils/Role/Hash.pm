@@ -30,6 +30,16 @@ sub get {
   $_[0]->{ $_[1] }
 }
 
+sub sliced {
+  blessed($_[0])->new(
+    map {;
+      exists $_[0]->{$_} ? 
+        ( $_ => $_[0]->{$_} )
+        : ()
+    } @_[1 .. $#_]
+  )
+}
+
 sub set {
   my $self = shift;
   my @keysidx = grep {; not $_ % 2 } 0 .. $#_ ;
@@ -161,7 +171,14 @@ Returns boolean true if the key exists.
 Retrieves a key or list of keys from the hash.
 
 If we're taking a slice (multiple keys were specified), results are returned
-as an L</array_type> object.
+as an L</array_type> object. (See L</sliced> if you'd rather generate a new
+hash.)
+
+=head2 sliced
+
+  my $newhash = $hash->slice(@keys);
+
+Returns a new hash object built from the specified set of keys.
 
 =head2 set
 

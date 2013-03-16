@@ -9,7 +9,9 @@ ok( $hr->does('List::Objects::WithUtils::Role::Hash'),
 );
 
 ## array_type()
-cmp_ok( $hr->array_type, 'eq', 'List::Objects::WithUtils::Array' );
+cmp_ok( $hr->array_type, 'eq', 'List::Objects::WithUtils::Array',
+  'array_type() ok'
+);
 
 ## is_empty()
 ok( $hr->is_empty, 'is_empty() ok' );
@@ -27,6 +29,17 @@ ok( !$hr->defined('baz'), 'key baz not defined' );
 
 ## get()
 cmp_ok( $hr->get('foo'), 'eq', 'bar', 'get() ok' );
+
+## sliced()
+my $slicable = hash(a => 1, b => 2, c => 3, d => 4);
+my $slice = $slicable->sliced('a', 'c', 'z');
+isa_ok( $slice, 'List::Objects::WithUtils::Hash',
+  'slice() produced obj'
+);
+cmp_ok( $slice->keys->count, '==', 2, 'sliced() key count ok' );
+cmp_ok( $slice->get('a'), '==', 1, 'sliced get(a) ok' );
+cmp_ok( $slice->get('c'), '==', 3, 'sliced get(c) ok' );
+ok( !$slice->get('z'), 'sliced get(z) ok' );
 
 ## keys()
 ok(
