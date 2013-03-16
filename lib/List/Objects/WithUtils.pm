@@ -16,6 +16,10 @@ sub import {
       push @mods, 'List::Objects::WithUtils::Hash'; 
       next
     }
+    if ($function eq 'arrayval') {
+      push @mods, 'List::Objects::WithUtils::Array::Immutable';
+      next
+    }
   }
 
   my $pkg = caller;
