@@ -3,8 +3,10 @@ use strictures 1;
 use Role::Tiny;
 
 use Syntax::Keyword::Junction
-  any => { -as => 'junction_any' },
-  all => { -as => 'junction_all' };
+  any  => { -as => 'junction_any' },
+  all  => { -as => 'junction_all' },
+  none => { -as => 'junction_none' },
+  ;
 
 use namespace::clean;
 
@@ -14,6 +16,10 @@ sub any_items {
 
 sub all_items {
   junction_all( @{ $_[0] } )
+}
+
+sub no_items {
+  junction_none( @{ $_[0] } )
 }
 
 1;
@@ -56,8 +62,12 @@ current array.
 
 =head2 all_items
 
-Returns the overloaded L<Syntax::Keyword::Junction/"all"> object for the
+Returns the L<Syntax::Keyword::Junction/"all"> object for the
 current array.
+
+=head2 no_items
+
+Returns the L<Syntax::Keyword::Junction/"none"> object for the current array.
 
 =head1 AUTHOR
 
