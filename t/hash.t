@@ -40,6 +40,7 @@ cmp_ok( $slice->keys->count, '==', 2, 'sliced() key count ok' );
 cmp_ok( $slice->get('a'), '==', 1, 'sliced get(a) ok' );
 cmp_ok( $slice->get('c'), '==', 3, 'sliced get(c) ok' );
 ok( !$slice->get('z'), 'sliced get(z) ok' );
+ok( !$slice->get('b'), 'sliced get(b) ok' );
 
 ## keys()
 ok(
