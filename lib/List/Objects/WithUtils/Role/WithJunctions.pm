@@ -18,10 +18,6 @@ sub all_items {
   junction_all( @{ $_[0] } )
 }
 
-sub no_items {
-  junction_none( @{ $_[0] } )
-}
-
 1;
 
 =pod
@@ -45,10 +41,6 @@ List::Objects::WithUtils::Role::WithJunctions - Arrays with junctions
     ...
   }
 
-  if ( $array->no_items eq 'd' ) {
-    ...
-  }
-
   ## As a Role ->
   use Role::Tiny::With;
   with 'List::Objects::WithUtils::Role::Array',
@@ -68,10 +60,6 @@ current array.
 
 Returns the L<Syntax::Keyword::Junction/"all"> object for the
 current array.
-
-=head2 no_items
-
-Returns the L<Syntax::Keyword::Junction/"none"> object for the current array.
 
 =head1 AUTHOR
 

@@ -299,9 +299,5 @@ ok( not($arr->all_items == 2), 'not all_items == 2 ok' );
 $arr = array(1, 1, 1);
 ok( $arr->all_items == 1, 'all_items == 1 ok' );
 
-## no_items()
-ok( $arr->no_items == 2, 'no_items == 2 ok' );
-ok( not($arr->no_items == 1), 'negative no_items ok' );
-
 done_testing;
 
