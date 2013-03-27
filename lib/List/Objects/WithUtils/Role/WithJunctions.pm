@@ -24,7 +24,7 @@ sub all_items {
 
 =head1 NAME
 
-List::Objects::WithUtils::Role::WithJunctions - Arrays with junctions
+List::Objects::WithUtils::Role::WithJunctions - Add junctions to Arrays
 
 =head1 SYNOPSIS
 

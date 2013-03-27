@@ -105,9 +105,8 @@ sub reduce {
 sub natatime {
   my $itr = List::MoreUtils::natatime($_[1], @{ $_[0] } );
   if ($_[2]) {
-    while (my @nxt = $itr->()) {
-      $_[2]->(@nxt)
-    }
+    while (my @nxt = $itr->()) 
+      { $_[2]->(@nxt) }
   } else { 
     $itr 
   }
