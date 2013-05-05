@@ -1,5 +1,10 @@
 # Changes for List-Objects-WithUtils
 
+1.000000  (05 May 2013)
+
+  Documentation shuffle.
+  No functional changes.
+
 0.003000  (16 Mar 2013)
 
   Add hash->sliced()
