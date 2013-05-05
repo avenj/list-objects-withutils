@@ -20,9 +20,7 @@ sub copy {
 }
 
 sub count { CORE::scalar @{ $_[0] } }
-{ no warnings 'once';
-  *scalar = *count;
-}
+{ no warnings 'once'; *scalar = *count; }
 
 sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }
 
@@ -222,7 +220,7 @@ Returns the number of elements in the array.
 
 =head3 scalar
 
-The same as calling L</count>.
+Same as calling L</count>; returns the number of elements in the array.
 
 =head3 is_empty
 
