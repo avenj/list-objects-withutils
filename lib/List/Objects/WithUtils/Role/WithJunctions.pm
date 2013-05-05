@@ -6,7 +6,7 @@ use Syntax::Keyword::Junction
   any  => { -as => 'junction_any' },
   all  => { -as => 'junction_all' },
   none => { -as => 'junction_none' },
-  ;
+;
 
 use namespace::clean;
 
