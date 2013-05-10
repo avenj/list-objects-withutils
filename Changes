@@ -1,5 +1,10 @@
 # Changes for List-Objects-WithUtils
 
+1.000001  (10 May 2013)
+
+  Minor documentation fix
+  (->natatime's iterator returns a list, not an ARRAY)
+
 1.000000  (05 May 2013)
 
   Documentation shuffle.
