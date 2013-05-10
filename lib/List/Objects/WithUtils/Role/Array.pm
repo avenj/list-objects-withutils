@@ -302,13 +302,13 @@ The existing array is modified in-place.
 =head3 natatime
 
   my $iter = array( 1 .. 7 )->natatime(3);
-  $iter->();  ##  [ 1, 2, 3 ]
-  $iter->();  ##  [ 4, 5, 6 ]
-  $iter->();  ##  [ 7 ]
+  $iter->();  ##  ( 1, 2, 3 )
+  $iter->();  ##  ( 4, 5, 6 )
+  $iter->();  ##  ( 7 )
 
   array( 1 .. 7 )->natatime(3, sub { my @vals = @_; ... });
 
-Returns an iterator that, when called, produces an ARRAY containing the next
+Returns an iterator that, when called, produces a list containing the next
 'n' items.
 
 If given a coderef as a second argument, it will be called against each
