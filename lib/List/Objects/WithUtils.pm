@@ -77,15 +77,8 @@ A small set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays. Originally derived from L<Data::Perl>.
 
 Some commonly used functions from L<List::Util>, L<List::MoreUtils>, and
-L<List::UtilsBy> are conveniently provided as methods.
-
-See:
-
-L<List::Objects::WithUtils::Role::Array>
-
-L<List::Objects::WithUtils::Role::WithJunctions>
-
-L<List::Objects::WithUtils::Role::Hash>
+L<List::UtilsBy> are conveniently provided as methods. Junctions, 
+as provided by L<Syntax::Keyword::Junction>, are also available.
 
 B<array> is imported from L<List::Objects::WithUtils::Array> and creates a new
 ARRAY-type object. 
@@ -107,6 +100,17 @@ arrays exclusively, with convenient access to common tools. The interface is
 expected to remain stable; methods may be added but are
 not expected to be removed (or experience incompatible interface changes, barring
 serious bugs).
+
+=head1 SEE ALSO
+
+L<List::Objects::WithUtils::Role::Array> for documentation on C<array()>
+methods.
+
+L<List::Objects::WithUtils::Role::WithJunctions> for details regarding using 
+junctions on an C<array()>.
+
+L<List::Objects::WithUtils::Role::Hash> for documentation on C<hash()>
+methods.
 
 =head1 AUTHOR
 
