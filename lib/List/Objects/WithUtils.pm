@@ -68,9 +68,6 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
     ...    
   }
 
-See L<List::Objects::WithUtils::Role::Array> and
-L<List::Objects::WithUtils::Role::Hash> for details.
-
 =head1 DESCRIPTION
 
 A small set of roles and classes defining an object-oriented interface to Perl
