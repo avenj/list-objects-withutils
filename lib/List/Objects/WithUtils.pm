@@ -46,24 +46,30 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 
   use List::Objects::WithUtils;
 
-  my $array = array(qw/ aa Ab bb Bc bc /);
+  # Chained array operations:
+  array(qw/ aa Ab bb Bc bc /)
+    ->grep(sub { $_[0] =~ /^b/i })
+    ->map( sub { uc $_[0] })
+    ->uniq
+    ->all;     # ( 'BB', 'BC' )
 
-  my @upper = $array->grep(
-      sub { $_[0] =~ /^b/i }
-    )->map(
-      sub { uc $_[0] }
-  )->uniq->all;  # @upper = ( 'BB', 'BC' )
+  # Sample hash operations:
+  my $hash  = hash( foo => 'bar', snacks => 'cake' );  
 
-
-  my $hash  = hash( foo => 'bar', snacks => 'cake' );
-  
   $hash->set( foobar => 'baz', pie => 'tasty' );
+
+  my $snacks = $hash->get('snacks');
+
+  my $slice = $hash->sliced('foo', 'pie');
 
   my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
 
   if ( $hash->keys->any_items eq 'snacks' ) {
     ...    
   }
+
+See L<List::Objects::WithUtils::Role::Array> and
+L<List::Objects::WithUtils::Role::Hash> for details.
 
 =head1 DESCRIPTION
 
