@@ -1,6 +1,3 @@
-Pulled from a blag post I wrote on List-Objects-WithUtils.
- - avenj (http://perl.cobaltirc.org)
-
 Topic: Easy list ops with List-Objects-WithUtils
 Date: 2013-03-26
 
@@ -9,8 +6,6 @@ Hmm.. I should sort these hash items. Okay, I've got my _sort_ and _map_
 oh, right, _List::UtilsBy_!
 But I want to iterate five of them at a time ... 
 uh, hmm, is natatime in _List::Util_ or _List::MoreUtils_? 
-Oh, MoreUtils, righto. But now I want to take a slice from
-this hash and create a new hash ... ah, fook, what was the syntax again?
 
 Ah, screw it:
 
@@ -21,10 +16,19 @@ Ah, screw it:
                 ->sort_by(sub { $_->name })
                 ->natatime(5);
 
-    while (my $nxt = $iter->()) {
-      my @objs = @$nxt;
+    while (my @objs = $iter->()) {
       ...
     }
+
+But now I want to take a slice from
+this hash and create a new hash ... ah, fook, what was the syntax again?
+Hum. I could shove the keys I want in `@keys` ... but if any of those keys
+don't exist in the old hash, I don't want them to be set to `undef` in the new
+hash, so I need some kind of loop ...
+
+Ah, never mind:
+
+    my $newhash = $hash->sliced(qw/foo bar baz/);
 
 There we are!
 
@@ -44,8 +48,8 @@ and
 [Syntax::Keyword::Junction](http://metacpan.org/module/Syntax::Keyword::Junction).
 
 This post covers the raw basics and the things I use most frequently. See the
-List::Objects::WithUtils documentation on
-[metacpan](http://metacpan.org/release/List-Objects-WithUtils) for usage
+[List::Objects::WithUtils documentation on
+metacpan](http://metacpan.org/release/List-Objects-WithUtils) for usage
 details.
 
 #### The basics
@@ -166,6 +170,17 @@ List operations returning new lists makes for pretty chaining:
             ->map(sub { uc $_[0] })
             ->all;
 
+How about a Schwartzian (with a little extra overhead, granted)?
+
+    my $sorted = 
+      array(qw/ abcd ab abc a /)
+        ->map(sub { [ $_[0], length $_[0] ] })
+        ->sort(sub { $_[0]->[1] <=> $_[1]->[1] })
+        ->map(sub { $_[0]->[0] })
+
+(This is pointless because we have `sort_by` available (see above), but it's a
+well-known idiom with which we can demonstrate chaining.)
+
 #### Junctions
 
 One of the most common things I do with a list is apply `grep` to find stuff
@@ -178,8 +193,8 @@ I could, of course, use `grep` and check for found elements:
       ...
     }
 
-... or I could turn to `has_any` or `first` for the same purpose, which would
-be more efficient:
+... or I could turn to `has_any` or `first` for the same purpose, which could
+be more efficient on account of terminating after the first successful hit:
 
     if ( array(1,2,3)->has_any(sub { $_ == 4 }) ) { }
 
@@ -243,6 +258,13 @@ and `hash` objects. Now that array example looks more like this:
 Unlike `->splice`, `->sliced` leaves the existing array alone and returns a
 new array-type object containing the values requested.
 
+A sliced() hash returns a new hash object:
+
+    my $newhash = $hash->sliced('foo', 'bar');
+
+When using `->sliced`, keys that don't exist in the old hash won't be created
+with undefined values in the new hash.
+
 In a similar vein, sometimes it's convenient to be able to get all the items
 before the one matching some condition:
 
@@ -260,7 +282,4 @@ A get() that returns a list of values returns an array object:
 
     my @foobar  = $hash->get('foo', 'bar')->all;
 
-A sliced() hash returns a new hash object:
-
-    my $newhash = $hash->sliced('foo', 'bar');
-
+There's plenty more. See the official documentation.
