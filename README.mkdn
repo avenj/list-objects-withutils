@@ -6,20 +6,21 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 
     use List::Objects::WithUtils;
 
-    my $array = array(qw/ aa Ab bb Bc bc /);
+    # Chained array operations:
+    array(qw/ aa Ab bb Bc bc /)
+      ->grep(sub { $_[0] =~ /^b/i })
+      ->map( sub { uc $_[0] })
+      ->uniq
+      ->all;     # ( 'BB', 'BC' )
 
-    my @upper = $array->grep(
-        sub { $_[0] =~ /^b/i }
-      )->map(
-        sub { uc $_[0] }
-    )->uniq->all;  # @upper = ( 'BB', 'BC' )
-
-
-
-    my $hash  = hash( foo => 'bar', snacks => 'cake' );
-    
+    # Sample hash operations:
+    my $hash  = hash( foo => 'bar', snacks => 'cake' );  
 
     $hash->set( foobar => 'baz', pie => 'tasty' );
+
+    my $snacks = $hash->get('snacks');
+
+    my $slice = $hash->sliced('foo', 'pie');
 
     my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
 
@@ -33,15 +34,8 @@ A small set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays. Originally derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl).
 
 Some commonly used functions from [List::Util](http://search.cpan.org/perldoc?List::Util), [List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils), and
-[List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy) are conveniently provided as methods.
-
-See:
-
-[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array)
-
-[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions)
-
-[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash)
+[List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy) are conveniently provided as methods. Junctions, 
+as provided by [Syntax::Keyword::Junction](http://search.cpan.org/perldoc?Syntax::Keyword::Junction), are also available.
 
 __array__ is imported from [List::Objects::WithUtils::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array) and creates a new
 ARRAY-type object. 
@@ -63,6 +57,17 @@ arrays exclusively, with convenient access to common tools. The interface is
 expected to remain stable; methods may be added but are
 not expected to be removed (or experience incompatible interface changes, barring
 serious bugs).
+
+# SEE ALSO
+
+[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array) for documentation on `array()`
+methods.
+
+[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions) for details regarding using 
+junctions on an `array()`.
+
+[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation on `hash()`
+methods.
 
 # AUTHOR
 
