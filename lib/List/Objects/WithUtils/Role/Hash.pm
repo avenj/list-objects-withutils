@@ -81,7 +81,7 @@ sub kv {
 
 sub export {
   my ($self) = @_;
-  CORE::map {; $_, $self->{$_} } CORE::keys %$self
+  %$self
 }
 
 
