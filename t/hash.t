@@ -34,13 +34,13 @@ cmp_ok( $hr->get('foo'), 'eq', 'bar', 'get() ok' );
 my $slicable = hash(a => 1, b => 2, c => 3, d => 4);
 my $slice = $slicable->sliced('a', 'c', 'z');
 isa_ok( $slice, 'List::Objects::WithUtils::Hash',
-  'slice() produced obj'
+  'sliced() produced obj'
 );
 cmp_ok( $slice->keys->count, '==', 2, 'sliced() key count ok' );
+ok( !$slice->exists('z'), 'sliced exists(z) ok' );
+ok( !$slice->get('b'), 'sliced get(b) ok' );
 cmp_ok( $slice->get('a'), '==', 1, 'sliced get(a) ok' );
 cmp_ok( $slice->get('c'), '==', 3, 'sliced get(c) ok' );
-ok( !$slice->get('z'), 'sliced get(z) ok' );
-ok( !$slice->get('b'), 'sliced get(b) ok' );
 
 ## keys()
 ok(
@@ -58,10 +58,14 @@ ok(
 
 ## kv()
 my $kv = $hr->kv;
-for my $item ($kv->all) {
-  ok( ref $item eq 'ARRAY' && @$item == 2, 'kv item looks ok' )
-    or diag explain $item;
-}
+my @sorted = $kv->sort_by(sub { $_->[0] })->all;
+is_deeply( \@sorted,
+  [
+    [ baz => undef ],
+    [ foo => 'bar' ],
+  ],
+  'kv() ok'
+);
 
 ## export()
 is_deeply( +{ $hr->export }, +{ foo => 'bar', baz => undef }, 
