@@ -299,5 +299,34 @@ ok( not($arr->all_items == 2), 'not all_items == 2 ok' );
 $arr = array(1, 1, 1);
 ok( $arr->all_items == 1, 'all_items == 1 ok' );
 
+## mesh()
+my $mesh_even = array(qw/ a b c d /)->mesh( array(1, 2, 3, 4) );
+is_deeply( 
+  [ $mesh_even->all ],
+  [ 'a', 1, 'b', 2, 'c', 3, 'd', 4 ],
+  'mesh even list ok'
+);
+
+my @u_one; $#u_one = 9;
+my $with_holes = array( 1 .. 10 )->mesh( array(@u_one) );
+is_deeply(
+  [ $with_holes->all ],
+  [
+    1, undef, 2, undef, 3, undef, 4, undef, 5, undef,
+    6, undef, 7, undef, 8, undef, 9, undef, 10, undef
+  ],
+  'mesh with undef-filled list ok'
+);
+
+my @a_one = ( 1, 2 );
+my @a_two = qw/ foo bar baz /;
+# mesh() with mixed array obj / array ref
+my $mesh_multi = array( 'x' )->mesh( array(@a_one), [ @a_two ] );
+is_deeply(
+  [ $mesh_multi->all ],
+  [ 'x', 1, 'foo', undef, 2, 'bar', undef, undef, 'baz' ],
+  'mesh with array/ref mix ok'
+);
+
 done_testing;
 

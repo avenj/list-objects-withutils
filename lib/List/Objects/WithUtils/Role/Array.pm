@@ -163,6 +163,21 @@ sub uniq_by {
   )
 }
 
+sub mesh {
+  blessed($_[0])->new(
+    &List::MoreUtils::mesh( @_ )
+  )
+#  my $max = -1;
+#  for my $item (@_) {
+#    $max = $#$item if $max < $#$item
+#  }
+#  blessed($_[0])->new(
+#    map {;
+#      my $idx = $_; map $_->[$idx], @_
+#    } 0 .. $max
+#  )
+}
+
 
 1;
 
@@ -280,24 +295,16 @@ Joins the array's elements and returns the joined string.
 
 Defaults to ',' if no delimiter is specified.
 
-=head3 sliced
+=head3 mesh
 
-  my $slice = $array->sliced(1, 3, 5);
+  my $meshed = array(qw/ a b c /)->mesh(
+    array( 1, 2, 3 )
+  );
+  #  [ 'a', 1, 'b', 2, 'c', 3 ]
 
-Returns a new array object consisting of the elements retrived 
-from the specified indexes.
-
-=head3 splice
-
-  ## 2-arg splice (remove elements):
-  my $spliced = $array->splice(0, 2)
-  ## 3-arg splice (replace):
-  $array->splice(0, 1, 'abc');
-
-Performs a C<splice()> on the current list and returns a new array object
-consisting of the items returned from the splice.
-
-The existing array is modified in-place.
+Takes array references or objects and returns a new array object consisting of
+one element from each array, in turn, until all arrays have been traversed
+fully.
 
 =head3 natatime
 
@@ -323,6 +330,25 @@ Returns a new array object consisting of the reversed list of elements.
   my $shuffled = $array->shuffle;
 
 Shuffles the original list and returns a new array object.
+
+=head3 sliced
+
+  my $slice = $array->sliced(1, 3, 5);
+
+Returns a new array object consisting of the elements retrived 
+from the specified indexes.
+
+=head3 splice
+
+  ## 2-arg splice (remove elements):
+  my $spliced = $array->splice(0, 2)
+  ## 3-arg splice (replace):
+  $array->splice(0, 1, 'abc');
+
+Performs a C<splice()> on the current list and returns a new array object
+consisting of the items returned from the splice.
+
+The existing array is modified in-place.
 
 =head3 uniq
 
