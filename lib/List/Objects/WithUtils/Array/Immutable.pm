@@ -24,7 +24,7 @@ sub _mk_ro {
   ) {
     my $do_clone = !$skip_clone && &Internals::SvREFCNT($_[0]) > 1;
     $_[0] = dclone($_[0]) if $do_clone;
-    bless $_[0], $bless if $bless;
+    bless($_[0], $bless) if $bless;
     &Internals::SvREADONLY($_[0], 1);
     _mk_ro($_) for @{ $_[0] };
   }
