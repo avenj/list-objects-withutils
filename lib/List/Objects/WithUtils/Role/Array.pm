@@ -251,7 +251,7 @@ L<List::Objects::WithUtils::Array> consumes this role (along with
 L<List::Objects::WithUtils::Role::WithJunctions>) to provide B<array()> object
 methods.
 
-=head2 Basic Array Methods
+=head2 Basic array methods
 
 =head3 new
 
@@ -398,7 +398,7 @@ Returns a new array object consisting of the reversed list of elements.
 
   my $shuffled = $array->shuffle;
 
-Shuffles the original list and returns a new array object.
+Returns a new array object containing the shuffled list.
 
 =head3 sliced
 
