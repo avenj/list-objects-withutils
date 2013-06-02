@@ -96,8 +96,20 @@ sub firstidx {
   &List::MoreUtils::firstidx( $_[1], @{ $_[0] } )
 }
 
-sub reduce {
-  List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
+sub mesh {
+  blessed($_[0])->new(
+    &List::MoreUtils::mesh( @_ )
+  )
+# In case upstream ever changes, here's a pure-perl impl:
+#  my $max = -1;
+#  for my $item (@_) {
+#    $max = $#$item if $max < $#$item
+#  }
+#  blessed($_[0])->new(
+#    map {;
+#      my $idx = $_; map $_->[$idx], @_
+#    } 0 .. $max
+#  )
 }
 
 sub natatime {
@@ -107,6 +119,10 @@ sub natatime {
   } else { 
     return $itr
   }
+}
+
+sub reduce {
+  List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
 
 sub items_after {
@@ -163,20 +179,6 @@ sub uniq_by {
   )
 }
 
-sub mesh {
-  blessed($_[0])->new(
-    &List::MoreUtils::mesh( @_ )
-  )
-#  my $max = -1;
-#  for my $item (@_) {
-#    $max = $#$item if $max < $#$item
-#  }
-#  blessed($_[0])->new(
-#    map {;
-#      my $idx = $_; map $_->[$idx], @_
-#    } 0 .. $max
-#  )
-}
 
 
 1;
