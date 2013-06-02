@@ -18,6 +18,11 @@ cmp_ok( $first, 'eq', 'a', 'scalar head() ok' );
 my ($head, $tail) = $arr->head;
 cmp_ok( $head, 'eq', 'a', 'list head() head ok' );
 cmp_ok( $tail->count, '==', 2, 'list head() tail size ok' );
+is_deeply(
+  [ $tail->all ],
+  [ 'b', 'c' ],
+  'list head() tail looks ok'
+);
 
 ($head, $tail) = $tail->head;
 cmp_ok( $head, 'eq', 'b', 'list head() on prev tail head ok' );
@@ -28,6 +33,11 @@ undef $head; undef $tail; my $rest;
 ($tail, $rest) = $arr->tail;
 cmp_ok( $tail, 'eq', 'c', 'list tail() tail ok' );
 cmp_ok( $rest->count, '==', 2, 'list tail() remainder size ok' );
+is_deeply(
+  [ $rest->all ],
+  [ 'a', 'b' ],
+  'list tail() tail looks ok'
+);
 
 ## unimplemented
 my @unimpl = qw/
