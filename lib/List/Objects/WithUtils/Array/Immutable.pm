@@ -45,6 +45,7 @@ sub ___unimp {
 
 =begin Pod::Coverage
 
+new
 immarray
 clear
 set

@@ -88,7 +88,8 @@ there for documentation on available methods.
 
 B<immarray> is imported from L<List::Objects::WithUtils::Array::Immutable> and
 operates much like an B<array>, except methods that mutate the list are not
-available; using immutable arrays promotes safer functional patterns.
+available and the backing ARRAY is marked read-only; using immutable arrays 
+promotes safer functional patterns.
 
 B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
 L<List::Objects::WithUtils::Role::Hash> for documentation.
