@@ -127,7 +127,7 @@ sub part {
   CORE::push @{ $parts[ $code->($_) ] }, $_ for @$self;
   my $cls = blessed $self;
   $cls->new(
-    map {; $cls->new(ref $_ ? @$_ : () ) } @parts
+    map {; $cls->new(defined $_ ? @$_ : () ) } @parts
   )
 }
 
