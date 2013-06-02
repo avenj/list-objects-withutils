@@ -271,7 +271,7 @@ Returns the number of elements in the array.
 
 =head3 scalar
 
-Same as calling L</count>; returns the number of elements in the array.
+See L</count>.
 
 =head3 is_empty
 
@@ -428,13 +428,6 @@ array.
 
 =head2 Methods that take subs with params
 
-=head3 map
-
-  my $lowercased = $array->map(sub { lc $_[0] });
-
-Evaluates a given subroutine for each element of the array, and returns a new
-array object. C<$_[0]> is the element being operated upon.
-
 =head3 grep
 
   my $matched = $array->grep(sub { $_[0] =~ /foo/ });
@@ -443,15 +436,12 @@ Returns a new array object consisting of the list of elements for which the
 given subroutine evaluated to true. C<$_[0]> is the element being operated
 upon.
 
-=head3 sort
+=head3 map
 
-  my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
+  my $lowercased = $array->map(sub { lc $_[0] });
 
-Returns a new array object consisting of the list sorted by the given
-subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
-normal sort() call.
-
-The existing array is not modified.)
+Evaluates a given subroutine for each element of the array, and returns a new
+array object. C<$_[0]> is the element being operated upon.
 
 =head3 reduce
 
@@ -459,6 +449,14 @@ The existing array is not modified.)
 
 Reduces the array by calling the given subroutine for each element of the
 list. See L<List::Util/"reduce">.
+
+=head3 sort
+
+  my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
+
+Returns a new array object consisting of the list sorted by the given
+subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
+normal sort() call.
 
 =head2 Methods that take subs with topicalizer
 
