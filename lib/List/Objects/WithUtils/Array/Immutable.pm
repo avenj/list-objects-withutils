@@ -34,9 +34,7 @@ sub _mk_ro {
 
 sub new {
   my $self = [ @_[1 .. $#_] ];
-#  bless $self, $_[0];
   _mk_ro($self, 1, $_[0])
-#  $self
 }
 
 sub ___unimp {
