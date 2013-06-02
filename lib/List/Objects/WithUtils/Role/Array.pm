@@ -1,15 +1,15 @@
 package List::Objects::WithUtils::Role::Array;
 use strictures 1;
 
-use Role::Tiny;
+use Carp 'confess';
 
 use List::Util ();
 use List::MoreUtils ();
 use List::UtilsBy ();
 
-use Scalar::Util 'blessed';
+use Scalar::Util 'blessed', 'reftype';
 
-use namespace::clean;
+use Role::Tiny;
 
 sub new {
   bless [ @_[1 .. $#_] ], $_[0] 
@@ -117,6 +117,10 @@ sub firstidx {
 }
 
 sub mesh {
+  for (@_) {
+    confess "Expected ARRAY or compatible obj, got $_"
+      unless (reftype $_ || '') eq 'ARRAY'
+  }
   blessed($_[0])->new(
     &List::MoreUtils::mesh( @_ )
   )
@@ -363,7 +367,8 @@ bundled group.
 Takes a subroutine that indicates into which partition each value should be
 placed.
 
-Returns an array-type object containing array-type objects, as seen above.
+Returns an array-type object containing partitions represented as array-type
+objects, as seen above.
 
 Skipped partitions are empty array objects:
 

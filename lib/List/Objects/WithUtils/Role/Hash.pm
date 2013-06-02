@@ -1,11 +1,10 @@
 package List::Objects::WithUtils::Role::Hash;
 use strictures 1;
 
-use Role::Tiny;
 use Module::Runtime 'require_module';
 use Scalar::Util 'blessed';
 
-use namespace::clean;
+use Role::Tiny;
 
 sub new {
   require_module( $_[0]->array_type );
