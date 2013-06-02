@@ -334,13 +334,20 @@ Defaults to ',' if no delimiter is specified.
 =head3 mesh
 
   my $meshed = array(qw/ a b c /)->mesh(
-    array( 1, 2, 3 )
+    array( 1 .. 3 )
   );
-  #  [ 'a', 1, 'b', 2, 'c', 3 ]
+  $meshed->all;  # 'a', 1, 'b', 2, 'c', 3
 
 Takes array references or objects and returns a new array object consisting of
 one element from each array, in turn, until all arrays have been traversed
 fully.
+
+You can mix and match references and objects freely:
+
+  my $meshed = array(qw/ a b c /)->mesh(
+    array( 1 .. 3 ),
+    [ qw/ foo bar baz / ],
+  );
 
 =head3 natatime
 
