@@ -162,6 +162,14 @@ Returns boolean true if the hash has no keys.
 
 Returns boolean true if the key has a defined value.
 
+=head2 delete
+
+  $hash->delete( @keys );
+
+Deletes keys from the hash.
+
+Returns an L</array_type> object containing the deleted values.
+
 =head2 exists
 
   if ( $hash->exists($key) ) { ... }
@@ -178,14 +186,6 @@ Retrieves a key or list of keys from the hash.
 If we're taking a slice (multiple keys were specified), values are returned
 as an L</array_type> object. (See L</sliced> if you'd rather generate a new
 hash.)
-
-=head2 sliced
-
-  my $newhash = $hash->slice(@keys);
-
-Returns a new hash object built from the specified set of keys.
-
-(See L</get> if you only need the values.)
 
 =head2 keys
 
@@ -219,13 +219,13 @@ Sets keys in the hash.
 
 Returns an L</array_type> object containing the new values.
 
-=head2 delete
+=head2 sliced
 
-  $hash->delete( @keys );
+  my $newhash = $hash->slice(@keys);
 
-Deletes keys from the hash.
+Returns a new hash object built from the specified set of keys.
 
-Returns an L</array_type> object containing the deleted values.
+(See L</get> if you only need the values.)
 
 =head1 SEE ALSO
 

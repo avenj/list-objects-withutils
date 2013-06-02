@@ -125,14 +125,14 @@ sub mesh {
     &List::MoreUtils::mesh( @_ )
   )
 # In case upstream ever changes, here's a pure-perl impl:
-#  my $max = -1;
+#  my $max_idx = -1;
 #  for my $item (@_) {
-#    $max = $#$item if $max < $#$item
+#    $max_idx = $#$item if $max_idx < $#$item
 #  }
 #  blessed($_[0])->new(
 #    map {;
-#      my $idx = $_; map $_->[$idx], @_
-#    } 0 .. $max
+#      my $idx = $_; map {; $_->[$idx] } @_
+#    } 0 .. $max_idx
 #  )
 }
 
