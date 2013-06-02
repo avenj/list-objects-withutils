@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+1.000003  (02 Jun 2013)
+
+  Add array->mesh()
+
 1.000002  (19 May 2013)
 
   Documentation tweaks.
