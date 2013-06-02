@@ -121,6 +121,16 @@ sub natatime {
   }
 }
 
+sub part {
+  my ($self, $code) = @_;
+  my @parts;
+  CORE::push @{ $parts[ $code->($_) ] }, $_ for @$self;
+  my $cls = blessed $self;
+  $cls->new(
+    map {; $cls->new(ref $_ ? @$_ : () ) } @parts
+  )
+}
+
 sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
@@ -322,6 +332,18 @@ Returns an iterator that, when called, produces a list containing the next
 
 If given a coderef as a second argument, it will be called against each
 bundled group.
+
+=head3 part
+
+  my $parts = array( 1 .. 8 )->part(sub { $i++ % 2 });
+  # Returns array objects:
+  $parts->get(0)->all;  # 1, 3, 5, 7
+  $parts->get(1)->all;  # 2, 4, 6, 8
+
+Takes a subroutine that indicates into which partition each value should be
+placed.
+
+Returns an array-type object containing array-type objects, as seen above.
 
 =head3 reverse
 

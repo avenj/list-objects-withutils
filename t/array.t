@@ -328,5 +328,37 @@ is_deeply(
   'mesh with array/ref mix ok'
 );
 
+## part()
+my $parts_n = do {
+  my $i = 0;
+  array(1 .. 12)->part(sub { $i++ % 3 });
+};
+ok( $parts_n->count == 3, 'part() created 3 arrays' );
+is_deeply(
+  [ $parts_n->get(0)->all ],
+  [ 1, 4, 7, 10 ],
+  'part() first array ok'
+);
+is_deeply(
+  [ $parts_n->get(1)->all ],
+  [ 2, 5, 8, 11 ],
+  'part() second array ok'
+);
+is_deeply(
+  [ $parts_n->get(2)->all ],
+  [ 3, 6, 9, 12 ],
+  'part() third array ok'
+);
+
+my $parts_single = array(1 .. 12)->part(sub { 3 });
+ok( $parts_single->get(0)->count == 0, 'part() first empty ok' );
+ok( $parts_single->get(1)->count == 0, 'part() second empty ok' );
+ok( $parts_single->get(2)->count == 0, 'part() third empty ok' );
+is_deeply( 
+  [ $parts_single->get(3)->all ],
+  [ 1 .. 12 ],
+  'part() fourth part filled ok'
+);
+
 done_testing;
 
