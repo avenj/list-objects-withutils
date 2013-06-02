@@ -15,7 +15,7 @@ use Scalar::Util 'reftype', 'blessed';
 use Storable 'dclone';
 
 sub _mk_ro {
-  ## Borrowed from Const::Fast
+  ## Inspired by Const::Fast ->
   my (undef, $skip_clone, $bless) = @_;
   if (
     (reftype $_[0] || '') eq 'ARRAY' 
@@ -109,6 +109,6 @@ manually modify the backing ARRAY reference will throw an exception.
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Licensed under the same terms as Perl
+Licensed under the same terms as Perl.
 
 =cut

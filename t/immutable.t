@@ -16,6 +16,9 @@ cmp_ok( $arr->count, '==', 3, 'size 3 ok' );
 my $first = $arr->head;
 cmp_ok( $first, 'eq', 'a', 'scalar head() ok' );
 my ($head, $tail) = $arr->head;
+isa_ok( $tail, 'List::Objects::WithUtils::Array::Immutable',
+  '->head() produced obj'
+);
 cmp_ok( $head, 'eq', 'a', 'list head() head ok' );
 cmp_ok( $tail->count, '==', 2, 'list head() tail size ok' );
 is_deeply(
@@ -65,12 +68,16 @@ my $with_hash = immarray( hash( foo => 'bar' ) );
 ok( $with_hash->get(0)->get('foo') eq 'bar', 'hash in immarray ok' );
 ok( $with_hash->get(0)->set(foo => 'baz'), 'hash->set in immarray ok' );
 ok( $with_hash->get(0)->get('foo') eq 'baz', 'hash->get in immarray ok' );
+{ local $@;
+  eval {; $with_hash->[0] = 'foo' };
+  ok( $@ =~ /read-only/, 'attempt to modify 2 died' );
+}
 
 my $with_arr = immarray( array( qw/ a b c / ) );
 ok( $with_arr->get(0)->set(0, 'foo'), 'mutable set() inside immutable list ok');
 { local $@;
   eval {; $with_arr->[0] = 'bar' };
-  ok( $@ =~ /read-only/, 'attempt to modify #2 died' );
+  ok( $@ =~ /read-only/, 'attempt to modify 3 died' );
 }
 
 done_testing;
