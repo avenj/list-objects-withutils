@@ -1,5 +1,4 @@
 use Test::More;
-use Test::Exception;
 use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'arrayval';
@@ -40,7 +39,8 @@ my @unimpl = qw/
 /;
 
 for my $method (@unimpl) {
-  throws_ok { $arr->$method } qr/implemented/, "$method dies"
+  eval {; $arr->$method };
+  ok( $@ =~ /implemented/, "$method dies" );
 }
 
 done_testing;

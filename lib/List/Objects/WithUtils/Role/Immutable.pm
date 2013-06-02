@@ -2,17 +2,23 @@ package List::Objects::WithUtils::Role::Immutable;
 use strictures 1;
 use Carp 'confess';
 
-use Role::Tiny;
 use Scalar::Util 'blessed', 'reftype';
 
-use namespace::clean;
+use Role::Tiny;
 
-sub new {
-  bless [
-    map {; 
-      ( ref $_ && reftype($_) eq 'ARRAY' ) ? @$_ : $_ 
-    } @_[1 .. $#_]
-  ], $_[0]
+sub ___unimp {
+  confess 'Method not implemented'
+}
+{ no warnings 'once';
+  *clear = *___unimp;
+  *set   = *___unimp;
+  *pop   = *___unimp;
+  *push  = *___unimp;
+  *shift = *___unimp;
+  *unshift = *___unimp;
+  *delete  = *___unimp;
+  *insert  = *___unimp;
+  *splice  = *___unimp;
 }
 
 sub head {
@@ -35,14 +41,6 @@ sub tail {
   $_[0]->[-1]
 }
 
-sub set  { confess "Not implemented" }
-sub pop  { confess "Not implemented" }
-sub push { confess "Not implemented" }
-sub shift   { confess "Not implemented" }
-sub unshift { confess "Not implemented" }
-sub clear  { confess "Not implemented" }
-sub delete { confess "Not implemented" }
-sub insert { confess "Not implemented" }
-sub splice { confess "Not implemented" }
+
 
 1;
