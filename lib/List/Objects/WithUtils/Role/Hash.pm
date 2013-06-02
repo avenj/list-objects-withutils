@@ -15,6 +15,10 @@ sub array_type { 'List::Objects::WithUtils::Array' }
 
 sub clear { %{ $_[0] } = () }
 
+sub copy {
+  bless +{ %{ $_[0] } }, blessed($_[0])
+}
+
 sub defined { CORE::defined $_[0]->{ $_[1] } }
 sub exists  { CORE::exists  $_[0]->{ $_[1] } }
 
@@ -151,6 +155,10 @@ will be returned:
 =head2 clear
 
 Clears the current hash entirely.
+
+=head2 copy
+
+Creates a shallow clone of the current object.
 
 =head2 is_empty
 

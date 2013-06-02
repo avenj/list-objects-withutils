@@ -334,12 +334,13 @@ is_deeply(
   'mesh with array/ref mix ok'
 );
 
+undef @a_one; undef @a_two;
+undef $mesh_multi;
+
 eval {; array( 'foo' )->mesh( 'bar' ) };
 ok( $@ =~ /Expected ARRAY/, 'mesh with bad args dies' )
   or diag explain $@;
 
-undef @a_one; undef @a_two;
-undef $mesh_multi;
 
 ## part()
 my $parts_n = do {

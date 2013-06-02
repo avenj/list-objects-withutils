@@ -30,6 +30,10 @@ ok( !$hr->defined('baz'), 'key baz not defined' );
 ## get()
 cmp_ok( $hr->get('foo'), 'eq', 'bar', 'get() ok' );
 
+## copy()
+my $copy = $hr->copy;
+cmp_ok( $copy->get('foo'), 'eq', 'bar', 'get() on copy ok' );
+
 ## sliced()
 my $slicable = hash(a => 1, b => 2, c => 3, d => 4);
 my $slice = $slicable->sliced('a', 'c', 'z');
