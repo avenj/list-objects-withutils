@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+1.001001  (02 Jun 2013)
+
+  Sanity check ->mesh() arguments.
+  Other minor cleanups.
 
 1.001000  (02 Jun 2013)
 
