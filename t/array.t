@@ -364,5 +364,16 @@ is_deeply(
   'part() 3 filled ok'
 );
 
+is_deeply(
+  [ 
+    array(qw/foo bar baz 1 2 3/)
+      ->part(sub { $_[0] =~ /^[0-9]+$/ ? 0 : 1 })
+      ->get(1)
+      ->all
+  ],
+  [ 'foo', 'bar', 'baz' ],
+  'part() with args ok'
+);
+
 done_testing;
 

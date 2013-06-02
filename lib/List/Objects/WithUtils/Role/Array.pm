@@ -376,6 +376,13 @@ Skipped partitions are empty array objects:
   $parts->get(0)->is_empty;  # true
   $parts->get(1)->is_empty;  # false
 
+The subroutine is passed the value we are operating on:
+
+  array(qw/foo bar baz 1 2 3/)
+    ->part(sub { $_[0] =~ /^[0-9]+$/ ? 0 : 1 })
+    ->get(1)
+    ->all;   # 'foo', 'bar', 'baz'
+
 =head3 reverse
 
 Returns a new array object consisting of the reversed list of elements.
