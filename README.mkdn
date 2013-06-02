@@ -42,9 +42,10 @@ ARRAY-type object.
 Behavior is defined by [List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array); look
 there for documentation on available methods.
 
-__valarray__ is imported from [List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) and
+__immarray__ is imported from [List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) and
 operates much like an __array__, except methods that mutate the list are not
-available; using immutable arrays promotes safer functional patterns.
+available and the backing ARRAY is marked read-only; using immutable arrays 
+promotes safer functional patterns.
 
 __hash__ is imported from [List::Objects::WithUtils::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash); see  
 [List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation.

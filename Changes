@@ -1,5 +1,15 @@
 # Changes for List-Objects-WithUtils
 
+1.002000  (03 Jun 2013)
+
+  Add immarray() immutable array objects
+
+  Add hash->copy() to match array->copy()
+
+  Add array->head(), array->tail() methods
+
+  POD, test fixups
+
 1.001001  (02 Jun 2013)
 
   Sanity check ->mesh() arguments.
