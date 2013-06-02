@@ -29,16 +29,36 @@ sub get { $_[0]->[ $_[1] ] }
 sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
 sub pop  { CORE::pop @{ $_[0] } }
-sub push { CORE::push @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
+sub push { 
+  CORE::push @{ $_[0] }, @_[1 .. $#_]; 
+  $_[0] 
+}
 
 sub shift   { CORE::shift @{ $_[0] } }
-sub unshift { CORE::unshift @{ $_[0] }, @_[1 .. $#_] ; $_[0] }
+sub unshift { 
+  CORE::unshift @{ $_[0] }, @_[1 .. $#_]; 
+  $_[0] 
+}
 
 sub clear  { @{ $_[0] } = (); $_[0] }
-sub delete { scalar( CORE::splice(@{ $_[0] }, $_[1], 1) ) }
-sub insert { CORE::splice(@{ $_[0] }, $_[1], 0, $_[2]); $_[0] }
 
-sub join { CORE::join( (defined $_[1] ? $_[1] : ','), @{ $_[0] } ) }
+sub delete { 
+  scalar( 
+    CORE::splice @{ $_[0] }, $_[1], 1
+  ) 
+}
+
+sub insert { 
+  CORE::splice @{ $_[0] }, $_[1], 0, $_[2];
+  $_[0] 
+}
+
+sub join { 
+  CORE::join( 
+    ( defined $_[1] ? $_[1] : ',' ), 
+    @{ $_[0] } 
+  ) 
+}
 
 sub map {
   blessed($_[0])->new(
@@ -70,7 +90,7 @@ sub reverse {
 
 sub sliced {
   blessed($_[0])->new(
-    @{$_[0]}[ @_[1 .. $#_] ]
+    @{ $_[0] }[ @_[1 .. $#_] ]
   )
 }
 
