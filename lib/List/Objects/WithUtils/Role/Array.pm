@@ -345,6 +345,12 @@ placed.
 
 Returns an array-type object containing array-type objects, as seen above.
 
+Skipped partitions are empty array objects:
+
+  my $parts = array(qw/ foo bar /)->part(sub { 1 });
+  $parts->get(0)->is_empty;  # true
+  $parts->get(1)->is_empty;  # false
+
 =head3 reverse
 
 Returns a new array object consisting of the reversed list of elements.
