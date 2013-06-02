@@ -28,6 +28,24 @@ sub all { @{ $_[0] } }
 sub get { $_[0]->[ $_[1] ] }
 sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
+sub head {
+  wantarray ?
+    ( 
+      $_[0]->[0], 
+      blessed($_[0])->new( @{ $_[0] }[ 1 .. $#{$_[0]} ] ) 
+    )
+    : $_[0]->[0]
+}
+
+sub tail {
+  wantarray ?
+    (
+      $_[0]->[-1],
+      blessed($_[0])->new( @{ $_[0] }[ 0 .. ($#{$_[0]} - 1) ] )
+    )
+    : $_[0]->[-1]
+}
+
 sub pop  { CORE::pop @{ $_[0] } }
 sub push { 
   CORE::push @{ $_[0] }, @_[1 .. $#_]; 
@@ -330,6 +348,23 @@ Inserts a value at a given position.
 Joins the array's elements and returns the joined string.
 
 Defaults to ',' if no delimiter is specified.
+
+=head3 head
+
+  my ($first, $rest) = $array->head;
+
+In list context, returns the first element of the list, and a new array-type
+object containing the remaining list. The original object's list is untouched.
+
+In scalar context, returns just the first element of the array:
+
+  my $first = $array->head;
+
+=head3 tail
+
+Similar to L</head>, but returns either the last element and a new array-type
+object containing the remaining list (in list context), or just the last
+element of the list (in scalar context).
 
 =head3 mesh
 
