@@ -8,8 +8,8 @@ require List::Objects::WithUtils::Array;
 our @ISA = 'List::Objects::WithUtils::Array';
 
 use Exporter 'import';
-our @EXPORT = 'valarray';
-sub valarray { __PACKAGE__->new(@_) }
+our @EXPORT = 'immarray';
+sub immarray { __PACKAGE__->new(@_) }
 
 sub ___unimp {
   confess 'Method not implemented'
@@ -19,7 +19,7 @@ sub ___unimp {
 
 =begin Pod::Coverage
 
-valarray
+immarray
 clear
 set
 pop
@@ -56,9 +56,9 @@ List::Objects::WithUtils::Array::Immutable - Immutable array objects
 
 =head1 SYNOPSIS
 
-  use List::Objects::WithUtils 'valarray';
+  use List::Objects::WithUtils 'immarray';
 
-  my $array = valarray(qw/ a b c /);
+  my $array = immarray(qw/ a b c /);
 
   my ($head, $rest) = $array->head;
 
