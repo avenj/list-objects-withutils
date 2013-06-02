@@ -101,7 +101,8 @@ list-mutating methods:
   insert
   splice
 
-The array is also marked read-only.
+The array is marked read-only; attempting to call the methods listed above or
+manually modify the backing ARRAY reference will throw an exception.
 
 =head1 AUTHOR
 
