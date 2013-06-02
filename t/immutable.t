@@ -1,7 +1,7 @@
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
-use List::Objects::WithUtils 'immarray';
+use List::Objects::WithUtils;
 
 my $arr = immarray;
 
@@ -49,8 +49,28 @@ my @unimpl = qw/
 /;
 
 for my $method (@unimpl) {
+  local $@;
   eval {; $arr->$method };
   ok( $@ =~ /implemented/, "$method dies" );
+}
+
+## readonly
+{ local $@;
+  my $imm = immarray(qw/ a b c/);
+  eval {; push @$imm, 'bar' };
+  ok( $@ =~ /read-only/, 'attempt to modify died' );
+}
+
+my $with_hash = immarray( hash( foo => 'bar' ) );
+ok( $with_hash->get(0)->get('foo') eq 'bar', 'hash in immarray ok' );
+ok( $with_hash->get(0)->set(foo => 'baz'), 'hash->set in immarray ok' );
+ok( $with_hash->get(0)->get('foo') eq 'baz', 'hash->get in immarray ok' );
+
+my $with_arr = immarray( array( qw/ a b c / ) );
+ok( $with_arr->get(0)->set(0, 'foo'), 'mutable set() inside immutable list ok');
+{ local $@;
+  eval {; $with_arr->[0] = 'bar' };
+  ok( $@ =~ /read-only/, 'attempt to modify #2 died' );
 }
 
 done_testing;

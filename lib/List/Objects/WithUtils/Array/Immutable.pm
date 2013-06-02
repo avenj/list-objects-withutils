@@ -11,6 +11,34 @@ use Exporter 'import';
 our @EXPORT = 'immarray';
 sub immarray { __PACKAGE__->new(@_) }
 
+use Scalar::Util 'reftype', 'blessed';
+use Storable 'dclone';
+
+sub _mk_ro {
+  ## Borrowed from Const::Fast
+  my (undef, $skip_clone, $bless) = @_;
+  if (
+    (reftype $_[0] || '') eq 'ARRAY' 
+    && ! blessed($_[0])
+    && ! &Internals::SvREADONLY($_[0])
+  ) {
+    my $do_clone = !$skip_clone && &Internals::SvREFCNT($_[0]) > 1;
+    $_[0] = dclone($_[0]) if $do_clone;
+    bless $_[0], $bless if $bless;
+    &Internals::SvREADONLY($_[0], 1);
+    _mk_ro($_) for @{ $_[0] };
+  }
+  Internals::SvREADONLY($_[0], 1);
+  $_[0]
+}
+
+sub new {
+  my $self = [ @_[1 .. $#_] ];
+#  bless $self, $_[0];
+  _mk_ro($self, 1, $_[0])
+#  $self
+}
+
 sub ___unimp {
   confess 'Method not implemented'
 }
@@ -74,6 +102,8 @@ list-mutating methods:
   delete
   insert
   splice
+
+The array is also marked read-only.
 
 =head1 AUTHOR
 
