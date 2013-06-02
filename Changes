@@ -1,5 +1,10 @@
 # Changes for List-Objects-WithUtils
 
+
+1.001000  (02 Jun 2013)
+
+  Add array->part()
+
 1.000003  (02 Jun 2013)
 
   Add array->mesh()
