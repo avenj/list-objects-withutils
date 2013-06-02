@@ -4,7 +4,7 @@ use strictures 1;
 
 sub import {
   my ($class, @funcs) = @_;
-  @funcs = qw/ array arrayval hash / unless @funcs;
+  @funcs = qw/ array valarray hash / unless @funcs;
 
   my @mods;
   for my $function (@funcs) {
@@ -16,7 +16,7 @@ sub import {
       push @mods, 'List::Objects::WithUtils::Hash'; 
       next
     }
-    if ($function eq 'arrayval') {
+    if ($function eq 'valarray') {
       push @mods, 'List::Objects::WithUtils::Array::Immutable';
       next
     }
@@ -86,7 +86,7 @@ ARRAY-type object.
 Behavior is defined by L<List::Objects::WithUtils::Role::Array>; look
 there for documentation on available methods.
 
-B<arrayval> is imported from L<List::Objects::WithUtils::Array::Immutable> and
+B<valarray> is imported from L<List::Objects::WithUtils::Array::Immutable> and
 operates much like an B<array>, except methods that mutate the list are not
 available; using immutable arrays promotes safer functional patterns.
 

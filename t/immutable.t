@@ -1,15 +1,15 @@
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
-use List::Objects::WithUtils 'arrayval';
+use List::Objects::WithUtils 'valarray';
 
-my $arr = arrayval;
+my $arr = valarray;
 
 isa_ok( $arr, 'List::Objects::WithUtils::Array::Immutable' );
 isa_ok( $arr, 'List::Objects::WithUtils::Array' );
 
 cmp_ok( $arr->count, '==', 0, 'size 0 ok' );
-$arr = arrayval(qw/ a b c /);
+$arr = valarray(qw/ a b c /);
 cmp_ok( $arr->count, '==', 3, 'size 3 ok' );
 
 ## head
