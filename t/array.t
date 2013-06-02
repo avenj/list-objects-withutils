@@ -351,13 +351,13 @@ is_deeply(
 );
 
 my $parts_single = array(1 .. 12)->part(sub { 3 });
-ok( $parts_single->get(0)->count == 0, 'part() first empty ok' );
-ok( $parts_single->get(1)->count == 0, 'part() second empty ok' );
-ok( $parts_single->get(2)->count == 0, 'part() third empty ok' );
+ok( $parts_single->get(0)->count == 0, 'part() 0 empty ok' );
+ok( $parts_single->get(1)->count == 0, 'part() 1 empty ok' );
+ok( $parts_single->get(2)->count == 0, 'part() 2 empty ok' );
 is_deeply( 
   [ $parts_single->get(3)->all ],
   [ 1 .. 12 ],
-  'part() fourth part filled ok'
+  'part() 3 filled ok'
 );
 
 done_testing;
