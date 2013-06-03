@@ -14,7 +14,7 @@ sub immarray { __PACKAGE__->new(@_) }
 use Scalar::Util 'reftype', 'blessed';
 use Storable 'dclone';
 
-sub _mk_ro {
+sub __mk_ro {
   ## Inspired by Const::Fast ->
   my (undef, $skip_clone, $bless) = @_;
   if (
@@ -26,15 +26,15 @@ sub _mk_ro {
     $_[0] = dclone($_[0]) if $do_clone;
     bless($_[0], $bless) if $bless;
     &Internals::SvREADONLY($_[0], 1);
-    _mk_ro($_) for @{ $_[0] };
+    __mk_ro($_) for @{ $_[0] };
   }
   Internals::SvREADONLY($_[0], 1);
   $_[0]
 }
 
-sub new { _mk_ro([ @_[1 .. $#_] ], 1, $_[0]) }
+sub new { __mk_ro([ @_[1 .. $#_] ], 1, $_[0]) }
 
-sub ___unimp {
+sub __unimp {
   confess 'Method not implemented'
 }
 
@@ -59,15 +59,15 @@ splice
 =cut
 
 { no warnings 'once';
-  *clear = *___unimp;
-  *set   = *___unimp;
-  *pop   = *___unimp;
-  *push  = *___unimp;
-  *shift = *___unimp;
-  *unshift = *___unimp;
-  *delete  = *___unimp;
-  *insert  = *___unimp;
-  *splice  = *___unimp;
+  *clear = *__unimp;
+  *set   = *__unimp;
+  *pop   = *__unimp;
+  *push  = *__unimp;
+  *shift = *__unimp;
+  *unshift = *__unimp;
+  *delete  = *__unimp;
+  *insert  = *__unimp;
+  *splice  = *__unimp;
 }
 
 1;
