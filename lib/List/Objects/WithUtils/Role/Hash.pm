@@ -76,7 +76,7 @@ sub values {
 sub kv {
   my ($self) = @_;
   $self->array_type->new(
-    CORE::map {;
+    map {;
       [ $_, $self->{ $_ } ]
     } CORE::keys %$self
   )

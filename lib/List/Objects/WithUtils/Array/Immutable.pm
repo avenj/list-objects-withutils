@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Array::Immutable;
 use strictures 1;
-use Carp 'confess';
+use Carp 'croak';
 
 require List::Objects::WithUtils::Array;
 our @ISA = 'List::Objects::WithUtils::Array';
@@ -22,7 +22,20 @@ sub new {
   $self
 }
 
-sub __unimp { confess 'Method not implemented' }
+
+sub __unimp { croak 'Method not implemented on immutable arrays' }
+{ no warnings 'once';
+  *clear = *__unimp;
+  *set   = *__unimp;
+  *pop   = *__unimp;
+  *push  = *__unimp;
+  *shift = *__unimp;
+  *unshift = *__unimp;
+  *delete  = *__unimp;
+  *insert  = *__unimp;
+  *splice  = *__unimp;
+}
+
 
 =pod
 
@@ -43,18 +56,6 @@ splice
 =end Pod::Coverage
 
 =cut
-
-{ no warnings 'once';
-  *clear = *__unimp;
-  *set   = *__unimp;
-  *pop   = *__unimp;
-  *push  = *__unimp;
-  *shift = *__unimp;
-  *unshift = *__unimp;
-  *delete  = *__unimp;
-  *insert  = *__unimp;
-  *splice  = *__unimp;
-}
 
 1;
 
