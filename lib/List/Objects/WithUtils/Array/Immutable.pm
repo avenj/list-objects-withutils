@@ -9,28 +9,21 @@ use Exporter 'import';
 our @EXPORT = 'immarray';
 sub immarray { __PACKAGE__->new(@_) }
 
-use Scalar::Util 'reftype', 'blessed';
+use Scalar::Util 'blessed';
 use Storable 'dclone';
 
-sub __mk_ro {
-  ## Inspired by Const::Fast ->
-  my (undef, $skip_clone, $bless) = @_;
-  if (
-    (reftype $_[0] || '') eq 'ARRAY' 
-    && ! blessed($_[0])
-    && ! &Internals::SvREADONLY($_[0])
-  ) {
-    my $do_clone = !$skip_clone && &Internals::SvREFCNT($_[0]) > 1;
-    $_[0] = dclone($_[0]) if $do_clone;
-    bless($_[0], $bless) if $bless;
-    &Internals::SvREADONLY($_[0], 1);
-    __mk_ro($_) for @{ $_[0] };
-  }
-  Internals::SvREADONLY($_[0], 1);
-  $_[0]
-}
+sub new {
+  my $self = [ @_[1 .. $#_] ];
 
-sub new { __mk_ro([ @_[1 .. $#_] ], 1, $_[0]) }
+  bless $self, $_[0];
+  &Internals::SvREADONLY($self, 1);
+
+  for my $item (@$self) {
+    Internals::SvREADONLY($item, 1);
+  }
+
+  $self
+}
 
 sub __unimp {
   confess 'Method not implemented'
