@@ -32,10 +32,7 @@ sub _mk_ro {
   $_[0]
 }
 
-sub new {
-  my $self = [ @_[1 .. $#_] ];
-  _mk_ro($self, 1, $_[0])
-}
+sub new { _mk_ro([ @_[1 .. $#_] ], 1, $_[0]) }
 
 sub ___unimp {
   confess 'Method not implemented'

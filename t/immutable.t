@@ -80,4 +80,8 @@ ok( $with_arr->get(0)->set(0, 'foo'), 'mutable set() inside immutable list ok');
   ok( $@ =~ /read-only/, 'attempt to modify 3 died' );
 }
 
+undef $with_arr;
+$with_arr = immarray( [ qw/ a b c/ ] );
+ok( ref $with_arr->get(0) eq 'ARRAY', 'non-objs remain unblessed' );
+
 done_testing;
