@@ -14,20 +14,15 @@ use Storable 'dclone';
 
 sub new {
   my $self = [ @_[1 .. $#_] ];
-
   bless $self, $_[0];
-  &Internals::SvREADONLY($self, 1);
 
-  for my $item (@$self) {
-    Internals::SvREADONLY($item, 1);
-  }
+  &Internals::SvREADONLY($self, 1);
+  Internals::SvREADONLY($_, 1) for @$self;
 
   $self
 }
 
-sub __unimp {
-  confess 'Method not implemented'
-}
+sub __unimp { confess 'Method not implemented' }
 
 =pod
 

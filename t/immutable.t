@@ -17,7 +17,7 @@ my $first = $arr->head;
 cmp_ok( $first, 'eq', 'a', 'scalar head() ok' );
 my ($head, $tail) = $arr->head;
 isa_ok( $tail, 'List::Objects::WithUtils::Array::Immutable',
-  '->head() produced obj'
+  'head() produced obj'
 );
 cmp_ok( $head, 'eq', 'a', 'list head() head ok' );
 cmp_ok( $tail->count, '==', 2, 'list head() tail size ok' );
@@ -83,5 +83,10 @@ ok( $with_arr->get(0)->set(0, 'foo'), 'mutable set() inside immutable list ok');
 undef $with_arr;
 $with_arr = immarray( [ qw/ a b c/ ] );
 ok( ref $with_arr->get(0) eq 'ARRAY', 'non-objs remain unblessed' );
+ok( (push @{ $with_arr->get(0) }, 'd'), 'non-objs remain rw' );
+{ local $@;
+  eval {; $with_arr->[0] = [] };
+  ok( $@ =~ /read-only/, 'attempt to modify 4 died' );
+}
 
 done_testing;
