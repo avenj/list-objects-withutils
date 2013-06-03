@@ -7,5 +7,6 @@ BEGIN {
 
 ok( main->can('array'), 'array() imported' );
 ok( main->can('hash'),  'hash() imported'  );
+ok( main->can('immarray'), 'immarray() imported' );
 
 done_testing;
