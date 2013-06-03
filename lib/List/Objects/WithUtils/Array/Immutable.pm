@@ -2,9 +2,7 @@ package List::Objects::WithUtils::Array::Immutable;
 use strictures 1;
 use Carp 'confess';
 
-use Role::Tiny::With;
 require List::Objects::WithUtils::Array;
-
 our @ISA = 'List::Objects::WithUtils::Array';
 
 use Exporter 'import';
