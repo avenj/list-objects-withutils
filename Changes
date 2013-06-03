@@ -1,5 +1,11 @@
 # Changes for List-Objects-WithUtils
 
+1.002001  (03 Jun 2013)
+
+  Simplify read-only array constructor
+
+  Cleanups / test tweaks
+
 1.002000  (03 Jun 2013)
 
   Add immarray() immutable array objects
