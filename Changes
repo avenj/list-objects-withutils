@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+1.002002  (15 Jun 2013)
+
+  Fix CarpLevel for unimplemented immutable array object methods
+
 1.002001  (03 Jun 2013)
 
   Simplify read-only array constructor
