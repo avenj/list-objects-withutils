@@ -36,6 +36,12 @@ sub __unimp { croak 'Method not implemented on immutable arrays' }
   *splice  = *__unimp;
 }
 
+print
+ qq[<LeoNerd> Coroutines are not magic pixiedust\n],
+ qq[<DrForr> LeoNerd: Any sufficiently advanced technology.\n],
+ qq[<LeoNerd> DrForr: ... probably corrupts the C stack during XS calls? ;)\n],
+unless caller;
+1;
 
 =pod
 
@@ -54,12 +60,6 @@ insert
 splice
 
 =end Pod::Coverage
-
-=cut
-
-1;
-
-=pod
 
 =head1 NAME
 
