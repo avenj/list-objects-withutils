@@ -23,7 +23,10 @@ sub new {
 }
 
 
-sub __unimp { croak 'Method not implemented on immutable arrays' }
+sub __unimp { 
+  local $Carp::CarpLevel = 1;
+  croak 'Method not implemented on immutable arrays'
+}
 { no warnings 'once';
   *clear = *__unimp;
   *set   = *__unimp;
