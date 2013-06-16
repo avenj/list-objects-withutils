@@ -3,7 +3,16 @@ use strictures 1;
 
 use Module::Runtime 'require_module';
 use Scalar::Util 'blessed';
-sub blessed_or_pkg { blessed($_[0]) || __PACKAGE__ }
+
+sub HASH_TYPE () { 'List::Objects::WithUtils::Hash' }
+my $_required;
+sub blessed_or_pkg { 
+  my $pkg; 
+  ($pkg = blessed $_[0]) ? return $pkg
+    : $_required ? return HASH_TYPE
+      : eval( "require " . HASH_TYPE . ";1" ) and $_required++,
+        return HASH_TYPE
+}
 
 
 use Role::Tiny;

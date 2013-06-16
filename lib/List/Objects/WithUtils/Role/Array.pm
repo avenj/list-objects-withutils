@@ -8,8 +8,16 @@ use List::MoreUtils ();
 use List::UtilsBy ();
 
 use Scalar::Util 'blessed', 'reftype';
-sub blessed_or_pkg { blessed($_[0]) || __PACKAGE__ }
 
+sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
+my $_required;
+sub blessed_or_pkg {
+  my $pkg; 
+  ($pkg = blessed $_[0]) ? return $pkg
+    : $_required ? return ARRAY_TYPE
+      : eval( "require " . ARRAY_TYPE . ";1" ) and $_required++, 
+        return ARRAY_TYPE
+}
 
 use Role::Tiny;
 
