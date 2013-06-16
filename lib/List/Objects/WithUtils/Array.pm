@@ -15,7 +15,7 @@ sub array { __PACKAGE__->new(@_) }
 
 =head1 NAME
 
-List::Objects::WithUtils::Array - An array container class
+List::Objects::WithUtils::Array - Array-type objects WithUtils
 
 =head1 SYNOPSIS
 

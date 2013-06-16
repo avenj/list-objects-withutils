@@ -14,7 +14,7 @@ sub hash { __PACKAGE__->new(@_) }
 
 =head1 NAME
 
-List::Objects::WithUtils::Hash - A hash container class
+List::Objects::WithUtils::Hash - Hash-type objects WithUtils
 
 =head1 SYNOPSIS
 
