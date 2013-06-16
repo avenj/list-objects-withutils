@@ -4,7 +4,13 @@ use strictures 1;
 
 sub import {
   my ($class, @funcs) = @_;
-  @funcs = qw/ array immarray hash / unless @funcs;
+  my @defaults = qw/ array immarray hash/;
+
+  if (!@funcs) {
+    @funcs = @defaults
+  } elsif (grep {; lc $_ eq 'all' || lc $_ eq ':all' } @funcs) {
+    @funcs = ( @defaults, 'autobox' )
+  }
 
   my @mods;
   for my $function (@funcs) {
