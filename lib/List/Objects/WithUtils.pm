@@ -85,7 +85,8 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
   # Same, but via convenience shortcut:
   use Lowu;
 
-  # Some simple chained array operations, eventually returning a plain list:
+  # Some simple chained array operations, eventually returning a plain list
+  # List returning methods return new list objects:
   array(qw/ aa Ab bb Bc bc /)
     ->grep(sub { $_[0] =~ /^b/i })
     ->map(sub { uc $_[0] })
@@ -120,7 +121,12 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
     +{ name => 'suzy', acct => 3 },
   )->sort_by(sub { $_->{name} });
 
-  # Array objects can be immutable:
+  # Regular array objects are mutable:
+  my $mutable = array(qw/ foo bar baz /);
+  $mutable->insert(1, 'quux');
+  $mutable->delete(2);
+
+  # ... but array objects can be immutable:
   my $static = immarray( qw/ foo bar baz / );
   $static->set(0, 'quux');  # dies
   $static->[0] = 'quux';    # dies
@@ -129,20 +135,34 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
   # Simple hash operations; construct a hash:
   my $hash  = hash( foo => 'bar', snacks => 'cake' );
   
-  # Set multiple keys:
-  $hash->set( foobar => 'baz', pie => 'tasty' );
+  # It's trivial to set multiple keys:
+  $hash->set( foobar => 'baz', pie => 'cherry' );
+  # ... which is useful for merging in another (plain) hash:
+  my %foo = ( pie => 'pumpkin', snacks => 'cheese' );
+  $hash->set( %foo );
+  # ... or another hash object:
+  my $second = hash( pie => 'key lime' );
+  $hash->set( $second->export );
 
   # Retrieve one value as a simple scalar:
   my $snacks = $hash->get('snacks');
 
-  # Retrieve multiple values as an array-type object:
+  # ... or retrieve multiple values as an array-type object:
   my $vals = $hash->get('foo', 'foobar');
 
-  # Take a hash slice of keys/values, return a new hash object:
+  # Take a hash slice of keys, return a new hash object
+  # consisting of the retrieved key/value pairs:
   my $slice = $hash->sliced('foo', 'pie');
 
-  # Hash methods returning arrays returning arrays . . .
-  my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
+  # Chained method examples; methods that return multiple values
+  # typically return array-type objects:
+  my @match_keys = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
+  my @match_vals = $hash->values->grep(sub { $_[0] =~ /bar/ })->all;
+  
+  my @sorted_pairs = hash( foo => 2, bar => 3, baz => 1)
+    ->kv
+    ->sort_by(sub { $_->[1] })
+    ->all;  # ( [ baz => 1 ], [ foo => 2 ], [ bar => 3 ] )
 
   # Perl6-inspired Junctions:
   if ( $hash->keys->any_items eq 'snacks' ) {
@@ -169,6 +189,20 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
           to     => scalar(caller)
       })
     }
+  }
+
+  # Functionality is mostly defined by Roles:
+  { package My::Array::Object;
+
+    use Role::Tiny::With;
+    with 'List::Objects::WithUtils::Role::Array';
+
+    # An easy way to add your own functional interface:
+    use Exporter 'import';
+    our @EXPORT = 'my_array';
+    sub my_array { __PACKAGE__->new(@_) }
+
+    # ... add/override methods ...
   }
  
 
