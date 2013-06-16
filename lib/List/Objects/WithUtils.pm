@@ -4,6 +4,14 @@ use strictures 1;
 
 sub import {
   my ($class, @funcs) = @_;
+
+  my $pkg;
+  if (ref $funcs[0] eq 'HASH') {
+    my $opts = $funcs[0];
+    @funcs = @{ $opts->{import} || [ 'all' ] };
+    $pkg   = $opts->{to} || caller;
+  }
+
   my @defaults = qw/ array immarray hash/;
 
   if (!@funcs) {
@@ -34,7 +42,7 @@ sub import {
     }
   }
 
-  my $pkg = caller;
+  $pkg = caller unless defined $pkg;
   my @failed;
   for my $mod (@mods) {
     my $c = "package $pkg; use $mod;";
