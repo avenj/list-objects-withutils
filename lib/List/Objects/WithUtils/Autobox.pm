@@ -1,22 +1,42 @@
 package List::Objects::WithUtils::Autobox;
 use strictures 1;
-
-require List::Objects::WithUtils::Array;
-require List::Objects::WithUtils::Hash;
+require Carp;
+require Module::Runtime;
 
 use parent 'autobox';
 
+sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
+sub HASH_TYPE  () { 'List::Objects::WithUtils::Hash' }
+
 sub import {
-  my ($class) = @_;
-  $class->SUPER::import( ARRAY => 'List::Objects::WithUtils::Array' );
-  $class->SUPER::import( HASH  => 'List::Objects::WithUtils::Hash'  );
+  my ($class, %params) = @_;
+
+  # Ability to pass in your own subclasses is tested but undocumented ..
+  # The catch is that the Roles fall back to the standard object classes
+  # if blessed_or_pkg hits on a non-blessed ref (i.e. we're called against
+  # an autoboxed ref). In other words, your autoboxed objects in-scope have
+  # your spiffy new subclass' methods -- but lots of methods checking
+  # blessed_or_pkg() will lose your spiffyness and revert to boring old
+  # standard types.
+  #
+  # I'm sure there's a work-around, but I haven't thought of it, yet . . .
+
+  %params = map {; lc($_) => $params{$_} } keys %params;
+  $class->SUPER::import( 
+    ARRAY => 
+      Module::Runtime::use_package_optimistically($params{array} || ARRAY_TYPE) 
+  );
+  $class->SUPER::import( 
+    HASH  => 
+      Module::Runtime::use_package_optimistically($params{hash}  || HASH_TYPE)  
+  );
 }
 
 1;
 
 =pod
 
-=for Pod::Coverage import
+=for Pod::Coverage import ARRAY_TYPE HASH_TYPE
 
 =head1 NAME
 
@@ -52,9 +72,9 @@ Like L<autobox>, the effect is lexical in scope:
 It's worth noting that methods that create new lists will return blessed
 objects, not native data types. This lets you continue passing result
 collections around to other pieces of Perl that wouldn't otherwise know how to
-call the autoboxed methods. Some methods do return the object they were
+call the autoboxed methods. (Some methods do return the object they were
 originally operating on, in which case the original reference is indeed
-returned, as expected.
+returned, as expected.)
 
 =head1 AUTHOR
 
