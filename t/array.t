@@ -31,8 +31,9 @@ cmp_ok( $copy->count, '==', 3, 'copy size 3 ok' );
 ok( array()->is_empty, 'is_empty ok' );
 ok( !$arr->is_empty, 'negative is_empty ok' );
 
-## all()
+## all() / export()
 is_deeply( [ $arr->all ], [1, 2, 3], 'all() ok' );
+is_deeply( [ $arr->export ], [1, 2, 3], 'export() ok' );
 
 ## get()
 cmp_ok( $arr->get(0), '==', 1, 'get 0 ok' );
@@ -378,16 +379,23 @@ is_deeply(
 
 undef $parts_single;
 
-is_deeply(
-  [ 
-    array(qw/foo bar baz 1 2 3/)
-      ->part(sub { $_[0] =~ /^[0-9]+$/ ? 0 : 1 })
-      ->get(1)
-      ->all
-  ],
-  [ 'foo', 'bar', 'baz' ],
-  'part() with args ok'
-);
+my ($evens, $odds) = array( 1 .. 6 )->part(sub { $_[0] & 1 })->all;
+is_deeply( [ $evens->all ], [ 2,4,6 ], 'part() with args picked evens ok' );
+is_deeply( [ $odds->all ], [ 1,3,5 ], 'part() with args picked odds ok' );
+
+{  package My::List;
+   use strict; use warnings FATAL => 'all';
+
+   require List::Objects::WithUtils::Array;
+   use parent 'List::Objects::WithUtils::Array';
+
+   package My::Foo;
+   use strict; use warnings FATAL => 'all';
+   use Test::More;
+
+   my $foo = My::List->new;
+   isa_ok( $foo->map(sub { $_[0] }), 'My::List', 'subclassed obj' );
+}
 
 done_testing;
 

@@ -126,4 +126,18 @@ cmp_ok( $deleted->count, '==', 2, 'correct number of elements deleted' );
 $hr->clear;
 ok( $hr->is_empty, 'is_empty after clear' );
 
+{ package My::List;
+  use strict; use warnings FATAL => 'all';
+
+  require List::Objects::WithUtils::Hash;
+  use parent 'List::Objects::WithUtils::Hash';
+
+  package My::Foo;
+  use strict; use warnings FATAL => 'all';
+  use Test::More;
+
+  my $foo = My::List->new(foo => 1, bar => 2, baz => 3);
+  isa_ok( $foo->sliced('foo', 'baz'), 'My::List', 'subclassed obj' );
+}
+
 done_testing;
