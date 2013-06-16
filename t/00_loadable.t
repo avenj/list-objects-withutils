@@ -1,13 +1,27 @@
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
-BEGIN {
-  use_ok( 'List::Objects::WithUtils' );
+{ package My::Baz;
+  use Test::More;
+  use strict; use warnings FATAL => 'all';
+
+  use List::Objects::WithUtils;
+
+  ok( My::Baz->can('array'), 'array() imported' );
+  ok( My::Baz->can('hash'),  'hash() imported'  );
+  ok( My::Baz->can('immarray'), 'immarray() imported' );
 }
 
-ok( main->can('array'), 'array() imported' );
-ok( main->can('hash'),  'hash() imported'  );
-ok( main->can('immarray'), 'immarray() imported' );
+{ package My::Quux;
+  use Test::More;
+  use strict; use warnings FATAL => 'all';
+
+  use List::Objects::WithUtils 'array', 'hash';
+
+  ok( My::Quux->can('array'), 'selectively imported array()' );
+  ok( My::Quux->can('hash'),  'selectively imported hash()'  );
+}
+
 
 { package My::Foo;
   use Test::More;
