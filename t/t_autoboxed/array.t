@@ -51,6 +51,7 @@ is_deeply [ $foo->all ], [1,2,4], 'autoboxed all() after delete() ok';
 $foo = [qw/ a b c /];
 
 my $upper = $foo->map(sub { uc $_[0] });
+isa_ok $upper, 'List::Objects::WithUtils::Array', 'autoboxed produced obj';
 is_deeply [ $upper->all ], [qw/A B C/], 'autoboxed map() ok';
 
 my $found = [qw/ a b c /]->grep(sub { $_[0] eq 'b' });

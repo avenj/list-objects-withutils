@@ -14,6 +14,7 @@ cmp_ok +{ foo => 1, bar => 2 }->values->count, '==', 2,
   'autoboxed values() ok';
 
 my $slice = +{ a => 1, b => 2, c => 3, d => 4 }->sliced('a', 'c');
+isa_ok $slice, 'List::Objects::WithUtils::Hash', 'autoboxed slice() produced obj';
 cmp_ok $slice->keys->count, '==', 2, 'autoboxed sliced() ok';
 
 my $kv = +{ foo => 'bar', baz => 'quux' }->kv;
