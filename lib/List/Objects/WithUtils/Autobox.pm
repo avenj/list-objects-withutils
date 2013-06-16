@@ -38,7 +38,14 @@ List::Objects::WithUtils::Autobox - Native data types WithUtils
 This module is a subclass of L<autobox> that provides
 L<List::Objects::WithUtils> methods for native ARRAY and HASH types.
 
-Like L<autobox>, the effect is lexical in scope.
+Like L<autobox>, the effect is lexical in scope:
+
+  use List::Objects::WithUtils::Autobox;
+  my $foo = [3,2,1]->sort;
+  
+  no List::Objects::WithUtils::Autobox;
+  [3,2,1]->sort;  # dies
+
 It's worth noting that methods that create new lists will return blessed
 objects, not native data types. This lets you continue passing result
 collections around to other pieces of Perl that wouldn't otherwise know how to
