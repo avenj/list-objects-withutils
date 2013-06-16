@@ -1,8 +1,6 @@
 use Test::More;
+use strict; use warnings FATAL => 'all';
 
-# FIXME test lexical scoping
-
-#use List::Objects::WithUtils::Autobox;
 use List::Objects::WithUtils 'autobox';
 
 cmp_ok []->count, '==', 0, 'empty autoboxed count() ok';
@@ -111,5 +109,11 @@ is_deeply [ $mesh_even->all ],
 
 my $parts_n = do { my $i = 0; [1 .. 12]->part(sub { $i++ % 3 }) };
 ok $parts_n->count == 3, 'autoboxed part() ok';
+
+{
+  no List::Objects::WithUtils::Autobox;
+  eval {; [1,2,3]->count };
+  ok $@, 'lexical scoping seems ok';
+}
 
 done_testing;
