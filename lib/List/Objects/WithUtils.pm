@@ -20,6 +20,12 @@ sub import {
       push @mods, 'List::Objects::WithUtils::Array::Immutable';
       next
     }
+    if ($function eq 'autobox') {
+      # Some unpleasantries required because well, autobox
+      require List::Objects::WithUtils::Autobox;
+      List::Objects::WithUtils::Autobox::import($class);
+      next
+    }
   }
 
   my $pkg = caller;
@@ -69,11 +75,16 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 
   my $slice = $hash->sliced('foo', 'pie');
 
+  # Hash operations returning array objects:
   my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
 
   if ( $hash->keys->any_items eq 'snacks' ) {
     ...    
   }
+
+  # Autoboxed:
+  use List::Objects::WithUtils 'autobox';
+  my $foo = [ qw/foo baz bar foo quux/ ]->uniq->sort;
 
 =head1 DESCRIPTION
 
@@ -96,6 +107,9 @@ promotes safer functional patterns.
 
 B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
 L<List::Objects::WithUtils::Role::Hash> for documentation.
+
+Importing B<autobox> imports L<List::Objects::WithUtils::Autobox>, providing
+methods for native ARRAY and HASH types.
 
 B<Why another object-oriented list module?>
 
