@@ -36,7 +36,10 @@ List::Objects::WithUtils::Autobox - Native data types WithUtils
 =head1 DESCRIPTION
 
 This module is a subclass of L<autobox> that provides
-L<List::Objects::WithUtils> methods for native ARRAY and HASH types.
+L<List::Objects::WithUtils> methods for native ARRAY and HASH types; you can
+treat native Perl list references as if they were
+L<List::Objects::WithUtils::Array> or L<List::Objects::WithUtils::Hash>
+instances.
 
 Like L<autobox>, the effect is lexical in scope:
 
@@ -49,7 +52,9 @@ Like L<autobox>, the effect is lexical in scope:
 It's worth noting that methods that create new lists will return blessed
 objects, not native data types. This lets you continue passing result
 collections around to other pieces of Perl that wouldn't otherwise know how to
-call the autoboxed methods.
+call the autoboxed methods. Some methods do return the object they were
+originally operating on, in which case the original reference is indeed
+returned, as expected.
 
 =head1 AUTHOR
 

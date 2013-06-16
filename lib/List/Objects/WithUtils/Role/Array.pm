@@ -9,15 +9,22 @@ use List::UtilsBy ();
 
 use Scalar::Util 'blessed', 'reftype';
 
+=pod
+
+=for Pod::Coverage ARRAY_TYPE blessed_or_pkg
+
+=cut
+
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 my $_required;
 sub blessed_or_pkg {
-  my $pkg; 
-  ($pkg = blessed $_[0]) ? return $pkg
-    : $_required ? return ARRAY_TYPE
-      : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
-        return ARRAY_TYPE
+  my $pkg; ($pkg = blessed $_[0]) ? return $pkg
+    : $_required ? 
+      return ARRAY_TYPE
+    : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
+      return ARRAY_TYPE
 }
+
 
 use Role::Tiny;
 
@@ -30,7 +37,7 @@ sub copy {
 }
 
 sub count { CORE::scalar @{ $_[0] } }
-{ no warnings 'once'; *scalar = *count; }
+{ no warnings 'once'; *scalar = *count; *export = *all; }
 
 sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }
 
@@ -177,7 +184,7 @@ sub part {
   my ($self, $code) = @_;
   my @parts;
   CORE::push @{ $parts[ $code->($_) ] }, $_ for @$self;
-  my $cls = blessed_or_pkg $self;
+  my $cls = blessed_or_pkg($self);
   $cls->new(
     map {; $cls->new(defined $_ ? @$_ : () ) } @parts
   )
@@ -308,6 +315,10 @@ Returns boolean true if the array is empty.
 =head3 all
 
 Returns all elements in the array as a plain list.
+
+=head3 export
+
+Same as L</all>; included for consistency with hash-type objects.
 
 =head3 get
 

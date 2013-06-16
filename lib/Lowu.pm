@@ -14,6 +14,9 @@ sub import {
   )
 }
 
+print
+ qq[I'm not sorry, on account of all the typing I've saved myself ;-)\n]
+unless caller;
 1;
 
 =pod

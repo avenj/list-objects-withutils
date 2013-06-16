@@ -78,38 +78,97 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 
 =head1 SYNOPSIS
 
+  ## A very small sampling; consult the description, below, for links to
+  ## extended documentation:
+
+  # Import selectively:
+  use List::Objects::WithUtils 'array';
+
+  # Import 'array()', 'immarray()', 'hash()' object constructors:
   use List::Objects::WithUtils;
 
-  # Chained array operations:
+  # Import all of the above plus autoboxing:
+  use List::Objects::WithUtils ':all';
+  # Same, but via convenience shortcut:
+  use Lowu;
+
+  # Some simple chained array operations, eventually returning a plain list:
   array(qw/ aa Ab bb Bc bc /)
     ->grep(sub { $_[0] =~ /^b/i })
-    ->map( sub { uc $_[0] })
+    ->map(sub { uc $_[0] })
     ->uniq
-    ->all;     # ( 'BB', 'BC' )
+    ->all;   # ( 'BB', 'BC' )
 
-  # Sample hash operations:
-  my $hash  = hash( foo => 'bar', snacks => 'cake' );  
+  # Useful utilities from other list modules are available:
+  my $wanted = array(
+    +{ id => '200', user => 'bob' },
+    +{ id => '400', user => 'suzy' },
+    +{ id => '600', user => 'fred' },
+  )->first(sub { $_->{id} > 500 });
 
+  my $sum = array( 1, 2, 3 )->reduce(sub { $_[0] + $_[1] });  # 6
+
+  my $itr = array( 1 .. 7 )->natatime(3);
+  while ( my @nextset = $itr->() ) {
+    ...
+  }
+
+  my $meshed = array(qw/ a b c d /)
+    ->mesh( array(1 .. 4) )
+    ->all;   # ( 'a', 1, 'b', 2, 'c', 3, 'd', 4 )
+  
+  my ($evens, $odds) = array( 1 .. 20 )
+    ->part(sub { $_[0] & 1 })
+    ->all;
+
+  my $sorted = array(
+    +{ name => 'bob',  acct => 1 },
+    +{ name => 'fred', acct => 2 },
+    +{ name => 'suzy', acct => 3 },
+  )->sort_by(sub { $_->{name} });
+
+  # Array objects can be immutable:
+  my $static = immarray( qw/ foo bar baz / );
+  $static->set(0, 'quux');  # dies
+  $static->[0] = 'quux';    # dies
+  push @$static, 'quux';    # dies
+
+  # Simple hash operations; construct a hash:
+  my $hash  = hash( foo => 'bar', snacks => 'cake' );
+  
+  # Set multiple keys:
   $hash->set( foobar => 'baz', pie => 'tasty' );
 
+  # Retrieve one value as a simple scalar:
   my $snacks = $hash->get('snacks');
 
+  # Retrieve multiple values as an array-type object:
+  my $vals = $hash->get('foo', 'foobar');
+
+  # Take a hash slice of keys/values, return a new hash object:
   my $slice = $hash->sliced('foo', 'pie');
 
-  # Hash operations returning array objects:
+  # Hash methods returning arrays returning arrays . . .
   my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
 
+  # Perl6-inspired Junctions:
   if ( $hash->keys->any_items eq 'snacks' ) {
     ...    
   }
 
-  # Autoboxed:
+  # Autoboxed native data types:
   use List::Objects::WithUtils 'autobox';
   my $foo = [ qw/foo baz bar foo quux/ ]->uniq->sort;
+  my $bar = +{ a => 1, b => 2, c => 3 }->values->sort;
+
+  # Autoboxing is lexically scoped like normal:
+  { no List::Objects::WithUtils::Autobox;
+    [ 1 .. 10 ]->shuffle;  # dies
+  }
 
 =head1 DESCRIPTION
 
-A small set of roles and classes defining an object-oriented interface to Perl
+A set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays. Originally derived from L<Data::Perl>.
 
 Some commonly used functions from L<List::Util>, L<List::MoreUtils>, and
@@ -133,9 +192,9 @@ Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
 providing methods for native ARRAY and HASH types.
 
 A bare import list (C<use List::Objects::WithUtils;>) will import the
-B<array>, B<immarray>, and B<hash> functions.
+C<array>, C<immarray>, and C<hash> functions.
 Importing B<all> or B<:all> will import all of the above and additionally turn
-B<autobox> on.
+B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
 
 B<Why another object-oriented list module?>
 
@@ -152,22 +211,41 @@ serious bugs).
 
 =head1 SEE ALSO
 
-L<List::Objects::WithUtils::Role::Array> for documentation on C<array()>
+L<List::Objects::WithUtils::Role::Array> for documentation on the basic set of
+C<array()> methods.
+
+L<List::Objects::WithUtils::Role::WithJunctions> for documentation on C<array()>
+junction-returning methods.
+
+L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
 methods.
 
-L<List::Objects::WithUtils::Role::WithJunctions> for details regarding using 
-junctions on an C<array()>.
+L<List::Objects::WithUtils::Array::Immutable> for more on C<immarray()>
+immutable arrays.
 
-L<List::Objects::WithUtils::Role::Hash> for documentation on C<hash()>
-methods.
+L<List::Objects::WithUtils::Autobox> for details on autoboxing.
+
+The L<Lowu> module for a convenient importer shortcut.
 
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Significant portions of this code are derived from L<Data::Perl> 
-by Matthew Phillips (CPAN: MATTP), haarg, and others.
-
 Licensed under the same terms as Perl.
+
+The original Array and Hash roles were derived from L<Data::Perl> by Matthew
+Phillips (CPAN: MATTP), haarg, and others.
+
+Immutable array objects were inspired by L<Const::Fast>.
+
+Most of this code relies entirely on other widely-used modules, including:
+
+L<List::Util>
+
+L<List::MoreUtils>
+
+L<List::UtilsBy>
+
+L<Syntax::Keyword::Junction>
 
 =cut
