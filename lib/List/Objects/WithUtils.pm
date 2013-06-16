@@ -8,10 +8,10 @@ sub import {
   my ($class, @funcs) = @_;
 
   my $pkg;
-  if (ref $funcs[0] eq 'HASH') {
-    my $opts = $funcs[0];
-    @funcs = @{ $opts->{import} || [ 'all' ] };
-    $pkg   = $opts->{to} || caller;
+  if (ref $funcs[0]) {
+    my %opts = %{ $funcs[0] };
+    @funcs = @{ $opts{import} || [ 'all' ] };
+    $pkg   = $opts{to} || caller;
   }
 
   if (!@funcs) {
@@ -71,7 +71,7 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 
 =head1 SYNOPSIS
 
-  ## A very small sampling; consult the description, below, for links to
+  ## A small sampling; consult the description, below, for links to
   ## extended documentation:
 
   # Import selectively:
@@ -179,32 +179,6 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
     [ 1 .. 10 ]->shuffle;  # dies
   }
 
-  # Subclass and import to target packages (see Lowu.pm f.ex):
-  { package My::Defaults;
-    use parent 'List::Objects::WithUtils';
-    sub import {
-      my ($class, @params) = @_;
-      $class->SUPER::import({
-          import => [ 'autobox', 'immarray' ], 
-          to     => scalar(caller)
-      })
-    }
-  }
-
-  # Functionality is mostly defined by Roles:
-  { package My::Array::Object;
-
-    use Role::Tiny::With;
-    with 'List::Objects::WithUtils::Role::Array';
-
-    # An easy way to add your own functional interface:
-    use Exporter 'import';
-    our @EXPORT = 'my_array';
-    sub my_array { __PACKAGE__->new(@_) }
-
-    # ... add/override methods ...
-  }
- 
 
 =head1 DESCRIPTION
 
@@ -267,6 +241,51 @@ L<List::Objects::WithUtils::Autobox> for details on autoboxing.
 
 The L<Lowu> module for a convenient importer shortcut.
 
+=head2 Subclassing
+
+The importer for this package is somewhat flexible; a subclass can override
+import to pass import tags and a target package by feeding this package's
+C<import()> a HASH:
+
+  # Subclass and import to target packages (see Lowu.pm f.ex):
+  package My::Defaults;
+  use parent 'List::Objects::WithUtils';
+  sub import {
+    my ($class, @params) = @_;
+    $class->SUPER::import({
+        import => [ 'autobox', 'array', 'hash' ], 
+        to     => scalar(caller)
+    })
+  }
+
+Functionality is mostly defined by Roles.
+For example, it's easy to create your own array class with new methods:
+
+  package My::Array::Object;
+  use Role::Tiny::With;
+  with 'List::Objects::WithUtils::Role::Array',
+       'List::Objects::WithUtils::Role::WithJunctions';
+
+  # An easy way to add your own functional interface:
+  use Exporter 'import';  our @EXPORT = 'my_array';
+  sub my_array { __PACKAGE__->new(@_) }
+
+  # ... add/override methods ...
+
+... in which case you may want to also define your own hash subclass that
+overrides C<array_type> to produce your preferred arrays:
+
+  package My::Hash::Object;
+  use Role::Tiny::With;
+  with 'List::Objects::WithUtils::Role::Hash';
+
+  use Exporter 'import';  our @EXPORT = 'my_hash';
+  sub my_hash { __PACKAGE__->new(@_) }
+  
+  sub array_type { 'My::Array::Object' }
+
+  # ...
+ 
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
