@@ -1,5 +1,7 @@
 use Test::More;
 
+# FIXME test lexical scoping
+
 #use List::Objects::WithUtils::Autobox;
 use List::Objects::WithUtils 'autobox';
 
@@ -91,6 +93,23 @@ is_deeply [ $before->all ], [1,2,3,4], 'autoboxed items_before_incl ok';
 ok [1,2,3]->shuffle->count == 3, 'autoboxed shuffle() ok';
 is_deeply [ [1,1,2,3,3]->uniq->sort->all ], [1,2,3], 'autoboxed uniq() ok';
 
+my $sorted_hash = [ 
+  { id => 'c' }, { id => 'a' }, { id => 'b' } 
+]->sort_by(sub { $_->{id} });
+is_deeply [ $sorted_hash->all ],
+  [
+    { id => 'a' }, { id => 'b' }, { id => 'c' }
+  ],
+  'autoboxed sort_by() ok';
 
+ok [1,2,3]->any_items == 2, 'autoboxed junctions ok';
+
+my $mesh_even = [qw/a b c d/]->mesh([1 .. 4]);
+is_deeply [ $mesh_even->all ],
+  [ a => 1, b => 2, c => 3, d => 4 ],
+  'autoboxed mesh() ok';
+
+my $parts_n = do { my $i = 0; [1 .. 12]->part(sub { $i++ % 3 }) };
+ok $parts_n->count == 3, 'autoboxed part() ok';
 
 done_testing;
