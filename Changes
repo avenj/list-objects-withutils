@@ -1,5 +1,24 @@
 # Changes for List-Objects-WithUtils
 
+1.003000  (16 Jun 2013)
+
+  Add 'use Lowu;' shortcut to import all available functionality.
+
+  Add autoboxing support via List::Objects::WithUtils::Autobox and
+  make autoboxing available via "use List::Objects::WithUtils 'autobox'"
+  (as well as the 'use Lowu;' shortcut)
+
+  More flexible import() in List::Objects::WithUtils; allows for exporting
+  selected functionality to designated target packages.
+
+  Added 'all'/':all' import tags to List::Objects::WithUtils;
+  bare import list still just enables array/immarray/hash,
+  'all' adds autoboxing.
+
+  Add array()->export to line up with hash()->export.
+
+  POD improvements. 
+
 1.002002  (15 Jun 2013)
 
   Fix CarpLevel for unimplemented immutable array object methods

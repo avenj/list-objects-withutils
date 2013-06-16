@@ -4,33 +4,122 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 
 # SYNOPSIS
 
+    ## A small sampling; consult the description, below, for links to
+    ## extended documentation:
+
+    # Import selectively:
+    use List::Objects::WithUtils 'array';
+
+    # Import 'array()', 'immarray()', 'hash()' object constructors:
     use List::Objects::WithUtils;
 
-    # Chained array operations:
+    # Import all of the above plus autoboxing:
+    use List::Objects::WithUtils ':all';
+    # Same, but via convenience shortcut:
+    use Lowu;
+
+    # Some simple chained array operations, eventually returning a plain list
+    # List returning methods return new list objects:
     array(qw/ aa Ab bb Bc bc /)
       ->grep(sub { $_[0] =~ /^b/i })
-      ->map( sub { uc $_[0] })
+      ->map(sub { uc $_[0] })
       ->uniq
-      ->all;     # ( 'BB', 'BC' )
+      ->all;   # ( 'BB', 'BC' )
 
-    # Sample hash operations:
-    my $hash  = hash( foo => 'bar', snacks => 'cake' );  
+    # Useful utilities from other list modules are available:
+    my $wanted = array(
+      +{ id => '200', user => 'bob' },
+      +{ id => '400', user => 'suzy' },
+      +{ id => '600', user => 'fred' },
+    )->first(sub { $_->{id} > 500 });
 
-    $hash->set( foobar => 'baz', pie => 'tasty' );
+    my $sum = array( 1, 2, 3 )->reduce(sub { $_[0] + $_[1] });  # 6
 
+    my $itr = array( 1 .. 7 )->natatime(3);
+    while ( my @nextset = $itr->() ) {
+      ...
+    }
+
+    my $meshed = array(qw/ a b c d /)
+      ->mesh( array(1 .. 4) )
+      ->all;   # ( 'a', 1, 'b', 2, 'c', 3, 'd', 4 )
+    
+
+    my ($evens, $odds) = array( 1 .. 20 )
+      ->part(sub { $_[0] & 1 })
+      ->all;
+
+    my $sorted = array(
+      +{ name => 'bob',  acct => 1 },
+      +{ name => 'fred', acct => 2 },
+      +{ name => 'suzy', acct => 3 },
+    )->sort_by(sub { $_->{name} });
+
+    # Regular array objects are mutable:
+    my $mutable = array(qw/ foo bar baz /);
+    $mutable->insert(1, 'quux');
+    $mutable->delete(2);
+
+    # ... but array objects can be immutable:
+    my $static = immarray( qw/ foo bar baz / );
+    $static->set(0, 'quux');  # dies
+    $static->[0] = 'quux';    # dies
+    push @$static, 'quux';    # dies
+
+    # Simple hash operations; construct a hash:
+    my $hash  = hash( foo => 'bar', snacks => 'cake' );
+    
+
+    # It's trivial to set multiple keys:
+    $hash->set( foobar => 'baz', pie => 'cherry' );
+    # ... which is useful for merging in another (plain) hash:
+    my %foo = ( pie => 'pumpkin', snacks => 'cheese' );
+    $hash->set( %foo );
+    # ... or another hash object:
+    my $second = hash( pie => 'key lime' );
+    $hash->set( $second->export );
+
+    # Retrieve one value as a simple scalar:
     my $snacks = $hash->get('snacks');
 
+    # ... or retrieve multiple values as an array-type object:
+    my $vals = $hash->get('foo', 'foobar');
+
+    # Take a hash slice of keys, return a new hash object
+    # consisting of the retrieved key/value pairs:
     my $slice = $hash->sliced('foo', 'pie');
 
-    my @matching = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
+    # Chained method examples; methods that return multiple values
+    # typically return array-type objects:
+    my @match_keys = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
+    my @match_vals = $hash->values->grep(sub { $_[0] =~ /bar/ })->all;
+    
 
+    my @sorted_pairs = hash( foo => 2, bar => 3, baz => 1)
+      ->kv
+      ->sort_by(sub { $_->[1] })
+      ->all;  # ( [ baz => 1 ], [ foo => 2 ], [ bar => 3 ] )
+
+    # Perl6-inspired Junctions:
     if ( $hash->keys->any_items eq 'snacks' ) {
       ...    
     }
 
+    # Autoboxed native data types:
+    use List::Objects::WithUtils 'autobox';
+    my $foo = [ qw/foo baz bar foo quux/ ]->uniq->sort;
+    my $bar = +{ a => 1, b => 2, c => 3 }->values->sort;
+
+    # Autoboxing is lexically scoped like normal:
+    { no List::Objects::WithUtils::Autobox;
+      [ 1 .. 10 ]->shuffle;  # dies
+    }
+
+
+
 # DESCRIPTION
 
-A small set of roles and classes defining an object-oriented interface to Perl
+A set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays. Originally derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl).
 
 Some commonly used functions from [List::Util](http://search.cpan.org/perldoc?List::Util), [List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils), and
@@ -50,6 +139,14 @@ promotes safer functional patterns.
 __hash__ is imported from [List::Objects::WithUtils::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash); see  
 [List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation.
 
+Importing __autobox__ lexically enables [List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox),
+providing methods for native ARRAY and HASH types.
+
+A bare import list (`use List::Objects::WithUtils;`) will import the
+`array`, `immarray`, and `hash` functions.
+Importing __all__ or __:all__ will import all of the above and additionally turn
+__autobox__ on, as will the shortcut `use Lowu;` (as of 1.003).
+
 __Why another object-oriented list module?__
 
 There are a fair few object-oriented approaches to lists on CPAN, none of
@@ -65,20 +162,86 @@ serious bugs).
 
 # SEE ALSO
 
-[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array) for documentation on `array()`
+[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array) for documentation on the basic set of
+`array()` methods.
+
+[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions) for documentation on `array()`
+junction-returning methods.
+
+[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation regarding `hash()`
 methods.
 
-[List::Objects::WithUtils::Role::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::WithJunctions) for details regarding using 
-junctions on an `array()`.
+[List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) for more on `immarray()`
+immutable arrays.
 
-[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation on `hash()`
-methods.
+[List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox) for details on autoboxing.
+
+The [Lowu](http://search.cpan.org/perldoc?Lowu) module for a convenient importer shortcut.
+
+## Subclassing
+
+The importer for this package is somewhat flexible; a subclass can override
+import to pass import tags and a target package by feeding this package's
+`import()` a HASH:
+
+    # Subclass and import to target packages (see Lowu.pm f.ex):
+    package My::Defaults;
+    use parent 'List::Objects::WithUtils';
+    sub import {
+      my ($class, @params) = @_;
+      $class->SUPER::import({
+          import => [ 'autobox', 'array', 'hash' ], 
+          to     => scalar(caller)
+      })
+    }
+
+Functionality is mostly defined by Roles.
+For example, it's easy to create your own array class with new methods:
+
+    package My::Array::Object;
+    use Role::Tiny::With;
+    with 'List::Objects::WithUtils::Role::Array',
+         'List::Objects::WithUtils::Role::WithJunctions';
+
+    # An easy way to add your own functional interface:
+    use Exporter 'import';  our @EXPORT = 'my_array';
+    sub my_array { __PACKAGE__->new(@_) }
+
+    # ... add/override methods ...
+
+... in which case you may want to also define your own hash subclass that
+overrides `array_type` to produce your preferred arrays:
+
+    package My::Hash::Object;
+    use Role::Tiny::With;
+    with 'List::Objects::WithUtils::Role::Hash';
+
+    use Exporter 'import';  our @EXPORT = 'my_hash';
+    sub my_hash { __PACKAGE__->new(@_) }
+    
+
+    sub array_type { 'My::Array::Object' }
+
+     # ...
+    
 
 # AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
 
-Significant portions of this code are derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl) 
-by Matthew Phillips (CPAN: MATTP), haarg, and others.
-
 Licensed under the same terms as Perl.
+
+The original Array and Hash roles were derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl) by Matthew
+Phillips (CPAN: MATTP), haarg, and others.
+
+Immutable array objects were inspired by [Const::Fast](http://search.cpan.org/perldoc?Const::Fast).
+
+Most of this code relies entirely on other widely-used modules, including:
+
+[List::Util](http://search.cpan.org/perldoc?List::Util)
+
+[List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils)
+
+[List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy)
+
+[Syntax::Keyword::Junction](http://search.cpan.org/perldoc?Syntax::Keyword::Junction)
