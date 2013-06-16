@@ -15,7 +15,7 @@ sub blessed_or_pkg {
   my $pkg; 
   ($pkg = blessed $_[0]) ? return $pkg
     : $_required ? return ARRAY_TYPE
-      : eval( "require " . ARRAY_TYPE . ";1" ) and $_required++, 
+      : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
         return ARRAY_TYPE
 }
 

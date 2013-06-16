@@ -10,10 +10,9 @@ sub blessed_or_pkg {
   my $pkg; 
   ($pkg = blessed $_[0]) ? return $pkg
     : $_required ? return HASH_TYPE
-      : eval( "require " . HASH_TYPE . ";1" ) and $_required++,
+      : eval( 'require ' . HASH_TYPE . ';1' ) and $_required++,
         return HASH_TYPE
 }
-
 
 use Role::Tiny;
 
