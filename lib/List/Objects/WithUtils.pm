@@ -9,13 +9,6 @@ sub import {
 
   my $pkg;
   if (ref $funcs[0] eq 'HASH') {
-    # Undocumented currently, but you can import to elsewhere:
-    #  use parent 'List::Objects::WithUtils';
-    #  sub import {
-    #    my ($class, @params) = @_;
-    #    $class->SUPER::import({ import => \@params, to => scalar(caller) })
-    #  }
-    # (see Lowu.pm f.ex)
     my $opts = $funcs[0];
     @funcs = @{ $opts->{import} || [ 'all' ] };
     $pkg   = $opts->{to} || caller;
@@ -165,6 +158,19 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
   { no List::Objects::WithUtils::Autobox;
     [ 1 .. 10 ]->shuffle;  # dies
   }
+
+  # Subclass and import to target packages (see Lowu.pm f.ex):
+  { package My::Defaults;
+    use parent 'List::Objects::WithUtils';
+    sub import {
+      my ($class, @params) = @_;
+      $class->SUPER::import({
+          import => [ 'autobox', 'immarray' ], 
+          to     => scalar(caller)
+      })
+    }
+  }
+ 
 
 =head1 DESCRIPTION
 

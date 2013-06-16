@@ -4,8 +4,8 @@ use strictures 1;
 require List::Objects::WithUtils::Array;
 require List::Objects::WithUtils::Hash;
 
-require autobox;
-our @ISA = 'autobox';
+use parent 'autobox';
+
 sub import {
   my ($class) = @_;
   $class->SUPER::import( ARRAY => 'List::Objects::WithUtils::Array' );

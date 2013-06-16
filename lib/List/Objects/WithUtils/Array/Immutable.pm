@@ -2,8 +2,7 @@ package List::Objects::WithUtils::Array::Immutable;
 use strictures 1;
 use Carp 'croak';
 
-require List::Objects::WithUtils::Array;
-our @ISA = 'List::Objects::WithUtils::Array';
+use parent 'List::Objects::WithUtils::Array';
 
 use Exporter 'import';
 our @EXPORT = 'immarray';
