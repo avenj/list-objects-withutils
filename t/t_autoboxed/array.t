@@ -111,6 +111,11 @@ is_deeply [ $mesh_even->all ],
 my $parts_n = do { my $i = 0; [1 .. 12]->part(sub { $i++ % 3 }) };
 ok $parts_n->count == 3, 'autoboxed part() ok';
 
+my ($head, $tail) = [1,2,3]->head;
+isa_ok $tail, 'List::Objects::WithUtils::Array', 'autoboxed head() produced obj';
+my (undef, $rest) = [1,2,3]->tail;
+isa_ok $rest, 'List::Objects::WithUtils::Array', 'autoboxed tail() produced obj';
+
 {
   no List::Objects::WithUtils::Autobox;
   eval {; [1,2,3]->count };
