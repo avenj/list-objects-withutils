@@ -4,24 +4,30 @@ use strictures 1;
 use Module::Runtime 'require_module';
 use Scalar::Util 'blessed';
 
+=pod
+
+=for Pod::Coverage HASH_TYPE blessed_or_pkg
+
+=cut
+
 sub HASH_TYPE () { 'List::Objects::WithUtils::Hash' }
 my $_required;
 sub blessed_or_pkg { 
-  my $pkg; 
-  ($pkg = blessed $_[0]) ? return $pkg
-    : $_required ? return HASH_TYPE
-      : eval( 'require ' . HASH_TYPE . ';1' ) and $_required++,
-        return HASH_TYPE
+  my $pkg; ($pkg = blessed $_[0]) ? return $pkg
+    : $_required ? 
+      return HASH_TYPE
+    : eval( 'require ' . HASH_TYPE . ';1' ) and $_required++,
+      return HASH_TYPE
 }
 
 use Role::Tiny;
+
+sub array_type { 'List::Objects::WithUtils::Array' }
 
 sub new {
   require_module( $_[0]->array_type );
   bless +{ @_[1 .. $#_] }, $_[0]
 }
-
-sub array_type { 'List::Objects::WithUtils::Array' }
 
 sub clear { %{ $_[0] } = () }
 
