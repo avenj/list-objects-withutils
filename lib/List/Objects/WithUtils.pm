@@ -114,8 +114,13 @@ promotes safer functional patterns.
 B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
 L<List::Objects::WithUtils::Role::Hash> for documentation.
 
-Importing B<autobox> imports L<List::Objects::WithUtils::Autobox>, providing
-methods for native ARRAY and HASH types.
+Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
+providing methods for native ARRAY and HASH types.
+
+A bare import list (C<use List::Objects::WithUtils;>) will import the
+B<array>, B<immarray>, and B<hash> functions.
+Importing B<all> or B<:all> will import all of the above and additionally turn
+B<autobox> on.
 
 B<Why another object-oriented list module?>
 
