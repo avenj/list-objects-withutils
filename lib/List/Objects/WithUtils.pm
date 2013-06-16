@@ -2,22 +2,29 @@ package List::Objects::WithUtils;
 use Carp;
 use strictures 1;
 
+our @DefaultImport = qw/ array immarray hash /;
+
 sub import {
   my ($class, @funcs) = @_;
 
   my $pkg;
   if (ref $funcs[0] eq 'HASH') {
+    # Undocumented currently, but you can import to elsewhere:
+    #  use parent 'List::Objects::WithUtils';
+    #  sub import {
+    #    my ($class, @params) = @_;
+    #    $class->SUPER::import({ import => \@params, to => scalar(caller) })
+    #  }
+    # (see Lowu.pm f.ex)
     my $opts = $funcs[0];
     @funcs = @{ $opts->{import} || [ 'all' ] };
     $pkg   = $opts->{to} || caller;
   }
 
-  my @defaults = qw/ array immarray hash/;
-
   if (!@funcs) {
-    @funcs = @defaults
+    @funcs = @DefaultImport
   } elsif (grep {; lc $_ eq 'all' || lc $_ eq ':all' } @funcs) {
-    @funcs = ( @defaults, 'autobox' )
+    @funcs = ( @DefaultImport, 'autobox' )
   }
 
   my @mods;
@@ -35,7 +42,7 @@ sub import {
       next
     }
     if ($function eq 'autobox') {
-      # Some unpleasantries required because well, autobox
+      # Some unpleasantries required; autobox is weirdly scoped
       require List::Objects::WithUtils::Autobox;
       List::Objects::WithUtils::Autobox::import($class);
       next
@@ -46,7 +53,7 @@ sub import {
   my @failed;
   for my $mod (@mods) {
     my $c = "package $pkg; use $mod;";
-    eval $c;
+    local $@; eval $c;
     if ($@) { carp $@; push @failed, $mod }
   }
 

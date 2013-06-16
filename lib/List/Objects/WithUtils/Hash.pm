@@ -29,7 +29,7 @@ L<List::Objects::WithUtils::Role::Hash>. Methods are documented there.
 
 =head2 hash
 
-Creates a new hash container object.
+Creates a new hash object.
 
 =head1 AUTHOR
 

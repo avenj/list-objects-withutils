@@ -32,7 +32,7 @@ This class also consumes L<List::Objects::WithUtils::Role::WithJunctions>.
 
 =head2 array
 
-Creates a new array container object.
+Creates a new array object.
 
 =head1 AUTHOR
 
