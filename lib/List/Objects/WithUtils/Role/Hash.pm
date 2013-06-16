@@ -28,7 +28,7 @@ sub is_empty { keys %{ $_[0] } ? 0 : 1 }
 
 sub get {
   if (@_ > 2) {
-    return $_[0]->array_type->new(
+    return blessed_or_pkg($_[0])->array_type->new(
       @{ $_[0] }{@_}
     )
   }
@@ -52,32 +52,32 @@ sub set {
 
   @{$self}{ @_[@keysidx] } = @_[@valsidx];
 
-  $self->array_type->new(
+  blessed_or_pkg($self)->array_type->new(
     @{$self}{ @_[@keysidx] }
   )
 }
 
 sub delete {
-  $_[0]->array_type->new(
+  blessed_or_pkg($_[0])->array_type->new(
     CORE::delete @{ $_[0] }{ @_[1 .. $#_] }
   )
 }
 
 sub keys {
-  $_[0]->array_type->new(
+  blessed_or_pkg($_[0])->array_type->new(
     CORE::keys %{ $_[0] }
   )
 }
 
 sub values {
-  $_[0]->array_type->new(
+  blessed_or_pkg($_[0])->array_type->new(
     CORE::values %{ $_[0] }
   )
 }
 
 sub kv {
   my ($self) = @_;
-  $self->array_type->new(
+  blessed_or_pkg($self)->array_type->new(
     map {;
       [ $_, $self->{ $_ } ]
     } CORE::keys %$self
