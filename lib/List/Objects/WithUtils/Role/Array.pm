@@ -9,6 +9,16 @@ use List::UtilsBy ();
 
 use Scalar::Util 'blessed', 'reftype';
 
+sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
+my $_required;
+sub blessed_or_pkg {
+  my $pkg; 
+  ($pkg = blessed $_[0]) ? return $pkg
+    : $_required ? return ARRAY_TYPE
+      : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
+        return ARRAY_TYPE
+}
+
 use Role::Tiny;
 
 sub new {
@@ -16,7 +26,7 @@ sub new {
 }
 
 sub copy {
-  bless [ @{ $_[0] } ], blessed($_[0])
+  bless [ @{ $_[0] } ], blessed_or_pkg($_[0])
 }
 
 sub count { CORE::scalar @{ $_[0] } }
@@ -32,7 +42,7 @@ sub head {
   wantarray ?
     ( 
       $_[0]->[0], 
-      blessed($_[0])->new( @{ $_[0] }[ 1 .. $#{$_[0]} ] ) 
+      blessed_or_pkg($_[0])->new( @{ $_[0] }[ 1 .. $#{$_[0]} ] ) 
     )
     : $_[0]->[0]
 }
@@ -41,7 +51,7 @@ sub tail {
   wantarray ?
     (
       $_[0]->[-1],
-      blessed($_[0])->new( @{ $_[0] }[ 0 .. ($#{$_[0]} - 1) ] )
+      blessed_or_pkg($_[0])->new( @{ $_[0] }[ 0 .. ($#{$_[0]} - 1) ] )
     )
     : $_[0]->[-1]
 }
@@ -79,13 +89,13 @@ sub join {
 }
 
 sub map {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     CORE::map {; $_[1]->($_) } @{ $_[0] }
   )
 }
 
 sub grep {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     CORE::grep {; $_[1]->($_) } @{ $_[0] }
   )
 }
@@ -97,23 +107,23 @@ sub sort {
   } else {
     @sorted = CORE::sort @{ $_[0] }
   }
-  blessed($_[0])->new(@sorted)
+  blessed_or_pkg($_[0])->new(@sorted)
 }
 
 sub reverse {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     CORE::reverse @{ $_[0] }
   )
 }
 
 sub sliced {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     @{ $_[0] }[ @_[1 .. $#_] ]
   )
 }
 
 sub splice {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     CORE::splice @{ $_[0] }, $_[1], $_[2], @_[3 .. $#_]
   )
 }
@@ -139,7 +149,7 @@ sub mesh {
     confess "Expected ARRAY or compatible obj, got $_"
       unless (reftype $_ || '') eq 'ARRAY'
   }
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::MoreUtils::mesh( @_ )
   )
 # In case upstream ever changes, here's a pure-perl impl:
@@ -147,7 +157,7 @@ sub mesh {
 #  for my $item (@_) {
 #    $max_idx = $#$item if $max_idx < $#$item
 #  }
-#  blessed($_[0])->new(
+#  blessed_or_pkg($_[0])->new(
 #    map {;
 #      my $idx = $_; map {; $_->[$idx] } @_
 #    } 0 .. $max_idx
@@ -167,7 +177,7 @@ sub part {
   my ($self, $code) = @_;
   my @parts;
   CORE::push @{ $parts[ $code->($_) ] }, $_ for @$self;
-  my $cls = blessed $self;
+  my $cls = blessed_or_pkg $self;
   $cls->new(
     map {; $cls->new(defined $_ ? @$_ : () ) } @parts
   )
@@ -178,55 +188,55 @@ sub reduce {
 }
 
 sub items_after {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::MoreUtils::after( $_[1], @{ $_[0] } )
   )
 }
 
 sub items_after_incl {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::MoreUtils::after_incl( $_[1], @{ $_[0] } )
   )
 }
 
 sub items_before {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::MoreUtils::before( $_[1], @{ $_[0] } )
   )
 }
 
 sub items_before_incl {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::MoreUtils::before_incl( $_[1], @{ $_[0] } )
   )
 }
 
 sub shuffle {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     List::Util::shuffle( @{ $_[0] } )
   )
 }
 
 sub uniq {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     List::MoreUtils::uniq( @{ $_[0] } )
   )
 }
 
 sub sort_by {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::UtilsBy::sort_by( $_[1], @{ $_[0] } )
   )
 }
 
 sub nsort_by {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::UtilsBy::nsort_by( $_[1], @{ $_[0] } )
   )
 }
 
 sub uniq_by {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     &List::UtilsBy::uniq_by( $_[1], @{ $_[0] } )
   )
 }

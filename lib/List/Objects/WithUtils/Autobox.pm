@@ -1,0 +1,58 @@
+package List::Objects::WithUtils::Autobox;
+use strictures 1;
+
+require List::Objects::WithUtils::Array;
+require List::Objects::WithUtils::Hash;
+
+require autobox;
+our @ISA = 'autobox';
+sub import {
+  my ($class) = @_;
+  $class->SUPER::import( ARRAY => 'List::Objects::WithUtils::Array' );
+  $class->SUPER::import( HASH  => 'List::Objects::WithUtils::Hash'  );
+}
+
+1;
+
+=pod
+
+=for Pod::Coverage import
+
+=head1 NAME
+
+List::Objects::WithUtils::Autobox - Native data types WithUtils
+
+=head1 SYNOPSIS
+
+  use List::Objects::WithUtils 'autobox';
+
+  my @upper = [ qw/foo bar baz/ ]->map(sub { uc $_[0] })->all;
+
+  my @sorted_keys = { foo => 'bar', baz => 'quux' }->keys->sort->all;
+
+  # See List::Objects::WithUtils::Role::Array
+  # and List::Objects::WithUtils::Role::Hash
+
+=head1 DESCRIPTION
+
+This module is a subclass of L<autobox> that provides
+L<List::Objects::WithUtils> methods for native ARRAY and HASH types.
+
+Like L<autobox>, the effect is lexical in scope:
+
+  use List::Objects::WithUtils::Autobox;
+  my $foo = [3,2,1]->sort;
+  
+  no List::Objects::WithUtils::Autobox;
+  [3,2,1]->sort;  # dies
+
+It's worth noting that methods that create new lists will return blessed
+objects, not native data types. This lets you continue passing result
+collections around to other pieces of Perl that wouldn't otherwise know how to
+call the autoboxed methods.
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
+
+=cut
