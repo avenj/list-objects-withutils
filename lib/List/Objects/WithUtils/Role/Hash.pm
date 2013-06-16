@@ -3,6 +3,8 @@ use strictures 1;
 
 use Module::Runtime 'require_module';
 use Scalar::Util 'blessed';
+sub blessed_or_pkg { blessed($_[0]) || __PACKAGE__ }
+
 
 use Role::Tiny;
 
@@ -16,7 +18,7 @@ sub array_type { 'List::Objects::WithUtils::Array' }
 sub clear { %{ $_[0] } = () }
 
 sub copy {
-  bless +{ %{ $_[0] } }, blessed($_[0])
+  bless +{ %{ $_[0] } }, blessed_or_pkg($_[0])
 }
 
 sub defined { CORE::defined $_[0]->{ $_[1] } }
@@ -34,7 +36,7 @@ sub get {
 }
 
 sub sliced {
-  blessed($_[0])->new(
+  blessed_or_pkg($_[0])->new(
     map {;
       exists $_[0]->{$_} ? 
         ( $_ => $_[0]->{$_} )
