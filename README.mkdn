@@ -70,7 +70,7 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
     my $hash  = hash( foo => 'bar', snacks => 'cake' );
     
 
-    # It's trivial to set multiple keys:
+    # You can set multiple keys in one call:
     $hash->set( foobar => 'baz', pie => 'cherry' );
     # ... which is useful for merging in another (plain) hash:
     my %foo = ( pie => 'pumpkin', snacks => 'cheese' );
@@ -144,6 +144,7 @@ providing methods for native ARRAY and HASH types.
 
 A bare import list (`use List::Objects::WithUtils;`) will import the
 `array`, `immarray`, and `hash` functions.
+
 Importing __all__ or __:all__ will import all of the above and additionally turn
 __autobox__ on, as will the shortcut `use Lowu;` (as of 1.003).
 

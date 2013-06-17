@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+1.003001  (16 Jun 2013)
+
+  Missing dep on 'parent'
+
 1.003000  (16 Jun 2013)
 
   Add 'use Lowu;' shortcut to import all available functionality.
