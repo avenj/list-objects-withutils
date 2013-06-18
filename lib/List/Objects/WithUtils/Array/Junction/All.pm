@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Array::Junction::All;
 use strictures 1;
-use parent 'List::Objects::WithUtils::Array::Junction::Base';
+use parent 'List::Objects::WithUtils::Array::Junction';
 
 sub num_eq {
   return regex_eq(@_) if ref $_[1] eq 'Regexp';

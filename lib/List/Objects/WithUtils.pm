@@ -298,14 +298,12 @@ Phillips (CPAN: MATTP), haarg, and others.
 
 Immutable array objects were inspired by L<Const::Fast>.
 
-Most of this code relies entirely on other widely-used modules, including:
+Much of this code simply wraps other widely-used modules, including:
 
 L<List::Util>
 
 L<List::MoreUtils>
 
 L<List::UtilsBy>
-
-L<Syntax::Keyword::Junction>
 
 =cut
