@@ -1,20 +1,17 @@
 package List::Objects::WithUtils::Role::WithJunctions;
 use strictures 1;
 
-use Syntax::Keyword::Junction
-  any  => { -as => 'junction_any' },
-  all  => { -as => 'junction_all' },
-  none => { -as => 'junction_none' },
-;
+use Syntax::Keyword::Junction::Any;
+use Syntax::Keyword::Junction::All;
 
 use Role::Tiny;
 
 sub any_items {
-  junction_any( @{ $_[0] } )
+  Syntax::Keyword::Junction::Any->new( @{ $_[0] } )
 }
 
 sub all_items {
-  junction_all( @{ $_[0] } )
+  Syntax::Keyword::Junction::All->new( @{ $_[0] } )
 }
 
 1;
