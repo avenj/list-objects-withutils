@@ -1,5 +1,5 @@
 package List::Objects::WithUtils::Array::Junction::Any;
-use strictures 1;
+use strict; use warnings;
 use parent 'List::Objects::WithUtils::Array::Junction';
 
 sub num_eq {
@@ -59,28 +59,28 @@ sub str_ne {
 sub str_ge {
   return str_le( @_[0, 1] ) if $_[2];
   for (@{ $_[0] })
-    { return 1 if $_ ge $_[2] }
+    { return 1 if $_ ge $_[1] }
   ()
 }
 
 sub str_gt {
   return str_lt( @_[0, 1] ) if $_[2];
   for (@{ $_[0] })
-    { return 1 if $_ gt $_[2] }
+    { return 1 if $_ gt $_[1] }
   ()
 }
 
 sub str_le {
   return str_ge( @_[0, 1] ) if $_[2];
   for (@{ $_[0] })
-    { return 1 if $_ le $_[2] }
+    { return 1 if $_ le $_[1] }
   ()
 }
 
 sub str_lt {
   return str_gt( @_[0, 1] ) if $_[2];
   for (@{ $_[0] })
-    { return 1 if $_ lt $_[2] }
+    { return 1 if $_ lt $_[1] }
   ()
 }
 
