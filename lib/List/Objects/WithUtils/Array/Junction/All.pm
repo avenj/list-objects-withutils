@@ -1,5 +1,5 @@
 package List::Objects::WithUtils::Array::Junction::All;
-use strictures 1;
+use strict; use warnings;
 use parent 'List::Objects::WithUtils::Array::Junction';
 
 sub num_eq {

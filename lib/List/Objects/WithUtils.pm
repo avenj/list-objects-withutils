@@ -183,11 +183,10 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 =head1 DESCRIPTION
 
 A set of roles and classes defining an object-oriented interface to Perl
-hashes and arrays. Originally derived from L<Data::Perl>.
+hashes and arrays with useful utility methods, junctions, and optional
+autoboxing.
 
-Some commonly used functions from L<List::Util>, L<List::MoreUtils>, and
-L<List::UtilsBy> are conveniently provided as methods. Junctions, 
-as provided by L<Syntax::Keyword::Junction>, are also available.
+Originally derived from L<Data::Perl>.
 
 B<array> is imported from L<List::Objects::WithUtils::Array> and creates a new
 ARRAY-type object. 
