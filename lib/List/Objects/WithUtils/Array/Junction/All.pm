@@ -46,13 +46,13 @@ sub num_lt {
 
 sub str_eq {
   for (@{ $_[0] })
-    { return unless $_ eq $_[0] }
+    { return unless $_ eq $_[1] }
   1
 }
 
 sub str_ne {
   for (@{ $_[0] })
-    { return unless $_ ne $_[0] }
+    { return unless $_ ne $_[1] }
   1
 }
 
