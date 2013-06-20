@@ -104,6 +104,9 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
     if ( $hash->keys->any_items eq 'snacks' ) {
       ...    
     }
+    if ( $hash->values->all_items > 10 ) {
+      ...
+    }
 
     # Autoboxed native data types:
     use List::Objects::WithUtils 'autobox';
@@ -120,11 +123,10 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
 # DESCRIPTION
 
 A set of roles and classes defining an object-oriented interface to Perl
-hashes and arrays. Originally derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl).
+hashes and arrays with useful utility methods, junctions, and optional
+autoboxing.
 
-Some commonly used functions from [List::Util](http://search.cpan.org/perldoc?List::Util), [List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils), and
-[List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy) are conveniently provided as methods. Junctions, 
-as provided by [Syntax::Keyword::Junction](http://search.cpan.org/perldoc?Syntax::Keyword::Junction), are also available.
+Originally derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl).
 
 __array__ is imported from [List::Objects::WithUtils::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array) and creates a new
 ARRAY-type object. 
@@ -237,12 +239,12 @@ Phillips (CPAN: MATTP), haarg, and others.
 
 Immutable array objects were inspired by [Const::Fast](http://search.cpan.org/perldoc?Const::Fast).
 
-Most of this code relies entirely on other widely-used modules, including:
+Junctions are adapted from [Perl6::Junction](http://search.cpan.org/perldoc?Perl6::Junction) by Carl Franks.
+
+Much of this code simply wraps other widely-used modules, including:
 
 [List::Util](http://search.cpan.org/perldoc?List::Util)
 
 [List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils)
 
 [List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy)
-
-[Syntax::Keyword::Junction](http://search.cpan.org/perldoc?Syntax::Keyword::Junction)

@@ -2,8 +2,7 @@ package List::Objects::WithUtils::Role::WithJunctions;
 use strictures 1;
 use Role::Tiny;
 
-require List::Objects::WithUtils::Array::Junction::Any;
-require List::Objects::WithUtils::Array::Junction::All;
+use List::Objects::WithUtils::Array::Junction;
 
 sub any_items {
   List::Objects::WithUtils::Array::Junction::Any->new( @{ $_[0] } )
