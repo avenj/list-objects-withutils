@@ -41,8 +41,9 @@ C<any_items> methods defined by
 L<List::Objects::WithUtils::Role::WithJunctions>.
 
 Only the junction types used by L<List::Objects::WithUtils> ('any' and 'all')
-are implemented; nothing is exported. See L<Syntax::Keyword::Junction> if you
-were looking for a stand-alone implementation with more features.
+are implemented; nothing is exported. The C<~~> smart-match operator is not
+supposed. See L<Syntax::Keyword::Junction> if you were looking for a
+stand-alone implementation with more features.
 
 See L<List::Objects::WithUtils::Role::WithJunctions> for usage details.
 

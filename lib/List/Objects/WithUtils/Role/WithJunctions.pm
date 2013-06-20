@@ -54,6 +54,8 @@ operators.
 Regular expressions can be matched by providing a C<qr//> regular expression
 object to the C<==> or C<!=> operators.
 
+There is no support for the C<~~> experimental smart-match operator.
+
 =head2 any_items
 
 Returns the overloaded B<any> object for the current array; a comparison is

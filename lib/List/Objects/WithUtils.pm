@@ -168,6 +168,9 @@ List::Objects::WithUtils - Object interfaces to lists with useful methods
   if ( $hash->keys->any_items eq 'snacks' ) {
     ...    
   }
+  if ( $hash->values->all_items > 10 ) {
+    ...
+  }
 
   # Autoboxed native data types:
   use List::Objects::WithUtils 'autobox';
@@ -296,6 +299,8 @@ The original Array and Hash roles were derived from L<Data::Perl> by Matthew
 Phillips (CPAN: MATTP), haarg, and others.
 
 Immutable array objects were inspired by L<Const::Fast>.
+
+Junctions are adapted from L<Perl6::Junction> by Carl Franks.
 
 Much of this code simply wraps other widely-used modules, including:
 
