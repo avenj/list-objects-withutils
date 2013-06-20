@@ -1,5 +1,14 @@
 # Changes for List-Objects-WithUtils
 
+
+1.004000  (19 Jun 2013)
+
+  Implement streamlined junctions.
+  This removes Sub::Exporter from the dependency chain;
+  additionally, we do not need the extra methods - and probably do not
+  want the smart-match support - provided by Perl6::Junction and
+  Syntax::Keyword::Junction.
+
 1.003001  (16 Jun 2013)
 
   Missing dep on 'parent'
