@@ -24,11 +24,9 @@ sub import {
   %params = map {; lc($_) => $params{$_} } keys %params;
   $class->SUPER::import( 
     ARRAY => 
-      Module::Runtime::use_package_optimistically($params{array} || ARRAY_TYPE) 
-  );
-  $class->SUPER::import( 
+      Module::Runtime::use_package_optimistically($params{array} || ARRAY_TYPE),
     HASH  => 
-      Module::Runtime::use_package_optimistically($params{hash}  || HASH_TYPE)  
+      Module::Runtime::use_package_optimistically($params{hash}  || HASH_TYPE)
   );
 }
 
