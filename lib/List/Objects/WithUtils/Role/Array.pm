@@ -1,13 +1,13 @@
 package List::Objects::WithUtils::Role::Array;
 use strictures 1;
 
-use Carp 'confess';
+use Carp ();
 
 use List::Util ();
 use List::MoreUtils ();
 use List::UtilsBy ();
 
-use Scalar::Util 'blessed', 'reftype';
+use Scalar::Util ();
 
 =pod
 
@@ -18,7 +18,7 @@ use Scalar::Util 'blessed', 'reftype';
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 my $_required;
 sub blessed_or_pkg {
-  my $pkg; ($pkg = blessed $_[0]) ? return $pkg
+  my $pkg; ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
     : $_required ? 
       return ARRAY_TYPE
     : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
@@ -154,8 +154,8 @@ sub firstidx {
 
 sub mesh {
   for (@_) {
-    confess "Expected ARRAY or compatible obj, got $_"
-      unless (reftype $_ || '') eq 'ARRAY'
+    Carp::confess("Expected ARRAY or compatible obj, got $_")
+      unless (Scalar::Util::reftype($_) || '') eq 'ARRAY'
   }
   blessed_or_pkg($_[0])->new(
     &List::MoreUtils::mesh( @_ )

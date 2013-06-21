@@ -1,8 +1,8 @@
 package List::Objects::WithUtils::Role::Hash;
 use strictures 1;
 
-use Module::Runtime 'require_module';
-use Scalar::Util 'blessed';
+use Module::Runtime ();
+use Scalar::Util ();
 
 =pod
 
@@ -13,7 +13,7 @@ use Scalar::Util 'blessed';
 sub HASH_TYPE () { 'List::Objects::WithUtils::Hash' }
 my $_required;
 sub blessed_or_pkg { 
-  my $pkg; ($pkg = blessed $_[0]) ? return $pkg
+  my $pkg; ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
     : $_required ? 
       return HASH_TYPE
     : eval( 'require ' . HASH_TYPE . ';1' ) and $_required++,
@@ -25,7 +25,7 @@ use Role::Tiny;
 sub array_type { 'List::Objects::WithUtils::Array' }
 
 sub new {
-  require_module( $_[0]->array_type );
+  Module::Runtime::require_module( $_[0]->array_type );
   bless +{ @_[1 .. $#_] }, $_[0]
 }
 
