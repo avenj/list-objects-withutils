@@ -13,6 +13,14 @@ use Scalar::Util ();
 
 =for Pod::Coverage ARRAY_TYPE blessed_or_pkg
 
+=begin comment
+
+This is some nonsense to support autoboxing; if we aren't blessed, we're
+autoboxed, in which case we appear to have no choice but to cheap out and
+return the basic array type:
+
+=end comment
+
 =cut
 
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
