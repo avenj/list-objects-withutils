@@ -1,5 +1,11 @@
 # Changes for List-Objects-WithUtils
 
+1.005000  (21 Jun 2013)
+
+  Turn junctions into List::Objects::WithUtils::Array subclasses,
+  allowing easier junction manipulation.
+
+  Minor ->sort() optimization.
 
 1.004000  (19 Jun 2013)
 
