@@ -56,7 +56,19 @@ object to the C<==> or C<!=> operators.
 There is no support for the C<~~> experimental smart-match operator.
 
 The junction objects returned are subclasses of
-L<List::Objects::WithUtils::Array>, allowing various insanity ;-)
+L<List::Objects::WithUtils::Array>, allowing manipulation of junctions (of
+varying degrees of sanity) -- a simple case might be generating a new junction
+out of an old junction:
+
+  my $list = array(3, 4, 5);
+  if ( (my $anyof = $list->any_items) > 2 ) {
+    my $incr = $anyof->map(sub { $_[0] + 1 })->all_items;
+    if ( $incr > 3 ) {
+      ...
+    }
+    # Drop junction magic again:
+    my $plain = array( $incr->all );
+  }
 
 =head2 any_items
 

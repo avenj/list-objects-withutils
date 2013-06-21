@@ -36,12 +36,14 @@ sub copy {
   bless [ @{ $_[0] } ], blessed_or_pkg($_[0])
 }
 
+sub all { @{ $_[0] } }
+
 sub count { CORE::scalar @{ $_[0] } }
+
 { no warnings 'once'; *scalar = *count; *export = *all; }
 
 sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }
 
-sub all { @{ $_[0] } }
 sub get { $_[0]->[ $_[1] ] }
 sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
