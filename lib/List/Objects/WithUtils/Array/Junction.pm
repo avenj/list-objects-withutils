@@ -3,6 +3,7 @@ package List::Objects::WithUtils::Array::Junction;
 { package 
     List::Objects::WithUtils::Array::Junction::Base;
   use strictures 1;
+  use parent 'List::Objects::WithUtils::Array';
   use overload
     '=='   => 'num_eq',
     '!='   => 'num_ne',
@@ -19,8 +20,6 @@ package List::Objects::WithUtils::Array::Junction;
     'bool' => 'bool',
     '""'   => sub { shift },
   ;
-
-  sub new { bless [ @_[1 .. $#_] ], $_[0] }
 }
 { package 
     List::Objects::WithUtils::Array::Junction::All;
@@ -276,7 +275,7 @@ warnings under perl-5.18.x).
 =head1 AUTHOR
 
 This code is originally derived from L<Perl6::Junction> by way of
-L<Syntax::Keyword::Junction>.
+L<Syntax::Keyword::Junction>; the original author is Carl Franks, based on the
+Perl6 design documentation.
 
-Slimmed down and adapted to L<List::Objects::WithUtils> by Jon Portnoy
-<avenj@cobaltirc.org>
+Adapted to L<List::Objects::WithUtils> by Jon Portnoy <avenj@cobaltirc.org>

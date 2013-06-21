@@ -3,6 +3,8 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+ok array()->all_items->isa('List::Objects::WithUtils::Array'), 'subclass ok';
+
 # ==
 ok array(3, 3.0)->all_items == 3,     '==';
 ok array(3, 3  )->all_items == 3,     '==';
