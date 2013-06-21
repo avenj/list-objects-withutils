@@ -108,13 +108,12 @@ sub grep {
 }
 
 sub sort {
-  my @sorted;
   if (defined $_[1]) {
-    @sorted = CORE::sort {; $_[1]->($a, $b) } @{ $_[0] }
-  } else {
-    @sorted = CORE::sort @{ $_[0] }
+    return blessed_or_pkg($_[0])->new(
+      CORE::sort {; $_[1]->($a, $b) } @{ $_[0] }
+    )
   }
-  blessed_or_pkg($_[0])->new(@sorted)
+  return blessed_or_pkg($_[0])->new( CORE::sort @{ $_[0] } )
 }
 
 sub reverse {
