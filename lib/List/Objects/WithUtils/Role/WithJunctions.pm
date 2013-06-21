@@ -55,6 +55,9 @@ object to the C<==> or C<!=> operators.
 
 There is no support for the C<~~> experimental smart-match operator.
 
+The junction objects returned are subclasses of
+L<List::Objects::WithUtils::Array>, allowing various insanity ;-)
+
 =head2 any_items
 
 Returns the overloaded B<any> object for the current array; a comparison is
