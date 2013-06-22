@@ -36,6 +36,14 @@ sub blessed_or_pkg {
 
 use Role::Tiny;
 
+=pod
+
+=for Pod::Coverage TO_JSON
+
+=cut
+
+sub TO_JSON { [ @{ $_[0] } ] }
+
 sub new {
   bless [ @_[1 .. $#_] ], $_[0] 
 }

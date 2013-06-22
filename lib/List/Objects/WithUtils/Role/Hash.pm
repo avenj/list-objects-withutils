@@ -24,6 +24,14 @@ use Role::Tiny;
 
 sub array_type { 'List::Objects::WithUtils::Array' }
 
+=pod
+
+=for Pod::Coverage TO_JSON
+
+=cut
+
+sub TO_JSON { +{ %{ $_[0] } } }
+
 sub new {
   Module::Runtime::require_module( $_[0]->array_type );
   bless +{ @_[1 .. $#_] }, $_[0]
