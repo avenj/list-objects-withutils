@@ -144,6 +144,8 @@ ok( $hr->is_empty, 'is_empty after clear' );
 my $obj = hash(foo => 'bar', baz => 'quux')->inflate;
 ok $obj->foo eq 'bar', 'accessor on inflated obj ok';
 ok $obj->baz eq 'quux', 'accessor on inflated obj ok';
+ok ref $obj->can('foo') eq 'CODE', 'can() on inflated obj ok';
+ok !$obj->can('cake'), 'negative can() ok';
 { local $@;
   eval {; $obj->set };
   ok $@, 'nonexistant key dies ok';

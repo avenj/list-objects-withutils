@@ -7,6 +7,22 @@ sub new {
 }
 
 our $AUTOLOAD;
+
+sub can {
+  my ($self, $method) = @_;
+  if (my $sub = $self->SUPER::can($method)) {
+    return $sub
+  }
+  return unless exists $self->{$method};
+  sub { 
+    if (my $sub = $_[0]->SUPER::can($method)) {
+      goto &$sub
+    }
+    $AUTOLOAD = $method; 
+    goto &AUTOLOAD 
+  }
+}
+
 sub AUTOLOAD {
   my $self = shift || return;
   ( my $method = $AUTOLOAD ) =~ s/.*:://;
@@ -24,6 +40,6 @@ sub DESTROY {}
 
 =pod
 
-=for Pod::Coverage new AUTOLOAD
+=for Pod::Coverage new can AUTOLOAD
 
 =cut
