@@ -1,5 +1,13 @@
 # Changes for List-Objects-WithUtils
 
+1.006000  (22 Jun 2013)
+
+  Add hash->inflate() to simplify creating little struct-like objects out of
+  hashes.
+
+  Add a ->TO_JSON method to array and hash objects.  (Serializing these
+  objects to JSON is a pretty common use case for me.)
+
 1.005000  (21 Jun 2013)
 
   Turn junctions into List::Objects::WithUtils::Array subclasses,
