@@ -154,5 +154,7 @@ ok !$obj->can('cake'), 'negative can() ok';
   eval {; $obj->foo('bar') };
   ok $@, 'read-only dies ok';
 }
+my %deflated = $obj->DEFLATE;
+ok $deflated{foo} eq 'bar', 'deflated HASH looks ok';
 
 done_testing;
