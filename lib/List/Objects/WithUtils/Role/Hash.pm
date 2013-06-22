@@ -159,6 +159,9 @@ List::Objects::WithUtils::Role::Hash - Hash manipulation methods
 A L<Role::Tiny> role defining methods for creating and manipulating HASH-type
 objects.
 
+In addition to the methods documented below, these objects provide a
+C<TO_JSON> method exporting a plain HASH-type reference.
+
 =head2 new
 
 Constructs a new HASH-type object.
@@ -216,6 +219,13 @@ hash.)
 Inflates a simple object providing read-only accessors for a hash.
 
 Returns an L</inflated_type> object.
+
+The default L</inflated_type> object provides a L</DEFLATE> method returning a
+plain hash; this makes it easy to turn inflated objects back into a C<hash()>
+for modification:
+
+  my $first = hash( foo => 'bar', baz => 'quux' )->inflate;
+  my $second = hash( $first->DEFLATE, frobulate => 1 )->inflate;
 
 =head2 is_empty
 

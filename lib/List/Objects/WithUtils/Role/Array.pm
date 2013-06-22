@@ -303,6 +303,9 @@ L<List::Objects::WithUtils::Array> consumes this role (along with
 L<List::Objects::WithUtils::Role::WithJunctions>) to provide B<array()> object
 methods.
 
+In addition to the methods documented below, these objects provide a
+C<TO_JSON> method exporting a plain ARRAY-type reference.
+
 =head2 Basic array methods
 
 =head3 new
