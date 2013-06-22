@@ -32,4 +32,6 @@ $foo = +{ foo => 'bar' };
 $foo->clear;
 ok $foo->is_empty, 'autoboxed is_empty after clear ok';
 
+ok +{ foo => 'bar' }->inflate->foo eq 'bar', 'inflate from autoboxed ok';
+
 done_testing;
