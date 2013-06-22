@@ -35,8 +35,14 @@ Lowu - Shortcut for importing list object goodness
 
 =head1 DESCRIPTION
 
-A short-to-type way to get all of List::Objects::WithUtils, including
+A short-to-type way to get all of L<List::Objects::WithUtils>, including
 autoboxing.
+
+If you like, you can specify params as if calling C<use
+List::Objects::WithUtils>:
+
+  # Get array() and immarray() only:
+  use Lowu 'array', 'immarray';
 
 =head1 AUTHOR
 
