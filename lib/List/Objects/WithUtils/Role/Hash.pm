@@ -229,7 +229,7 @@ values:
 
 Returns an L</inflated_type> (or L</inflated_rw_type>) object.
 
-The default objects provide a L</DEFLATE> method returning a
+The default objects provide a C<DEFLATE> method returning a
 plain hash; this makes it easy to turn inflated objects back into a C<hash()>
 for modification:
 
