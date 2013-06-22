@@ -3,8 +3,16 @@ use strictures 1;
 require Carp;
 
 sub new {
-  bless +{ @_[1 .. $#_] }, $_[0]
+  my $self = +{ @_[1 .. $#_] };
+  for my $reserved (qw/ new can DESTROY AUTOLOAD DEFLATE /) {
+    Carp::carp("Hash key '$reserved' clashes with method name")
+      if exists $self->{$reserved};
+  }
+  bless $self, $_[0]
 }
+
+sub DEFLATE { %{ $_[0] } }
+
 
 our $AUTOLOAD;
 
@@ -40,6 +48,6 @@ sub DESTROY {}
 
 =pod
 
-=for Pod::Coverage new can AUTOLOAD
+=for Pod::Coverage new can AUTOLOAD DEFLATE
 
 =cut
