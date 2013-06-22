@@ -157,4 +157,9 @@ ok !$obj->can('cake'), 'negative can() ok';
 my %deflated = $obj->DEFLATE;
 ok $deflated{foo} eq 'bar', 'deflated HASH looks ok';
 
+my $rwobj = hash(foo => 1, baz => 2)->inflate(rw => 1);
+ok $rwobj->foo == 1, 'rw inflated obj accessor read ok';
+ok $rwobj->foo('bar') eq 'bar', 'rw inflated obj accessor write ok';
+ok $rwobj->foo eq 'bar', 'rw inflated obj accessor rw ok';
+
 done_testing;
