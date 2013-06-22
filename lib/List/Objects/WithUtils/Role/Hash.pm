@@ -23,6 +23,7 @@ sub blessed_or_pkg {
 use Role::Tiny;
 
 sub array_type { 'List::Objects::WithUtils::Array' }
+sub inflated_type { 'List::Objects::WithUtils::Hash::Inflated' }
 
 sub new {
   Module::Runtime::require_module( $_[0]->array_type );
@@ -33,6 +34,11 @@ sub clear { %{ $_[0] } = () }
 
 sub copy {
   bless +{ %{ $_[0] } }, blessed_or_pkg($_[0])
+}
+
+sub inflate {
+  Module::Runtime::require_module( $_[0]->inflated_type );
+  blessed_or_pkg($_[0])->inflated_type->new( %{ $_[0] } )
 }
 
 sub defined { CORE::defined $_[0]->{ $_[1] } }
