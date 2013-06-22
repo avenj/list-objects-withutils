@@ -1,5 +1,9 @@
 # Changes for List-Objects-WithUtils
 
+1.006001  (22 Jun 2013)
+
+  Fix ->inflate() on autoboxed hashes; add test for same.
+
 1.006000  (22 Jun 2013)
 
   Add hash->inflate() to simplify creating little struct-like objects out of
