@@ -144,7 +144,9 @@ ok( $hr->is_empty, 'is_empty after clear' );
 my $obj = hash(foo => 'bar', baz => 'quux')->inflate;
 ok $obj->foo eq 'bar', 'accessor on inflated obj ok';
 ok $obj->baz eq 'quux', 'accessor on inflated obj ok';
-ok ref $obj->can('foo') eq 'CODE', 'can() on inflated obj ok';
+my $cref;
+ok ref ($cref = $obj->can('foo')) eq 'CODE', 'can() on inflated obj ok';
+ok $obj->$cref eq 'bar', 'can() coderef ok';
 ok !$obj->can('cake'), 'negative can() ok';
 { local $@;
   eval {; $obj->set };
@@ -156,5 +158,10 @@ ok !$obj->can('cake'), 'negative can() ok';
 }
 my %deflated = $obj->DEFLATE;
 ok $deflated{foo} eq 'bar', 'deflated HASH looks ok';
+
+my $rwobj = hash(foo => 1, baz => 2)->inflate(rw => 1);
+ok $rwobj->foo == 1, 'rw inflated obj accessor read ok';
+ok $rwobj->foo('bar') eq 'bar', 'rw inflated obj accessor write ok';
+ok $rwobj->foo eq 'bar', 'rw inflated obj accessor rw ok';
 
 done_testing;

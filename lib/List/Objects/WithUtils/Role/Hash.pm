@@ -22,8 +22,9 @@ sub blessed_or_pkg {
 
 use Role::Tiny;
 
-sub array_type { 'List::Objects::WithUtils::Array' }
-sub inflated_type { 'List::Objects::WithUtils::Hash::Inflated' }
+sub array_type       { 'List::Objects::WithUtils::Array' }
+sub inflated_type    { 'List::Objects::WithUtils::Hash::Inflated' }
+sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =pod
 
@@ -45,8 +46,10 @@ sub copy {
 }
 
 sub inflate {
-  Module::Runtime::require_module( $_[0]->inflated_type );
-  blessed_or_pkg($_[0])->inflated_type->new( %{ $_[0] } )
+  my ($self, %params) = @_;
+  my $type = $params{rw} ? 'inflated_rw_type' : 'inflated_type';
+  Module::Runtime::require_module( $self->$type );
+  blessed_or_pkg($self)->$type->new( %$self )
 }
 
 sub defined { CORE::defined $_[0]->{ $_[1] } }
@@ -216,11 +219,17 @@ hash.)
   my $obj = hash(foo => 'bar', baz => 'quux')->inflate;
   my $baz = $obj->baz; 
 
-Inflates a simple object providing read-only accessors for a hash.
+Inflates a simple object providing accessors for a hash.
 
-Returns an L</inflated_type> object.
+By default, accessors are read-only; specifying C<rw => 1> allows setting new
+values:
 
-The default L</inflated_type> object provides a L</DEFLATE> method returning a
+  my $obj = hash(foo => 'bar', baz => 'quux')->inflate(rw => 1);
+  $obj->foo('frobulate');
+
+Returns an L</inflated_type> (or L</inflated_rw_type>) object.
+
+The default objects provide a L</DEFLATE> method returning a
 plain hash; this makes it easy to turn inflated objects back into a C<hash()>
 for modification:
 
@@ -289,6 +298,14 @@ will be returned:
 The class name that objects are blessed into when calling L</inflate>.
 
 Defaults to L<List::Objects::WithUtils::Hash::Inflated>.
+
+=head2 inflated_rw_type
+
+The class name that objects are blessed into when calling L</inflate> with
+C<rw => 1>.
+
+Defaults to L<List::Objects::WithUtils::Hash::Inflated::RW>, a subclass of
+L<List::Objects::WithUtils::Hash::Inflated>.
 
 =head1 SEE ALSO
 
