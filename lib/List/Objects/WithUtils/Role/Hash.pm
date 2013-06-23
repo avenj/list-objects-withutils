@@ -48,8 +48,9 @@ sub copy {
 sub inflate {
   my ($self, %params) = @_;
   my $type = $params{rw} ? 'inflated_rw_type' : 'inflated_type';
-  Module::Runtime::require_module( blessed_or_pkg($self)->$type );
-  blessed_or_pkg($self)->$type->new( %$self )
+  my $pkg = blessed_or_pkg($self);
+  Module::Runtime::require_module( $pkg->$type );
+  $pkg->$type->new( %$self )
 }
 
 sub defined { CORE::defined $_[0]->{ $_[1] } }
@@ -115,10 +116,7 @@ sub kv {
   )
 }
 
-sub export {
-  my ($self) = @_;
-  %$self
-}
+sub export { %{ $_[0] } }
 
 
 1;

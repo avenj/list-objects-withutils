@@ -3,16 +3,10 @@ use strictures 1;
 require Carp;
 
 sub new {
-  my $self = +{ @_[1 .. $#_] };
-  for my $reserved (qw/ new can DESTROY AUTOLOAD DEFLATE /) {
-    Carp::carp("Hash key '$reserved' clashes with method name")
-      if exists $self->{$reserved};
-  }
-  bless $self, $_[0]
+  bless +{ @_[1 .. $#_] }, $_[0]
 }
 
 sub DEFLATE { %{ $_[0] } }
-
 
 our $AUTOLOAD;
 
@@ -40,6 +34,7 @@ sub AUTOLOAD {
     unless exists $self->{$method};
   Carp::confess "Accessor '$method' is read-only"
     if @_;
+
   $self->{$method}
 }
 
