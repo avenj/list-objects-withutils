@@ -383,6 +383,33 @@ my ($evens, $odds) = array( 1 .. 6 )->part(sub { $_[0] & 1 })->all;
 is_deeply( [ $evens->all ], [ 2,4,6 ], 'part() with args picked evens ok' );
 is_deeply( [ $odds->all ], [ 1,3,5 ], 'part() with args picked odds ok' );
 
+## bisect()
+my $pair = array( 1 .. 10 )->bisect(sub { $_[0] >= 5 });
+isa_ok( $pair, 'List::Objects::WithUtils::Array', 
+  'bisect() array obj'
+);
+
+ok( $pair->count == 2, 'bisect() returned two items' );
+isa_ok( $pair->get(0), 'List::Objects::WithUtils::Array',
+  'bisect() item 0 obj'
+);
+isa_ok( $pair->get(1), 'List::Objects::WithUtils::Array',
+  'bisect() item 1 obj'
+);
+
+is_deeply(
+  [ $pair->get(0)->all ],
+  [ 5 .. 10 ],
+  'bisect() item 0 ok'
+);
+is_deeply(
+  [ $pair->get(1)->all ],
+  [ 1 .. 4 ],
+  'bisect() item 1 ok'
+);
+
+
+## subclasses
 {  package My::List;
    use strict; use warnings FATAL => 'all';
 
