@@ -408,6 +408,8 @@ is_deeply(
   'bisect() item 1 ok'
 );
 
+ok( array->bisect(sub {})->count == 2, 'bisect() always returns two arrays' );
+
 
 ## subclasses
 {  package My::List;
