@@ -486,7 +486,7 @@ The subroutine is passed the value we are operating on:
   $parts->get(0)->all;  # ( 5 .. 10 )
   $parts->get(1)->all;  # ( 1 .. 4 )
 
-Like L</part>, but only creates an array-type object containing two
+Like L</part>, but creates an array-type object containing two
 partitions; the first contains all items for which the subroutine evaluates to
 true, the second contains the remaining items.
 
