@@ -207,6 +207,16 @@ sub part {
   )
 }
 
+sub bisect {
+  my ($self, $code) = @_;
+  my @parts = ( [], [] );
+  CORE::push @{ $parts[ $code->($_) ? 0 : 1 ] }, $_ for @$self;
+  my $cls = blessed_or_pkg($self);
+  $cls->new(
+    map {; $cls->new(@$_) } @parts
+  )
+}
+
 sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
@@ -469,6 +479,16 @@ The subroutine is passed the value we are operating on:
     ->part(sub { $_[0] =~ /^[0-9]+$/ ? 0 : 1 })
     ->get(1)
     ->all;   # 'foo', 'bar', 'baz'
+
+=head3 bisect
+
+  my $parts = array( 1 .. 10 )->bisect(sub { $_[0] >= 5 });
+  $parts->get(0)->all;  # ( 5 .. 10 )
+  $parts->get(1)->all;  # ( 1 .. 4 )
+
+Like L</part>, but only creates an array-type object containing two
+partitions; the first contains all items for which the subroutine evaluates to
+true, the second contains the remaining items.
 
 =head3 reverse
 
