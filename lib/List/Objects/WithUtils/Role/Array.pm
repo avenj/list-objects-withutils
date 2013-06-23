@@ -482,9 +482,11 @@ The subroutine is passed the value we are operating on:
 
 =head3 bisect
 
-  my $parts = array( 1 .. 10 )->bisect(sub { $_[0] >= 5 });
-  $parts->get(0)->all;  # ( 5 .. 10 )
-  $parts->get(1)->all;  # ( 1 .. 4 )
+  my ($true, $false) = array( 1 .. 10 )
+    ->bisect(sub { $_[0] >= 5 })
+    ->all;
+  my @bigger  = $true->all;   # ( 5 .. 10 )
+  my @smaller = $false->all;  # ( 1 .. 4 )
 
 Like L</part>, but creates an array-type object containing two
 partitions; the first contains all items for which the subroutine evaluates to
