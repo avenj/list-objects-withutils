@@ -1,13 +1,15 @@
 #!/usr/bin/env perl
-use strict; use warnings;
+use strict; use warnings FATAL => 'all';
+
 use Lowu;
 
-my $selected = array;
+my $selected = [];
 
 while ($selected->count < 6) {
 
   if ($selected->count == 5) {
     print " > Selected balls: ", $selected->join('-'), "\n";
+
     my $eball;
     do { 
       print "Select an extra ball between 1 and 35: ";
@@ -25,10 +27,12 @@ while ($selected->count < 6) {
     my $current = $selected->count;
     print " > $current balls selected: ",
           $selected->join('-'), "\n";
+
     print "Select a ball between 1 and 59: ";
     $ball = <STDIN>;
     chomp $ball;
-  } until $ball and $ball > 0 and $ball < 59;
+  } until $ball and $ball > 0 and $ball < 59
+    and $selected->all_items != $ball;
 
   $selected->push($ball);
 }
@@ -36,27 +40,20 @@ while ($selected->count < 6) {
 print " > You selected ", $selected->sliced(0 .. 4)->join('-'), "\n",
       " > Extra ball ".$selected->get(5), "\n";
 
-
-my $balls = array( 1 .. 59 )
-  ->shuffle
-  ->sliced( 1 .. 5 );
-
-my $extra = array( 1 .. 35 )
-  ->shuffle
-  ->get(0);
+my $balls = [ 1 .. 59 ]->shuffle->sliced( 1 .. 5 );
+my $extra = [ 1 .. 35 ]->shuffle->get(0);
 
 print "! Drew: ", $balls->join('-'), ' ', $extra, "\n";
 
-my $hits = $selected->sliced(0 .. 4)->grep(sub {
-  my $num = $_[0];
-  $balls->has_any(sub { $_ == $num })
-});
+my $hits = $selected->sliced(0 .. 4)->grep(
+  sub { $balls->any_items == $_[0] }
+);
 
 my $did_hit;
 
 if ($hits->has_any) {
-  print "!! You hit on ", $hits->count, " balls:\n";
-  print "!!  ", $hits->join(', '), "\n";
+  print "!! You hit on ", $hits->count, 
+        " balls: ", $hits->join(', '), "\n";
   ++$did_hit
 }
 
