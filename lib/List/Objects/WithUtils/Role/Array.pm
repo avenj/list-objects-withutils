@@ -511,9 +511,9 @@ from the specified indexes.
 
 =head3 splice
 
-  ## 2-arg splice (remove elements):
+  # 2-arg splice (remove elements):
   my $spliced = $array->splice(0, 2)
-  ## 3-arg splice (replace):
+  # 3-arg splice (replace):
   $array->splice(0, 1, 'abc');
 
 Performs a C<splice()> on the current list and returns a new array object
@@ -536,14 +536,17 @@ array.
 
 Returns a new array object consisting of the list of elements for which the
 given subroutine evaluated to true. C<$_[0]> is the element being operated
-upon.
+on; you can also use the topicalizer C<$_>.
 
 =head3 map
 
+  my $lowercased = $array->map(sub { lc });
+  # Same as:
   my $lowercased = $array->map(sub { lc $_[0] });
 
 Evaluates a given subroutine for each element of the array, and returns a new
-array object. C<$_[0]> is the element being operated upon.
+array object. C<$_[0]> is the element being operated on; you can also use
+the topicalizer C<$_>.
 
 =head3 reduce
 

@@ -119,12 +119,22 @@ is_deeply( [ $arr->all ], [qw/a b c/], 'array reset' );
 my $upper = $arr->map(sub { uc $_[0] });
 is_deeply( [ $upper->all ], [qw/A B C/], 'map() ok' );
 is_deeply( [ $arr->all ], [qw/a b c/], 'orig after map() ok' );
+is_deeply(
+  [ array(qw/ a b c /)->map(sub { uc $_ })->all ],
+  [ qw/ A B C / ],
+  'map() on topicalizer ok'
+);
 
 ## grep()
 $arr->push('b');
 my $found = $arr->grep(sub { $_[0] eq 'b' });
 is_deeply( [ $found->all ], [qw/b b/], 'grep() ok' );
 is_deeply( [ $arr->all ], [qw/a b c b/], 'orig after grep() ok' );
+is_deeply(
+  [ array(qw/ a b c /)->grep(sub { /^b/ })->all ],
+  [ 'b' ],
+  'grep() on topicalizer ok'
+);
 
 undef $upper;
 undef $found;
