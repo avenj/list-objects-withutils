@@ -275,6 +275,15 @@ sub uniq_by {
   )
 }
 
+sub flatten_all {
+  CORE::map {;  _flat($_)  } @{ $_[0] }
+}
+
+sub _flat {
+  ref $_[0] && Scalar::Util::reftype $_[0] eq 'ARRAY' ?
+    map {; _flat($_) } @{ $_[0] }
+    : $_[0]
+}
 
 
 1;
@@ -349,6 +358,11 @@ Returns boolean true if the array is empty.
 =head3 all
 
 Returns all elements in the array as a plain list.
+
+=head3 flatten_all
+
+Returns a plain list consisting of all sub-arrays recursively
+flattened.
 
 =head3 export
 
