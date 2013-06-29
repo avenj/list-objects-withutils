@@ -50,7 +50,9 @@ sub import {
     if ($@) { carp $@; push @failed, $mod }
   }
 
-  confess "Failed to import ".join ', ', @failed if @failed;
+  if (@failed) {
+    confess 'Failed to import ' . join ', ', @failed
+  }
 
   1
 }
@@ -67,7 +69,7 @@ unless caller;
 
 =head1 NAME
 
-List::Objects::WithUtils - Object interfaces to lists with useful methods
+List::Objects::WithUtils - List objects with useful methods
 
 =head1 SYNOPSIS
 
