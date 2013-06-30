@@ -77,18 +77,15 @@ is_deeply( +{ $hr->export }, +{ foo => 'bar', baz => undef },
 );
 
 ## set()
-isa_ok( $hr->set(snacks => 'tasty'), $hr->array_type,
-  'set() returned array-type object'
-);
+ok $hr->set(snacks => 'tasty') == $hr, 'set() returned self';
 cmp_ok( $hr->get('snacks'), 'eq', 'tasty', 'get() after set() ok' );
 
 
 $hr = hash();
 
 ## set(), multi-key
-my $arrset;
 ok( 
-  $arrset = $hr->set(
+  $hr->set(
     a => 1,
     b => 2,
     c => 3,
@@ -97,7 +94,7 @@ ok(
 );
 for my $expected (qw/a b c/) {
   ok( 
-    $arrset->grep(sub { $_[0] eq $expected }),
+    $hr->keys->grep(sub { $_[0] eq $expected }),
     "multikey set array has $expected"
   );
 }
@@ -107,7 +104,7 @@ my $arrget;
 ok( $arrget = $hr->get('b', 'c'), 'get multi-key ok' );
 for my $expected (qw/B C/) {
   ok(
-    $arrset->grep(sub { $_[0] eq $expected }),
+    $arrget->grep(sub { $_[0] eq $expected }),
     "multikey get array has $expected"
   );
 }

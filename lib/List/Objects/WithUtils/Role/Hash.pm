@@ -61,7 +61,7 @@ sub is_empty { keys %{ $_[0] } ? 0 : 1 }
 sub get {
   if (@_ > 2) {
     return blessed_or_pkg($_[0])->array_type->new(
-      @{ $_[0] }{@_}
+      @{ $_[0] }{ @_[1 .. $#_] }
     )
   }
   $_[0]->{ $_[1] }
@@ -84,9 +84,7 @@ sub set {
 
   @{$self}{ @_[@keysidx] } = @_[@valsidx];
 
-  blessed_or_pkg($self)->array_type->new(
-    @{$self}{ @_[@keysidx] }
-  )
+  $self
 }
 
 sub delete {
@@ -268,7 +266,8 @@ each of which is a two-element ARRAY.
 
 Sets keys in the hash.
 
-Returns an L</array_type> object containing the new values.
+As of version 1.007, returns the current hash object.
+The return value of prior versions is unreliable.
 
 =head2 sliced
 
