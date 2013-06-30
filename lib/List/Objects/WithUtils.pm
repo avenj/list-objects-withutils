@@ -90,8 +90,8 @@ List::Objects::WithUtils - List objects with useful methods
   # Some simple chained array operations, eventually returning a plain list
   # List returning methods return new list objects:
   array(qw/ aa Ab bb Bc bc /)
-    ->grep(sub { $_[0] =~ /^b/i })
-    ->map(sub { uc $_[0] })
+    ->grep(sub { /^b/i })
+    ->map(sub { uc })
     ->uniq
     ->all;   # ( 'BB', 'BC' )
 
@@ -158,8 +158,8 @@ List::Objects::WithUtils - List objects with useful methods
 
   # Chained method examples; methods that return multiple values
   # typically return array-type objects:
-  my @match_keys = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
-  my @match_vals = $hash->values->grep(sub { $_[0] =~ /bar/ })->all;
+  my @match_keys = $hash->keys->grep(sub { m/foo/ })->all;
+  my @match_vals = $hash->values->grep(sub { m/bar/ })->all;
   
   my @sorted_pairs = hash( foo => 2, bar => 3, baz => 1)
     ->kv
