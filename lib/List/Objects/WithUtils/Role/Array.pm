@@ -33,6 +33,12 @@ sub blessed_or_pkg {
       return ARRAY_TYPE
 }
 
+sub __flatten {
+  ref $_[0] && Scalar::Util::reftype $_[0] eq 'ARRAY' ?
+    map {; __flatten($_) } @{ $_[0] }
+    : $_[0]
+}
+
 
 use Role::Tiny;
 
@@ -276,13 +282,7 @@ sub uniq_by {
 }
 
 sub flatten_all {
-  CORE::map {;  _flat($_)  } @{ $_[0] }
-}
-
-sub _flat {
-  ref $_[0] && Scalar::Util::reftype $_[0] eq 'ARRAY' ?
-    map {; _flat($_) } @{ $_[0] }
-    : $_[0]
+  CORE::map {;  __flatten($_)  } @{ $_[0] }
 }
 
 
