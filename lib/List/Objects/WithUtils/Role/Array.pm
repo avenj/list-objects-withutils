@@ -294,7 +294,7 @@ List::Objects::WithUtils::Role::Array - Array manipulation methods
 
   $array->push(qw/ d e f /);
 
-  my @upper = $array->map(sub { uc $_[0] })->all;
+  my @upper = $array->map(sub { uc })->all;
 
   if ( $array->has_any(sub { $_ eq 'a' }) ) {
     ...
