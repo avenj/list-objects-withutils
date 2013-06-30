@@ -1,5 +1,14 @@
 # Changes for List-Objects-WithUtils
 
+1.007000  (30 Jun 2013)
+
+  Backwards incompatible change; the return value of hash->set() is now the 
+  object, in order to be consistent with array->set()
+
+  Fix hash->get(@keys) return value
+
+  Reorganize Role::Array POD
+
 1.006001  (22 Jun 2013)
 
   Fix ->inflate() on autoboxed hashes; add test for same.
