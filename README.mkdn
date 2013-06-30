@@ -1,6 +1,6 @@
 # NAME
 
-List::Objects::WithUtils - Object interfaces to lists with useful methods
+List::Objects::WithUtils - List objects with useful methods
 
 # SYNOPSIS
 
