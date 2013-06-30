@@ -339,46 +339,33 @@ Constructs a new ARRAY-type object.
 
 Creates a shallow clone of the current object.
 
-=head3 clear
-
-Clears the array entirely.
-
 =head3 count
 
 Returns the number of elements in the array.
-
-=head3 scalar
-
-See L</count>.
 
 =head3 is_empty
 
 Returns boolean true if the array is empty.
 
-=head3 all
+=head3 scalar
 
-Returns all elements in the array as a plain list.
+See L</count>.
 
-=head3 flatten_all
+=head2 Methods that manipulate the list
 
-Returns a plain list consisting of all sub-arrays recursively
-flattened.
+=head3 clear
 
-=head3 export
+Clears the array entirely.
 
-Same as L</all>; included for consistency with hash-type objects.
+=head3 delete
 
-=head3 get
+Splices a given index out of the array.
 
-Returns the array element corresponding to a specified index.
+=head3 insert
 
-=head3 set
+  $array->insert( $position, $value );
 
-  $array->set( $index, $value );
-
-Takes an array element and a new value to set.
-
-Returns the array object.
+Inserts a value at a given position.
 
 =head3 pop
 
@@ -387,6 +374,14 @@ Pops the last element off the array and returns it.
 =head3 push
 
 Pushes elements to the end of the array.
+
+Returns the array object.
+
+=head3 set
+
+  $array->set( $index, $value );
+
+Takes an array element and a new value to set.
 
 Returns the array object.
 
@@ -400,23 +395,48 @@ Adds elements to the beginning of the array.
 
 Returns the array object.
 
-=head3 delete
+=head3 splice
 
-Splices a given index out of the array.
+  # 2-arg splice (remove elements):
+  my $spliced = $array->splice(0, 2)
+  # 3-arg splice (replace):
+  $array->splice(0, 1, 'abc');
 
-=head3 insert
+Performs a C<splice()> on the current list and returns a new array object
+consisting of the items returned from the splice.
 
-  $array->insert( $position, $value );
+The existing array is modified in-place.
 
-Inserts a value at a given position.
+=head2 Methods that retrieve items
 
-=head3 join
+=head3 all
 
-  my $str = $array->join(' ');
+Returns all elements in the array as a plain list.
 
-Joins the array's elements and returns the joined string.
+=head3 bisect
 
-Defaults to ',' if no delimiter is specified.
+  my ($true, $false) = array( 1 .. 10 )
+    ->bisect(sub { $_[0] >= 5 })
+    ->all;
+  my @bigger  = $true->all;   # ( 5 .. 10 )
+  my @smaller = $false->all;  # ( 1 .. 4 )
+
+Like L</part>, but creates an array-type object containing two
+partitions; the first contains all items for which the subroutine evaluates to
+true, the second contains the remaining items.
+
+=head3 export
+
+Same as L</all>; included for consistency with hash-type objects.
+
+=head3 flatten_all
+
+Returns a plain list consisting of all sub-arrays recursively
+flattened.
+
+=head3 get
+
+Returns the array element corresponding to a specified index.
 
 =head3 head
 
@@ -435,6 +455,14 @@ Similar to L</head>, but returns either the last element and a new array-type
 object containing the remaining list (in list context), or just the last
 element of the list (in scalar context).
 
+=head3 join
+
+  my $str = $array->join(' ');
+
+Joins the array's elements and returns the joined string.
+
+Defaults to ',' if no delimiter is specified.
+
 =head3 mesh
 
   my $meshed = array(qw/ a b c /)->mesh(
@@ -452,21 +480,6 @@ You can mix and match references and objects freely:
     array( 1 .. 3 ),
     [ qw/ foo bar baz / ],
   );
-
-=head3 natatime
-
-  my $iter = array( 1 .. 7 )->natatime(3);
-  $iter->();  ##  ( 1, 2, 3 )
-  $iter->();  ##  ( 4, 5, 6 )
-  $iter->();  ##  ( 7 )
-
-  array( 1 .. 7 )->natatime(3, sub { my @vals = @_; ... });
-
-Returns an iterator that, when called, produces a list containing the next
-'n' items.
-
-If given a coderef as a second argument, it will be called against each
-bundled group.
 
 =head3 part
 
@@ -494,18 +507,6 @@ The subroutine is passed the value we are operating on:
     ->get(1)
     ->all;   # 'foo', 'bar', 'baz'
 
-=head3 bisect
-
-  my ($true, $false) = array( 1 .. 10 )
-    ->bisect(sub { $_[0] >= 5 })
-    ->all;
-  my @bigger  = $true->all;   # ( 5 .. 10 )
-  my @smaller = $false->all;  # ( 1 .. 4 )
-
-Like L</part>, but creates an array-type object containing two
-partitions; the first contains all items for which the subroutine evaluates to
-true, the second contains the remaining items.
-
 =head3 reverse
 
 Returns a new array object consisting of the reversed list of elements.
@@ -523,26 +524,7 @@ Returns a new array object containing the shuffled list.
 Returns a new array object consisting of the elements retrived 
 from the specified indexes.
 
-=head3 splice
-
-  # 2-arg splice (remove elements):
-  my $spliced = $array->splice(0, 2)
-  # 3-arg splice (replace):
-  $array->splice(0, 1, 'abc');
-
-Performs a C<splice()> on the current list and returns a new array object
-consisting of the items returned from the splice.
-
-The existing array is modified in-place.
-
-=head3 uniq
-
-  my $unique = $array->uniq;
-
-Returns a new array object containing only unique elements from the original
-array.
-
-=head2 Methods that take subs with params
+=head2 Methods that find items
 
 =head3 grep
 
@@ -551,33 +533,6 @@ array.
 Returns a new array object consisting of the list of elements for which the
 given subroutine evaluated to true. C<$_[0]> is the element being operated
 on; you can also use the topicalizer C<$_>.
-
-=head3 map
-
-  my $lowercased = $array->map(sub { lc });
-  # Same as:
-  my $lowercased = $array->map(sub { lc $_[0] });
-
-Evaluates a given subroutine for each element of the array, and returns a new
-array object. C<$_[0]> is the element being operated on; you can also use
-the topicalizer C<$_>.
-
-=head3 reduce
-
-  my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
-
-Reduces the array by calling the given subroutine for each element of the
-list. See L<List::Util/"reduce">.
-
-=head3 sort
-
-  my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
-
-Returns a new array object consisting of the list sorted by the given
-subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
-normal sort() call.
-
-=head2 Methods that take subs with topicalizer
 
 =head3 first
 
@@ -625,6 +580,50 @@ The opposite of L</items_after>.
 
 The opposite of L</items_after_incl>.
 
+=head2 Methods that iterate the list
+
+=head3 map
+
+  my $lowercased = $array->map(sub { lc });
+  # Same as:
+  my $lowercased = $array->map(sub { lc $_[0] });
+
+Evaluates a given subroutine for each element of the array, and returns a new
+array object. C<$_[0]> is the element being operated on; you can also use
+the topicalizer C<$_>.
+
+=head3 natatime
+
+  my $iter = array( 1 .. 7 )->natatime(3);
+  $iter->();  ##  ( 1, 2, 3 )
+  $iter->();  ##  ( 4, 5, 6 )
+  $iter->();  ##  ( 7 )
+
+  array( 1 .. 7 )->natatime(3, sub { my @vals = @_; ... });
+
+Returns an iterator that, when called, produces a list containing the next
+'n' items.
+
+If given a coderef as a second argument, it will be called against each
+bundled group.
+
+=head3 reduce
+
+  my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
+
+Reduces the array by calling the given subroutine for each element of the
+list. See L<List::Util/"reduce">.
+
+=head2 Methods that sort the list
+
+=head3 sort
+
+  my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
+
+Returns a new array object consisting of the list sorted by the given
+subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
+normal sort() call.
+
 =head3 sort_by
 
   my $array = array(
@@ -641,6 +640,13 @@ See L<List::UtilsBy>.
 =head3 nsort_by
 
 Like L</sort_by>, but using numerical comparison.
+
+=head3 uniq
+
+  my $unique = $array->uniq;
+
+Returns a new array object containing only unique elements from the original
+array.
 
 =head3 uniq_by
 

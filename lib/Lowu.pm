@@ -25,7 +25,7 @@ unless caller;
 
 =head1 NAME
 
-Lowu - Shortcut for importing list object goodness
+Lowu - Shortcut for importing all of List::Objects::WithUtils
 
 =head1 SYNOPSIS
 
