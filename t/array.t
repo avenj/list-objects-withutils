@@ -421,18 +421,45 @@ is_deeply(
 ok( array->bisect(sub {})->count == 2, 'bisect() always returns two arrays' );
 
 
+my $deep = array( 1, 2, [ 3, 4, [ 5, 6 ] ] );
 ## flatten_all()
 is_deeply(
-  [ array( 1, 2, [ 3, 4, [ 5, 6 ] ] )->flatten_all ],
+  [ $deep->flatten_all ],
   [ 1, 2, 3, 4, 5, 6 ],
-  'flatten(level => 0) ok'
+  'flatten_all() ok'
 );
 
 is_deeply(
   [ array( 1, 2, array(3, 4, array(5, 6) ) )->flatten_all ],
   [ 1, 2, 3, 4, 5, 6 ],
-  'flatten against objs ok'
+  'flatten_all() against objs ok'
 );
+
+## flatten()
+is_deeply(
+  [ $deep->flatten ],
+  [ $deep->all ],
+  'flatten() with no args same as all() ok'
+);
+
+is_deeply(
+  [ $deep->flatten(0) ],
+  [ $deep->all ],
+  'flatten() to depth 0 ok'
+);
+
+is_deeply(
+  [ $deep->flatten(1) ],
+  [ 1, 2, 3, 4, [ 5, 6 ] ],
+  'flatten to depth 1 ok'
+);
+
+is_deeply(
+  [ $deep->flatten(2) ],
+  [ 1, 2, 3, 4, 5, 6 ],
+  'flatten to depth 2 ok'
+);
+
 
 ## subclasses
 {  package My::List;
