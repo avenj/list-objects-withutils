@@ -33,10 +33,19 @@ sub blessed_or_pkg {
       return ARRAY_TYPE
 }
 
-sub __flatten {
+sub __flatten_all {
   ref $_[0] && Scalar::Util::reftype $_[0] eq 'ARRAY' ?
-    map {; __flatten($_) } @{ $_[0] }
+    map {; __flatten_all($_) } @{ $_[0] }
     : $_[0]
+}
+
+sub __flatten {
+  my ($depth, @arr) = @_;
+  CORE::map {
+    ref && Scalar::Util::reftype $_ eq 'ARRAY' ?
+      $depth > 0 ? __flatten( --$depth, @$_ ) : $_
+      : $_
+  } @arr
 }
 
 
@@ -282,7 +291,14 @@ sub uniq_by {
 }
 
 sub flatten_all {
-  CORE::map {;  __flatten($_)  } @{ $_[0] }
+  CORE::map {;  __flatten_all($_)  } @{ $_[0] }
+}
+
+sub flatten {
+  __flatten( 
+    ( defined $_[1] ? $_[1] : 0 ),
+    @{ $_[0] } 
+  )
 }
 
 
