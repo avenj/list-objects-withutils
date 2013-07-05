@@ -421,17 +421,17 @@ is_deeply(
 ok( array->bisect(sub {})->count == 2, 'bisect() always returns two arrays' );
 
 
-my $deep = array( 1, 2, [ 3, 4, [ 5, 6 ] ] );
+my $deep = array( 1, 2, [ 3, 4, [ 5, 6 ], 7 ] );
 ## flatten_all()
 is_deeply(
   [ $deep->flatten_all ],
-  [ 1, 2, 3, 4, 5, 6 ],
+  [ 1, 2, 3, 4, 5, 6, 7 ],
   'flatten_all() ok'
 );
 
 is_deeply(
-  [ array( 1, 2, array(3, 4, array(5, 6) ) )->flatten_all ],
-  [ 1, 2, 3, 4, 5, 6 ],
+  [ array( 1, 2, array(3, 4, array(5, 6) ), 7 )->flatten_all ],
+  [ 1, 2, 3, 4, 5, 6, 7 ],
   'flatten_all() against objs ok'
 );
 
@@ -450,13 +450,13 @@ is_deeply(
 
 is_deeply(
   [ $deep->flatten(1) ],
-  [ 1, 2, 3, 4, [ 5, 6 ] ],
+  [ 1, 2, 3, 4, [ 5, 6 ], 7 ],
   'flatten to depth 1 ok'
 );
 
 is_deeply(
   [ $deep->flatten(2) ],
-  [ 1, 2, 3, 4, 5, 6 ],
+  [ 1, 2, 3, 4, 5, 6, 7 ],
   'flatten to depth 2 ok'
 );
 
