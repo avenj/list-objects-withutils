@@ -460,6 +460,18 @@ is_deeply(
   'flatten to depth 2 ok'
 );
 
+my $cmplx = array(
+  1, 2,
+  [ 3, 4, [ 5, 6 ] ],
+  [ 7, 8, [ 9, 10 ] ],
+);
+
+is_deeply(
+  [ $cmplx->flatten(1) ],
+  [ 1, 2, 3, 4, [ 5, 6 ], 7, 8, [ 9, 10 ] ],
+  'flatten complex array ok'
+);
+
 
 ## subclasses
 {  package My::List;

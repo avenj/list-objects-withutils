@@ -43,7 +43,7 @@ sub __flatten {
   my ($depth, @arr) = @_;
   CORE::map {
     ref && Scalar::Util::reftype $_ eq 'ARRAY' ?
-      $depth > 0 ? __flatten( --$depth, @$_ ) : $_
+      $depth > 0 ? __flatten( $depth - 1, @$_ ) : $_
       : $_
   } @arr
 }
@@ -444,6 +444,31 @@ true, the second contains the remaining items.
 =head3 export
 
 Same as L</all>; included for consistency with hash-type objects.
+
+=head3 flatten
+
+Flatten array objects to plain lists, possibly recursively.
+
+C<flatten> without arguments is the same as L</all>:
+
+  my @flat = array( 1, 2, [ 3, 4 ] )->flatten;
+  #  @flat = ( 1, 2, [ 3, 4 ] );
+
+If a depth is specified, sub-arrays are recursively flattened until the
+specified depth is reached: 
+
+  my @flat = array( 1, 2, [ 3, 4 ] )->flatten(1);
+  #  @flat = ( 1, 2, 3, 4 );
+
+  my @flat = array( 1, 2, [ 3, 4, [ 5, 6 ] ] )->flatten(1);
+  #  @flat = ( 1, 2, 3, 4, [ 5, 6 ] );
+
+This works with both ARRAY-type references and array objects:
+
+  my @flat = array( 1, 2, [ 3, 4, array( 5, 6 ) ] )->flatten(2);
+  #  @flat = ( 1, 2, 3, 4, 5, 6 );
+
+Also see L</flatten_all>.
 
 =head3 flatten_all
 
