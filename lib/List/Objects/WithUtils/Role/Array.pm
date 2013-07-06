@@ -27,8 +27,8 @@ return the basic array type:
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 sub blessed_or_pkg {
   my $pkg;
-  ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
-    : return Module::Runtime::use_module(ARRAY_TYPE)
+  ($pkg = Scalar::Util::blessed $_[0]) ?
+   $pkg : Module::Runtime::use_module(ARRAY_TYPE)
 }
 
 

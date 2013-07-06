@@ -13,8 +13,8 @@ use Scalar::Util ();
 sub HASH_TYPE () { 'List::Objects::WithUtils::Hash' }
 sub blessed_or_pkg { 
   my $pkg;
-  ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
-   : return Module::Runtime::use_module(HASH_TYPE)
+  ($pkg = Scalar::Util::blessed $_[0]) ?
+    $pkg : Module::Runtime::use_module(HASH_TYPE)
 }
 
 use Role::Tiny;
