@@ -25,13 +25,10 @@ return the basic array type:
 =cut
 
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
-my $_required;
 sub blessed_or_pkg {
   my $pkg;
   ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
-    : $_required ? return ARRAY_TYPE
-      : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
-        return ARRAY_TYPE
+    : return Module::Runtime::use_module(ARRAY_TYPE)
 }
 
 
