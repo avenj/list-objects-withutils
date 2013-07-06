@@ -15,6 +15,7 @@ use Scalar::Util ();
 
 =begin comment
 
+Regarding blessed_or_pkg():
 This is some nonsense to support autoboxing; if we aren't blessed, we're
 autoboxed, in which case we appear to have no choice but to cheap out and
 return the basic array type:
@@ -26,26 +27,27 @@ return the basic array type:
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 my $_required;
 sub blessed_or_pkg {
-  my $pkg; ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
-    : $_required ? 
-      return ARRAY_TYPE
-    : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
-      return ARRAY_TYPE
+  my $pkg;
+  ($pkg = Scalar::Util::blessed $_[0]) ? return $pkg
+    : $_required ? return ARRAY_TYPE
+      : eval( 'require ' . ARRAY_TYPE . ';1' ) and $_required++, 
+        return ARRAY_TYPE
 }
 
+
 sub __flatten_all {
-  ref $_[0] && Scalar::Util::reftype $_[0] eq 'ARRAY' ?
+  ref $_[0] && Scalar::Util::reftype($_[0]) eq 'ARRAY' ?
     map {; __flatten_all($_) } @{ $_[0] }
     : $_[0]
 }
 
 sub __flatten {
-  my ($depth, @arr) = @_;
+  my $depth = shift;
   CORE::map {
-    ref && Scalar::Util::reftype $_ eq 'ARRAY' ?
+    ref && Scalar::Util::reftype($_) eq 'ARRAY' ?
       $depth > 0 ? __flatten( $depth - 1, @$_ ) : $_
       : $_
-  } @arr
+  } @_
 }
 
 
