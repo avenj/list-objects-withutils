@@ -449,6 +449,12 @@ is_deeply(
 );
 
 is_deeply(
+  [ $deep->flatten(-1) ],
+  [ $deep->all ],
+  'flatten() to negative depth same as all() ok'
+);
+
+is_deeply(
   [ $deep->flatten(1) ],
   [ 1, 2, 3, 4, [ 5, 6 ], 7 ],
   'flatten to depth 1 ok'
