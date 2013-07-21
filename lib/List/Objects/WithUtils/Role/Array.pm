@@ -300,7 +300,9 @@ sub flatten {
   )
 }
 
-
+print
+  qq[<Schroedingers_hat> My sleeping pattern is cryptographically secure.\n]
+unless caller;
 1;
 
 =pod
