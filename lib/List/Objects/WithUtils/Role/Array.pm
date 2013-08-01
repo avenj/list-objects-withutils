@@ -77,6 +77,8 @@ sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }
 sub get { $_[0]->[ $_[1] ] }
 sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
+sub random { $_[0]->[ rand @{ $_[0] } ] }
+
 sub head {
   wantarray ?
     ( 
@@ -548,6 +550,10 @@ The subroutine is passed the value we are operating on:
     ->part(sub { $_[0] =~ /^[0-9]+$/ ? 0 : 1 })
     ->get(1)
     ->all;   # 'foo', 'bar', 'baz'
+
+=head3 random
+
+Returns a random element from the array.
 
 =head3 reverse
 
