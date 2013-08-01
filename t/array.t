@@ -40,6 +40,9 @@ cmp_ok( $arr->get(0), '==', 1, 'get 0 ok' );
 cmp_ok( $arr->get(1), '==', 2, 'get 1 ok' );
 cmp_ok( $arr->get(2), '==', 3, 'get 2 ok' );
 
+## random()
+cmp_ok( array('foo')->random, 'eq', 'foo', 'random ok' );
+
 ## set()
 ok( $arr->set(1, 4), 'set 1,4 ok' );
 cmp_ok( $arr->get(1), '==', 4, 'get idx 1 after set 4 ok' );
