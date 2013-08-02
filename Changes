@@ -1,15 +1,19 @@
 # Changes for List-Objects-WithUtils
 
+1.009000  (02 Aug 2013)
+
+  Add array()->random
+
+  POD fixes
+
 1.008000  (06 Jul 2013)
 
   Add array()->flatten($depth)
 
 1.007000  (30 Jun 2013)
 
-  * * * *
-   ! Backwards incompatible change; the return value of hash->set() is now the 
-     object, in order to be consistent with array->set()
-  * * * *
+  ! Backwards incompatible change; the return value of hash->set() is now the 
+    object, in order to be consistent with array->set()
 
   Fix hash->get(@keys) return value
 
