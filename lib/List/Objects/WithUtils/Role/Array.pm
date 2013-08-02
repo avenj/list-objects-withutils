@@ -346,7 +346,8 @@ L<List::Objects::WithUtils::Role::WithJunctions>) to provide B<array()> object
 methods.
 
 In addition to the methods documented below, these objects provide a
-C<TO_JSON> method exporting a plain ARRAY-type reference.
+C<TO_JSON> method exporting a plain ARRAY-type reference for convenience when
+feeding L<JSON::Tiny> or similar.
 
 =head2 Basic array methods
 
