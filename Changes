@@ -1,150 +1,152 @@
-# Changes for List-Objects-WithUtils
+Revision history for Perl module List::Objects::WithUtils
 
-1.009000  (02 Aug 2013)
+1.009000 2013-08-02
 
-  Add array()->random
+  - Add array()->random
 
-  POD fixes
+  - POD fixes
 
-1.008000  (06 Jul 2013)
+1.008000 2013-07-06
 
-  Add array()->flatten($depth)
+  - Add array()->flatten($depth)
 
-1.007000  (30 Jun 2013)
+1.007000 2013-06-30
 
-  ! Backwards incompatible change; the return value of hash->set() is now the 
-    object, in order to be consistent with array->set()
+  - ! Backwards incompatible change; the return value of hash->set() is now the
+      object, in order to be consistent with array->set()
 
-  Fix hash->get(@keys) return value
+  - Fix hash->get(@keys) return value
 
-  Add array()->flatten_all
+  - Add array()->flatten_all
 
-  Reorganize Role::Array POD
+  - Reorganize Role::Array POD
 
-1.006001  (22 Jun 2013)
+1.006001 2013-06-22
 
-  Fix ->inflate() on autoboxed hashes; add test for same.
+  - Fix ->inflate() on autoboxed hashes; add test for same.
 
-1.006000  (22 Jun 2013)
+1.006000 2013-06-22
 
-  Add hash->inflate() to simplify creating little struct-like objects out of
-  hashes.
+  - Add hash->inflate() to simplify creating little struct-like objects out of
+    hashes.
 
-  Add a ->TO_JSON method to array and hash objects.  (Serializing these
-  objects to JSON is a pretty common use case for me.)
+  - Add a ->TO_JSON method to array and hash objects.  (Serializing these
+    objects to JSON is a pretty common use case for me.)
 
-1.005000  (21 Jun 2013)
+1.005000 2013-06-21
 
-  Turn junctions into List::Objects::WithUtils::Array subclasses,
-  allowing easier junction manipulation.
+  - Turn junctions into List::Objects::WithUtils::Array subclasses,
+    allowing easier junction manipulation.
 
-  Minor ->sort() optimization.
+  - Minor ->sort() optimization.
 
-1.004000  (19 Jun 2013)
+1.004000 2013-06-19
 
-  Implement streamlined junctions.
-  This removes Sub::Exporter from the dependency chain;
-  additionally, we do not need the extra methods - and probably do not
-  want the smart-match support - provided by Perl6::Junction and
-  Syntax::Keyword::Junction.
+  - Implement streamlined junctions.
+    This removes Sub::Exporter from the dependency chain;
+    additionally, we do not need the extra methods - and probably do not
+    want the smart-match support - provided by Perl6::Junction and
+    Syntax::Keyword::Junction.
 
-1.003001  (16 Jun 2013)
+1.003001 2013-06-16
 
-  Missing dep on 'parent'
+  - Missing dep on 'parent'
 
-1.003000  (16 Jun 2013)
+1.003000 2013-06-16
 
-  Add 'use Lowu;' shortcut to import all available functionality.
+  - Add 'use Lowu;' shortcut to import all available functionality.
 
-  Add autoboxing support via List::Objects::WithUtils::Autobox and
-  make autoboxing available via "use List::Objects::WithUtils 'autobox'"
-  (as well as the 'use Lowu;' shortcut)
+  - Add autoboxing support via List::Objects::WithUtils::Autobox and
+    make autoboxing available via "use List::Objects::WithUtils 'autobox'"
+    (as well as the 'use Lowu;' shortcut)
 
-  More flexible import() in List::Objects::WithUtils; allows for exporting
-  selected functionality to designated target packages.
+  - More flexible import() in List::Objects::WithUtils; allows for exporting
+    selected functionality to designated target packages.
 
-  Added 'all'/':all' import tags to List::Objects::WithUtils;
-  bare import list still just enables array/immarray/hash,
-  'all' adds autoboxing.
+  - Added 'all'/':all' import tags to List::Objects::WithUtils;
+    bare import list still just enables array/immarray/hash,
+    'all' adds autoboxing.
 
-  Add array()->export to line up with hash()->export.
+  - Add array()->export to line up with hash()->export.
 
-  POD improvements. 
+  - POD improvements.
 
-1.002002  (15 Jun 2013)
+1.002002 2013-06-15
 
-  Fix CarpLevel for unimplemented immutable array object methods
+  - Fix CarpLevel for unimplemented immutable array object methods
 
-1.002001  (03 Jun 2013)
+1.002001 2013-06-03
 
-  Simplify read-only array constructor
+  - Simplify read-only array constructor
 
-  Cleanups / test tweaks
+  - Cleanups / test tweaks
 
-1.002000  (03 Jun 2013)
+1.002000 2013-06-03
 
-  Add immarray() immutable array objects
+  - Add immarray() immutable array objects
 
-  Add hash->copy() to match array->copy()
+  - Add hash->copy() to match array->copy()
 
-  Add array->head(), array->tail() methods
+  - Add array->head(), array->tail() methods
 
-  POD, test fixups
+  - POD, test fixups
 
-1.001001  (02 Jun 2013)
+1.001001 2013-06-02
 
-  Sanity check ->mesh() arguments.
-  Other minor cleanups.
+  - Sanity check ->mesh() arguments.
 
-1.001000  (02 Jun 2013)
+  - Other minor cleanups.
 
-  Add array->part()
+1.001000 2013-06-02
 
-1.000003  (02 Jun 2013)
+  - Add array->part()
 
-  Add array->mesh()
+1.000003 2013-06-02
 
-1.000002  (19 May 2013)
+  - Add array->mesh()
 
-  Documentation tweaks.
+1.000002 2013-05-19
 
-1.000001  (10 May 2013)
+  - Documentation tweaks.
 
-  Minor documentation fix
-  (->natatime's iterator returns a list, not an ARRAY)
+1.000001 2013-05-10
 
-1.000000  (05 May 2013)
+  - Minor documentation fix
+    (->natatime's iterator returns a list, not an ARRAY)
 
-  Documentation shuffle.
-  No functional changes.
+1.000000 2013-05-05
 
-0.003000  (16 Mar 2013)
+  - Documentation shuffle.
 
-  Add hash->sliced()
+  - No functional changes.
 
-0.002004  (14 Mar 2013)
+0.003000 2013-03-16
 
-  Documentation fixes.
+  - Add hash->sliced()
 
-0.002003  (10 Mar 2013)
+0.002004 2013-03-14
 
-  Fix missing POD for array->natatime with coderef callback.
+  - Documentation fixes.
 
-0.002002  (10 Mar 2013)
+0.002003 2013-03-10
 
-  POD cleanups, some small fixes.
+  - Fix missing POD for array->natatime with coderef callback.
 
-  New release tests and rectify missing test for array->join
+0.002002 2013-03-10
 
-0.002001  (10 Mar 2013)
+  - POD cleanups, some small fixes.
 
-  Missing dependency in dist.ini
+  - New release tests and rectify missing test for array->join
 
-0.002000  (10 Mar 2013)
+0.002001 2013-03-10
 
-  Add Junctions via Role::WithJunctions 
-   ( array->any_items / array->all_items )
+  - Missing dependency in dist.ini
 
-0.001001
+0.002000 2013-03-10
 
-  Initial release
+  - Add Junctions via Role::WithJunctions
+    ( array->any_items / array->all_items )
+
+0.001001 2013-03-10
+
+  - Initial release
