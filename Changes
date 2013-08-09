@@ -1,5 +1,12 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.009002 2013-08-09
+
+  - No code changes.
+    Fix 'Changes' to match CPAN::Changes::Spec,
+    courtesy of Sergey Romanov ->
+    https://github.com/avenj/list-objects-withutils/pull/1
+
 1.009001 2013-08-09
 
   - Fix ->flatten(_all) behavior regarding ARRAY-type objects;
