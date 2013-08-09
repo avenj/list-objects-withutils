@@ -1,6 +1,6 @@
 Revision history for Perl module List::Objects::WithUtils
 
-1.009001  2013-08-09
+1.009001 2013-08-09
 
   - Fix ->flatten(_all) behavior regarding ARRAY-type objects;
     consumers of List::Objects::WithUtils::Role::Array are flattened,
