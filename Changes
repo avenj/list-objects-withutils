@@ -1,5 +1,11 @@
 # Changes for List-Objects-WithUtils
 
+1.009001  (09 Aug 2013)
+
+  Fix ->flatten(_all) behavior regarding ARRAY-type objects;
+  consumers of List::Objects::WithUtils::Role::Array are flattened,
+  other ARRAY-type objects should be left alone.`
+
 1.009000  (02 Aug 2013)
 
   Add array()->random
