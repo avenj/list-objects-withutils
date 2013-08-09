@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict; use warnings FATAL => 'all';
 
-use Lowu;
+use Lowu 1.009;
 
 my $selected = [];
 
@@ -22,8 +22,7 @@ while ($selected->count < 6) {
     last
   }
 
-  my $ball;
-  do {
+  my $ball;  do {
     my $current = $selected->count;
     print " > $current balls selected: ",
           $selected->join('-'), "\n";
@@ -33,24 +32,28 @@ while ($selected->count < 6) {
     chomp $ball;
   } until $ball and $ball > 0 and $ball < 59
     and $selected->all_items != $ball;
-
+  
   $selected->push($ball);
 }
 
-print " > You selected ", $selected->sliced(0 .. 4)->join('-'), "\n",
-      " > Extra ball ".$selected->get(5), "\n";
+print " > You selected ", 
+       $selected->sliced(0 .. 4)->join('-'), 
+      " (",
+       $selected->get(5), 
+      ")\n";
 
-my $balls = [ 1 .. 59 ]->shuffle->sliced( 1 .. 5 );
-my $extra = [ 1 .. 35 ]->shuffle->get(0);
+my $balls = [ 1 .. 59 ]
+              ->shuffle
+              ->sliced( 1 .. 5 );
+my $extra = [ 1 .. 35 ]
+              ->random;
 
 print "! Drew: ", $balls->join('-'), ' ', $extra, "\n";
 
-my $hits = $selected->sliced(0 .. 4)->grep(
-  sub { $balls->any_items == $_[0] }
-);
+my $hits = $selected->sliced(0 .. 4)
+             ->grep(sub { $balls->any_items == $_[0] });
 
-my $did_hit;
-
+my $did_hit;  
 if ($hits->has_any) {
   print "!! You hit on ", $hits->count, 
         " balls: ", $hits->join(', '), "\n";
