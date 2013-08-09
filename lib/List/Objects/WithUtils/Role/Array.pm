@@ -33,15 +33,19 @@ sub blessed_or_pkg {
 
 
 sub __flatten_all {
-  ref $_[0] && Scalar::Util::reftype($_[0]) eq 'ARRAY' ?
-    map {; __flatten_all($_) } @{ $_[0] }
-    : $_[0]
+  ref $_[0] eq 'ARRAY' 
+  || Scalar::Util::blessed($_[0]) 
+     && $_[0]->DOES('List::Objects::WithUtils::Role::Array') ?
+     map {; __flatten_all($_) } @{ $_[0] }
+  : $_[0]
 }
 
 sub __flatten {
   my $depth = shift;
   CORE::map {
-    ref && Scalar::Util::reftype($_) eq 'ARRAY' ?
+    ref eq 'ARRAY' 
+    || Scalar::Util::blessed($_)
+       && $_->DOES('List::Objects::WithUtils::Role::Array') ?
       $depth > 0 ? __flatten( $depth - 1, @$_ ) : $_
       : $_
   } @_
@@ -472,12 +476,15 @@ This works with both ARRAY-type references and array objects:
   my @flat = array( 1, 2, [ 3, 4, array( 5, 6 ) ] )->flatten(2);
   #  @flat = ( 1, 2, 3, 4, 5, 6 );
 
-Also see L</flatten_all>.
+(Specifically, consumers of this role are flattened; other ARRAY-type objects
+are left alone.)
+
+See L</flatten_all> for flattening to an unlimited depth.
 
 =head3 flatten_all
 
 Returns a plain list consisting of all sub-arrays recursively
-flattened.
+flattened. Also see L</flatten>.
 
 =head3 get
 

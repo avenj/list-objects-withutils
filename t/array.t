@@ -481,6 +481,33 @@ is_deeply(
   'flatten complex array ok'
 );
 
+{ package My::Obj;
+  use strict; use warnings FATAL => 'all';
+  sub new { bless [ 'foo' ], shift }
+
+  use List::Objects::WithUtils 'array';
+  use Test::More;
+
+  my $foo = My::Obj->new;
+  my $with_objs = array(
+    array(1, 2, 3),
+    $foo,
+    [4, 5, 6],
+  );
+
+  is_deeply(
+    [ $with_objs->flatten_all ],
+    [ 1, 2, 3, $foo, 4, 5, 6 ],
+    'flatten_all skipped ARRAY-type obj ok'
+  );
+
+  is_deeply(
+    [ $with_objs->flatten(1) ],
+    [ 1, 2, 3, $foo, 4, 5, 6 ],
+    'flatten skipped ARRAY-type obj ok'
+  );
+}
+
 
 ## subclasses
 {  package My::List;
