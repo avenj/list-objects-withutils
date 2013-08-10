@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.009003 2013-08-10
+
+  - Fix ->flatten(_all) on 5.8
+
 1.009002 2013-08-09
 
   - No code changes.
