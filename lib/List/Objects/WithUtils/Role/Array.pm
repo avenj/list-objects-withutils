@@ -35,7 +35,8 @@ sub blessed_or_pkg {
 sub __flatten_all {
   ref $_[0] eq 'ARRAY' 
   || Scalar::Util::blessed($_[0]) 
-     && $_[0]->DOES('List::Objects::WithUtils::Role::Array') ?
+     && $_[0]->can('does')
+     && $_[0]->does('List::Objects::WithUtils::Role::Array') ?
      map {; __flatten_all($_) } @{ $_[0] }
   : $_[0]
 }
@@ -45,7 +46,8 @@ sub __flatten {
   CORE::map {
     ref eq 'ARRAY' 
     || Scalar::Util::blessed($_)
-       && $_->DOES('List::Objects::WithUtils::Role::Array') ?
+       && $_->can('does')
+       && $_->does('List::Objects::WithUtils::Role::Array') ?
       $depth > 0 ? __flatten( $depth - 1, @$_ ) : $_
       : $_
   } @_
