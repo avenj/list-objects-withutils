@@ -252,6 +252,8 @@ L<List::Objects::WithUtils::Autobox> for details on autoboxing.
 
 The L<Lowu> module for a convenient importer shortcut.
 
+L<MoopsX::ListObjects> for integration with L<Moops> class-building sugar.
+
 =head2 Subclassing
 
 The importer for this package is somewhat flexible; a subclass can override
