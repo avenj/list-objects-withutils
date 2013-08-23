@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.009004 2013-08-23
+
+  - Pass tests on 5.19.3
+
+  - carp() on unknown import tags
+
 1.009003 2013-08-10
 
   - Fix ->flatten(_all) on 5.8
