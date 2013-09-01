@@ -629,7 +629,8 @@ Simple sugar for L</natatime>; returns a new array object consisting of tuples
 
 C<tuples> accepts L<Type::Tiny> types as an optional second parameter; if
 specified, items in tuples are checked against the type and a coercion is
-attempted if the initial type-check fails:
+attempted if the initial type-check fails; a stack-trace is thrown if a value
+in a tuple cannot be made to validate:
 
   use Types::Standard -all;
   my $tuples = array(1 .. 7)->tuples(2, Int);
