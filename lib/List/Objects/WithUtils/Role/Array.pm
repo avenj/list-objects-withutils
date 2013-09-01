@@ -142,6 +142,14 @@ sub map {
   )
 }
 
+sub mapval {
+  my ($self, $sub) = @_;
+  my @copy = @$self;
+  blessed_or_pkg($_[0])->new(
+    CORE::map {; $sub->($_); $_ } @copy
+  )
+}
+
 sub grep {
   blessed_or_pkg($_[0])->new(
     CORE::grep {; $_[1]->($_) } @{ $_[0] }
@@ -650,6 +658,22 @@ The opposite of L</items_after_incl>.
 Evaluates a given subroutine for each element of the array, and returns a new
 array object. C<$_[0]> is the element being operated on; you can also use
 the topicalizer C<$_>.
+
+Also see L</mapval>.
+
+=head3 mapval
+
+  my $orig = array(1, 2, 3);
+  my $incr = $orig->mapval(sub { ++$_ });
+
+  $incr->all;  # (2, 3, 4)
+  $orig->all;  # Still untouched
+
+An alternative to L</map>. C<$_> is a copy, rather than an alias to the
+current element, and the result is retrieved from the altered C<$_> rather
+than the return value of the block.
+
+This feature is borrowed from L<Data::Munge> by Lukas Mai (CPAN: MAUKE).
 
 =head3 natatime
 

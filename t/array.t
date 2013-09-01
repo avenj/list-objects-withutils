@@ -128,6 +128,17 @@ is_deeply(
   'map() on topicalizer ok'
 );
 
+## mapval()
+my $valarr = array(1, 2, 3);
+my $mapval = $valarr->mapval(sub { ++$_ });
+is_deeply( [ $mapval->all ], [ 2, 3, 4 ], 'mapval() ok' );
+is_deeply( [ $valarr->all ], [ 1, 2, 3 ], 'orig after mapval() ok' );
+is_deeply(
+  [ array(1, 2, 3)->mapval(sub { $_[0]++ })->all ],
+  [ 2, 3, 4 ],
+  'mapval() on @_ ok'
+);
+
 ## grep()
 $arr->push('b');
 my $found = $arr->grep(sub { $_[0] eq 'b' });
