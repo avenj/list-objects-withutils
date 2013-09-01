@@ -226,23 +226,13 @@ sub firstidx {
 }
 
 sub mesh {
-  for (@_) {
-    Carp::confess("Expected ARRAY or compatible obj, got $_")
-      unless (Scalar::Util::reftype($_) || '') eq 'ARRAY'
-  }
+  my $max_idx = -1;
+  for (@_) { $max_idx = $#$_ if $max_idx < $#$_ }
   blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::mesh( @_ )
+    CORE::map {;
+      my $idx = $_; map {; $_->[$idx] } @_
+    } 0 .. $max_idx
   )
-# In case upstream ever changes, here's a pure-perl impl:
-#  my $max_idx = -1;
-#  for my $item (@_) {
-#    $max_idx = $#$item if $max_idx < $#$item
-#  }
-#  blessed_or_pkg($_[0])->new(
-#    map {;
-#      my $idx = $_; map {; $_->[$idx] } @_
-#    } 0 .. $max_idx
-#  )
 }
 
 sub natatime {
