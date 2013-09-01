@@ -32,18 +32,6 @@ sub blessed_or_pkg {
 }
 
 
-sub __try_coerce {
-  my ($type, @vals) = @_;
-  Carp::confess "Expected a Type::Tiny type but got $type"
-    unless Scalar::Util::blessed $type;
-  CORE::map {;
-    my $coerced;
-    $type->check($_) ? $_
-    : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
-    : Carp::confess "I should be unreachable!"
-  } @vals
-}
-
 sub __flatten_all {
   ref $_[0] eq 'ARRAY' 
   || Scalar::Util::blessed($_[0]) 
@@ -77,6 +65,19 @@ use Role::Tiny;
 
 sub TO_JSON { [ @{ $_[0] } ] }
 
+sub _try_coerce {
+  my (undef, $type, @vals) = @_;
+  Carp::confess "Expected a Type::Tiny type but got $type"
+    unless Scalar::Util::blessed $type;
+  CORE::map {;
+    my $coerced;
+    $type->check($_) ? $_
+    : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
+    : Carp::confess "I should be unreachable!"
+  } @vals
+}
+
+
 sub new {
   bless [ @_[1 .. $#_] ], $_[0] 
 }
@@ -87,7 +88,7 @@ sub copy {
 
 sub validated {
   my ($self, $type) = @_;
-  bless [ map {; __try_coerce($type, $_) } @$self ], blessed_or_pkg($_[0])
+  bless [ map {; $self->_try_coerce($type, $_) } @$self ], blessed_or_pkg($_[0])
 }
 
 sub all { @{ $_[0] } }
@@ -276,7 +277,7 @@ sub tuples {
   my $new = blessed_or_pkg($self)->new;
   while (my @nxt = $itr->()) {
     if (defined $type) {
-      @nxt = CORE::map {; __try_coerce($type, $_) } @nxt
+      @nxt = CORE::map {; $self->_try_coerce($type, $_) } @nxt
     }
     $new->push( [ (@nxt == 2 ? @nxt : (@nxt, undef) ) ] )
   }

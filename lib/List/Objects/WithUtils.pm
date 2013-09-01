@@ -17,7 +17,7 @@ sub import {
   if (!@funcs) {
     @funcs = @DefaultImport
   } elsif (grep {; lc $_ eq 'all' || lc $_ eq ':all' } @funcs) {
-    @funcs = ( @DefaultImport, 'autobox' )
+    @funcs = ( @DefaultImport, 'autobox', 'array_of' )
   }
 
   my @mods;
@@ -32,6 +32,10 @@ sub import {
     }
     if ($function eq 'immarray') {
       push @mods, 'List::Objects::WithUtils::Array::Immutable';
+      next
+    }
+    if ($function eq 'array_of') {
+      push @mods, 'List::Objects::WithUtils::Array::Typed';
       next
     }
     if ($function eq 'autobox') {

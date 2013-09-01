@@ -63,17 +63,26 @@ use Types::Standard -all;
   use List::Objects::WithUtils 'array_of';
   my $arr = array_of( Int() => 1 .. 3 );
   
-  eval {; $arr = array_of( Int() => qw/foo 1 2/) };
-  ok $@; 'array_of invalid type died ok';
+  eval {; my $bad = array_of( Int() => qw/foo 1 2/) };
+  ok $@, 'array_of invalid type died ok';
   
   eval {; $arr->push('foo') };
   ok $@, 'invalid type push died ok';
+  ok $arr->push(4 .. 6), 'valid type push ok';
+  ok $arr->count == 6, 'count ok after push';
+
+  eval {; $arr->unshift('bar') };
+  ok $@, 'invalid type unshift died ok';
+  ok $arr->unshift(7 .. 9), 'valid type unshift ok';
+  ok $arr->count == 9, 'count ok after unshift';
 
   eval {; $arr->set(0 => 'foo') };
   ok $@, 'invalid type set died ok';
+  ok $arr->set(0 => 0), 'valid type set ok';
 
   eval {; $arr->map(sub { 'foo' }) };
   ok $@, 'invalid reconstruction died ok';
+  ok $arr->map(sub { 1 }), 'valid type reconstruction ok';
 }
 
 
