@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.010000 2013-09-01
+
+  - Add array()->tuples (with Type::Tiny support)
+
+  - Add array()->validated($type)
+
 1.009005 2013-09-01
 
   - Add array()->mapval (borrowed from Data::Munge)
