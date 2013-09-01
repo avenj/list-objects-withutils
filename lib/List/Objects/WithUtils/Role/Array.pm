@@ -32,6 +32,18 @@ sub blessed_or_pkg {
 }
 
 
+sub __try_coerce {
+  my ($type, @vals) = @_;
+  Carp::confess "Expected a Type::Tiny type but got $type"
+    unless Scalar::Util::blessed $type;
+  CORE::map {;
+    my $coerced;
+    $type->check($_) ? $_
+    : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
+    : Carp::confess "I should be unreachable!"
+  } @vals
+}
+
 sub __flatten_all {
   ref $_[0] eq 'ARRAY' 
   || Scalar::Util::blessed($_[0]) 
@@ -71,6 +83,11 @@ sub new {
 
 sub copy {
   bless [ @{ $_[0] } ], blessed_or_pkg($_[0])
+}
+
+sub validated {
+  my ($self, $type) = @_;
+  bless [ map {; __try_coerce($type, $_) } @$self ], blessed_or_pkg($_[0])
 }
 
 sub all { @{ $_[0] } }
@@ -248,6 +265,7 @@ sub bisect {
   )
 }
 
+
 sub tuples {
   # FIXME add optional Type::Tiny typecheck?
   my ($self, $size, $type) = @_;
@@ -258,12 +276,7 @@ sub tuples {
   my $new = blessed_or_pkg($self)->new;
   while (my @nxt = $itr->()) {
     if (defined $type) {
-      my $coerced;
-      @nxt = CORE::map {;
-        $type->check($_) ? $_
-        : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
-        : Carp::confess "I should be unreachable!"
-      } @nxt;
+      @nxt = CORE::map {; __try_coerce($type, $_) } @nxt
     }
     $new->push( [ (@nxt == 2 ? @nxt : (@nxt, undef) ) ] )
   }
@@ -464,6 +477,21 @@ consisting of the items returned from the splice.
 
 The existing array is modified in-place.
 
+=head3 validated
+
+  use Types::Standard -all;
+  my $valid = array(qw/foo bar baz/)->validated(Str);
+
+Accepts a L<Type::Tiny> type, against which each element of the current array
+will be checked before being added to the new array. 
+
+If the element fails the type check but can be coerced, the coerced value will
+be added to the new array.
+
+Dies with a stack trace if the value fails type checks and can't be coerced.
+
+See: L<Types::Standard>, L</List::Objects::Types>
+
 =head2 Methods that retrieve items
 
 =head3 all
@@ -635,7 +663,7 @@ in a tuple cannot be made to validate:
   use Types::Standard -all;
   my $tuples = array(1 .. 7)->tuples(2, Int);
 
-See L<Type::Tiny> and L<Types::Standard> for more details on types.
+See: L<Types::Standard>, L</List::Objects::Types>
 
 =head2 Methods that find items
 
