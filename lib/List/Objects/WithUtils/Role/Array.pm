@@ -249,13 +249,22 @@ sub bisect {
 }
 
 sub tuples {
-  my ($self, $size) = @_;
+  # FIXME add optional Type::Tiny typecheck?
+  my ($self, $size, $type) = @_;
   $size = 2 unless defined $size;
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 0;
   my $itr = List::MoreUtils::natatime($size, @$self);
   my $new = blessed_or_pkg($self)->new;
   while (my @nxt = $itr->()) {
+    if (defined $type) {
+      my $coerced;
+      @nxt = CORE::map {;
+        $type->check($_) ? $_
+        : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
+        : Carp::confess "I should be unreachable!"
+      } @nxt;
+    }
     $new->push( [ (@nxt == 2 ? @nxt : (@nxt, undef) ) ] )
   }
   $new
@@ -617,6 +626,15 @@ from the specified indexes.
 
 Simple sugar for L</natatime>; returns a new array object consisting of tuples
 (unblessed ARRAY references) of the specified size (defaults to 2).
+
+C<tuples> accepts L<Type::Tiny> types as an optional second parameter; if
+specified, items in tuples are checked against the type and a coercion is
+attempted if the initial type-check fails:
+
+  use Types::Standard -all;
+  my $tuples = array(1 .. 7)->tuples(2, Int);
+
+See L<Type::Tiny> and L<Types::Standard> for more details on types.
 
 =head2 Methods that find items
 
