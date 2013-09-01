@@ -26,7 +26,7 @@ sub new {
     $type = shift;
   }
 
-  Carp::confess "Expected a Type::Tiny type but got $type"
+  Carp::confess "Expected a Type::Tiny type but got '$type'"
     unless Scalar::Util::blessed($type)
     && $type->isa('Type::Tiny');
 

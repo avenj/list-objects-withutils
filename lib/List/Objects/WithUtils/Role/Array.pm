@@ -74,8 +74,10 @@ sub _try_coerce {
   CORE::map {;
     my $coerced;
     $type->check($_) ? $_
-    : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
-    : Carp::confess "I should be unreachable!"
+    : $type->assert_valid( 
+        $type->has_coercion ? ($coerced = $type->coerce($_)) : $_
+      ) ? $coerced
+      : Carp::confess "I should be unreachable!"
   } @vals
 }
 
