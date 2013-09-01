@@ -186,7 +186,7 @@ List::Objects::WithUtils - List objects with useful methods
   my $ints = array_of( Int, 1 .. 10 );
 
   # Hashes can be inflated to objects:
-  my $obj    = $hash->inflate;
+  my $obj = $hash->inflate;
   $snacks = $obj->snacks;
 
   # Native list types can be autoboxed:
