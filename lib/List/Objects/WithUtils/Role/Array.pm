@@ -824,6 +824,10 @@ L<List::Objects::WithUtils::Array>
 
 L<List::Objects::WithUtils::Role::WithJunctions>
 
+L<List::Objects::WithUtils::Array::Immutable>
+
+L<List::Objects::WithUtils::Array::Typed>
+
 L<Data::Perl>
 
 L<List::Util>
