@@ -25,7 +25,7 @@ return the basic array type:
 =cut
 
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
-sub _blessed_or_pkg {
+sub blessed_or_pkg {
   my $pkg;
   ($pkg = Scalar::Util::blessed $_[0]) ?
    $pkg : Module::Runtime::use_module(ARRAY_TYPE)
@@ -83,13 +83,12 @@ sub new {
 }
 
 sub copy {
-  my ($self) = @_;
-  bless [ @$self ], $self->_blessed_or_pkg
+  bless [ @{ $_[0] } ], blessed_or_pkg($_[0])
 }
 
 sub validated {
   my ($self, $type) = @_;
-  bless [ map {; $self->_try_coerce($type, $_) } @$self ], $self->_blessed_or_pkg
+  bless [ map {; $self->_try_coerce($type, $_) } @$self ], blessed_or_pkg($_[0])
 }
 
 sub all { @{ $_[0] } }
@@ -106,23 +105,21 @@ sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 sub random { $_[0]->[ rand @{ $_[0] } ] }
 
 sub head {
-  my ($self) = @_;
   wantarray ?
     ( 
-      $self->[0], 
-      $self->_blessed_or_pkg->new( @{ $self }[ 1 .. $#$self ] ) 
+      $_[0]->[0], 
+      blessed_or_pkg($_[0])->new( @{ $_[0] }[ 1 .. $#{$_[0]} ] ) 
     )
-    : $self->[0]
+    : $_[0]->[0]
 }
 
 sub tail {
-  my ($self) = @_;
   wantarray ?
     (
-      $self->[-1],
-      $self->_blessed_or_pkg->new( @{ $self }[ 0 .. ($#$self - 1) ] )
+      $_[0]->[-1],
+      blessed_or_pkg($_[0])->new( @{ $_[0] }[ 0 .. ($#{$_[0]} - 1) ] )
     )
-    : $self->[-1]
+    : $_[0]->[-1]
 }
 
 sub pop  { CORE::pop @{ $_[0] } }
@@ -158,56 +155,49 @@ sub join {
 }
 
 sub map {
-  my ($self, $sub) = @_;
-  $self->_blessed_or_pkg->new(
-    CORE::map {; $sub->($_) } @$self
+  blessed_or_pkg($_[0])->new(
+    CORE::map {; $_[1]->($_) } @{ $_[0] }
   )
 }
 
 sub mapval {
   my ($self, $sub) = @_;
   my @copy = @$self;
-  $self->_blessed_or_pkg->new(
+  blessed_or_pkg($_[0])->new(
     CORE::map {; $sub->($_); $_ } @copy
   )
 }
 
 sub grep {
-  my ($self, $sub) = @_;
-  $self->blessed_or_pkg->new(
-    CORE::grep {; $sub->($_) } @$self
+  blessed_or_pkg($_[0])->new(
+    CORE::grep {; $_[1]->($_) } @{ $_[0] }
   )
 }
 
 sub sort {
-  my ($self, $sub) = @_;
-  my $pkg = $self->_blessed_or_pkg;
-  if (defined $sub) {
-    return $pkg->new(
-      CORE::sort {; $sub->($a, $b) } @$self
+  if (defined $_[1]) {
+    return blessed_or_pkg($_[0])->new(
+      CORE::sort {; $_[1]->($a, $b) } @{ $_[0] }
     )
   }
-  return $self->_blessed_or_pkg->new( CORE::sort @$self )
+  return blessed_or_pkg($_[0])->new( CORE::sort @{ $_[0] } )
 }
 
 sub reverse {
-  my ($self) = @_;
-  $self->_blessed_or_pkg->new(
-    CORE::reverse @$self
+  blessed_or_pkg($_[0])->new(
+    CORE::reverse @{ $_[0] }
   )
 }
 
 sub sliced {
-  my ($self) = @_;
-  $self->_blessed_or_pkg->new(
-    @{ $self }[ @_[1 .. $#_] ]
+  blessed_or_pkg($_[0])->new(
+    @{ $_[0] }[ @_[1 .. $#_] ]
   )
 }
 
 sub splice {
-  my ($self) = @_;
-  $self->_blessed_or_pkg->new(
-    CORE::splice @$self, $_[1], $_[2], @_[3 .. $#_]
+  blessed_or_pkg($_[0])->new(
+    CORE::splice @{ $_[0] }, $_[1], $_[2], @_[3 .. $#_]
   )
 }
 
@@ -232,7 +222,7 @@ sub mesh {
     Carp::confess("Expected ARRAY or compatible obj, got $_")
       unless (Scalar::Util::reftype($_) || '') eq 'ARRAY'
   }
-  $_[0]->_blessed_or_pkg->new(
+  blessed_or_pkg($_[0])->new(
     &List::MoreUtils::mesh( @_ )
   )
 # In case upstream ever changes, here's a pure-perl impl:
