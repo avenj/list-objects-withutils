@@ -3,7 +3,7 @@ use strict; use warnings;
 use 5.10.1;
 use Lowu;
 
-my $search = immarray(
+my $result = immarray(
   +{ name => 'bob', id => '200' },
   +{ name => 'joe', id => '400' },
   +{ name => 'sam', id => '600' },
@@ -12,5 +12,5 @@ my $search = immarray(
   $_->{id} > 500
 }) or die 'No employees with ID > 500';
 
-my $person = $search->inflate;
+my $person = $result->inflate;
 say "Employee ".ucfirst($person->name)." has ID ".$person->id;
