@@ -85,12 +85,16 @@ use Types::Standard -all;
   ok $@ =~ /type/, 'invalid type insert died ok';
   ok $arr->insert(0 => 1), 'valid type insert ok';
 
+  eval {; $arr->splice(0, 1, 'foo') };
+  ok $@ =~ /type/, 'invalid type splice died ok';
+  ok $arr->splice(0, 1, 2), 'valid type splice ok';
+  ok $arr->splice(0, 1),    'splice without value ok';
+
   eval {; $arr->map(sub { 'foo' }) };
   ok $@ =~ /type/, 'invalid reconstruction died ok';
   my $mapped;
   ok $mapped = $arr->map(sub { 1 }), 'valid type reconstruction ok';
   isa_ok $mapped, 'List::Objects::WithUtils::Array::Typed';
 }
-
 
 done_testing;

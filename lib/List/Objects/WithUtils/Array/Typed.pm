@@ -64,6 +64,17 @@ sub insert {
   $self->SUPER::insert( $_[0], $self->_try_coerce($self->{type}, $_[1]) )
 }
 
+sub splice {
+  my ($self, $one, $two) = splice @_, 0, 3;
+  $self->SUPER::splice(
+    $one, $two,
+    ( @_ ? 
+      map {; $self->_try_coerce($self->{type}, $_) } @_
+      : ()
+    ),
+  )
+}
+
 print
   qq[<Su-Shee> there are those days when I'm too stupid to loop over a],
   qq[ simple list of things... I should close my editor now.\n],
