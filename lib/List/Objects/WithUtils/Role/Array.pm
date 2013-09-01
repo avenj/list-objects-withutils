@@ -248,6 +248,19 @@ sub bisect {
   )
 }
 
+sub tuples {
+  my ($self, $size) = @_;
+  $size = 2 unless defined $size;
+  Carp::confess "Expected a positive integer size but got $size"
+    if $size < 0;
+  my $itr = List::MoreUtils::natatime($size, @$self);
+  my $new = blessed_or_pkg($self)->new;
+  while (my @nxt = $itr->()) {
+    $new->push( [ (@nxt == 2 ? @nxt : (@nxt, undef) ) ] )
+  }
+  $new
+}
+
 sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
@@ -590,6 +603,20 @@ Returns a new array object containing the shuffled list.
 
 Returns a new array object consisting of the elements retrived 
 from the specified indexes.
+
+=head3 tuples
+
+  my $tuples = array(1 .. 7)->tuples(2);
+  # Returns:
+  #  array(
+  #    [ 1, 2 ], 
+  #    [ 3, 4 ],
+  #    [ 5, 6 ],
+  #    [ 7, undef ],
+  #  )
+
+Simple sugar for L</natatime>; returns a new array object consisting of tuples
+(unblessed ARRAY references) of the specified size (defaults to 2).
 
 =head2 Methods that find items
 

@@ -435,6 +435,16 @@ is_deeply(
 ok( array->bisect(sub {})->count == 2, 'bisect() always returns two arrays' );
 
 
+## tuples()
+my $tuples = array( 1 .. 7 )->tuples(2);
+is_deeply(
+  [ $tuples->all ],
+  [
+    [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, undef ]
+  ],
+  'tuples() ok'
+);
+
 my $deep = array( 1, 2, [ 3, 4, [ 5, 6 ], 7 ] );
 ## flatten_all()
 is_deeply(
