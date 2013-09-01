@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.010001 2013-09-01
+
+  - Fix array_of() assertions on non-coercible types
+
 1.010000 2013-09-01
 
   - Add 'array_of' (List::Objects::WithUtils::Array::Typed)
