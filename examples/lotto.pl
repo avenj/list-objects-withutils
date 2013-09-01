@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict; use warnings FATAL => 'all';
 
-use Lowu 1.009;
+use Lowu;
 
 my $selected = [];
 
