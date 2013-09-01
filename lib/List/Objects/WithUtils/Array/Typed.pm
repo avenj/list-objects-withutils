@@ -22,14 +22,21 @@ use overload
 
 
 sub new {
-  my $type = $_[1];
+  my $class = shift;
+  my $type;
+  if (my $blessed = Scalar::Util::blessed $class) {
+    $type  = $class->{type};
+    $class = $blessed;
+  } else {
+    $type = shift;
+  }
   Carp::confess "Expected a Type::Tiny type but got $type"
     unless Scalar::Util::blessed $type;
   my $self = +{
     type  => $type,
   };
-  bless $self, $_[0];
-  $self->{array} = [ map {; $self->_try_coerce($type, $_) } @_[2 .. $#_] ];
+  bless $self, $class;
+  $self->{array} = [ map {; $self->_try_coerce($type, $_) } @_ ];
   $self
 }
 

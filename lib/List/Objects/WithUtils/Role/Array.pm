@@ -26,9 +26,11 @@ return the basic array type:
 
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 sub blessed_or_pkg {
+  my ($item) = @_;
   my $pkg;
-  ($pkg = Scalar::Util::blessed $_[0]) ?
-   $pkg : Module::Runtime::use_module(ARRAY_TYPE)
+  ($pkg = Scalar::Util::blessed $item) ?
+    wantarray ? ($item, $pkg) : $item
+    : Module::Runtime::use_module(ARRAY_TYPE)
 }
 
 
@@ -79,16 +81,22 @@ sub _try_coerce {
 
 
 sub new {
-  bless [ @_[1 .. $#_] ], $_[0] 
+  if (my $blessed = Scalar::Util::blessed $_[0]) {
+    return bless [ @_[1 .. $#_] ], $blessed
+  }
+  bless [ @_[1 .. $#_] ], $_[0]
 }
 
 sub copy {
-  bless [ @{ $_[0] } ], blessed_or_pkg($_[0])
+  my ($self) = @_;
+  blessed_or_pkg($self)->new(@$self);
 }
 
 sub validated {
   my ($self, $type) = @_;
-  bless [ map {; $self->_try_coerce($type, $_) } @$self ], blessed_or_pkg($_[0])
+  blessed_or_pkg($_[0])->new(
+    CORE::map {; $self->_try_coerce($type, $_) } @$self
+  )
 }
 
 sub all { @{ $_[0] } }
