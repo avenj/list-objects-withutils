@@ -26,23 +26,13 @@ return the basic array type:
 
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 sub blessed_or_pkg {
+  my ($item) = @_;
   my $pkg;
-  ($pkg = Scalar::Util::blessed $_[0]) ?
-   $pkg : Module::Runtime::use_module(ARRAY_TYPE)
+  ($pkg = Scalar::Util::blessed $item) ?
+    wantarray ? ($item, $pkg) : $item
+    : Module::Runtime::use_module(ARRAY_TYPE)
 }
 
-
-sub __try_coerce {
-  my ($type, @vals) = @_;
-  Carp::confess "Expected a Type::Tiny type but got $type"
-    unless Scalar::Util::blessed $type;
-  CORE::map {;
-    my $coerced;
-    $type->check($_) ? $_
-    : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
-    : Carp::confess "I should be unreachable!"
-  } @vals
-}
 
 sub __flatten_all {
   ref $_[0] eq 'ARRAY' 
@@ -77,17 +67,36 @@ use Role::Tiny;
 
 sub TO_JSON { [ @{ $_[0] } ] }
 
+sub _try_coerce {
+  my (undef, $type, @vals) = @_;
+  Carp::confess "Expected a Type::Tiny type but got $type"
+    unless Scalar::Util::blessed $type;
+  CORE::map {;
+    my $coerced;
+    $type->check($_) ? $_
+    : $type->assert_valid( ($coerced = $type->coerce($_)) ) ? $coerced
+    : Carp::confess "I should be unreachable!"
+  } @vals
+}
+
+
 sub new {
-  bless [ @_[1 .. $#_] ], $_[0] 
+  if (my $blessed = Scalar::Util::blessed $_[0]) {
+    return bless [ @_[1 .. $#_] ], $blessed
+  }
+  bless [ @_[1 .. $#_] ], $_[0]
 }
 
 sub copy {
-  bless [ @{ $_[0] } ], blessed_or_pkg($_[0])
+  my ($self) = @_;
+  blessed_or_pkg($self)->new(@$self);
 }
 
 sub validated {
   my ($self, $type) = @_;
-  bless [ map {; __try_coerce($type, $_) } @$self ], blessed_or_pkg($_[0])
+  blessed_or_pkg($_[0])->new(
+    CORE::map {; $self->_try_coerce($type, $_) } @$self
+  )
 }
 
 sub all { @{ $_[0] } }
@@ -217,23 +226,13 @@ sub firstidx {
 }
 
 sub mesh {
-  for (@_) {
-    Carp::confess("Expected ARRAY or compatible obj, got $_")
-      unless (Scalar::Util::reftype($_) || '') eq 'ARRAY'
-  }
+  my $max_idx = -1;
+  for (@_) { $max_idx = $#$_ if $max_idx < $#$_ }
   blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::mesh( @_ )
+    CORE::map {;
+      my $idx = $_; map {; $_->[$idx] } @_
+    } 0 .. $max_idx
   )
-# In case upstream ever changes, here's a pure-perl impl:
-#  my $max_idx = -1;
-#  for my $item (@_) {
-#    $max_idx = $#$item if $max_idx < $#$item
-#  }
-#  blessed_or_pkg($_[0])->new(
-#    map {;
-#      my $idx = $_; map {; $_->[$idx] } @_
-#    } 0 .. $max_idx
-#  )
 }
 
 sub natatime {
@@ -276,7 +275,7 @@ sub tuples {
   my $new = blessed_or_pkg($self)->new;
   while (my @nxt = $itr->()) {
     if (defined $type) {
-      @nxt = CORE::map {; __try_coerce($type, $_) } @nxt
+      @nxt = CORE::map {; $self->_try_coerce($type, $_) } @nxt
     }
     $new->push( [ (@nxt == 2 ? @nxt : (@nxt, undef) ) ] )
   }
@@ -824,6 +823,10 @@ L<List::Objects::WithUtils>
 L<List::Objects::WithUtils::Array>
 
 L<List::Objects::WithUtils::Role::WithJunctions>
+
+L<List::Objects::WithUtils::Array::Immutable>
+
+L<List::Objects::WithUtils::Array::Typed>
 
 L<Data::Perl>
 

@@ -363,7 +363,7 @@ undef @a_one; undef @a_two;
 undef $mesh_multi;
 
 eval {; array( 'foo' )->mesh( 'bar' ) };
-ok( $@ =~ /Expected ARRAY/, 'mesh with bad args dies' )
+ok $@ =~ /ARRAY/, 'mesh with bad args dies'
   or diag explain $@;
 
 

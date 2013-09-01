@@ -11,8 +11,8 @@ sub immarray { __PACKAGE__->new(@_) }
 
 
 sub new {
-  my $self = [ @_[1 .. $#_] ];
-  bless $self, $_[0];
+  my $class = shift;
+  my $self = $class->SUPER::new( @_ );
 
   &Internals::SvREADONLY($self, 1);
   Internals::SvREADONLY($_, 1) for @$self;
