@@ -58,5 +58,23 @@ use Types::Standard -all;
     or diag explain $@;
 }
 
+# array_of
+{
+  use List::Objects::WithUtils 'array_of';
+  my $arr = array_of( Int() => 1 .. 3 );
+  
+  eval {; $arr = array_of( Int() => qw/foo 1 2/) };
+  ok $@; 'array_of invalid type died ok';
+  
+  eval {; $arr->push('foo') };
+  ok $@, 'invalid type push died ok';
+
+  eval {; $arr->set(0 => 'foo') };
+  ok $@, 'invalid type set died ok';
+
+  eval {; $arr->map(sub { 'foo' }) };
+  ok $@, 'invalid reconstruction died ok';
+}
+
 
 done_testing;
