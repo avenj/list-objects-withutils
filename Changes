@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.009005 2013-09-01
+
+  - Add array()->mapval (borrowed from Data::Munge)
+
+  - Drop minimum Perl prereq to perl-5.6
+
 1.009004 2013-08-23
 
   - Pass tests on 5.19.3
