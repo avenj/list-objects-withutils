@@ -673,6 +673,8 @@ An alternative to L</map>. C<$_> is a copy, rather than an alias to the
 current element, and the result is retrieved from the altered C<$_> rather
 than the return value of the block.
 
+(This comes with an extra memory cost.)
+
 This feature is borrowed from L<Data::Munge> by Lukas Mai (CPAN: MAUKE).
 
 =head3 natatime
