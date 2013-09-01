@@ -489,7 +489,7 @@ be added to the new array.
 
 Dies with a stack trace if the value fails type checks and can't be coerced.
 
-See: L<Types::Standard>, L</List::Objects::Types>
+See: L<Types::Standard>, L<List::Objects::Types>
 
 =head2 Methods that retrieve items
 
@@ -662,7 +662,7 @@ in a tuple cannot be made to validate:
   use Types::Standard -all;
   my $tuples = array(1 .. 7)->tuples(2, Int);
 
-See: L<Types::Standard>, L</List::Objects::Types>
+See: L<Types::Standard>, L<List::Objects::Types>
 
 =head2 Methods that find items
 

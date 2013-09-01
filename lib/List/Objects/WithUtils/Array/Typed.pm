@@ -84,7 +84,7 @@ unless caller;
 
 =pod
 
-=for Pod::Coverage new push unshift set array_of
+=for Pod::Coverage new push unshift set insert splice array_of
 
 =head1 NAME
 
@@ -100,8 +100,8 @@ List::Objects::WithUtils::Array::Typed - Type-checking array objects
   my $arr = array_of( Int() => 1 .. 10 );
   $arr->push('foo');  # dies
 
-  my $arr = array_of( ArrayObj );
-  $arr->push([]);     # coerces to ArrayObj
+  my $arr_of_arrs = array_of( ArrayObj );
+  $arr_of_arrs->push([], []);     # coerces to ArrayObj
 
 =head1 DESCRIPTION
 
