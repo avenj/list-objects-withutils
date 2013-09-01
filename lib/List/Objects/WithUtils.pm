@@ -252,6 +252,8 @@ L<List::Objects::WithUtils::Autobox> for details on autoboxing.
 
 The L<Lowu> module for a convenient importer shortcut.
 
+L<List::Objects::Types> for relevant L<Type::Tiny> types.
+
 L<MoopsX::ListObjects> for integration with L<Moops> class-building sugar.
 
 =head2 Subclassing
