@@ -2,6 +2,10 @@ Revision history for Perl module List::Objects::WithUtils
 
 1.010000 2013-09-01
 
+  - Add 'array_of' (List::Objects::WithUtils::Array::Typed)
+    These array-type objects perform Type::Tiny-compatible type-checking
+    against their elements (when constructed and when elements are added).
+
   - Add array()->tuples (with Type::Tiny support)
 
   - Add array()->validated($type)

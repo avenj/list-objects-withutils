@@ -108,8 +108,13 @@ List::Objects::WithUtils - List objects with useful methods
       ...
     }
 
+    # Type-checking arrays:
+    use List::Objects::WithUtils 'array_of';
+    use Types::Standard -all;
+    my $ints = array_of( Int, 1 .. 10 );
+
     # Hashes can be inflated to objects:
-    my $obj    = $hash->inflate;
+    my $obj = $hash->inflate;
     $snacks = $obj->snacks;
 
     # Native list types can be autoboxed:
@@ -151,6 +156,9 @@ providing methods for native ARRAY and HASH types.
 A bare import list (`use List::Objects::WithUtils;`) will import the
 `array`, `immarray`, and `hash` functions.
 
+Importing __array\_of__ gives you [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking array
+objects; see [List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed).
+
 Importing __all__ or __:all__ will import all of the above and additionally turn
 __autobox__ on, as will the shortcut `use Lowu;` (as of 1.003).
 
@@ -181,9 +189,14 @@ methods.
 [List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) for more on `immarray()`
 immutable arrays.
 
+[List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed) for more on `array_of()`
+type-checking arrays.
+
 [List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox) for details on autoboxing.
 
 The [Lowu](http://search.cpan.org/perldoc?Lowu) module for a convenient importer shortcut.
+
+[List::Objects::Types](http://search.cpan.org/perldoc?List::Objects::Types) for relevant [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny) types.
 
 [MoopsX::ListObjects](http://search.cpan.org/perldoc?MoopsX::ListObjects) for integration with [Moops](http://search.cpan.org/perldoc?Moops) class-building sugar.
 
