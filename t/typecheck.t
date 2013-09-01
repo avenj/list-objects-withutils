@@ -1,8 +1,14 @@
 
 BEGIN {
-  unless ($ENV{RELEASE_TESTING}) {
+  unless (
+    eval {; require List::Objects::Types; 1 }
+    && eval {; require Types::Standard; 1 }
+    && !$@
+  ) {
     require Test::More;
-    Test::More::plan(skip_all => 'these tests are for release candidate testing');
+    Test::More::plan(skip_all => 
+      'these tests require List::Objects::Types'
+    );
   }
 }
 
