@@ -64,8 +64,7 @@ use Types::Standard -all;
   my $arr = array_of Int() => 1 .. 3;
   
   eval {; my $bad = array_of( Int() => qw/foo 1 2/) };
-  ok $@ =~ /type/, 'array_of invalid type died ok'
-    or diag explain $@;
+  ok $@ =~ /constraint/, 'array_of invalid type died ok' or diag explain $@;
   
   eval {; $arr->push('foo') };
   ok $@ =~ /type/, 'invalid type push died ok';
