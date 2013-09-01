@@ -61,7 +61,7 @@ use Types::Standard -all;
 # array_of
 {
   use List::Objects::WithUtils 'array_of';
-  my $arr = array_of( Int() => 1 .. 3 );
+  my $arr = array_of Int() => 1 .. 3;
   
   eval {; my $bad = array_of( Int() => qw/foo 1 2/) };
   ok $@ =~ /type/, 'array_of invalid type died ok'
@@ -80,6 +80,10 @@ use Types::Standard -all;
   eval {; $arr->set(0 => 'foo') };
   ok $@ =~ /type/, 'invalid type set died ok';
   ok $arr->set(0 => 0), 'valid type set ok';
+
+  eval {; $arr->insert(0 => 'foo') };
+  ok $@ =~ /type/, 'invalid type insert died ok';
+  ok $arr->insert(0 => 1), 'valid type insert ok';
 
   eval {; $arr->map(sub { 'foo' }) };
   ok $@ =~ /type/, 'invalid reconstruction died ok';
