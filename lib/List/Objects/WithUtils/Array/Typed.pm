@@ -127,6 +127,9 @@ Values that cannot be coerced will throw an exception.
 
 Also see L<Types::Standard>, L<List::Objects::Types>
 
+It's worth noting that this comes with the obvious type-checking performance
+hit, plus some extra overhead in proxying array operations.
+
 =head2 type
 
 Returns the L<Type::Tiny> type the object was created with.
