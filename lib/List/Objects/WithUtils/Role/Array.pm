@@ -59,14 +59,6 @@ sub __flatten {
 
 use Role::Tiny;
 
-=pod
-
-=for Pod::Coverage TO_JSON
-
-=cut
-
-sub TO_JSON { [ @{ $_[0] } ] }
-
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
   Carp::confess "Expected a Type::Tiny type but got $type"
@@ -81,6 +73,17 @@ sub _try_coerce {
   } @vals
 }
 
+=pod
+
+=for Pod::Coverage TO_JSON type
+
+=cut
+
+sub TO_JSON { [ @{ $_[0] } ] }
+
+sub type {
+  # array() has an empty ->type
+}
 
 sub new {
   if (my $blessed = Scalar::Util::blessed $_[0]) {
