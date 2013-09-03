@@ -59,10 +59,16 @@ sub __flatten {
 
 use Role::Tiny;
 
+my $_loaded_tt;
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
-  Carp::confess "Expected a Type::Tiny type but got $type"
-    unless Scalar::Util::blessed $type;
+  unless (blessed $type) {
+    require Types::TypeTiny unless $_loaded_tt++;
+    $type = Types::TypeTiny::to_TypeTiny($type);
+
+    Carp::confess "Expected a Type::Tiny type but got $type"
+      unless Scalar::Util::blessed $type;
+  }
   CORE::map {;
     my $coerced;
     $type->check($_) ? $_
