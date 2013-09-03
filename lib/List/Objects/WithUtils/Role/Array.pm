@@ -63,12 +63,18 @@ my $_loaded_tt;
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
   unless (blessed $type) {
-    require Types::TypeTiny unless $_loaded_tt++;
+    unless ($_loaded_tt) {
+      eval {; require Types::TypeTiny; 1 }
+        and !$@
+        or Carp::confess 
+         "'$type' is not a Type::Tiny and failed to load Types::TypeTiny: $@";
+        ++$_loaded_tt;
+    }
     $type = Types::TypeTiny::to_TypeTiny($type);
-
     Carp::confess "Expected a Type::Tiny type but got $type"
       unless Scalar::Util::blessed $type;
   }
+
   CORE::map {;
     my $coerced;
     $type->check($_) ? $_
