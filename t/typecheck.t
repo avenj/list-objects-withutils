@@ -38,6 +38,9 @@ use Types::Standard -all;
   $arr = array( [], [], [], [] );
   ok $tuples = $arr->tuples(2, ArrayObj), 'ArrayObj coercion ok';  
   ok $tuples->shift->[0]->count == 0, 'ArrayObj was coerced';
+
+  eval {; $tuples = $arr->tuples(3, ArrayObj) };
+  ok $@ =~ m/type/i, 'ArrayObj check failed on odd tuple ok';
 }
 
 # validated

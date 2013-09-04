@@ -294,7 +294,8 @@ sub tuples {
   my $new = blessed_or_pkg($self)->new;
   while (my @nxt = $itr->()) {
     if (defined $type) {
-      @nxt = CORE::map {; $self->_try_coerce($type, $_) } @nxt
+      @nxt = CORE::map {; $self->_try_coerce($type, $_) }
+        @nxt[0 .. ($size-1)]
     }
     $new->push( [ @nxt ] );
   }
@@ -670,7 +671,7 @@ from the specified indexes.
   #    [ 1, 2 ], 
   #    [ 3, 4 ],
   #    [ 5, 6 ],
-  #    [ 7, undef ],
+  #    [ 7 ],
   #  )
 
 Simple sugar for L</natatime>; returns a new array object consisting of tuples
@@ -678,11 +679,12 @@ Simple sugar for L</natatime>; returns a new array object consisting of tuples
 
 C<tuples> accepts L<Type::Tiny> types as an optional second parameter; if
 specified, items in tuples are checked against the type and a coercion is
-attempted if the initial type-check fails. A stack-trace is thrown if a value
-in a tuple cannot be made to validate. For example:
+attempted if the initial type-check fails:
 
   use Types::Standard -all;
   my $tuples = array(1 .. 7)->tuples(2 => Int);
+
+A stack-trace is thrown if a value in a tuple cannot be made to validate.
 
 See: L<Types::Standard>, L<List::Objects::Types>
 
