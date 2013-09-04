@@ -117,7 +117,8 @@ use Types::Standard -all;
 
   eval {; $arr->[0] = 'foo' };
   ok $@ =~ /type/, 'invalid type set died ok';
-  ok(($arr->[0] = 0) == 0, 'valid type set ok');
+  $arr->[0] = 42;
+  is $arr->[0], 42, 'valid type set ok';
 }
 
 done_testing;
