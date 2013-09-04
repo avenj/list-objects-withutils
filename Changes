@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.010002 2013-09-04
+
+  - Fix array->tuples() to skip adding unnecessary undefs
+
+  - Fix immarray->tuples()
+
 1.010001 2013-09-01
 
   - Fix array_of() assertions on non-coercible types
