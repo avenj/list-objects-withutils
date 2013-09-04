@@ -440,7 +440,7 @@ my $tuples = array( 1 .. 7 )->tuples(2);
 is_deeply(
   [ $tuples->all ],
   [
-    [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, undef ]
+    [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7 ]
   ],
   'tuples() ok'
 );

@@ -286,18 +286,17 @@ sub bisect {
 
 
 sub tuples {
-  # FIXME add optional Type::Tiny typecheck?
   my ($self, $size, $type) = @_;
   $size = 2 unless defined $size;
   Carp::confess "Expected a positive integer size but got $size"
-    if $size < 0;
+    if $size < 1;
   my $itr = List::MoreUtils::natatime($size, @$self);
   my $new = blessed_or_pkg($self)->new;
   while (my @nxt = $itr->()) {
     if (defined $type) {
       @nxt = CORE::map {; $self->_try_coerce($type, $_) } @nxt
     }
-    $new->push( [ (@nxt == 2 ? @nxt : (@nxt, undef) ) ] )
+    $new->push( [ @nxt ] );
   }
   $new
 }
