@@ -70,6 +70,8 @@ List::Objects::WithUtils::Array::Typed - Type-checking array objects
 A L<List::Objects::WithUtils::Array> subclass providing type-checking via
 L<Type::Tiny> types.
 
+This module requires L<Type::Tie>.
+
 The first argument passed to the constructor should be a L<Type::Tiny> type:
 
   use Types::Standard -all;
