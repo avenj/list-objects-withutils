@@ -1,9 +1,9 @@
 
 BEGIN {
-  unless (eval {; require JSON::Tiny; 1 } && !$@ ) {
+  unless (eval {; require JSON::PP; 1 } && !$@ ) {
     require Test::More;
     Test::More::plan(skip_all => 
-      'these tests require JSON::Tiny'
+      'these tests require JSON::PP'
     );
   }
 }
@@ -11,10 +11,11 @@ BEGIN {
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
-use JSON::Tiny;
+use JSON::PP;
 use List::Objects::WithUtils;
 
-my $js = JSON::Tiny->new;
+my $js = JSON::PP->new;
+$js->convert_blessed(1);
 
 { my $obj = array(1,2,3);
   ok my $res = $js->encode($obj), 'encoded array';
