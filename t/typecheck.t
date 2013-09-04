@@ -121,4 +121,20 @@ use Types::Standard -all;
   is $arr->[0], 42, 'valid type set ok';
 }
 
+# hash_of
+{
+  use List::Objects::WithUtils 'hash_of';
+  my $h = hash_of Int() => (foo => 1, bar => 2);
+  ok $h->type == Int, 'type returned Int ok';
+  ok !hash->type, 'plain HashObj has no type ok';
+  
+  eval {; my $bad = hash_of( Int() => qw/foo 1 bar baz/) };
+  ok $@ =~ /constraint/, 'array_of invalid type died ok' or diag explain $@;
+  
+  eval {; $h->set(baz => 3.14159) };
+  ok $@ =~ /type/, 'invalid type set died ok';
+  ok $h->set(baz => 3), 'valid type set ok';
+  ok $h->keys->count == 3, 'count ok after set';
+}
+
 done_testing;
