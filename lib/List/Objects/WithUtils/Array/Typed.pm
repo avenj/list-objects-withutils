@@ -33,7 +33,7 @@ sub new {
     unless Scalar::Util::blessed($type)
     && $type->isa('Type::Tiny');
 
-  my $self = +{ type  => $type };
+  my $self = +{ type => $type };
   bless $self, $class;
 
   $self->{array} = [ map {; $self->_try_coerce($type, $_) } @_ ];
@@ -98,9 +98,7 @@ List::Objects::WithUtils::Array::Typed - Type-checking array objects
   use Types::Standard -all;
   use List::Objects::Types -all;
 
-  my $arr = array_of Int() => 1 .. 10;
-  # or:
-  #  $arr = array_of( Int, 1 .. 10 )
+  my $arr = array_of( Int() => 1 .. 10 );
   $arr->push('foo');    # dies, failed type check
   $arr->push(11 .. 15); # ok
 
