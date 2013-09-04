@@ -291,15 +291,15 @@ sub tuples {
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 1;
   my $itr = List::MoreUtils::natatime($size, @$self);
-  my $new = blessed_or_pkg($self)->new;
+  my @res;
   while (my @nxt = $itr->()) {
     if (defined $type) {
       @nxt = CORE::map {; $self->_try_coerce($type, $_) }
         @nxt[0 .. ($size-1)]
     }
-    $new->push( [ @nxt ] );
+    push @res, [ @nxt ];
   }
-  $new
+  blessed_or_pkg($self)->new(@res)
 }
 
 sub reduce {
