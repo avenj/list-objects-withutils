@@ -42,6 +42,13 @@ is_deeply(
   'list tail() tail looks ok'
 );
 
+## tuples
+is_deeply(
+  [ immarray(1 .. 4)->tuples(2)->all ],
+  [ [1, 2], [3, 4] ],
+  'tuples() ok'
+);
+
 ## unimplemented
 my @unimpl = qw/
   set
