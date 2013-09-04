@@ -100,4 +100,24 @@ use Types::Standard -all;
   isa_ok $mapped, 'List::Objects::WithUtils::Array::Typed';
 }
 
+# tied array
+{
+  use List::Objects::WithUtils 'array_of';
+  my $arr = array_of Int() => 1 .. 3;
+  
+  eval {; push @$arr, 'foo' };
+  ok $@ =~ /type/, 'invalid type push died ok';
+  push @$arr, 4 .. 6;
+  ok $arr->count == 6, 'count ok after push';
+
+  eval {; unshift @$arr, 'bar' };
+  ok $@ =~ /type/, 'invalid type unshift died ok';
+  unshift @$arr, 7 .. 9;
+  ok $arr->count == 9, 'count ok after unshift';
+
+  eval {; $arr->[0] = 'foo' };
+  ok $@ =~ /type/, 'invalid type set died ok';
+  ok(($arr->[0] = 0) == 0, 'valid type set ok');
+}
+
 done_testing;
