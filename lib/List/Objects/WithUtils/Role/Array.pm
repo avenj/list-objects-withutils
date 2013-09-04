@@ -297,7 +297,7 @@ sub tuples {
       @nxt = CORE::map {; $self->_try_coerce($type, $_) }
         @nxt[0 .. ($size-1)]
     }
-    push @res, [ @nxt ];
+    CORE::push @res, [ @nxt ];
   }
   blessed_or_pkg($self)->new(@res)
 }
