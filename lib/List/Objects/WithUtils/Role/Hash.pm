@@ -113,6 +113,9 @@ sub kv {
 
 sub export { %{ $_[0] } }
 
+sub type {
+  # array() has an empty ->type
+}
 
 1;
 
