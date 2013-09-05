@@ -17,7 +17,7 @@ sub import {
   if (!@funcs) {
     @funcs = @DefaultImport
   } elsif (grep {; lc $_ eq 'all' || lc $_ eq ':all' } @funcs) {
-    @funcs = ( @DefaultImport, 'autobox', 'array_of' )
+    @funcs = ( @DefaultImport, 'autobox', 'array_of', 'hash_of' )
   }
 
   my @mods;
@@ -187,12 +187,12 @@ List::Objects::WithUtils - List objects with useful methods
   # Type-checking arrays:
   use List::Objects::WithUtils 'array_of';
   use Types::Standard -all;
-  my $ints = array_of( Int, 1 .. 10 );
+  my $int_arr = array_of( Int, 1 .. 10 );
 
   # Type-checking hashes:
   use List::Objects::WithUtils 'hash_of';
   use Types::Standard -all;
-  my $ints = hash_of( Int, foo => 1, bar => 2 );
+  my $int_hash = hash_of( Int, foo => 1, bar => 2 );
 
   # Hashes can be inflated to objects:
   my $obj = $hash->inflate;
