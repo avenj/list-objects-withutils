@@ -65,9 +65,6 @@ List::Objects::WithUtils::Array::Typed - Type-checking array objects
   my $arr_of_arrs = array_of( ArrayObj );
   $arr_of_arrs->push([], []); # ok, coerces to ArrayObj
 
-  # Tied interface:
-  push @$arr_of_arrs, array(qw/foo bar/);
-
 =head1 DESCRIPTION
 
 A L<List::Objects::WithUtils::Array> subclass providing type-checking via

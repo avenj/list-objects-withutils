@@ -55,9 +55,7 @@ List::Objects::WithUtils::Hash::Typed - Type-checking hash objects
 =head1 SYNOPSIS
 
   use List::Objects::WithUtils 'hash_of';
-
   use Types::Standard -all;
-  use List::Objects::Types -all;
 
   my $arr = hash_of(Int, foo => 1, bar => 2);
   $arr->set(baz => 3.14159);    # dies, failed type check
@@ -77,8 +75,7 @@ The first argument passed to the constructor should be a L<Type::Tiny> type:
 Values are checked against the specified type when the object is constructed
 or new elements are added.
 
-If the initial type-check fails, a coercion is
-attempted.
+If the initial type-check fails, a coercion is attempted.
 
 Values that cannot be coerced will throw an exception.
 
