@@ -2,7 +2,7 @@
 BEGIN {
   unless (
     eval {; require List::Objects::Types; 1 } && !$@
-    && eval {; require Types::Standard; require Type::Tie; 1 }   && !$@
+    && eval {; require Types::Standard; 1 }   && !$@
   ) {
     require Test::More;
     Test::More::plan(skip_all => 
