@@ -45,7 +45,7 @@ unless caller;
 
 =pod
 
-=for Pod::Coverage new push unshift set insert splice array_of
+=for Pod::Coverage new
 
 =head1 NAME
 
@@ -65,6 +65,9 @@ List::Objects::WithUtils::Array::Typed - Type-checking array objects
   my $arr_of_arrs = array_of( ArrayObj );
   $arr_of_arrs->push([], []); # ok, coerces to ArrayObj
 
+  # Tied interface:
+  push @$arr_of_arrs, array(qw/foo bar/);
+
 =head1 DESCRIPTION
 
 A L<List::Objects::WithUtils::Array> subclass providing type-checking via
@@ -80,8 +83,7 @@ The first argument passed to the constructor should be a L<Type::Tiny> type:
 Elements are checked against the specified type when the object is constructed
 or new elements are added.
 
-If the initial type-check fails, a coercion is
-attempted.
+If the initial type-check fails, a coercion is attempted.
 
 Values that cannot be coerced will throw an exception.
 
@@ -96,7 +98,7 @@ Returns the L<Type::Tiny> type the object was created with.
 
 =head1 AUTHOR
 
-Jon Portnoy <avenj@cobaltirc.org>
-
+Jon Portnoy <avenj@cobaltirc.org> with significant contributions from Toby
+Inkster (CPAN: TOBYINK)
 
 =cut

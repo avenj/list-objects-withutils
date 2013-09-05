@@ -346,6 +346,9 @@ Immutable array objects were inspired by L<Const::Fast>.
 
 Junctions are adapted from L<Perl6::Junction> by Carl Franks.
 
+Many of the useful type-checking bits were contributed by Toby Inkster (CPAN:
+TOBYINK).
+
 Much of this code simply wraps other widely-used modules, including:
 
 L<List::Util>

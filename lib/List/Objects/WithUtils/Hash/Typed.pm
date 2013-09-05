@@ -46,7 +46,7 @@ unless caller;
 
 =pod
 
-=for Pod::Coverage new push unshift set insert splice array_of
+=for Pod::Coverage new
 
 =head1 NAME
 
@@ -93,7 +93,7 @@ Returns the L<Type::Tiny> type the object was created with.
 
 =head1 AUTHOR
 
-Jon Portnoy <avenj@cobaltirc.org>
-
+Jon Portnoy <avenj@cobaltirc.org>; typed hashes implemented by Toby Inkster
+(CPAN: TOBYINK)
 
 =cut
