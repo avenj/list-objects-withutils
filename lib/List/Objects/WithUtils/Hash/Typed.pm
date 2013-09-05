@@ -5,6 +5,7 @@ use parent 'List::Objects::WithUtils::Hash';
 
 use Carp ();
 use Scalar::Util ();
+use Type::Tie ();
 
 use Exporter 'import';
 our @EXPORT = 'hash_of';
@@ -29,7 +30,6 @@ sub new {
     unless Scalar::Util::blessed($type)
     && $type->isa('Type::Tiny');
 
-  require Type::Tie;
   my $self = {};
   tie(%$self, 'Type::Tie::HASH', $type);
   %$self = @_;
@@ -37,9 +37,10 @@ sub new {
 }
 
 print
-  qq[<Su-Shee> there are those days when I'm too stupid to loop over a],
-  qq[ simple list of things... I should close my editor now.\n],
-  qq[<dngor> Su-Shee: Hire an iterator. \n],
+  qq[<terje_> heh, I'm not using a CGI lib.\n],
+  qq[<terje_> I'm being lazy\n],
+  qq[<Somni> I'm being ultra-lazy today, I think I'll build an],
+  qq[ internal combustion engine so I can go to the bar\n],
 unless caller;
 1;
 
@@ -84,7 +85,7 @@ Values that cannot be coerced will throw an exception.
 Also see L<Types::Standard>, L<List::Objects::Types>
 
 It's worth noting that this comes with the obvious type-checking performance
-hit, plus some extra overhead in proxying array operations.
+hit, plus some extra overhead.
 
 =head2 type
 
