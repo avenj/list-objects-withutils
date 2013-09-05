@@ -13,6 +13,9 @@ List::Objects::WithUtils - List objects with useful methods
     # Import 'array()', 'immarray()', 'hash()' object constructors:
     use List::Objects::WithUtils;
 
+    # Import all functions:
+    use List::Objects::WithUtils ':functions';
+
     # Import all of the above plus autoboxing:
     use List::Objects::WithUtils ':all';
     # Same, but via convenience shortcut:
@@ -111,7 +114,12 @@ List::Objects::WithUtils - List objects with useful methods
     # Type-checking arrays:
     use List::Objects::WithUtils 'array_of';
     use Types::Standard -all;
-    my $ints = array_of( Int, 1 .. 10 );
+    my $int_arr = array_of( Int, 1 .. 10 );
+
+    # Type-checking hashes:
+    use List::Objects::WithUtils 'hash_of';
+    use Types::Standard -all;
+    my $int_hash = hash_of( Int, foo => 1, bar => 2 );
 
     # Hashes can be inflated to objects:
     my $obj = $hash->inflate;
@@ -159,6 +167,11 @@ A bare import list (`use List::Objects::WithUtils;`) will import the
 Importing __array\_of__ gives you [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking array
 objects; see [List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed).
 
+Importing __hash\_of__ gives you [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking hash
+objects; see [List::Objects::WithUtils::Hash::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Typed).
+
+Importing __functions__ or __:functions__ will import all of the above.
+
 Importing __all__ or __:all__ will import all of the above and additionally turn
 __autobox__ on, as will the shortcut `use Lowu;` (as of 1.003).
 
@@ -191,6 +204,9 @@ immutable arrays.
 
 [List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed) for more on `array_of()`
 type-checking arrays.
+
+[List::Objects::WithUtils::Hash::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Typed) for more on `hash_of()`
+type-checking hashes.
 
 [List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox) for details on autoboxing.
 
@@ -261,6 +277,9 @@ Phillips (CPAN: MATTP), haarg, and others.
 Immutable array objects were inspired by [Const::Fast](http://search.cpan.org/perldoc?Const::Fast).
 
 Junctions are adapted from [Perl6::Junction](http://search.cpan.org/perldoc?Perl6::Junction) by Carl Franks.
+
+Many of the useful type-checking bits were contributed by Toby Inkster (CPAN:
+TOBYINK).
 
 Much of this code simply wraps other widely-used modules, including:
 

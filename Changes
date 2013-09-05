@@ -1,5 +1,19 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.011000 2013-09-05
+
+  - Add 'hash_of' (List::Objects::WithUtils::Hash::Typed)
+     (Toby Inkster - github PR #3)
+    These hashes perform type-checking on their values via Type::Tie.
+
+  - List::Objects::WithUtils/Lowu now accept ':functions' import tag
+    (':all' without autobox)
+
+  - Array::Type now uses a Type::Tie tied array
+     (Toby Inkster - github PR #2)
+    This is faster (no more overload or method overrides), and allows for
+    'push @$typedarr, $foo' with type coercion/checking.
+
 1.010002 2013-09-04
 
   - Fix array->tuples() to skip adding unnecessary undefs
