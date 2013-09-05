@@ -38,6 +38,10 @@ sub import {
       push @mods, 'List::Objects::WithUtils::Array::Typed';
       next
     }
+    if ($function eq 'hash_of') {
+      push @mods, 'List::Objects::WithUtils::Hash::Typed';
+      next
+    }
     if ($function eq 'autobox') {
       # Some unpleasantries required; autobox is weirdly scoped
       require List::Objects::WithUtils::Autobox;
@@ -185,6 +189,11 @@ List::Objects::WithUtils - List objects with useful methods
   use Types::Standard -all;
   my $ints = array_of( Int, 1 .. 10 );
 
+  # Type-checking hashes:
+  use List::Objects::WithUtils 'hash_of';
+  use Types::Standard -all;
+  my $ints = hash_of( Int, foo => 1, bar => 2 );
+
   # Hashes can be inflated to objects:
   my $obj = $hash->inflate;
   $snacks = $obj->snacks;
@@ -230,6 +239,9 @@ C<array>, C<immarray>, and C<hash> functions.
 Importing B<array_of> gives you L<Type::Tiny>-compatible type-checking array
 objects; see L<List::Objects::WithUtils::Array::Typed>.
 
+Importing B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
+objects; see L<List::Objects::WithUtils::Hash::Typed>.
+
 Importing B<all> or B<:all> will import all of the above and additionally turn
 B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
 
@@ -262,6 +274,9 @@ immutable arrays.
 
 L<List::Objects::WithUtils::Array::Typed> for more on C<array_of()>
 type-checking arrays.
+
+L<List::Objects::WithUtils::Hash::Typed> for more on C<hash_of()>
+type-checking hashes.
 
 L<List::Objects::WithUtils::Autobox> for details on autoboxing.
 
