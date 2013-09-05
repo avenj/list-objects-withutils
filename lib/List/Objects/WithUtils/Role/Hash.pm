@@ -25,11 +25,13 @@ sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =pod
 
-=for Pod::Coverage TO_JSON
+=for Pod::Coverage TO_JSON type
 
 =cut
 
 sub TO_JSON { +{ %{ $_[0] } } }
+
+sub type {}
 
 sub new {
   Module::Runtime::require_module( $_[0]->array_type );
