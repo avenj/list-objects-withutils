@@ -35,6 +35,21 @@ use strict; use warnings FATAL => 'all';
   cmp_ok( []->count, '==', 0, 'all imported autobox');
 }
 
+{ package My::FuncsOnly;
+  use Test::More;
+  use strict; use warnings FATAL => 'all';
+
+  use List::Objects::WithUtils ':functions';
+
+  ok( My::FuncsOnly->can('array'), 'functions imported array()');
+  ok( My::FuncsOnly->can('hash'),  'functions imported hash()' );
+  ok( My::FuncsOnly->can('immarray'), 'functions imported immarray()' );
+  ok( My::FuncsOnly->can('array_of'), 'functions imported array_of()' );
+  ok( My::FuncsOnly->can('hash_of'),  'functions imported hash_of()'  );
+  eval {; []->count };
+  ok( $@, 'functions skipped autobox');
+}
+
 { package My::Bar;
   use Test::More;
   use strict; use warnings FATAL => 'all';

@@ -18,6 +18,8 @@ sub import {
     @funcs = @DefaultImport
   } elsif (grep {; lc $_ eq 'all' || lc $_ eq ':all' } @funcs) {
     @funcs = ( @DefaultImport, 'autobox', 'array_of', 'hash_of' )
+  } elsif (grep {; lc $_ eq 'functions' || lc $_ eq ':functions' } @funcs) {
+    @funcs = ( @DefaultImport, 'array_of', 'hash_of' )
   }
 
   my @mods;
