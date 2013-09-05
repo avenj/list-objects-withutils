@@ -45,7 +45,7 @@ unless caller;
 
 =pod
 
-=for Pod::Coverage new
+=for Pod::Coverage new array_of
 
 =head1 NAME
 

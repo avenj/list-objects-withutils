@@ -46,7 +46,7 @@ unless caller;
 
 =pod
 
-=for Pod::Coverage new
+=for Pod::Coverage new hash_of
 
 =head1 NAME
 

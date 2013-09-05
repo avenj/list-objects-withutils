@@ -94,6 +94,9 @@ List::Objects::WithUtils - List objects with useful methods
   # Import 'array()', 'immarray()', 'hash()' object constructors:
   use List::Objects::WithUtils;
 
+  # Import all functions:
+  use List::Objects::WithUtils ':functions';
+
   # Import all of the above plus autoboxing:
   use List::Objects::WithUtils ':all';
   # Same, but via convenience shortcut:
@@ -243,6 +246,8 @@ objects; see L<List::Objects::WithUtils::Array::Typed>.
 
 Importing B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
 objects; see L<List::Objects::WithUtils::Hash::Typed>.
+
+Importing B<functions> or B<:functions> will import all of the above.
 
 Importing B<all> or B<:all> will import all of the above and additionally turn
 B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
