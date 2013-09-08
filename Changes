@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.011001 2013-09-08
+
+  - Depend on newer Type::Tie (we need SPLICE)
+
 1.011000 2013-09-05
 
   - Add 'hash_of' (List::Objects::WithUtils::Hash::Typed)
