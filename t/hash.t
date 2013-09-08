@@ -71,6 +71,25 @@ is_deeply( \@sorted,
   'kv() ok'
 );
 
+## kv_sort()
+my $kvs = hash(map {; $_ => 1 } qw/d b c a/);
+is_deeply(
+  [ $kvs->kv_sort->all ],
+  [
+    [ a => 1 ], [ b => 1 ], [ c => 1 ], [ d => 1 ]
+  ],
+  'kv_sort default ok'
+);
+
+## kv_sort($sub)
+is_deeply(
+  [ $kvs->kv_sort(sub { $_[1] cmp $_[0] })->all ],
+  [
+    [ d => 1 ], [ c => 1 ], [ b => 1 ], [ a => 1 ],
+  ],
+  'kv_sort with sub ok'
+);
+
 ## export()
 is_deeply( +{ $hr->export }, +{ foo => 'bar', baz => undef }, 
   'export() ok'
