@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+1.012001 2013-09-16
+
+  - Add hash->kv_sort()
+
 1.011001 2013-09-08
 
   - Depend on newer Type::Tie (we need SPLICE)
