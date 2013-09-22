@@ -4,143 +4,129 @@ use strict; use warnings FATAL => 'all';
 use List::Objects::WithUtils 'hash';
 
 my $hr = hash();
-ok( $hr->does('List::Objects::WithUtils::Role::Hash'),
-  'hash obj does role'
-);
+ok $hr->does('List::Objects::WithUtils::Role::Hash'),
+  'hash obj does role';
 
 ## array_type()
-cmp_ok( $hr->array_type, 'eq', 'List::Objects::WithUtils::Array',
-  'array_type() ok'
-);
+cmp_ok $hr->array_type, 'eq', 'List::Objects::WithUtils::Array',
+  'array_type() ok';
 
 ## is_empty()
-ok( $hr->is_empty, 'is_empty() ok' );
+ok $hr->is_empty, 'is_empty() ok';
 
 
 $hr = hash(foo => 'bar', baz => undef);
 
 ## exists()
-ok( $hr->exists('foo'), 'key foo exists ok' );
-ok( !$hr->exists('pie'), 'key pie nonexistant' );
+ok $hr->exists('foo'), 'key foo exists ok';
+ok !$hr->exists('pie'), 'key pie nonexistant';
 
 ## defined()
-ok( $hr->defined('foo'), 'key foo defined ok');
-ok( !$hr->defined('baz'), 'key baz not defined' );
+ok $hr->defined('foo'), 'key foo defined ok';
+ok !$hr->defined('baz'), 'key baz not defined';
 
 ## get()
-cmp_ok( $hr->get('foo'), 'eq', 'bar', 'get() ok' );
+ok $hr->get('foo') eq 'bar', 'get() ok';
 
 ## copy()
 my $copy = $hr->copy;
-cmp_ok( $copy->get('foo'), 'eq', 'bar', 'get() on copy ok' );
+cmp_ok $copy->get('foo'), 'eq', 'bar', 'get() on copy ok';
 
 ## sliced()
 my $slicable = hash(a => 1, b => 2, c => 3, d => 4);
 my $slice = $slicable->sliced('a', 'c', 'z');
-isa_ok( $slice, 'List::Objects::WithUtils::Hash',
-  'sliced() produced obj'
-);
-cmp_ok( $slice->keys->count, '==', 2, 'sliced() key count ok' );
-ok( !$slice->exists('z'), 'sliced exists(z) ok' );
-ok( !$slice->get('b'), 'sliced get(b) ok' );
-cmp_ok( $slice->get('a'), '==', 1, 'sliced get(a) ok' );
-cmp_ok( $slice->get('c'), '==', 3, 'sliced get(c) ok' );
+isa_ok $slice, 'List::Objects::WithUtils::Hash',
+  'sliced() produced obj';
+cmp_ok $slice->keys->count, '==', 2, 'sliced() key count ok';
+ok !$slice->exists('z'), 'sliced exists(z) ok';
+ok !$slice->get('b'), 'sliced get(b) ok';
+cmp_ok $slice->get('a'), '==', 1, 'sliced get(a) ok';
+cmp_ok $slice->get('c'), '==', 3, 'sliced get(c) ok';
 
 ## keys()
-ok(
-  ( $hr->keys->grep(sub { $_[0] eq 'foo' })
-  && $hr->keys->grep(sub { $_[0] eq 'baz' }) ),
-  'keys() ok'
-);
+ok
+    $hr->keys->grep(sub { $_[0] eq 'foo' })
+    && $hr->keys->grep(sub { $_[0] eq 'baz' }), 
+  'keys() ok';
 
 ## values()
-ok(
-  ( $hr->values->grep(sub { defined $_[0] and $_[0] eq 'bar' })
-  && $hr->values->grep(sub { ! defined($_[0]) }) ),
-  'values() ok'
-);
+ok
+    $hr->values->grep(sub { defined $_[0] and $_[0] eq 'bar' })
+    && $hr->values->grep(sub { ! defined($_[0]) }),
+  'values() ok';
 
 ## kv()
 my $kv = $hr->kv;
 my @sorted = $kv->sort_by(sub { $_->[0] })->all;
-is_deeply( \@sorted,
+is_deeply \@sorted,
   [
     [ baz => undef ],
     [ foo => 'bar' ],
   ],
-  'kv() ok'
-);
+  'kv() ok';
 
 ## kv_sort()
 my $kvs = hash(map {; $_ => 1 } qw/d b c a/);
-is_deeply(
-  [ $kvs->kv_sort->all ],
+is_deeply [ $kvs->kv_sort->all ],
   [
     [ a => 1 ], [ b => 1 ], [ c => 1 ], [ d => 1 ]
   ],
-  'kv_sort default ok'
-);
+  'kv_sort default ok';
 
 ## kv_sort($sub)
-is_deeply(
-  [ $kvs->kv_sort(sub { $_[1] cmp $_[0] })->all ],
+is_deeply [ $kvs->kv_sort(sub { $_[1] cmp $_[0] })->all ],
   [
     [ d => 1 ], [ c => 1 ], [ b => 1 ], [ a => 1 ],
   ],
-  'kv_sort with sub ok'
-);
+  'kv_sort with sub ok';
 
 ## export()
-is_deeply( +{ $hr->export }, +{ foo => 'bar', baz => undef }, 
-  'export() ok'
-);
+is_deeply +{ $hr->export }, 
+  +{ foo => 'bar', baz => undef }, 
+  'export() ok';
 
 ## set()
 ok $hr->set(snacks => 'tasty') == $hr, 'set() returned self';
-cmp_ok( $hr->get('snacks'), 'eq', 'tasty', 'get() after set() ok' );
+cmp_ok $hr->get('snacks'), 'eq', 'tasty', 'get() after set() ok';
 
 
 $hr = hash();
 
 ## set(), multi-key
-ok( 
+ok
   $hr->set(
     a => 1,
     b => 2,
     c => 3,
   ),
-  'set multi-key ok'
-);
+  'set multi-key ok';
+
 for my $expected (qw/a b c/) {
-  ok( 
-    $hr->keys->grep(sub { $_[0] eq $expected }),
-    "multikey set array has $expected"
-  );
+  ok $hr->keys->grep(sub { $_[0] eq $expected }),
+    "multikey set array has $expected";
 }
 
 ## get(), multi-key
 my $arrget;
-ok( $arrget = $hr->get('b', 'c'), 'get multi-key ok' );
+ok $arrget = $hr->get('b', 'c'), 'get multi-key ok';
 for my $expected (qw/B C/) {
-  ok(
-    $arrget->grep(sub { $_[0] eq $expected }),
-    "multikey get array has $expected"
-  );
+  ok $arrget->grep(sub { $_[0] eq $expected }),
+    "multikey get array has $expected";
 }
 
 ## delete()
-ok( $hr->set(things => 'stuff'), 'set things ok' );
-ok( $hr->delete('things'), 'delete() ok' );
-ok( !$hr->get('things'), 'item was deleted' );
+ok $hr->set(things => 'stuff'), 'set things ok';
+ok $hr->delete('things'), 'delete() ok';
+ok !$hr->get('things'), 'item was deleted';
 
 ## delete(), multi-key
 my $deleted;
-ok( $deleted = $hr->delete('b', 'c'), 'multikey delete ok' );
-cmp_ok( $deleted->count, '==', 2, 'correct number of elements deleted' );
+ok $deleted = $hr->delete('b', 'c'), 'multikey delete ok';
+cmp_ok $deleted->count, '==', 2, 'correct number of elements deleted';
 
 ## clear()
-$hr->clear;
-ok( $hr->is_empty, 'is_empty after clear' );
+ok $hr->clear == $hr, 'clear() returned obj';
+ok $hr->is_empty, 'is_empty after clear';
 
 { package My::List;
   use strict; use warnings FATAL => 'all';
