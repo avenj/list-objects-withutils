@@ -26,15 +26,16 @@ sub __unimp {
   Carp::croak 'Method not implemented on immutable arrays'
 }
 { no warnings 'once';
-  *clear = *__unimp;
-  *set   = *__unimp;
-  *pop   = *__unimp;
-  *push  = *__unimp;
-  *shift = *__unimp;
-  *unshift = *__unimp;
-  *delete  = *__unimp;
-  *insert  = *__unimp;
-  *splice  = *__unimp;
+  *clear        = *__unimp;
+  *set          = *__unimp;
+  *pop          = *__unimp;
+  *push         = *__unimp;
+  *shift        = *__unimp;
+  *unshift      = *__unimp;
+  *delete       = *__unimp;
+  *delete_when  = *__unimp;
+  *insert       = *__unimp;
+  *splice       = *__unimp;
 }
 
 print
@@ -56,7 +57,8 @@ pop
 push
 shift 
 unshift 
-delete 
+delete
+delete_when
 insert 
 splice
 

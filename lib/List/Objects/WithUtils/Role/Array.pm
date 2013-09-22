@@ -457,6 +457,15 @@ Clears the array entirely.
 
 Splices a given index out of the array.
 
+=head3 delete_when
+
+  $array->delete_when( sub { $_[0] eq 'foo' } );
+
+Splices all items out of the array for which the given subroutine evaluates to
+true.
+
+Returns a new array object containing the deleted values (possibly none).
+
 =head3 insert
 
   $array->insert( $position, $value );
