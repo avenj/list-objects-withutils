@@ -14,11 +14,14 @@ sub import {
     $pkg   = $opts{to} || caller;
   }
 
-  if (!@funcs) {
-    @funcs = @DefaultImport
-  } elsif (grep {; lc $_ eq 'all' || lc $_ eq ':all' } @funcs) {
+  @funcs = @DefaultImport unless @funcs;
+  my %fmap = map {; 
+    lc( index($_, ':') == 0 ? substr($_, 1) : $_ ) => 1
+  } @funcs;
+
+  if (defined $fmap{all}) {
     @funcs = ( @DefaultImport, 'autobox', 'array_of', 'hash_of' )
-  } elsif (grep {; lc $_ eq 'functions' || lc $_ eq ':functions' } @funcs) {
+  } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
     @funcs = ( @DefaultImport, 'array_of', 'hash_of' )
   }
 
@@ -91,18 +94,18 @@ List::Objects::WithUtils - List objects with useful methods
   # Import selectively:
   use List::Objects::WithUtils 'array';
 
-  # Import 'array()', 'immarray()', 'hash()' object constructors:
+  # Import the basic 'array', 'immarray', and 'hash' constructors:
   use List::Objects::WithUtils;
 
-  # Import all functions:
+  # Import all object constructor functions
+  #  (array, immarray, array_of, hash, hash_of)
   use List::Objects::WithUtils ':functions';
 
   # Import all of the above plus autoboxing:
   use List::Objects::WithUtils ':all';
-  # Same, but via convenience shortcut:
+  # Same, but via the 'Lowu' shortcut:
   use Lowu;
 
-  # Some simple chained array operations, eventually returning a plain list
   # Most methods returning lists return new objects; chaining is easy:
   array(qw/ aa Ab bb Bc bc /)
     ->grep(sub { /^b/i })
@@ -117,7 +120,7 @@ List::Objects::WithUtils - List objects with useful methods
     +{ id => '600', user => 'fred' },
   )->first(sub { $_->{id} > 500 });
 
-  my $sum = array( 1, 2, 3 )->reduce(sub { $_[0] + $_[1] });  # 6
+  my $sum = array( 1, 2, 3 )->reduce(sub { $_[0] + $_[1] });
 
   my $itr = array( 1 .. 7 )->natatime(3);
   while ( my @nextset = $itr->() ) {
@@ -149,7 +152,7 @@ List::Objects::WithUtils - List objects with useful methods
   $static->[0] = 'quux';    # dies
   push @$static, 'quux';    # dies
 
-  # Simple hash operations; construct a hash:
+  # Construct a hash:
   my $hash  = hash( foo => 'bar', snacks => 'cake' );
   
   # You can set multiple keys in one call:
@@ -217,8 +220,8 @@ List::Objects::WithUtils - List objects with useful methods
 =head1 DESCRIPTION
 
 A set of roles and classes defining an object-oriented interface to Perl
-hashes and arrays with useful utility methods, junctions, and optional
-autoboxing.
+hashes and arrays with useful utility methods, junctions, type-checking
+ability, and optional autoboxing.
 
 Originally derived from L<Data::Perl>.
 
@@ -251,19 +254,6 @@ Importing B<functions> or B<:functions> will import all of the above.
 
 Importing B<all> or B<:all> will import all of the above and additionally turn
 B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
-
-B<Why another object-oriented list module?>
-
-There are a fair few object-oriented approaches to lists on CPAN, none of
-which were quite what I needed. L<Data::Perl> comes the closest -- but is
-primarily targetting MooX::HandlesVia and could not guarantee a stable API at the
-time this was written (plus, I don't need the other data types).
-
-This module aims to provide a consistent, natural interface to hashes and
-arrays exclusively, with convenient access to common tools. The interface is
-expected to remain stable; methods may be added but are
-not expected to be removed (or experience incompatible interface changes, barring
-serious bugs).
 
 =head1 SEE ALSO
 
@@ -349,12 +339,13 @@ Licensed under the same terms as Perl.
 The original Array and Hash roles were derived from L<Data::Perl> by Matthew
 Phillips (CPAN: MATTP), haarg, and others.
 
-Immutable array objects were inspired by L<Const::Fast>.
+Immutable array objects were inspired by L<Const::Fast> by Leon Timmermans
+(CPAN: LEONT)
 
-Junctions are adapted from L<Perl6::Junction> by Carl Franks.
+Junctions are adapted from L<Perl6::Junction> by Carl Franks (CPAN: CFRANKS)
 
-Many of the useful type-checking bits were contributed by Toby Inkster (CPAN:
-TOBYINK).
+Most of the type-checking code and other useful additions were contributed by
+Toby Inkster (CPAN: TOBYINK)
 
 Much of this code simply wraps other widely-used modules, including:
 
