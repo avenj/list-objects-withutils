@@ -16,7 +16,7 @@ sub import {
 
   @funcs = @DefaultImport unless @funcs;
   my %fmap = map {; 
-    lc( index($_, ':') == 0 ? substr($_, 1) : $_ ) => 1
+    lc( substr($_, 0, 1) eq ':' ? substr($_, 1) : $_ ) => 1
   } @funcs;
 
   if (defined $fmap{all}) {
