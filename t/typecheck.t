@@ -6,7 +6,7 @@ BEGIN {
   ) {
     require Test::More;
     Test::More::plan(skip_all => 
-      'these tests require List::Objects::Types'
+      'these tests require List::Objects::Types and Types::Standard'
     );
   }
 }

@@ -77,7 +77,7 @@ ok( $with_hash->get(0)->set(foo => 'baz'), 'hash->set in immarray ok' );
 ok( $with_hash->get(0)->get('foo') eq 'baz', 'hash->get in immarray ok' );
 
 SKIP: { 
-  skip 'SvREADONLY behavior changed in 5.19', 1 if $] >= 5.019;
+  skip 'SvREADONLY behavior changed in 5.19', 1 if $] =~ /^5.019/;
 # FIXME
 # Fails in 5.19.3 for reasons not entirely clear to me ...
 # ... but if the user is doing this they're already breaking encapsulation
