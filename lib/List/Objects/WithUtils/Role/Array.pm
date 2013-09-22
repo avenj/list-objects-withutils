@@ -164,10 +164,17 @@ sub unshift {
 
 sub clear  { @{ $_[0] } = (); $_[0] }
 
-sub delete { 
-  scalar( 
-    CORE::splice @{ $_[0] }, $_[1], 1
-  ) 
+sub delete { scalar CORE::splice @{ $_[0] }, $_[1], 1 }
+
+sub delete_when {
+  my ($self, $sub) = @_;
+  my @removed;
+  my $i = @$self;
+  while ($i--) {
+    CORE::push @removed, CORE::splice @$self, $i, 1 
+      if $sub->( $self->[$i] );
+  }
+  blessed_or_pkg($_[0])->new(@removed)
 }
 
 sub insert { 
