@@ -85,7 +85,7 @@ list-mutating methods:
   set
   pop push
   shift unshift
-  delete
+  delete delete_when
   insert
   splice
 

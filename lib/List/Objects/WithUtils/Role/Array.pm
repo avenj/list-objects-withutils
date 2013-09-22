@@ -171,8 +171,8 @@ sub delete_when {
   my @removed;
   my $i = @$self;
   while ($i--) {
-    CORE::push @removed, CORE::splice @$self, $i, 1 
-      if $sub->( $self->[$i] );
+    local $_ = $self->[$i];
+    CORE::push @removed, CORE::splice @$self, $i, 1 if $sub->($_);
   }
   blessed_or_pkg($_[0])->new(@removed)
 }
@@ -459,7 +459,7 @@ Splices a given index out of the array.
 
 =head3 delete_when
 
-  $array->delete_when( sub { $_[0] eq 'foo' } );
+  $array->delete_when( sub { $_ eq 'foo' } );
 
 Splices all items out of the array for which the given subroutine evaluates to
 true.

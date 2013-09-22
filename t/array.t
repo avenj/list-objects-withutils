@@ -112,7 +112,7 @@ is_deeply( [ $arr->all ], [1,2,4], 'all() after delete() ok' );
 
 ## delete_when();
 $arr = array(1,2,1,1,3,4,1);
-ok( $deleted = $arr->delete_when(sub { $_[0] == 1 }), 'delete_when() ok' );
+ok( $deleted = $arr->delete_when(sub { $_ == 1 }), 'delete_when() ok' );
 is_deeply( [ $deleted->all ], [ (1) x 4 ], 'delete_when() deleted value ok' );
 is_deeply( [ $arr->all ], [2,3,4], 'all() after delete_when() ok' );
 
