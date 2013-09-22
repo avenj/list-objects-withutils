@@ -38,7 +38,7 @@ sub new {
   bless +{ @_[1 .. $#_] }, $_[0]
 }
 
-sub clear { %{ $_[0] } = () }
+sub clear { %{ $_[0] } = (); $_[0] }
 
 sub copy {
   bless +{ %{ $_[0] } }, blessed_or_pkg($_[0])
@@ -186,6 +186,8 @@ Returns a raw key/value list.
 =head2 clear
 
 Clears the current hash entirely.
+
+Returns the hash object (as of version 1.013).
 
 =head2 copy
 
