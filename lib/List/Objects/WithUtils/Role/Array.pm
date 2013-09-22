@@ -641,7 +641,7 @@ The subroutine is passed the value we are operating on, or you can use the
 topicalizer C<$_>:
 
   array(qw/foo bar baz 1 2 3/)
-    ->part(sub { $_ =~ /^[0-9]+$/ ? 0 : 1 })
+    ->part(sub { m/^[0-9]+$/ ? 0 : 1 })
     ->get(1)
     ->all;   # 'foo', 'bar', 'baz'
 

@@ -128,7 +128,7 @@ my $upper = $arr->map(sub { uc $_[0] });
 is_deeply( [ $upper->all ], [qw/A B C/], 'map() ok' );
 is_deeply( [ $arr->all ], [qw/a b c/], 'orig after map() ok' );
 is_deeply(
-  [ array(qw/ a b c /)->map(sub { uc $_ })->all ],
+  [ array(qw/ a b c /)->map(sub { uc })->all ],
   [ qw/ A B C / ],
   'map() on topicalizer ok'
 );
@@ -205,11 +205,11 @@ ok( !$arr->has_any(sub { $_ eq 'd' }), 'negative has_any with param ok' );
 ## first()
 $arr = array(qw/ a ba bb c /);
 my $first;
-ok( $first = $arr->first(sub { $_ =~ /^b/ }), 'first() ok' );
+ok( $first = $arr->first(sub { /^b/ }), 'first() ok' );
 cmp_ok( $first, 'eq', 'ba', 'first() correct element ok' );
 
 ## firstidx()
-ok( $first = $arr->firstidx(sub { $_ =~ /^b/ }), 'firstidx() ok' );
+ok( $first = $arr->firstidx(sub { /^b/ }), 'firstidx() ok' );
 cmp_ok( $first, '==', 1, 'firstidx() correct index ok' );
 
 ## reduce()
