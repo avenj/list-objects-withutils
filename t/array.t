@@ -408,12 +408,12 @@ is_deeply(
 
 undef $parts_single;
 
-my ($evens, $odds) = array( 1 .. 6 )->part(sub { $_[0] & 1 })->all;
+my ($evens, $odds) = array( 1 .. 6 )->part(sub { $_ & 1 })->all;
 is_deeply( [ $evens->all ], [ 2,4,6 ], 'part() with args picked evens ok' );
 is_deeply( [ $odds->all ], [ 1,3,5 ], 'part() with args picked odds ok' );
 
 ## bisect()
-my $pair = array( 1 .. 10 )->bisect(sub { $_[0] >= 5 });
+my $pair = array( 1 .. 10 )->bisect(sub { $_ >= 5 });
 isa_ok( $pair, 'List::Objects::WithUtils::Array', 
   'bisect() array obj'
 );

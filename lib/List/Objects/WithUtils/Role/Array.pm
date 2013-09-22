@@ -525,7 +525,7 @@ Returns all elements in the array as a plain list.
 =head3 bisect
 
   my ($true, $false) = array( 1 .. 10 )
-    ->bisect(sub { $_[0] >= 5 })
+    ->bisect(sub { $_ >= 5 })
     ->all;
   my @bigger  = $true->all;   # ( 5 .. 10 )
   my @smaller = $false->all;  # ( 1 .. 4 )
@@ -637,10 +637,11 @@ Skipped partitions are empty array objects:
   $parts->get(0)->is_empty;  # true
   $parts->get(1)->is_empty;  # false
 
-The subroutine is passed the value we are operating on:
+The subroutine is passed the value we are operating on, or you can use the
+topicalizer C<$_>:
 
   array(qw/foo bar baz 1 2 3/)
-    ->part(sub { $_[0] =~ /^[0-9]+$/ ? 0 : 1 })
+    ->part(sub { $_ =~ /^[0-9]+$/ ? 0 : 1 })
     ->get(1)
     ->all;   # 'foo', 'bar', 'baz'
 
