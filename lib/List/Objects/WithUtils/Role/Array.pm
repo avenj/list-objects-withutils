@@ -109,6 +109,8 @@ sub all { @{ $_[0] } }
 
 sub count { CORE::scalar @{ $_[0] } }
 
+sub end { $#{ $_[0] } }
+
 { no warnings 'once'; *scalar = *count; *export = *all; }
 
 sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }

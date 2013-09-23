@@ -19,6 +19,9 @@ cmp_ok( $arr->count, '==', 1, 'size 1 ok' );
 $arr = array(1,2,3);
 cmp_ok( $arr->count, '==', 3, 'size 3 ok' );
 
+## end()
+cmp_ok( $arr->end, '==', 2, 'last index is 2' );
+
 ## join()
 cmp_ok( $arr->join, 'eq', '1,2,3', 'join 1 ok' );
 cmp_ok( $arr->join('-'), 'eq', '1-2-3', 'join 2 ok' );
