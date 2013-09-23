@@ -427,6 +427,10 @@ Creates a shallow clone of the current object.
 
 Returns the number of elements in the array.
 
+=head3 end
+
+Returns the last index of the array.
+
 =head3 is_empty
 
 Returns boolean true if the array is empty.
