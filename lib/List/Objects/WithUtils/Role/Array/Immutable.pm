@@ -22,11 +22,6 @@ around new => sub {
   $self
 };
 
-my $unimp = sub {
-  local $Carp::CarpLevel = 1;
-  Carp::croak 'Method not implemented on immutable arrays'
-};
-
 around $_ => _make_unimp($_) for qw/
   clear
   set
@@ -65,20 +60,20 @@ splice
 
 =head1 NAME
 
-List::Objects::WithUtils::Array::Immutable - Immutable array objects
+List::Objects::WithUtils::Role::Array::Immutable - Immutable array behavior
 
 =head1 SYNOPSIS
 
+  # Via List::Objects::WithUtils::Array::Immutable ->
   use List::Objects::WithUtils 'immarray';
-
   my $array = immarray(qw/ a b c /);
-
-  my ($head, $rest) = $array->head;
 
 =head1 DESCRIPTION
 
-A subclass of L<List::Objects::WithUtils::Array> without the following
-list-mutating methods:
+This role adds immutable behavior to L<List::Objects::WithUtils::Role::Array>
+consumers.
+
+The following methods are not available and will throw an exception:
 
   clear
   set
@@ -88,8 +83,9 @@ list-mutating methods:
   insert
   splice
 
-The array is marked read-only; attempting to call the methods listed above or
-manually modify the backing ARRAY reference will throw an exception.
+See L<List::Objects::WithUtils::Array::Immutable> for a consumer
+implementation that also pulls in L<List::Objects::WithUtils::Role::Array> &
+L<List::Objects::WithUtils::Role::Array::WithJunctions>.
 
 =head1 AUTHOR
 

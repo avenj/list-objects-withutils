@@ -22,23 +22,6 @@ sub immarray { __PACKAGE__->new(@_) }
 
 =pod
 
-=begin Pod::Coverage
-
-new
-immarray
-clear
-set
-pop
-push
-shift 
-unshift 
-delete
-delete_when
-insert 
-splice
-
-=end Pod::Coverage
-
 =head1 NAME
 
 List::Objects::WithUtils::Array::Immutable - Immutable array objects
@@ -53,19 +36,22 @@ List::Objects::WithUtils::Array::Immutable - Immutable array objects
 
 =head1 DESCRIPTION
 
-A subclass of L<List::Objects::WithUtils::Array> without the following
-list-mutating methods:
+These are immutable array objects; attempting to call list-mutating methods
+will throw an exception.
 
-  clear
-  set
-  pop push
-  shift unshift
-  delete delete_when
-  insert
-  splice
+On Perls which support it properly, the array is also marked read-only;
+manually modifying the backing ARRAY reference will also throw an exception.
 
-The array is marked read-only; attempting to call the methods listed above or
-manually modify the backing ARRAY reference will throw an exception.
+This class consumes the following roles, which contain most of the relevant
+documentation:
+
+L<List::Objects::WithUtils::Role::Array>
+
+L<List::Objects::WithUtils::Role::Array::WithJunctions>
+
+L<List::Objects::WithUtils::Role::Array::Immutable>
+
+(See L<List::Objects::WithUtils::Array> for the mutable implementation.)
 
 =head1 AUTHOR
 
