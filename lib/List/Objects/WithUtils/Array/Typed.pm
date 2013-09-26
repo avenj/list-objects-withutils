@@ -1,51 +1,23 @@
 package List::Objects::WithUtils::Array::Typed;
 use strictures 1;
 
-use parent 'List::Objects::WithUtils::Array';
-
-use Carp ();
-use Scalar::Util ();
-use Type::Tie ();
+use Role::Tiny ();
+Role::Tiny->apply_roles_to_package( __PACKAGE__,
+  qw/
+    List::Objects::WithUtils::Role::Array
+    List::Objects::WithUtils::Role::Array::WithJunctions
+    List::Objects::WithUtils::Role::Array::Typed
+  /,
+);
 
 use Exporter 'import';
 our @EXPORT = 'array_of';
 sub array_of { __PACKAGE__->new(@_) }
-
-sub type {
-  tied(@{$_[0]})->type
-}
-
-sub new {
-  my $class = shift;
-  my $type;
-
-  if (my $blessed = Scalar::Util::blessed $class) {
-    $type  = $class->type;
-    $class = $blessed;
-  } else {
-    $type = shift;
-  }
-
-  Carp::confess "Expected a Type::Tiny type but got '$type'"
-    unless Scalar::Util::blessed($type)
-    && $type->isa('Type::Tiny');
-
-  my $self = [];
-  tie(@$self, 'Type::Tie::ARRAY', $type);
-  push @$self, @_;
-  bless $self, $class;
-}
-
-print
-  qq[<Su-Shee> there are those days when I'm too stupid to loop over a],
-  qq[ simple list of things... I should close my editor now.\n],
-  qq[<dngor> Su-Shee: Hire an iterator. \n],
-unless caller;
 1;
 
 =pod
 
-=for Pod::Coverage new array_of
+=for Pod::Coverage array_of
 
 =head1 NAME
 
@@ -67,31 +39,26 @@ List::Objects::WithUtils::Array::Typed - Type-checking array objects
 
 =head1 DESCRIPTION
 
-A L<List::Objects::WithUtils::Array> subclass providing type-checking via
-L<Type::Tiny> types.
-
-This module requires L<Type::Tie>.
+These are type-checking array objects; elements are checked against the
+specified type when the object is constructed or new elements are added.
 
 The first argument passed to the constructor should be a L<Type::Tiny> type:
 
   use Types::Standard -all;
   my $arr = array_of Str() => qw/foo bar baz/;
 
-Elements are checked against the specified type when the object is constructed
-or new elements are added.
-
 If the initial type-check fails, a coercion is attempted.
 
-Values that cannot be coerced will throw an exception.
+This class consumes the following roles, which contain most of the relevant
+documentation:
+
+L<List::Objects::WithUtils::Role::Array>
+
+L<List::Objects::WithUtils::Role::Array::WithJunctions>
+
+L<List::Objects::WithUtils::Role::Array::Typed>
 
 Also see L<Types::Standard>, L<List::Objects::Types>
-
-It's worth noting that this comes with the obvious type-checking performance
-hit, plus some extra overhead in proxying array operations.
-
-=head2 type
-
-Returns the L<Type::Tiny> type the object was created with.
 
 =head1 AUTHOR
 

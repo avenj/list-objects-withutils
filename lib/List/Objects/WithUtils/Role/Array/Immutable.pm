@@ -46,23 +46,6 @@ unless caller;
 
 =pod
 
-=begin Pod::Coverage
-
-new
-immarray
-clear
-set
-pop
-push
-shift 
-unshift 
-delete
-delete_when
-insert 
-splice
-
-=end Pod::Coverage
-
 =head1 NAME
 
 List::Objects::WithUtils::Role::Array::Immutable - Immutable array behavior
