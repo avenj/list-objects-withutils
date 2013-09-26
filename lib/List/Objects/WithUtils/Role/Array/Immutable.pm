@@ -1,23 +1,39 @@
-package List::Objects::WithUtils::Array::Immutable;
+package List::Objects::WithUtils::Role::Array::Immutable;
 use strictures 1;
+use Carp ();
 
-require Role::Tiny;
-Role::Tiny->apply_roles_to_package( __PACKAGE__,
-  qw/
-    List::Objects::WithUtils::Role::Array
-    List::Objects::WithUtils::Role::WithJunctions
-  /
-);
-Role::Tiny->apply_roles_to_package( __PACKAGE__,
-  qw/
-    List::Objects::WithUtils::Role::Array::Immutable
-  /,
-);
+use Role::Tiny;
 
-use Exporter 'import';
-our @EXPORT = 'immarray';
-sub immarray { __PACKAGE__->new(@_) }
+around new => sub {
+  my $orig = shift;
+  my $self = $orig->(@_);
 
+  &Internals::SvREADONLY($self, 1);
+  Internals::SvREADONLY($_, 1) for @$self;
+
+  $self
+};
+
+my $unimp = sub {
+  local $Carp::CarpLevel = 1;
+  Carp::croak 'Method not implemented on immutable arrays'
+};
+
+around $_ => $unimp for qw/
+  clear
+  set
+  pop push
+  shift unshift
+  delete delete_when
+  insert
+  splice
+/;
+
+print
+ qq[<LeoNerd> Coroutines are not magic pixiedust\n],
+ qq[<DrForr> LeoNerd: Any sufficiently advanced technology.\n],
+ qq[<LeoNerd> DrForr: ... probably corrupts the C stack during XS calls? ;)\n],
+unless caller;
 1;
 
 =pod

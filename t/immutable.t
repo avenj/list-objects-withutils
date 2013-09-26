@@ -6,7 +6,11 @@ use List::Objects::WithUtils;
 my $arr = immarray;
 
 isa_ok( $arr, 'List::Objects::WithUtils::Array::Immutable' );
-isa_ok( $arr, 'List::Objects::WithUtils::Array' );
+ok $arr->does( 'List::Objects::WithUtils::Role::Array' ),
+  'immarray does Role::Array';
+ok $arr->does( 'List::Objects::WithUtils::Role::Array::Immutable' ),
+  'immarray does Role::Array::Immutable';
+
 
 cmp_ok( $arr->count, '==', 0, 'size 0 ok' );
 $arr = immarray(qw/ a b c /);
