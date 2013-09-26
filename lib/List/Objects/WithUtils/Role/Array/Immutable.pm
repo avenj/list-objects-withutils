@@ -2,6 +2,14 @@ package List::Objects::WithUtils::Role::Array::Immutable;
 use strictures 1;
 use Carp ();
 
+sub _make_unimp {
+  my ($method) = @_;
+  sub {
+    local $Carp::CarpLevel = 1;
+    Carp::croak "Method '$method' not implemented on immutable arrays"
+  }
+}
+
 use Role::Tiny;
 
 around new => sub {
@@ -19,7 +27,7 @@ my $unimp = sub {
   Carp::croak 'Method not implemented on immutable arrays'
 };
 
-around $_ => $unimp for qw/
+around $_ => _make_unimp($_) for qw/
   clear
   set
   pop push
