@@ -10,4 +10,8 @@ is_deeply [ $deleted->all ], [ (1) x 4 ],
 is_deeply [ $arr->all ], [ 2, 3, 4 ],
   'delete_when deleted correct values';
 
+$arr->delete_when(sub { $_[0] == 2 });
+is_deeply [ $arr->all ], [ 3, 4 ],
+  'delete_when using $_[0] ok';
+
 done_testing;
