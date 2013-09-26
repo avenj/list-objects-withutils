@@ -22,12 +22,6 @@ use strict; use warnings FATAL => 'all';
 
   ok []->foo, 'autoboxed array ok';
   ok {}->bar, 'autoboxed hash ok';
-
-  my $foo = [1]->copy;
-  ok $foo->isa('My::Array::Obj'), 'autoboxed array copy ok';
-
-  my $bar = +{foo => 1}->copy;
-  ok $bar->isa('My::Hash::Obj'), 'autoboxed hash copy ok';
 }
 
 done_testing;
