@@ -20,9 +20,24 @@ sub import {
   } @funcs;
 
   if (defined $fmap{all}) {
-    @funcs = ( @DefaultImport, 'autobox', 'array_of', 'hash_of' )
+    @funcs = ( 
+      @DefaultImport, 
+      qw/
+        autobox
+        array_of
+        immarray_of
+        hash_of
+      /,
+    )
   } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
-    @funcs = ( @DefaultImport, 'array_of', 'hash_of' )
+    @funcs = ( 
+      @DefaultImport,
+      qw/
+        array_of
+        immarray_of
+        hash_of
+      /,
+    )
   }
 
   my @mods;
@@ -41,6 +56,10 @@ sub import {
     }
     if ($function eq 'array_of') {
       push @mods, 'List::Objects::WithUtils::Array::Typed';
+      next
+    }
+    if ($function eq 'immarray_of') {
+      push @mods, 'List::Objects::WithUtils::Array::Immutable::Typed';
       next
     }
     if ($function eq 'hash_of') {
@@ -98,7 +117,7 @@ List::Objects::WithUtils - List objects with useful methods
   use List::Objects::WithUtils;
 
   # Import all object constructor functions
-  #  (array, immarray, array_of, hash, hash_of)
+  #  (array, immarray, array_of, immarray_of, hash, hash_of)
   use List::Objects::WithUtils ':functions';
 
   # Import all of the above plus autoboxing:
@@ -246,6 +265,9 @@ C<array>, C<immarray>, and C<hash> functions.
 
 Importing B<array_of> gives you L<Type::Tiny>-compatible type-checking array
 objects; see L<List::Objects::WithUtils::Array::Typed>.
+
+Importing B<immarray_of> gives you immutable type-checking arrays; see
+L<List::Objects::WithUtils::Array::Immutable::Typed>.
 
 Importing B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
 objects; see L<List::Objects::WithUtils::Hash::Typed>.
