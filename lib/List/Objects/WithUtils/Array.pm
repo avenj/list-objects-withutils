@@ -5,7 +5,7 @@ require Role::Tiny;
 Role::Tiny->apply_roles_to_package( __PACKAGE__,
   qw/
     List::Objects::WithUtils::Role::Array
-    List::Objects::WithUtils::Role::WithJunctions
+    List::Objects::WithUtils::Role::Array::WithJunctions
    /
 );
 
@@ -32,7 +32,7 @@ List::Objects::WithUtils::Array - Array-type objects WithUtils
 See L<List::Objects::WithUtils::Role::Array> for a description of available
 methods.
 
-This class also consumes L<List::Objects::WithUtils::Role::WithJunctions>.
+This class also consumes L<List::Objects::WithUtils::Role::Array::WithJunctions>.
 
 =head2 array
 

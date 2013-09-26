@@ -8,7 +8,7 @@ my $arr = array;
 ok( $arr->does( 'List::Objects::WithUtils::Role::Array' ),
   'does Array role'
 );
-ok( $arr->does( 'List::Objects::WithUtils::Role::WithJunctions' ),
+ok( $arr->does( 'List::Objects::WithUtils::Role::Array::WithJunctions' ),
   'does WithJunctions role'
 );
 

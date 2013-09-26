@@ -260,7 +260,7 @@ B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
 L<List::Objects::WithUtils::Role::Array> for documentation on the basic set of
 C<array()> methods.
 
-L<List::Objects::WithUtils::Role::WithJunctions> for documentation on C<array()>
+L<List::Objects::WithUtils::Role::Array::WithJunctions> for documentation on C<array()>
 junction-returning methods.
 
 L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
@@ -308,7 +308,7 @@ For example, it's easy to create your own array class with new methods:
   package My::Array::Object;
   use Role::Tiny::With;
   with 'List::Objects::WithUtils::Role::Array',
-       'List::Objects::WithUtils::Role::WithJunctions';
+       'List::Objects::WithUtils::Role::Array::WithJunctions';
 
   # An easy way to add your own functional interface:
   use Exporter 'import';  our @EXPORT = 'my_array';

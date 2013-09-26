@@ -5,7 +5,7 @@ require Role::Tiny;
 Role::Tiny->apply_roles_to_package( __PACKAGE__,
   qw/
     List::Objects::WithUtils::Role::Array
-    List::Objects::WithUtils::Role::WithJunctions
+    List::Objects::WithUtils::Role::Array::WithJunctions
   /
 );
 Role::Tiny->apply_roles_to_package( __PACKAGE__,
