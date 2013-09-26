@@ -20,7 +20,7 @@ use Types::Standard -all;
 
 # hash_of
 {
-  use List::Objects::WithUtils 'hash_of';
+  use List::Objects::WithUtils 'hash', 'hash_of';
   my $h = hash_of Int() => (foo => 1, bar => 2);
   ok $h->type == Int, 'type returned Int ok';
   ok !hash->type, 'plain HashObj has no type ok';

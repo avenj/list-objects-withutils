@@ -19,7 +19,7 @@ use Types::Standard -all;
 
 # array_of
 {
-  use List::Objects::WithUtils 'array_of';
+  use List::Objects::WithUtils 'array', 'array_of';
   my $arr = array_of Int() => 1 .. 3;
   ok $arr->type == Int, 'type returned Int ok';
   ok !array->type, 'plain ArrayObj has no type ok';
