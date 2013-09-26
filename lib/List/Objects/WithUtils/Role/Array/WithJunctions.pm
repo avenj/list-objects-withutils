@@ -1,8 +1,9 @@
-package List::Objects::WithUtils::Role::WithJunctions;
+package List::Objects::WithUtils::Role::Array::WithJunctions;
 use strictures 1;
-use Role::Tiny;
 
 use List::Objects::WithUtils::Array::Junction;
+
+use Role::Tiny;
 
 sub any_items {
   List::Objects::WithUtils::Array::Junction::Any->new( @{ $_[0] } )
@@ -18,7 +19,7 @@ sub all_items {
 
 =head1 NAME
 
-List::Objects::WithUtils::Role::WithJunctions - Add junctions to Arrays
+List::Objects::WithUtils::Role::Array::WithJunctions - Add junctions
 
 =head1 SYNOPSIS
 
@@ -42,7 +43,7 @@ List::Objects::WithUtils::Role::WithJunctions - Add junctions to Arrays
   ## As a Role ->
   use Role::Tiny::With;
   with 'List::Objects::WithUtils::Role::Array',
-       'List::Objects::WithUtils::Role::WithJunctions';
+       'List::Objects::WithUtils::Role::Array::WithJunctions';
 
 =head1 DESCRIPTION
 
