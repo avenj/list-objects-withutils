@@ -10,7 +10,20 @@ sub _make_unimp {
   }
 }
 
+our @ImmutableMethods = qw/
+  clear
+  set
+  pop push
+  shift unshift
+  delete delete_when
+  insert
+  splice
+/;
+
 use Role::Tiny;
+requires 'new', @ImmutableMethods;
+
+use namespace::clean;
 
 around new => sub {
   my $orig = shift;
@@ -22,15 +35,7 @@ around new => sub {
   $self
 };
 
-around $_ => _make_unimp($_) for qw/
-  clear
-  set
-  pop push
-  shift unshift
-  delete delete_when
-  insert
-  splice
-/;
+around $_ => _make_unimp($_) for @ImmutableMethods;
 
 print
  qq[<LeoNerd> Coroutines are not magic pixiedust\n],
