@@ -2,7 +2,14 @@ package List::Objects::WithUtils;
 use Carp;
 use strictures 1;
 
-our @DefaultImport = qw/ array immarray hash /;
+our @DefaultImport = qw/ 
+  array array_of
+  immarray immarray_of
+  hash hash_of
+  immhash immhash_of
+/;
+
+## FIXME POD for new default imports
 
 sub import {
   my ($class, @funcs) = @_;
@@ -30,14 +37,8 @@ sub import {
       /,
     )
   } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
-    @funcs = ( 
-      @DefaultImport,
-      qw/
-        array_of
-        immarray_of
-        hash_of
-      /,
-    )
+    # Legacy import tag
+    @funcs = @DefaultImport
   }
 
   my @mods;
