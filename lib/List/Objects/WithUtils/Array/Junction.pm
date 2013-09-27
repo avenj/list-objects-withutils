@@ -246,14 +246,14 @@ List::Objects::WithUtils::Array::Junction - Lightweight junction classes
 
 =head1 SYNOPSIS
 
-  # See List::Objects::WithUtils::Role::WithJunctions
+  # See List::Objects::WithUtils::Role::Array::WithJunctions
 
 =head1 DESCRIPTION
 
 These are light-weight junction objects covering most of the functionality
 provided by L<Syntax::Keyword::Junction>. They provide the C<all_items> and
 C<any_items> methods defined by
-L<List::Objects::WithUtils::Role::WithJunctions>.
+L<List::Objects::WithUtils::Role::Array::WithJunctions>.
 
 Only the junction types used by L<List::Objects::WithUtils> ('any' and 'all')
 are implemented; nothing is exported. The C<~~> smart-match operator is not
@@ -263,7 +263,7 @@ stand-alone implementation with more features.
 The junction objects produced are subclasses of
 L<List::Objects::WithUtils::Array>.
 
-See L<List::Objects::WithUtils::Role::WithJunctions> for usage details.
+See L<List::Objects::WithUtils::Role::Array::WithJunctions> for usage details.
 
 =head2 Motivation
 

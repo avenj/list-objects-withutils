@@ -2,7 +2,18 @@ package List::Objects::WithUtils;
 use Carp;
 use strictures 1;
 
-our @DefaultImport = qw/ array immarray hash /;
+our %ImportMap = (
+  array       => 'Array',
+  immarray    => 'Array::Immutable',
+  array_of    => 'Array::Typed',
+  immarray_of => 'Array::Immutable::Typed',
+  hash        => 'Hash',
+  immhash     => 'Hash::Immutable',
+  hash_of     => 'Hash::Typed',
+  immhash_of  => 'Hash::Immutable::Typed',
+);
+
+our @DefaultImport = keys %ImportMap;
 
 sub import {
   my ($class, @funcs) = @_;
@@ -20,40 +31,26 @@ sub import {
   } @funcs;
 
   if (defined $fmap{all}) {
-    @funcs = ( @DefaultImport, 'autobox', 'array_of', 'hash_of' )
+    @funcs = ( 
+      @DefaultImport,
+      'autobox'
+    )
   } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
-    @funcs = ( @DefaultImport, 'array_of', 'hash_of' )
+    # Legacy import tag
+    @funcs = @DefaultImport
   }
 
   my @mods;
   for my $function (@funcs) {
-    if ($function eq 'array') {
-      push @mods, 'List::Objects::WithUtils::Array';
-      next
-    }
-    if ($function eq 'hash') {
-      push @mods, 'List::Objects::WithUtils::Hash'; 
-      next
-    }
-    if ($function eq 'immarray') {
-      push @mods, 'List::Objects::WithUtils::Array::Immutable';
-      next
-    }
-    if ($function eq 'array_of') {
-      push @mods, 'List::Objects::WithUtils::Array::Typed';
-      next
-    }
-    if ($function eq 'hash_of') {
-      push @mods, 'List::Objects::WithUtils::Hash::Typed';
-      next
-    }
     if ($function eq 'autobox') {
-      # Some unpleasantries required; autobox is weirdly scoped
       require List::Objects::WithUtils::Autobox;
       List::Objects::WithUtils::Autobox::import($class);
       next
     }
-
+    if (my $thismod = $ImportMap{$function}) {
+      push @mods, 'List::Objects::WithUtils::'.$thismod;
+      next
+    }
     carp "Unknown import parameter '$function'"
   }
 
@@ -84,7 +81,7 @@ unless caller;
 
 =head1 NAME
 
-List::Objects::WithUtils - List objects with useful methods
+List::Objects::WithUtils - List objects, kitchen sink included
 
 =head1 SYNOPSIS
 
@@ -94,12 +91,10 @@ List::Objects::WithUtils - List objects with useful methods
   # Import selectively:
   use List::Objects::WithUtils 'array';
 
-  # Import the basic 'array', 'immarray', and 'hash' constructors:
+  # Import all object constructor functions:
+  #   array immarray array_of immarray_of
+  #   hash immhash hash_of immhash_of
   use List::Objects::WithUtils;
-
-  # Import all object constructor functions
-  #  (array, immarray, array_of, hash, hash_of)
-  use List::Objects::WithUtils ':functions';
 
   # Import all of the above plus autoboxing:
   use List::Objects::WithUtils ':all';
@@ -192,15 +187,15 @@ List::Objects::WithUtils - List objects with useful methods
     ...
   }
 
-  # Type-checking arrays:
+  # Type-checking arrays via Type::Tiny:
   use List::Objects::WithUtils 'array_of';
   use Types::Standard -all;
-  my $int_arr = array_of( Int, 1 .. 10 );
+  my $int_arr = array_of Int() => 1 .. 10;
 
   # Type-checking hashes:
   use List::Objects::WithUtils 'hash_of';
   use Types::Standard -all;
-  my $int_hash = hash_of( Int, foo => 1, bar => 2 );
+  my $int_hash = hash_of Int() => (foo => 1, bar => 2);
 
   # Hashes can be inflated to objects:
   my $obj = $hash->inflate;
@@ -238,19 +233,20 @@ promotes safer functional patterns.
 B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
 L<List::Objects::WithUtils::Role::Hash> for documentation.
 
-Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
-providing methods for native ARRAY and HASH types.
-
-A bare import list (C<use List::Objects::WithUtils;>) will import the
-C<array>, C<immarray>, and C<hash> functions.
-
 Importing B<array_of> gives you L<Type::Tiny>-compatible type-checking array
 objects; see L<List::Objects::WithUtils::Array::Typed>.
+
+Importing B<immarray_of> gives you immutable type-checking arrays; see
+L<List::Objects::WithUtils::Array::Immutable::Typed>.
 
 Importing B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
 objects; see L<List::Objects::WithUtils::Hash::Typed>.
 
-Importing B<functions> or B<:functions> will import all of the above.
+Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
+providing methods for native ARRAY and HASH types.
+
+A bare import list (C<use List::Objects::WithUtils;>) will import all of the
+object constructor functions described above.
 
 Importing B<all> or B<:all> will import all of the above and additionally turn
 B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
@@ -260,7 +256,7 @@ B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
 L<List::Objects::WithUtils::Role::Array> for documentation on the basic set of
 C<array()> methods.
 
-L<List::Objects::WithUtils::Role::WithJunctions> for documentation on C<array()>
+L<List::Objects::WithUtils::Role::Array::WithJunctions> for documentation on C<array()>
 junction-returning methods.
 
 L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
@@ -308,7 +304,7 @@ For example, it's easy to create your own array class with new methods:
   package My::Array::Object;
   use Role::Tiny::With;
   with 'List::Objects::WithUtils::Role::Array',
-       'List::Objects::WithUtils::Role::WithJunctions';
+       'List::Objects::WithUtils::Role::Array::WithJunctions';
 
   # An easy way to add your own functional interface:
   use Exporter 'import';  our @EXPORT = 'my_array';

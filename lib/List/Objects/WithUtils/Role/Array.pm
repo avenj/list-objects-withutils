@@ -406,7 +406,7 @@ A L<Role::Tiny> role defining methods for creating and manipulating ARRAY-type
 objects.
 
 L<List::Objects::WithUtils::Array> consumes this role (along with
-L<List::Objects::WithUtils::Role::WithJunctions>) to provide B<array()> object
+L<List::Objects::WithUtils::Role::Array::WithJunctions>) to provide B<array()> object
 methods.
 
 In addition to the methods documented below, these objects provide a
@@ -855,7 +855,7 @@ L<List::Objects::WithUtils>
 
 L<List::Objects::WithUtils::Array>
 
-L<List::Objects::WithUtils::Role::WithJunctions>
+L<List::Objects::WithUtils::Role::Array::WithJunctions>
 
 L<List::Objects::WithUtils::Array::Immutable>
 
