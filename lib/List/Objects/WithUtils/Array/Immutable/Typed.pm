@@ -44,7 +44,10 @@ sub immarray_of {
   my $self = __PACKAGE__->new(@_);
   &Internals::SvREADONLY($self, 0);
   tie(@$self, 'Lowu::Tied::Array::RO', $self->type);
-  warn "WTF3 ".$self->join('-');
+  # FIXME array disappears here, clearly I'm failing at tie
+  # Constraints:
+  #  - tied(@$foo)->type needs to work
+  #  - attempted array modification should die
   $self
 }
 
