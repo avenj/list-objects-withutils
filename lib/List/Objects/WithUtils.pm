@@ -28,13 +28,8 @@ sub import {
 
   if (defined $fmap{all}) {
     @funcs = ( 
-      @DefaultImport, 
-      qw/
-        autobox
-        array_of
-        immarray_of
-        hash_of
-      /,
+      @DefaultImport,
+      'autobox'
     )
   } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
     # Legacy import tag
@@ -45,10 +40,6 @@ sub import {
   for my $function (@funcs) {
     if ($function eq 'array') {
       push @mods, 'List::Objects::WithUtils::Array';
-      next
-    }
-    if ($function eq 'hash') {
-      push @mods, 'List::Objects::WithUtils::Hash'; 
       next
     }
     if ($function eq 'immarray') {
@@ -63,8 +54,20 @@ sub import {
       push @mods, 'List::Objects::WithUtils::Array::Immutable::Typed';
       next
     }
+    if ($function eq 'hash') {
+      push @mods, 'List::Objects::WithUtils::Hash'; 
+      next
+    }
+    if ($function eq 'immhash') {
+      push @mods, 'List::Objects::WithUtils::Hash::Immutable';
+      next
+    }
     if ($function eq 'hash_of') {
       push @mods, 'List::Objects::WithUtils::Hash::Typed';
+      next
+    }
+    if ($function eq 'immhash_of') {
+      push @mods, 'List::Objects::WithUtils::Hash::Immutable::Typed';
       next
     }
     if ($function eq 'autobox') {
