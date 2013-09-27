@@ -23,15 +23,11 @@ our @ImmutableMethods = qw/
 use Role::Tiny;
 requires 'new', @ImmutableMethods;
 
-use namespace::clean;
-
 around new => sub {
   my $orig = shift;
   my $self = $orig->(@_);
-
   &Internals::SvREADONLY($self, 1);
   Internals::SvREADONLY($_, 1) for @$self;
-
   $self
 };
 
