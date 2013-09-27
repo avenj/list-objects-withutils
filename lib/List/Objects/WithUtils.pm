@@ -81,7 +81,7 @@ unless caller;
 
 =head1 NAME
 
-List::Objects::WithUtils - List objects with useful methods
+List::Objects::WithUtils - List objects, kitchen sink included
 
 =head1 SYNOPSIS
 
@@ -91,12 +91,10 @@ List::Objects::WithUtils - List objects with useful methods
   # Import selectively:
   use List::Objects::WithUtils 'array';
 
-  # Import the basic 'array', 'immarray', and 'hash' constructors:
+  # Import all object constructor functions:
+  #   array immarray array_of immarray_of
+  #   hash immhash hash_of immhash_of
   use List::Objects::WithUtils;
-
-  # Import all object constructor functions
-  #  (array, immarray, array_of, immarray_of, hash, hash_of)
-  use List::Objects::WithUtils ':functions';
 
   # Import all of the above plus autoboxing:
   use List::Objects::WithUtils ':all';
@@ -189,15 +187,15 @@ List::Objects::WithUtils - List objects with useful methods
     ...
   }
 
-  # Type-checking arrays:
+  # Type-checking arrays via Type::Tiny:
   use List::Objects::WithUtils 'array_of';
   use Types::Standard -all;
-  my $int_arr = array_of( Int, 1 .. 10 );
+  my $int_arr = array_of Int() => 1 .. 10;
 
   # Type-checking hashes:
   use List::Objects::WithUtils 'hash_of';
   use Types::Standard -all;
-  my $int_hash = hash_of( Int, foo => 1, bar => 2 );
+  my $int_hash = hash_of Int() => (foo => 1, bar => 2);
 
   # Hashes can be inflated to objects:
   my $obj = $hash->inflate;
@@ -235,12 +233,6 @@ promotes safer functional patterns.
 B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
 L<List::Objects::WithUtils::Role::Hash> for documentation.
 
-Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
-providing methods for native ARRAY and HASH types.
-
-A bare import list (C<use List::Objects::WithUtils;>) will import the
-C<array>, C<immarray>, and C<hash> functions.
-
 Importing B<array_of> gives you L<Type::Tiny>-compatible type-checking array
 objects; see L<List::Objects::WithUtils::Array::Typed>.
 
@@ -250,7 +242,11 @@ L<List::Objects::WithUtils::Array::Immutable::Typed>.
 Importing B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
 objects; see L<List::Objects::WithUtils::Hash::Typed>.
 
-Importing B<functions> or B<:functions> will import all of the above.
+Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
+providing methods for native ARRAY and HASH types.
+
+A bare import list (C<use List::Objects::WithUtils;>) will import all of the
+object constructor functions described above.
 
 Importing B<all> or B<:all> will import all of the above and additionally turn
 B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
