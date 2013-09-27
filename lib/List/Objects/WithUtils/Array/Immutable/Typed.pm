@@ -1,6 +1,33 @@
 package List::Objects::WithUtils::Array::Immutable::Typed;
 use strictures 1;
 
+{ package
+    Lowu::Tied::Array::RO;
+  use strictures 1;
+  use Tie::Array ();
+  use Carp ();
+  our @ISA = 'Type::Tie::ARRAY';
+  sub STORE {
+    Carp::croak "Attempted to modify a read-only value"
+  }
+  { no warnings 'once';
+    *CLEAR      = *STORE;
+    *STORESIZE  = *STORE;
+    *PUSH       = *STORE;
+    *POP        = *STORE;
+    *SHIFT      = *STORE;
+    *UNSHIFT    = *STORE;
+    *EXTEND     = *STORE;
+  }
+  sub SPLICE {
+    my ($self, $offset, $len, @list) = @_;
+    if (@list) {
+      goto &STORE
+    }
+    $self->SUPER::SPLICE($offset, $len)
+  }
+}
+
 require Role::Tiny;
 Role::Tiny->apply_roles_to_package( __PACKAGE__,
   qw/
@@ -13,7 +40,13 @@ Role::Tiny->apply_roles_to_package( __PACKAGE__,
 
 use Exporter 'import';
 our @EXPORT = 'immarray_of';
-sub immarray_of { __PACKAGE__->new(@_) }
+sub immarray_of { 
+  my $self = __PACKAGE__->new(@_);
+  &Internals::SvREADONLY($self, 0);
+  tie(@$self, 'Lowu::Tied::Array::RO', $self->type);
+  warn "WTF3 ".$self->join('-');
+  $self
+}
 
 1;
 
