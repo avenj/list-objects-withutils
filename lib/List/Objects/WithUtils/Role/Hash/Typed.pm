@@ -43,10 +43,11 @@ around new => sub {
 
 =head1 NAME
 
-List::Objects::WithUtils::Hash::Typed - Type-checking hash objects
+List::Objects::WithUtils::Role::Hash::Typed - Type-checking hash behavior
 
 =head1 SYNOPSIS
 
+  # Via List::Objects::WithUtils::Hash::Typed ->
   use List::Objects::WithUtils 'hash_of';
   use Types::Standard -all;
 
@@ -55,10 +56,8 @@ List::Objects::WithUtils::Hash::Typed - Type-checking hash objects
 
 =head1 DESCRIPTION
 
-A L<List::Objects::WithUtils::Hash> subclass providing type-checking via
-L<Type::Tiny> types.
-
-This module requires L<Type::Tie>.
+This role makes use of L<Type::Tie> to add type-checking behavior to
+L<List::Objects::WithUtils::Role::Hash> consumers.
 
 The first argument passed to the constructor should be a L<Type::Tiny> type:
 
@@ -73,9 +72,6 @@ If the initial type-check fails, a coercion is attempted.
 Values that cannot be coerced will throw an exception.
 
 Also see L<Types::Standard>, L<List::Objects::Types>
-
-It's worth noting that this comes with the obvious type-checking performance
-hit, plus some extra overhead.
 
 =head2 type
 
