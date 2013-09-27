@@ -2,14 +2,18 @@ package List::Objects::WithUtils;
 use Carp;
 use strictures 1;
 
-our @DefaultImport = qw/ 
-  array array_of
-  immarray immarray_of
-  hash hash_of
-  immhash immhash_of
-/;
+our %ImportMap = (
+  array       => 'Array',
+  immarray    => 'Array::Immutable',
+  array_of    => 'Array::Typed',
+  immarray_of => 'Array::Immutable::Typed',
+  hash        => 'Hash',
+  immhash     => 'Hash::Immutable',
+  hash_of     => 'Hash::Typed',
+  immhash_of  => 'Hash::Immutable::Typed',
+);
 
-## FIXME POD for new default imports
+our @DefaultImport = keys %ImportMap;
 
 sub import {
   my ($class, @funcs) = @_;
@@ -38,45 +42,15 @@ sub import {
 
   my @mods;
   for my $function (@funcs) {
-    if ($function eq 'array') {
-      push @mods, 'List::Objects::WithUtils::Array';
-      next
-    }
-    if ($function eq 'immarray') {
-      push @mods, 'List::Objects::WithUtils::Array::Immutable';
-      next
-    }
-    if ($function eq 'array_of') {
-      push @mods, 'List::Objects::WithUtils::Array::Typed';
-      next
-    }
-    if ($function eq 'immarray_of') {
-      push @mods, 'List::Objects::WithUtils::Array::Immutable::Typed';
-      next
-    }
-    if ($function eq 'hash') {
-      push @mods, 'List::Objects::WithUtils::Hash'; 
-      next
-    }
-    if ($function eq 'immhash') {
-      push @mods, 'List::Objects::WithUtils::Hash::Immutable';
-      next
-    }
-    if ($function eq 'hash_of') {
-      push @mods, 'List::Objects::WithUtils::Hash::Typed';
-      next
-    }
-    if ($function eq 'immhash_of') {
-      push @mods, 'List::Objects::WithUtils::Hash::Immutable::Typed';
-      next
-    }
     if ($function eq 'autobox') {
-      # Some unpleasantries required; autobox is weirdly scoped
       require List::Objects::WithUtils::Autobox;
       List::Objects::WithUtils::Autobox::import($class);
       next
     }
-
+    if (my $thismod = $ImportMap{$function}) {
+      push @mods, 'List::Objects::WithUtils::'.$thismod;
+      next
+    }
     carp "Unknown import parameter '$function'"
   }
 
