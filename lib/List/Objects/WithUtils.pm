@@ -20,6 +20,8 @@ sub import {
 
   my $pkg;
   if (ref $funcs[0]) {
+    croak 'Expected a list of imports or a HASH but got '.$funcs[0]
+      unless ref $funcs[0] eq 'HASH';
     my %opts = %{ $funcs[0] };
     @funcs = @{ $opts{import} || [ 'all' ] };
     $pkg   = $opts{to} || caller;
@@ -63,7 +65,7 @@ sub import {
   }
 
   if (@failed) {
-    confess 'Failed to import ' . join ', ', @failed
+    croak 'Failed to import ' . join ', ', @failed
   }
 
   1
