@@ -229,19 +229,18 @@ there for documentation on available methods.
 
 B<immarray> is imported from L<List::Objects::WithUtils::Array::Immutable> and
 operates much like an B<array>, except methods that mutate the list are not
-available and the backing ARRAY is marked read-only; using immutable arrays 
-promotes safer functional patterns.
+available; using immutable arrays promotes safer functional patterns.
 
 B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
 L<List::Objects::WithUtils::Role::Hash> for documentation.
 
-Importing B<array_of> gives you L<Type::Tiny>-compatible type-checking array
+B<array_of> gives you L<Type::Tiny>-compatible type-checking array
 objects; see L<List::Objects::WithUtils::Array::Typed>.
 
-Importing B<immarray_of> gives you immutable type-checking arrays; see
+B<immarray_of> gives you immutable type-checking arrays; see
 L<List::Objects::WithUtils::Array::Immutable::Typed>.
 
-Importing B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
+B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
 objects; see L<List::Objects::WithUtils::Hash::Typed>.
 
 Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
@@ -251,35 +250,8 @@ A bare import list (C<use List::Objects::WithUtils;>) will import all of the
 object constructor functions described above.
 
 Importing B<all> or B<:all> will import all of the above and additionally turn
-B<autobox> on, as will the shortcut C<use Lowu;> (as of 1.003).
+B<autobox> on; C<use Lowu;> is a shortcut for importing B<all>.
 
-=head1 SEE ALSO
-
-L<List::Objects::WithUtils::Role::Array> for documentation on the basic set of
-C<array()> methods.
-
-L<List::Objects::WithUtils::Role::Array::WithJunctions> for documentation on C<array()>
-junction-returning methods.
-
-L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
-methods.
-
-L<List::Objects::WithUtils::Array::Immutable> for more on C<immarray()>
-immutable arrays.
-
-L<List::Objects::WithUtils::Array::Typed> for more on C<array_of()>
-type-checking arrays.
-
-L<List::Objects::WithUtils::Hash::Typed> for more on C<hash_of()>
-type-checking hashes.
-
-L<List::Objects::WithUtils::Autobox> for details on autoboxing.
-
-The L<Lowu> module for a convenient importer shortcut.
-
-L<List::Objects::Types> for relevant L<Type::Tiny> types.
-
-L<MoopsX::ListObjects> for integration with L<Moops> class-building sugar.
 
 =head2 Subclassing
 
@@ -328,6 +300,34 @@ overrides C<array_type> to produce your preferred arrays:
 
   # ...
  
+=head1 SEE ALSO
+
+L<List::Objects::WithUtils::Role::Array> for documentation on the basic set of
+C<array()> methods.
+
+L<List::Objects::WithUtils::Role::Array::WithJunctions> for documentation on C<array()>
+junction-returning methods.
+
+L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
+methods.
+
+L<List::Objects::WithUtils::Array::Immutable> for more on C<immarray()>
+immutable arrays.
+
+L<List::Objects::WithUtils::Array::Typed> for more on C<array_of()>
+type-checking arrays.
+
+L<List::Objects::WithUtils::Hash::Typed> for more on C<hash_of()>
+type-checking hashes.
+
+L<List::Objects::WithUtils::Autobox> for details on autoboxing.
+
+The L<Lowu> module for a convenient importer shortcut.
+
+L<List::Objects::Types> for relevant L<Type::Tiny> types.
+
+L<MoopsX::ListObjects> for integration with L<Moops> class-building sugar.
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
