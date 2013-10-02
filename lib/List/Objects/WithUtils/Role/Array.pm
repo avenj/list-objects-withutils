@@ -7,24 +7,27 @@ use List::Util ();
 use List::MoreUtils ();
 use List::UtilsBy ();
 
+use Module::Runtime ();
+
 use Scalar::Util ();
 
 =pod
 
-=for Pod::Coverage ARRAY_TYPE blessed_or_pkg
+=for Pod::Coverage ARRAY_TYPE HASH_TYPE blessed_or_pkg
 
 =begin comment
 
 Regarding blessed_or_pkg():
 This is some nonsense to support autoboxing; if we aren't blessed, we're
 autoboxed, in which case we appear to have no choice but to cheap out and
-return the basic array type:
+return the basic array type.
 
 =end comment
 
 =cut
 
 sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
+
 sub blessed_or_pkg {
   my ($item) = @_;
   my $pkg;
@@ -58,6 +61,9 @@ sub __flatten {
 
 
 use Role::Tiny;
+
+
+sub inflated_type { 'List::Objects::WithUtils::Hash' }
 
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
@@ -96,6 +102,13 @@ sub new {
 sub copy {
   my ($self) = @_;
   blessed_or_pkg($self)->new(@$self);
+}
+
+sub inflate {
+  my ($self) = @_;
+  my $pkg = blessed_or_pkg($self);
+  Module::Runtime::require_module( $pkg->inflated_type );
+  $pkg->inflated_type->new(@$self)
 }
 
 sub validated {
@@ -438,6 +451,24 @@ Returns boolean true if the array is empty.
 =head3 scalar
 
 See L</count>.
+
+=head3 inflate
+
+  my $hash = $array->inflate;
+  # Same as:
+  # my $hash = hash( $array->all )
+
+Inflates an array-type object to a hash-type object.
+
+Returns an L</inflated_type> object; by default this is a
+L<List::Objects::WithUtils::Hash>.
+
+=head3 inflated_type
+
+The class name that objects are blessed into when calling L</inflate>;
+subclasses can override to provide their own hash-type objects.
+
+Defaults to L<List::Objects::WithUtils::Hash>.
 
 =head2 Methods that manipulate the list
 

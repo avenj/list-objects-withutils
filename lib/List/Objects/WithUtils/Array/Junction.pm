@@ -251,8 +251,8 @@ List::Objects::WithUtils::Array::Junction - Lightweight junction classes
 =head1 DESCRIPTION
 
 These are light-weight junction objects covering most of the functionality
-provided by L<Syntax::Keyword::Junction>. They provide the C<all_items> and
-C<any_items> methods defined by
+provided by L<Syntax::Keyword::Junction>. They provide the objects created by
+the C<all_items> and C<any_items> methods defined by
 L<List::Objects::WithUtils::Role::Array::WithJunctions>.
 
 Only the junction types used by L<List::Objects::WithUtils> ('any' and 'all')
