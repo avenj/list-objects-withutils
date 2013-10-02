@@ -86,8 +86,6 @@ sub _try_coerce {
 
 =cut
 
-sub TO_JSON { [ @{ $_[0] } ] }
-
 sub type {
   # array() has an empty ->type
 }
@@ -110,6 +108,9 @@ sub inflate {
   Module::Runtime::require_module( $pkg->inflated_type );
   $pkg->inflated_type->new(@$self)
 }
+
+sub unbless { [ @{ $_[0] } ] }
+{ no warnings 'once'; *TO_JSON = *unbless; }
 
 sub validated {
   my ($self, $type) = @_;
@@ -469,6 +470,10 @@ The class name that objects are blessed into when calling L</inflate>;
 subclasses can override to provide their own hash-type objects.
 
 Defaults to L<List::Objects::WithUtils::Hash>.
+
+=head3 unbless
+
+Returns a plain C</ARRAY> reference (shallow clone).
 
 =head2 Methods that manipulate the list
 

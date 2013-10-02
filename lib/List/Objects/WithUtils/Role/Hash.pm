@@ -29,14 +29,15 @@ sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =cut
 
-sub TO_JSON { +{ %{ $_[0] } } }
-
 sub type { }
 
 sub new {
   Module::Runtime::require_module( $_[0]->array_type );
   bless +{ @_[1 .. $#_] }, $_[0]
 }
+
+sub unbless { +{ %{ $_[0] } } }
+{ no warnings 'once'; *TO_JSON = *unbless; }
 
 sub clear { %{ $_[0] } = (); $_[0] }
 
@@ -192,6 +193,10 @@ Returns the hash object (as of version 1.013).
 =head2 copy
 
 Creates a shallow clone of the current object.
+
+=head2 unbless
+
+Returns a plain C</HASH> reference (shallow clone).
 
 =head2 defined
 
