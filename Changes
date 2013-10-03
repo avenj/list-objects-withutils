@@ -1,5 +1,27 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.001001 2013-10-03
+
+  - Import all constructor functions by default
+    (via 'use List::Objects::WithUtils')
+
+  - Add 'immhash' immutable hashes
+
+  - Add 'immarray_of' and 'immhash_of' immutable type-checking lists
+
+  - New array methods: delete_when(), end(), inflate()
+
+  - hash()->clear returns the hash object
+
+  - Immutable array behavior should now work consistently across any
+    perl version; no longer mucking about with Internals::SvREADONLY
+
+  - Immutable & type-checking behavior moved to roles
+
+  - Role::WithJunctions moved to Role::Array::WithJunctions
+
+  - t/ reorganized to be slightly more managable
+
 1.012001 2013-09-16
 
   - Add hash->kv_sort()

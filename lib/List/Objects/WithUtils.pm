@@ -90,9 +90,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
   ## A small sample; consult the description, below, for links to
   ## extended documentation
 
-  # Import selectively:
-  use List::Objects::WithUtils 'array';
-
   # Import all object constructor functions:
   #   array immarray array_of immarray_of
   #   hash immhash hash_of immhash_of
@@ -112,12 +109,10 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
   # Useful utilities from other list modules are available:
   my $wanted = array(
-    +{ id => '200', user => 'bob' },
-    +{ id => '400', user => 'suzy' },
-    +{ id => '600', user => 'fred' },
+    +{ id => '400', user => 'bob' },
+    +{ id => '600', user => 'suzy' },
+    +{ id => '700', user => 'fred' },
   )->first(sub { $_->{id} > 500 });
-
-  my $sum = array( 1, 2, 3 )->reduce(sub { $_[0] + $_[1] });
 
   my $itr = array( 1 .. 7 )->natatime(3);
   while ( my @nextset = $itr->() ) {
@@ -154,9 +149,11 @@ List::Objects::WithUtils - List objects, kitchen sink included
   
   # You can set multiple keys in one call:
   $hash->set( foobar => 'baz', pie => 'cherry' );
+
   # ... which is useful for merging in another (plain) hash:
   my %foo = ( pie => 'pumpkin', snacks => 'cheese' );
   $hash->set( %foo );
+
   # ... or another hash object:
   my $second = hash( pie => 'key lime' );
   $hash->set( $second->export );
@@ -170,6 +167,10 @@ List::Objects::WithUtils - List objects, kitchen sink included
   # Take a hash slice of keys, return a new hash object
   # consisting of the retrieved key/value pairs:
   my $slice = $hash->sliced('foo', 'pie');
+
+  # Hashes can be inflated to objects:
+  my $obj = $hash->inflate;
+  $snacks = $obj->snacks;
 
   # Chained method examples; methods that return multiple values
   # typically return new array-type objects:
@@ -198,10 +199,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
   use List::Objects::WithUtils 'hash_of';
   use Types::Standard -all;
   my $int_hash = hash_of Int() => (foo => 1, bar => 2);
-
-  # Hashes can be inflated to objects:
-  my $obj = $hash->inflate;
-  $snacks = $obj->snacks;
 
   # Native list types can be autoboxed:
   use List::Objects::WithUtils 'autobox';
