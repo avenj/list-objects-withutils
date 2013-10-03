@@ -44,10 +44,4 @@ ok( $with_hash->get(0)->get('foo') eq 'bar', 'hash in immarray ok' );
 ok( $with_hash->get(0)->set(foo => 'baz'), 'hash->set in immarray ok' );
 ok( $with_hash->get(0)->get('foo') eq 'baz', 'hash->get in immarray ok' );
 
-SKIP: {
-  local $@;
-  eval {; $with_hash->[0] = 'foo' };
-  ok( $@ =~ /read-only/, 'attempt to modify 2 died' ) or diag $@;
-}
-
 done_testing;
