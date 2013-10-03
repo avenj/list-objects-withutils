@@ -14,9 +14,7 @@ around type => sub {
 };
 
 around new => sub {
-  shift;
-  my $class = shift;
-  my $type;
+  my (undef, $class, $type) = splice @_, 0, 2;
 
   if (my $blessed = Scalar::Util::blessed $class) {
     $type  = $class->type;

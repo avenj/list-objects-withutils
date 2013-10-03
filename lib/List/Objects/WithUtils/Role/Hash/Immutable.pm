@@ -51,6 +51,7 @@ List::Objects::WithUtils::Role::Hash::Immutable - Immutable hash behavior
   # Via List::Objects::WithUtils::Hash::Immutable ->
   use List::Objects::WithUtils 'immhash';
   my $hash = immhash( foo => 1, bar => 2 );
+  $hash->set(foo => 3);  # dies
 
 =head1 DESCRIPTION
 
@@ -63,7 +64,7 @@ The following methods are not available and will throw an exception:
   set
   delete
 
-(The backing hash is also marked read-only.)
+(The backing hash is also marked read-only, but see L<Hash::Util/"CAVEATS">)
 
 See L<List::Objects::WithUtils::Hash::Immutable> for a consumer
 implementation.

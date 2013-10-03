@@ -66,6 +66,7 @@ List::Objects::WithUtils::Role::Array::Immutable - Immutable array behavior
   # Via List::Objects::WithUtils::Array::Immutable ->
   use List::Objects::WithUtils 'immarray';
   my $array = immarray(qw/ a b c /);
+  $array->push('d');  # dies
 
 =head1 DESCRIPTION
 
