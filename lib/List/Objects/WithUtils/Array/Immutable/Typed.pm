@@ -13,13 +13,7 @@ Role::Tiny->apply_roles_to_package( __PACKAGE__,
 
 use Exporter 'import';
 our @EXPORT = 'immarray_of';
-sub immarray_of { 
-  my $self = __PACKAGE__->new(@_);
-  Role::Tiny->apply_roles_to_object( tied(@$self),
-    'List::Objects::WithUtils::Role::Array::TiedRO'
-  );
-  $self
-}
+sub immarray_of { __PACKAGE__->new(@_) }
 
 1;
 

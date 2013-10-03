@@ -1,6 +1,7 @@
 package List::Objects::WithUtils::Role::Array::Immutable;
 use strictures 1;
 use Carp ();
+use Tie::Array ();
 
 sub _make_unimp {
   my ($method) = @_;
@@ -24,10 +25,24 @@ use Role::Tiny;
 requires 'new', @ImmutableMethods;
 
 around new => sub {
-  my $orig = shift;
-  my $self = $orig->(@_);
-  &Internals::SvREADONLY($self, 1);
-  Internals::SvREADONLY($_, 1) for @$self;
+  my ($orig, $class) = splice @_, 0, 2;
+  my $self = $class->$orig(@_);
+
+  # SvREADONLY behavior is not very reliable.
+  # Remove mutable behavior from our backing tied array instead:
+
+  unless (tied @$self) {
+    # If we're already tied, something else is going on,
+    # like we're a typed array.
+    # Otherwise, tie a StdArray & push items.
+    tie @$self, 'Tie::StdArray';
+    push @$self, @_
+  }
+
+  Role::Tiny->apply_roles_to_object( tied(@$self),
+    'List::Objects::WithUtils::Role::Array::TiedRO'
+  );
+
   $self
 };
 
