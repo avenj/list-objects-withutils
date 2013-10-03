@@ -47,7 +47,11 @@ L<List::Objects::WithUtils::Role::Array::WithJunctions>
 
 L<List::Objects::WithUtils::Role::Array::Immutable>
 
-(See L<List::Objects::WithUtils::Array> for the mutable implementation.)
+(See L<List::Objects::WithUtils::Array> for a mutable implementation.)
+
+=head2 immarray
+
+Creates a new immutable array object.
 
 =head1 AUTHOR
 

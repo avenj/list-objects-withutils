@@ -52,6 +52,10 @@ L<List::Objects::WithUtils::Role::Hash::Typed>
 
 L<List::Objects::WithUtils::Role::Hash::Immutable>
 
+=head2 immhash_of
+
+Creates a new immutable typed hash object.
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>

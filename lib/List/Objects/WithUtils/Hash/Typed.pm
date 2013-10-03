@@ -51,6 +51,10 @@ L<List::Objects::WithUtils::Role::Hash::Typed>
 
 Also see L<Types::Standard>, L<List::Objects::Types>
 
+=head2 hash_of
+
+Creates a new typed hash object.
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org> with significant contributions from Toby
