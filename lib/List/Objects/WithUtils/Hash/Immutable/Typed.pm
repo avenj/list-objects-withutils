@@ -12,13 +12,7 @@ Role::Tiny->apply_roles_to_package( __PACKAGE__,
 
 use Exporter 'import';
 our @EXPORT = 'immhash_of';
-sub immhash_of { 
-  my $self = __PACKAGE__->new(@_);
-  Role::Tiny->apply_roles_to_object( tied(%$self),
-    'List::Objects::WithUtils::Role::Hash::TiedRO'
-  );
-  $self
-}
+sub immhash_of { __PACKAGE__->new(@_) }
 
 1;
 

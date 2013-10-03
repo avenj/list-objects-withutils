@@ -1,6 +1,7 @@
 package List::Objects::WithUtils::Role::Hash::Immutable;
 use strictures 1;
 use Carp ();
+use Hash::Util ();
 
 sub _make_unimp {
   my ($method) = @_;
@@ -23,8 +24,14 @@ around new => sub {
   my $orig = shift;
   my $self = $orig->(@_);
 
-  &Internals::SvREADONLY($self, 1);
-  Internals::SvREADONLY($_, 1) for values %$self;
+  if (my $tobj = tied %$self) {
+    Role::Tiny->apply_roles_to_object( tied %$self,
+      'List::Objects::WithUtils::Role::Hash::TiedRO'
+    );
+  }
+
+  Hash::Util::lock_keys(%$self);
+  Hash::Util::lock_value(%$self, $_) for keys %$self;
 
   $self
 };
@@ -55,6 +62,8 @@ The following methods are not available and will throw an exception:
   clear
   set
   delete
+
+(The backing hash is also marked read-only.)
 
 See L<List::Objects::WithUtils::Hash::Immutable> for a consumer
 implementation.

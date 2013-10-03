@@ -82,6 +82,8 @@ The following methods are not available and will throw an exception:
   insert
   splice
 
+(The backing array is also marked read-only.)
+
 See L<List::Objects::WithUtils::Array::Immutable> for a consumer
 implementation that also pulls in L<List::Objects::WithUtils::Role::Array> &
 L<List::Objects::WithUtils::Role::Array::WithJunctions>.

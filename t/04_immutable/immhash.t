@@ -12,12 +12,13 @@ for my $method
   ok $@ =~ /implemented/, "$method dies"
 }
 
-{ local $@;
-  eval {; $imm->{baz} = 'quux' };
-  ok $@, 'attempt to add key died';
-  eval {; $imm->{foo} = 2 };
-  ok $@ =~ /read-only/, 'attempt to modify existing died';
-}
+eval {; $imm->{baz} = 'quux' };
+ok $@, 'attempt to add key died' or diag explain $@;
 
+eval {; $imm->{foo} = 2 };
+ok $@, 'attempt to modify existing died';
+
+eval {; delete $imm->{bar} };
+ok $@, 'attempt to delete key died';
 
 done_testing;
