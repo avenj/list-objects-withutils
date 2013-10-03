@@ -43,6 +43,9 @@ These are immutable type-checking array objects, essentially a combination of
 L<List::Objects::WithUtils::Array::Typed> and
 L<List::Objects::WithUtils::Array::Immutable>.
 
+Type-checking is performed when the object is created; attempts to modify the
+object will throw an exception.
+
 This class consumes the following roles, which contain most of the relevant
 documentation:
 
