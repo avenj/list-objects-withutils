@@ -17,6 +17,8 @@ my $immh = immhash_of Int() => ( foo => 1, bar => 2 );
 
 ok $immh->type == Int, 'type ok';
 
+ok $immh->get('foo') == 1 && $immh->get('bar') == 2, 'get ok';
+
 eval {; immhash_of Int() => ( foo => 'baz' ) };
 ok $@ =~ /constraint/, 'immhash_of invalid type died';
 
@@ -26,5 +28,14 @@ for my $method
   eval {; $immh->$method };
   ok $@ =~ /implemented/, "$method dies"
 }
+
+eval {; $immh->{foo} = 3 };
+ok $@ =~ /read-only/, 'hash item set dies';
+
+eval {; delete $immh->{foo} };
+ok $@ =~ /read-only/, 'hash item delete dies';
+
+eval {; $immh->{quux} = 4 };
+ok $@ =~ /read-only/, 'hash item insert dies';
 
 done_testing;
