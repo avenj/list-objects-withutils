@@ -49,8 +49,8 @@ ok $@ =~ /read-only/, 'shift dies';
 eval {; splice @$immof, 0, 1, 10 };
 ok $@ =~ /read-only/, '3-arg splice dies';
 
-my $spliced = splice @$immof, 0, 1;
-ok $spliced == 0, '2-arg splice ok';
+my @spliced = splice @$immof, 0, 1;
+ok $spliced[0] == 1, '2-arg splice ok';
 
 eval {; $immof->[10] = 'foo' };
 ok $@ =~ /read-only/, 'attempted extend dies';
