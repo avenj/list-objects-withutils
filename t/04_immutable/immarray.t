@@ -26,14 +26,16 @@ ok $@ =~ /read-only/, 'shift dies';
 eval {; splice @$imm, 0, 1, 10 };
 ok $@ =~ /read-only/, '3-arg splice dies';
 
-my @spliced = splice @$imm, 0, 1;
-ok $spliced[0] == 1, '2-arg splice ok';
-
 eval {; $imm->[10] = 'foo' };
 ok $@ =~ /read-only/, 'attempted extend dies';
 
 eval {; $imm->[0] = 10 };
 ok $@ =~ /read-only/, 'element set dies';
+
+is_deeply
+  [ $imm->all ],
+  [ 1 .. 4 ],
+  'array ok after exceptions';
 
 # Make sure we didn't recursively break anything:
 my $with_arr = immarray( array( qw/ a b c / ) );

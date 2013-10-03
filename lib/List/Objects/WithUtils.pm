@@ -331,8 +331,14 @@ immutable arrays.
 L<List::Objects::WithUtils::Array::Typed> for more on C<array_of()>
 type-checking arrays.
 
+L<List::Objects::WithUtils::Array::Immutable::Typed> for more on
+C<immarray_of()> immutable type-checking arrays.
+
 L<List::Objects::WithUtils::Hash::Typed> for more on C<hash_of()>
 type-checking hashes.
+
+L<List::Objects::WithUtils::Hash::Immutable::Typed> for more on
+C<immhash_of()> immutable type-checking hashes.
 
 L<List::Objects::WithUtils::Autobox> for details on autoboxing.
 

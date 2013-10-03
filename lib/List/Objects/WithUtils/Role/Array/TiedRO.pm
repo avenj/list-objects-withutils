@@ -19,16 +19,9 @@ around $_ => sub {
   PUSH
   POP
   SHIFT
+  SPLICE
   UNSHIFT
   EXTEND
 /;
-
-around SPLICE => sub {
-  my ($orig, $self, $offset, $len, @list) = @_;
-  if (@list) {
-    Carp::croak "Attempted to modify a read-only value"
-  }
-  $self->$orig($offset, $len)
-};
 
 1;

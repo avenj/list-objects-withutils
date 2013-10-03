@@ -21,4 +21,6 @@ ok $@, 'attempt to modify existing died';
 eval {; delete $imm->{bar} };
 ok $@, 'attempt to delete key died';
 
+ok $imm->get('foo') == 1 && $imm->get('bar') == 2;
+
 done_testing;
