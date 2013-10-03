@@ -222,36 +222,53 @@ ability, and optional autoboxing.
 
 Originally derived from L<Data::Perl>.
 
-B<array> is imported from L<List::Objects::WithUtils::Array> and creates a new
-ARRAY-type object. 
-Behavior is defined by L<List::Objects::WithUtils::Role::Array>; look
-there for documentation on available methods.
+=head2 Arrays
+
+B<array> (L<List::Objects::WithUtils::Array>) provides basic mutable
+ARRAY-type objects.  Behavior is defined by
+L<List::Objects::WithUtils::Role::Array>; look there for documentation on
+available methods.
 
 B<immarray> is imported from L<List::Objects::WithUtils::Array::Immutable> and
 operates much like an B<array>, except methods that mutate the list are not
 available; using immutable arrays promotes safer functional patterns.
 
-B<hash> is imported from L<List::Objects::WithUtils::Hash>; see  
-L<List::Objects::WithUtils::Role::Hash> for documentation.
+B<array_of> provides L<Type::Tiny>-compatible type-checking array objects
+that can coerce and check their values as they are added; see
+L<List::Objects::WithUtils::Array::Typed>.
 
-B<array_of> gives you L<Type::Tiny>-compatible type-checking array
-objects; see L<List::Objects::WithUtils::Array::Typed>.
-
-B<immarray_of> gives you immutable type-checking arrays; see
+B<immarray_of> provides immutable type-checking arrays; see
 L<List::Objects::WithUtils::Array::Immutable::Typed>.
 
-B<hash_of> gives you L<Type::Tiny>-compatible type-checking hash
+=head2 Hashes
+
+B<hash> is the basic mutable HASH-type object imported from
+L<List::Objects::WithUtils::Hash>; see
+L<List::Objects::WithUtils::Role::Hash> for documentation.
+
+B<immhash> provides immutable (restricted) hashes; see
+L<List::Objects::WithUtils::Hash::Immutable>.
+
+B<hash_of> provides L<Type::Tiny>-compatible type-checking hash
 objects; see L<List::Objects::WithUtils::Hash::Typed>.
+
+B<immhash_of> provides immutable type-checking hashes; see
+L<List::Objects::WithUtils::Hash::Immutable::Typed>.
+
+=head2 Importing
+
+A bare import list (C<use List::Objects::WithUtils;>) will import all of the
+object constructor functions described above; they can also be selectively
+imported, e.g.:
+
+  use List::Objects::WithUtils 'array_of', 'hash_of';
 
 Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
 providing methods for native ARRAY and HASH types.
 
-A bare import list (C<use List::Objects::WithUtils;>) will import all of the
-object constructor functions described above.
-
-Importing B<all> or B<:all> will import all of the above and additionally turn
-B<autobox> on; C<use Lowu;> is a shortcut for importing B<all>.
-
+Importing B<all> or B<:all> will import all of the object constructors and
+additionally turn B<autobox> on; C<use Lowu;> is a shortcut for importing
+B<all>.
 
 =head2 Subclassing
 
