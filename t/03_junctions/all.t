@@ -3,7 +3,7 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
-ok array()->all_items->isa('List::Objects::WithUtils::Array'), 'subclass ok';
+ok array()->all_items->does('List::Objects::WithUtils::Role::Array');
 
 # ==
 ok array(3, 3.0)->all_items == 3,     '==';

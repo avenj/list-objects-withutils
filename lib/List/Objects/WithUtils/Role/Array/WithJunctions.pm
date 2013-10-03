@@ -1,7 +1,7 @@
 package List::Objects::WithUtils::Role::Array::WithJunctions;
 use strictures 1;
 
-use List::Objects::WithUtils::Array::Junction;
+use List::Objects::WithUtils::Array::Junction ();
 
 use Role::Tiny;
 
