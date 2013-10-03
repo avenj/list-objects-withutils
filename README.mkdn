@@ -254,8 +254,14 @@ immutable arrays.
 [List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed) for more on `array_of()`
 type-checking arrays.
 
+[List::Objects::WithUtils::Array::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable::Typed) for more on
+`immarray_of()` immutable type-checking arrays.
+
 [List::Objects::WithUtils::Hash::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Typed) for more on `hash_of()`
 type-checking hashes.
+
+[List::Objects::WithUtils::Hash::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Immutable::Typed) for more on
+`immhash_of()` immutable type-checking hashes.
 
 [List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox) for details on autoboxing.
 
