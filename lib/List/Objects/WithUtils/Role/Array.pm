@@ -13,7 +13,7 @@ use Scalar::Util ();
 
 =pod
 
-=for Pod::Coverage ARRAY_TYPE HASH_TYPE blessed_or_pkg
+=for Pod::Coverage ARRAY_TYPE blessed_or_pkg
 
 =begin comment
 

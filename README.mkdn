@@ -7,9 +7,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
     ## A small sample; consult the description, below, for links to
     ## extended documentation
 
-    # Import selectively:
-    use List::Objects::WithUtils 'array';
-
     # Import all object constructor functions:
     #   array immarray array_of immarray_of
     #   hash immhash hash_of immhash_of
@@ -29,12 +26,10 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
     # Useful utilities from other list modules are available:
     my $wanted = array(
-      +{ id => '200', user => 'bob' },
-      +{ id => '400', user => 'suzy' },
-      +{ id => '600', user => 'fred' },
+      +{ id => '400', user => 'bob' },
+      +{ id => '600', user => 'suzy' },
+      +{ id => '700', user => 'fred' },
     )->first(sub { $_->{id} > 500 });
-
-    my $sum = array( 1, 2, 3 )->reduce(sub { $_[0] + $_[1] });
 
     my $itr = array( 1 .. 7 )->natatime(3);
     while ( my @nextset = $itr->() ) {
@@ -73,9 +68,11 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
     # You can set multiple keys in one call:
     $hash->set( foobar => 'baz', pie => 'cherry' );
+
     # ... which is useful for merging in another (plain) hash:
     my %foo = ( pie => 'pumpkin', snacks => 'cheese' );
     $hash->set( %foo );
+
     # ... or another hash object:
     my $second = hash( pie => 'key lime' );
     $hash->set( $second->export );
@@ -89,6 +86,10 @@ List::Objects::WithUtils - List objects, kitchen sink included
     # Take a hash slice of keys, return a new hash object
     # consisting of the retrieved key/value pairs:
     my $slice = $hash->sliced('foo', 'pie');
+
+    # Hashes can be inflated to objects:
+    my $obj = $hash->inflate;
+    $snacks = $obj->snacks;
 
     # Chained method examples; methods that return multiple values
     # typically return new array-type objects:
@@ -119,10 +120,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
     use Types::Standard -all;
     my $int_hash = hash_of Int() => (foo => 1, bar => 2);
 
-    # Hashes can be inflated to objects:
-    my $obj = $hash->inflate;
-    $snacks = $obj->snacks;
-
     # Native list types can be autoboxed:
     use List::Objects::WithUtils 'autobox';
     my $foo = [ qw/foo baz bar foo quux/ ]->uniq->sort;
@@ -143,37 +140,53 @@ ability, and optional autoboxing.
 
 Originally derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl).
 
-__array__ is imported from [List::Objects::WithUtils::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array) and creates a new
-ARRAY-type object. 
-Behavior is defined by [List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array); look
-there for documentation on available methods.
+## Arrays
+
+__array__ ([List::Objects::WithUtils::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array)) provides basic mutable
+ARRAY-type objects.  Behavior is defined by
+[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array); look there for documentation on
+available methods.
 
 __immarray__ is imported from [List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) and
 operates much like an __array__, except methods that mutate the list are not
 available; using immutable arrays promotes safer functional patterns.
 
-__hash__ is imported from [List::Objects::WithUtils::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash); see  
-[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation.
+__array\_of__ provides [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking array objects
+that can coerce and check their values as they are added; see
+[List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed).
 
-__array\_of__ gives you [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking array
-objects; see [List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed).
-
-__immarray\_of__ gives you immutable type-checking arrays; see
+__immarray\_of__ provides immutable type-checking arrays; see
 [List::Objects::WithUtils::Array::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable::Typed).
 
-__hash\_of__ gives you [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking hash
+## Hashes
+
+__hash__ is the basic mutable HASH-type object imported from
+[List::Objects::WithUtils::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash); see
+[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation.
+
+__immhash__ provides immutable (restricted) hashes; see
+[List::Objects::WithUtils::Hash::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Immutable).
+
+__hash\_of__ provides [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking hash
 objects; see [List::Objects::WithUtils::Hash::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Typed).
+
+__immhash\_of__ provides immutable type-checking hashes; see
+[List::Objects::WithUtils::Hash::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Immutable::Typed).
+
+## Importing
+
+A bare import list (`use List::Objects::WithUtils;`) will import all of the
+object constructor functions described above; they can also be selectively
+imported, e.g.:
+
+    use List::Objects::WithUtils 'array_of', 'hash_of';
 
 Importing __autobox__ lexically enables [List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox),
 providing methods for native ARRAY and HASH types.
 
-A bare import list (`use List::Objects::WithUtils;`) will import all of the
-object constructor functions described above.
-
-Importing __all__ or __:all__ will import all of the above and additionally turn
-__autobox__ on; `use Lowu;` is a shortcut for importing __all__.
-
-
+Importing __all__ or __:all__ will import all of the object constructors and
+additionally turn __autobox__ on; `use Lowu;` is a shortcut for importing
+__all__.
 
 ## Subclassing
 

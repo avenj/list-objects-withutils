@@ -8,10 +8,7 @@ use Type::Tie ();
 use Role::Tiny;
 requires 'type', 'new';
 
-around type => sub {
-  shift;
-  tied(@{$_[0]})->type
-};
+around type => sub { tied(@{$_[1]})->type };
 
 around new => sub {
   my (undef, $class, $type) = splice @_, 0, 2;

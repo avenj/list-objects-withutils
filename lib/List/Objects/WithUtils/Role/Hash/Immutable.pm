@@ -24,8 +24,8 @@ around new => sub {
   my $orig = shift;
   my $self = $orig->(@_);
 
-  if (my $tobj = tied %$self) {
-    Role::Tiny->apply_roles_to_object( tied %$self,
+  if (my $obj = tied %$self) {
+    Role::Tiny->apply_roles_to_object( $obj,
       'List::Objects::WithUtils::Role::Hash::TiedRO'
     );
   }
