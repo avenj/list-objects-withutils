@@ -24,6 +24,8 @@ our @ImmutableMethods = qw/
 use Role::Tiny;
 requires 'new', @ImmutableMethods;
 
+around is_mutable => sub { () };
+
 around new => sub {
   my ($orig, $class) = splice @_, 0, 2;
   my $self = $class->$orig(@_);

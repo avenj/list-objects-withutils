@@ -29,6 +29,8 @@ sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =cut
 
+sub is_mutable { 1 }
+
 sub type { }
 
 sub new {
@@ -254,6 +256,11 @@ for modification:
 =head2 is_empty
 
 Returns boolean true if the hash has no keys.
+
+=head2 is_mutable
+
+Returns boolean true if the hash is mutable; immutable subclasses can override
+to provide a negative value.
 
 =head2 keys
 

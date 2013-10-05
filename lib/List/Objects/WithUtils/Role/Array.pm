@@ -65,6 +65,8 @@ use Role::Tiny;
 
 sub inflated_type { 'List::Objects::WithUtils::Hash' }
 
+sub is_mutable { 1 }
+
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
     Carp::confess "Expected a Type::Tiny type but got $type"
@@ -449,6 +451,11 @@ Returns the last index of the array.
 
 Returns boolean true if the array is empty.
 
+=head3 is_mutable
+
+Returns boolean true if the hash is mutable; immutable subclasses can override
+to provide a negative value.
+
 =head3 scalar
 
 See L</count>.
@@ -746,7 +753,7 @@ on; you can also use the topicalizer C<$_>.
 =head3 first
 
   my $arr = array( qw/ ab bc bd de / );
-  my $first = $arr->first(sub { $_ =~ /^b/ });  ## 'bc'
+  my $first = $arr->first(sub { /^b/ });  ## 'bc'
 
 Returns the first element of the list for which the given sub evaluates to
 true. C<$_> is set to each element, in turn, until a match is found (or we run

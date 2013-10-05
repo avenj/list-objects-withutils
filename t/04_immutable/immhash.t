@@ -3,6 +3,9 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils;
 
+ok hash->is_mutable, 'hash is_mutable';
+ok !immhash->is_mutable, 'immhash not is_mutable';
+
 my $imm = immhash( foo => 1, bar => 2 );
 
 for my $method

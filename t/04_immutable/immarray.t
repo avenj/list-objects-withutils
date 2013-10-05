@@ -3,6 +3,9 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils;
 
+ok array->is_mutable, 'array ->is_mutable';
+ok !immarray->is_mutable, 'immarray not ->is_mutable';
+
 my $imm = immarray( 1 .. 4 );
 
 for my $method
@@ -31,6 +34,9 @@ ok $@ =~ /read-only/, 'attempted extend dies';
 
 eval {; $imm->[0] = 10 };
 ok $@ =~ /read-only/, 'element set dies';
+
+eval {; @$imm = () };
+ok $@ =~ /read-only/, 'array clear dies';
 
 is_deeply
   [ $imm->all ],
