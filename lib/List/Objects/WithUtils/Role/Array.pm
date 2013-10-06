@@ -438,7 +438,7 @@ Constructs a new ARRAY-type object.
 
 =head3 copy
 
-Creates a shallow clone of the current object.
+Returns a shallow clone of the current object.
 
 =head3 count
 
@@ -476,6 +476,8 @@ Inflates an array-type object to a hash-type object.
 Returns an L</inflated_type> object; by default this is a
 L<List::Objects::WithUtils::Hash>.
 
+Throws an exception if the array contains an odd number of elements.
+
 =head3 inflated_type
 
 The class name that objects are blessed into when calling L</inflate>;
@@ -491,11 +493,15 @@ Returns a plain C</ARRAY> reference (shallow clone).
 
 =head3 clear
 
-Clears the array entirely.
+Delete all elements from the array.
+
+Returns the newly-emptied array object.
 
 =head3 delete
 
 Splices a given index out of the array.
+
+Returns the removed value.
 
 =head3 delete_when
 
@@ -511,6 +517,8 @@ Returns a new array object containing the deleted values (possibly none).
   $array->insert( $position, $value );
 
 Inserts a value at a given position.
+
+Returns the array object.
 
 =head3 pop
 
@@ -558,7 +566,7 @@ The existing array is modified in-place.
   my $valid = array(qw/foo bar baz/)->validated(Str);
 
 Accepts a L<Type::Tiny> type, against which each element of the current array
-will be checked before being added to the new array. 
+will be checked before being added to a new array. Returns the new array.
 
 If the element fails the type check but can be coerced, the coerced value will
 be added to the new array.
