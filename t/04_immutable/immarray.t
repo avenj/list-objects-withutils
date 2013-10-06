@@ -3,8 +3,10 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils;
 
-ok array->is_mutable, 'array ->is_mutable';
-ok !immarray->is_mutable, 'immarray not ->is_mutable';
+ok array->is_mutable, 'array is_mutable';
+ok !immarray->is_mutable, 'immarray !is_mutable';
+ok !array->is_immutable, 'array !is_immutable';
+ok immarray->is_immutable, 'immarray is_immutable';
 
 my $imm = immarray( 1 .. 4 );
 

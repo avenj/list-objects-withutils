@@ -66,6 +66,7 @@ use Role::Tiny;
 sub inflated_type { 'List::Objects::WithUtils::Hash' }
 
 sub is_mutable { 1 }
+sub is_immutable { ! $_[0]->is_mutable }
 
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
@@ -455,6 +456,10 @@ Returns boolean true if the array is empty.
 
 Returns boolean true if the hash is mutable; immutable subclasses can override
 to provide a negative value.
+
+=head3 is_immutable
+
+The opposite of L</is_mutable>.
 
 =head3 scalar
 

@@ -29,7 +29,8 @@ sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =cut
 
-sub is_mutable { 1 }
+sub is_mutable   { 1 }
+sub is_immutable { ! $_[0]->is_mutable }
 
 sub type { }
 
@@ -261,6 +262,10 @@ Returns boolean true if the hash has no keys.
 
 Returns boolean true if the hash is mutable; immutable subclasses can override
 to provide a negative value.
+
+=head2 is_immutable
+
+The opposite of L</is_mutable>.
 
 =head2 keys
 
