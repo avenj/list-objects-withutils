@@ -29,10 +29,14 @@ List::Objects::WithUtils::Array - Array-type objects WithUtils
 
 =head1 DESCRIPTION
 
-See L<List::Objects::WithUtils::Role::Array> for a description of available
-methods.
+This class is the basic concrete implementation of
+L<List::Objects::WithUtils::Role::Array>. Methods are documented there.
 
-This class also consumes L<List::Objects::WithUtils::Role::Array::WithJunctions>.
+This class also consumes
+L<List::Objects::WithUtils::Role::Array::WithJunctions>, which adds the
+B<any_items> & B<all_items> junction-returning methods; see the POD for
+L<List::Objects::WithUtils::Role::Array::WithJunctions> and
+L<List::Objects::WithUtils::Array::Junction> for details.
 
 =head2 array
 

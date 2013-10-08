@@ -28,7 +28,7 @@ List::Objects::WithUtils::Hash - Hash-type objects WithUtils
 
 =head1 DESCRIPTION
 
-This class is a concrete implementation of
+This class is the basic concrete implementation of
 L<List::Objects::WithUtils::Role::Hash>. Methods are documented there.
 
 =head2 hash
