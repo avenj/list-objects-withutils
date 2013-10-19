@@ -128,7 +128,11 @@ sub count { CORE::scalar @{ $_[0] } }
 
 sub end { $#{ $_[0] } }
 
-{ no warnings 'once'; *scalar = *count; *export = *all; }
+{ no warnings 'once'; 
+  *scalar = *count; 
+  *export = *all;
+  *elements  = *all;
+}
 
 sub is_empty { CORE::scalar @{ $_[0] } ? 0 : 1 }
 
@@ -459,7 +463,8 @@ to provide a negative value.
 
 =head3 is_immutable
 
-The opposite of L</is_mutable>.
+The opposite of L</is_mutable>. (Subclasses do not need to override so long as
+L</is_mutable> returns a correct value.)
 
 =head3 scalar
 
@@ -595,6 +600,11 @@ Returns all elements in the array as a plain list.
 Like L</part>, but creates an array-type object containing two
 partitions; the first contains all items for which the subroutine evaluates to
 true, the second contains the remaining items.
+
+=head3 elements
+
+Same as L</all>; included for consistency with similar array-type object
+classes.
 
 =head3 export
 
