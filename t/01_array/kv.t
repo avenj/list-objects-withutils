@@ -13,5 +13,6 @@ is_deeply
     [ 2 => 'baz' ],
     [ 3 => 'quux' ],
   ],
+  'array kv ok';
 
 done_testing;

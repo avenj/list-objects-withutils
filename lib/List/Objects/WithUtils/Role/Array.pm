@@ -141,6 +141,13 @@ sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
 sub random { $_[0]->[ rand @{ $_[0] } ] }
 
+sub kv {
+  my ($self) = @_;
+  blessed_or_pkg($self)->new(
+    map {; [ $_ => $self->[$_] ] } 0 .. $#$self
+  )
+}
+
 sub head {
   wantarray ?
     ( 
@@ -663,6 +670,12 @@ In scalar context, returns just the first element of the array:
 Similar to L</head>, but returns either the last element and a new array-type
 object containing the remaining list (in list context), or just the last
 element of the list (in scalar context).
+
+=head3 kv
+
+Returns an array-type object containing key/value pairs as (unblessed) ARRAYs;
+this is much like L<List::Objects::WithUtils::Role::Hash/"kv">, except the
+array index is the key.
 
 =head3 join
 
