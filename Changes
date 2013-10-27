@@ -1,5 +1,15 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.002001 2013-10-27
+
+  - Add ->is_mutable / ->is_immutable methods
+
+  - Add array->kv()
+
+  - Add array->elements()
+    (This is the same as '->all', but it's natural for people coming from
+    Moose and similar to the perl6 'elems' method.)
+
 2.001001 2013-10-03
 
   - Import all constructor functions by default
