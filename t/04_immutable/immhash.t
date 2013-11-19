@@ -28,4 +28,6 @@ ok $@, 'attempt to delete key died';
 
 ok $imm->get('foo') == 1 && $imm->get('bar') == 2;
 
+ok !$imm->get('nonexistant'), 'retrieving nonexistant key ok';
+
 done_testing;
