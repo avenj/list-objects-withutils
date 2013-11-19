@@ -66,7 +66,11 @@ The following methods are not available and will throw an exception:
   set
   delete
 
-(The backing hash is also marked read-only, but see L<Hash::Util/"CAVEATS">)
+The backing hash is also marked read-only, but see L<Hash::Util/"CAVEATS">.
+
+Due to the behavior of L<Hash::Util/"lock_keys">, attempting to fetch a
+nonexistant key will also throw an exception. This may change in a future
+version.
 
 See L<List::Objects::WithUtils::Hash::Immutable> for a consumer
 implementation.

@@ -31,6 +31,10 @@ List::Objects::WithUtils::Hash::Immutable - Immutable hash objects
 These are immutable hash objects; attempting to call list-mutating methods
 will throw an exception.
 
+Due to the behavior of L<Hash::Util/"lock_keys">, attempting to fetch a
+nonexistant key will also throw an exception. This may change in a future
+version.
+
 This class consumes the following roles, which contain most of the relevant
 documentation:
 
