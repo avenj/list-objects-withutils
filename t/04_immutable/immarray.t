@@ -17,28 +17,28 @@ for my $method
 }
 
 eval {; push @$imm, 'bar' };
-ok $@ =~ /read-only/, 'push dies';
+like $@, qr/read-only/, 'push dies';
 
 eval {; pop @$imm };
-ok $@ =~ /read-only/, 'pop dies';
+like $@, qr/read-only/, 'pop dies';
 
 eval {; unshift @$imm, 0 };
-ok $@ =~ /read-only/, 'unshift dies';
+like $@, qr/read-only/, 'unshift dies';
 
 eval {; shift @$imm };
-ok $@ =~ /read-only/, 'shift dies';
+like $@, qr/read-only/, 'shift dies';
 
 eval {; splice @$imm, 0, 1, 10 };
-ok $@ =~ /read-only/, '3-arg splice dies';
+like $@, qr/read-only/, '3-arg splice dies';
 
 eval {; $imm->[10] = 'foo' };
-ok $@ =~ /read-only/, 'attempted extend dies';
+like $@, qr/read-only/, 'attempted extend dies';
 
 eval {; $imm->[0] = 10 };
-ok $@ =~ /read-only/, 'element set dies';
+like $@, qr/read-only/, 'element set dies';
 
 eval {; @$imm = () };
-ok $@ =~ /read-only/, 'array clear dies';
+like $@, qr/read-only/, 'array clear dies';
 
 is_deeply
   [ $imm->all ],

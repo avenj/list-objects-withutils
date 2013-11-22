@@ -33,7 +33,8 @@ eval {; %$imm = () };
 like $@, qr/read-only/,
   'attempt to clear hash died';
 
-ok $imm->get('foo') == 1 && $imm->get('bar') == 2;
+ok $imm->get('foo') == 1 && $imm->get('bar') == 2,
+  'hash ok after attempted clear';
 
 ok !$imm->get('nonexistant'), 'retrieving nonexistant key ok';
 
