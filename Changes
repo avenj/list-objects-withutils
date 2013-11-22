@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.002002 2013-11-22
+
+  - Drop Hash::Util in favor of tied immutable hashes;
+    these now work just like immutable array types
+    (and no longer throw an exception on unknown key fetches)
+
 2.002001 2013-10-27
 
   - Add ->is_mutable / ->is_immutable methods
