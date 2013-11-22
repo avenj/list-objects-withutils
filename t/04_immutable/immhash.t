@@ -26,6 +26,9 @@ ok $@, 'attempt to modify existing died';
 eval {; delete $imm->{bar} };
 ok $@, 'attempt to delete key died';
 
+eval {; %$imm = () };
+ok $@, 'attempt to clear hash died';
+
 ok $imm->get('foo') == 1 && $imm->get('bar') == 2;
 
 ok !$imm->get('nonexistant'), 'retrieving nonexistant key ok';
