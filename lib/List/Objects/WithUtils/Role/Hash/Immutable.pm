@@ -70,7 +70,11 @@ The backing hash is also marked read-only, but see L<Hash::Util/"CAVEATS">.
 
 Due to the behavior of L<Hash::Util/"lock_keys">, attempting to fetch a
 nonexistant key will also throw an exception. This may change in a future
-version.
+version. In the meantime, it is safe to check if the key exists first:
+
+  if ( $hash->exists($key) ) {
+    my $val = $hash->get($key);
+  }
 
 See L<List::Objects::WithUtils::Hash::Immutable> for a consumer
 implementation.
