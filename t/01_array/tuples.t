@@ -15,4 +15,11 @@ is_deeply
   ],
   'tuples ok';
 
+my $default = $arr->tuples;
+is_deeply [ $default->all ], [ $tuples->all ],
+  'tuples default 2 ok';
+
+eval {; $arr->tuples(0) };
+like $@, qr/positive/, 'tuples < 1 dies ok';
+
 done_testing;
