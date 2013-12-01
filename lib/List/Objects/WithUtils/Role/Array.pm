@@ -31,8 +31,7 @@ sub ARRAY_TYPE () { 'List::Objects::WithUtils::Array' }
 sub blessed_or_pkg {
   my ($item) = @_;
   my $pkg;
-  ($pkg = Scalar::Util::blessed $item) ?
-    wantarray ? ($item, $pkg) : $item
+  ($pkg = Scalar::Util::blessed $item) ? $item 
     : Module::Runtime::use_module(ARRAY_TYPE)
 }
 
