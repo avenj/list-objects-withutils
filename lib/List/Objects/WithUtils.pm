@@ -38,7 +38,7 @@ sub import {
       'autobox'
     )
   } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
-    # Legacy import tag
+    # Legacy import tag, not documented / tested
     @funcs = @DefaultImport
   }
 

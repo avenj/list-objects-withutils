@@ -37,6 +37,16 @@ ok $rwobj->foo('bar') eq 'bar', 'rw inflated obj setter ok';
 ok $rwobj->foo eq 'bar', 'rw inflated obj set attrib ok';
 
 { local $@;
+  eval {; $rwobj->set };
+  like $@, qr/object method/, 'nonexistant key dies ok (rw)';
+}
+
+{ local $@;
+  eval {; $rwobj->foo(qw/bar baz/) };
+  like $@, qr/Multiple arguments/i, 'multiple args setter dies ok';
+}
+
+{ local $@;
   my $pkg = ref $rwobj;
   eval {; $pkg->foo };
   like $@, qr/class method/, 'attempt to call class method on rw dies ok';
