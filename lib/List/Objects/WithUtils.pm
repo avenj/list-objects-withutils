@@ -38,7 +38,7 @@ sub import {
       'autobox'
     )
   } elsif (defined $fmap{functions} || defined $fmap{funcs}) {
-    # Legacy import tag, not documented / tested
+    # Legacy import tag, tested but not documented
     @funcs = @DefaultImport
   }
 
@@ -53,7 +53,7 @@ sub import {
       push @mods, 'List::Objects::WithUtils::'.$thismod;
       next
     }
-    carp "Unknown import parameter '$function'"
+    croak "Unknown import parameter '$function'"
   }
 
   $pkg = caller unless defined $pkg;
