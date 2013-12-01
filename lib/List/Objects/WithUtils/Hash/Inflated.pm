@@ -1,6 +1,7 @@
 package List::Objects::WithUtils::Hash::Inflated;
 use strictures 1;
-require Carp;
+use Carp ();
+use Scalar::Util ();
 
 sub new {
   bless +{ @_[1 .. $#_] }, $_[0]
@@ -27,8 +28,10 @@ sub can {
 }
 
 sub AUTOLOAD {
-  my $self = shift || return;
+  my $self = shift;
   ( my $method = $AUTOLOAD ) =~ s/.*:://;
+  Scalar::Util::blessed($self)
+    or Carp::confess "Not a class method: '$method'";
   
   Carp::confess "Can't locate object method '$method'"
     unless exists $self->{$method};

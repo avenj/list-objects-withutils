@@ -22,6 +22,12 @@ ok !$obj->can('cake'), 'negative can() ok';
   ok $@, 'read-only inflated hash setter attempt dies ok';
 }
 
+{ local $@;
+  my $pkg = ref $obj;
+  eval {; $pkg->foo };
+  like $@, qr/class method/, 'attempt to call class method dies ok';
+}
+
 my %deflated = $obj->DEFLATE;
 ok $deflated{foo} eq 'bar', 'deflated HASH looks ok';
 
@@ -29,5 +35,11 @@ my $rwobj = hash(foo => 1, baz => 2)->inflate(rw => 1);
 ok $rwobj->foo == 1, 'rw inflated obj ok';
 ok $rwobj->foo('bar') eq 'bar', 'rw inflated obj setter ok';
 ok $rwobj->foo eq 'bar', 'rw inflated obj set attrib ok';
+
+{ local $@;
+  my $pkg = ref $rwobj;
+  eval {; $pkg->foo };
+  like $@, qr/class method/, 'attempt to call class method on rw dies ok';
+}
 
 done_testing;
