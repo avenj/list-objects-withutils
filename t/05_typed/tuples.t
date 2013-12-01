@@ -37,4 +37,7 @@ ok $tuples->shift->[0]->count == 0, 'ArrayObj coerced in tuple';
 eval {; $tuples = $arr->tuples(3, ArrayObj) };
 ok $@ =~ /type/i, 'ArrayObj check failed on odd tuple ok';
 
+eval {; $tuples = $arr->tuples(3, 'foo') };
+ok $@ =~ /Type::Tiny/, 'bad type dies ok';
+
 done_testing;
