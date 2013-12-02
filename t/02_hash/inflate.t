@@ -13,6 +13,9 @@ ok $obj->$cref eq 'bar', 'can() coderef works';
 
 ok !$obj->can('cake'), 'negative can() ok';
 
+ok $obj->isa('List::Objects::WithUtils::Hash::Inflated'),
+  'autoloaded isa ok';
+
 { local $@;
   eval {; $obj->set };
   ok $@, 'nonexistant key dies ok';
