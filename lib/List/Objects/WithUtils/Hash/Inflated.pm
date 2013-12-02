@@ -41,7 +41,7 @@ sub AUTOLOAD {
   $self->{$method}
 }
 
-sub DESTROY {} # uncoverable statement
+sub DESTROY {}
 
 1;
 
