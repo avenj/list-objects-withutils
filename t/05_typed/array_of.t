@@ -55,6 +55,11 @@ use Types::Standard -all;
   my $mapped;
   ok $mapped = $arr->map(sub { 1 }), 'valid type reconstruction ok';
   isa_ok $mapped, 'List::Objects::WithUtils::Array::Typed';
+  ok $arr->type == $mapped->type, 'reconstructed obj has same type';
+  my $copy = $arr->copy;
+  ok $copy->type == $arr->type, 'copy has same type ok';
+  is_deeply [ $copy->export ], [ $arr->export ],
+    'copy ok';
 }
 
 # tied array

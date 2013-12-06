@@ -32,6 +32,12 @@ use Types::Standard -all;
   ok $@ =~ /type/, 'invalid type set died ok';
   ok $h->set(baz => 3), 'valid type set ok';
   ok $h->keys->count == 3, 'count ok after set';
+
+  my $copy = $h->copy;
+  isa_ok $copy, 'List::Objects::WithUtils::Hash::Typed';
+  ok $copy->type == $h->type, 'copy has same type ok';
+  is_deeply +{ $copy->export }, +{ $h->export },
+    'copy ok';
 }
 
 # tied hash
