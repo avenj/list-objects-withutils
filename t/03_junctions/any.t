@@ -94,6 +94,7 @@ ok not( 'i' lt array(qw/ g h /)->any_items ), 'negative lt switched';
 # regex
 ok array(3, 'b')->any_items == qr/\d+/, '== regex';
 ok array(3, 4, 'a')->any_items != qr/\d/, '!= regex';
+ok not(array(3,4,'a')->any_items == qr/b/), 'negated regex';
 
 # bool
 ok array(2, 0)->any_items, 'bool with zero';

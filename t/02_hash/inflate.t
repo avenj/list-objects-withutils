@@ -13,7 +13,9 @@ ok $obj->$cref eq 'bar', 'can() coderef works';
 
 ok !$obj->can('cake'), 'negative can() ok';
 
-ok $obj->isa('List::Objects::WithUtils::Hash::Inflated'),
+my $isa = $obj->can('isa');
+ok ref $isa eq 'CODE', 'can() fetched UNIVERSAL method ok';
+ok $isa->($obj, 'List::Objects::WithUtils::Hash::Inflated'),
   'autoloaded isa ok';
 
 { local $@;
