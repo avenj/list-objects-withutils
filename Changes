@@ -1,5 +1,12 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.002004 2013-12-06
+
+  - Minor low-level behavior changes;
+    bring Role::Hash in line with Role::Array blessed_or_pkg & ->copy
+
+  - Test coverage improvements
+
 2.002003 2013-12-06
 
   - Bad import args now die rather than warn
