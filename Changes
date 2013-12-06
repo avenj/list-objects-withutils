@@ -1,5 +1,15 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.002003 2013-12-06
+
+  - Bad import args now die rather than warn
+
+  - Optimize methods returning arrays
+
+  - Allow hash->new() to match array->new()
+
+  - Test coverage improvements
+
 2.002002 2013-11-22
 
   - Drop Hash::Util in favor of tied immutable hashes;
