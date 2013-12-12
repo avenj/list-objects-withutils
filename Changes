@@ -13,7 +13,7 @@ Revision history for Perl module List::Objects::WithUtils
 
   - Optimize methods returning arrays
 
-  - Allow hash->new() to match array->new()
+  - hash->new() matches array->new() behavior
 
   - Test coverage improvements
 
