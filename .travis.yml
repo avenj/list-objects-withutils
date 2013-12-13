@@ -5,7 +5,7 @@ install:
   - dzil authordeps | grep -vP '[^\w:]' | xargs -n 5 -P 10 cpanm --quiet --notest --skip-satisfied
   - dzil listdeps | grep -vP '[^\w:]' | cpanm --verbose
 
-script: dzil smoke --release --author
+script: dzil test
 
 perl:
   - '5.19'
