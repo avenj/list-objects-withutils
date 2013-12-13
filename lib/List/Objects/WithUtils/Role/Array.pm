@@ -560,7 +560,7 @@ Returns the array object.
 
 =head3 splice
 
-  # 2-arg splice (remove elements):
+  # 1- or 2-arg splice (remove elements):
   my $spliced = $array->splice(0, 2)
   # 3-arg splice (replace):
   $array->splice(0, 1, 'abc');
