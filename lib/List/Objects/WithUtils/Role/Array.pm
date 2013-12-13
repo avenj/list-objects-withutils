@@ -245,7 +245,8 @@ sub sliced {
 
 sub splice {
   blessed_or_pkg($_[0])->new(
-    CORE::splice @{ $_[0] }, $_[1], $_[2], @_[3 .. $#_]
+    @_ == 2 ? CORE::splice(@{ $_[0] }, $_[1])
+    : CORE::splice(@{ $_[0] }, $_[1], $_[2], @_[3 .. $#_])
   )
 }
 

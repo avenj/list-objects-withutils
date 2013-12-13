@@ -4,7 +4,22 @@ use strict; use warnings FATAL => 'all';
 use List::Objects::WithUtils 'array';
 
 my $arr = array(qw/ a b c d /);
-my $spliced = $arr->splice(1, 3);
+my $spliced = $arr->splice(2);
+is_deeply
+  [ $arr->all ],
+  [ qw/ a b / ],
+  'single arg splice modified orig ok';
+is_deeply
+  [ $spliced->all ],
+  [ qw/ c d / ],
+  'single arg splice ok';
+
+$arr = array(qw/ a b c d /);
+$spliced = $arr->splice(1, 3);
+is_deeply
+  [ $arr->all ],
+  [ 'a' ],
+  '2-arg splice modified orig ok';
 is_deeply
   [ $spliced->all ],
   [ qw/ b c d / ],
