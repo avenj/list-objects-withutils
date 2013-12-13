@@ -22,6 +22,8 @@ This is some nonsense to support autoboxing; if we aren't blessed, we're
 autoboxed, in which case we appear to have no choice but to cheap out and
 return the basic array type.
 
+(Relatedly, new() methods should be able to operate on a blessed invocant.)
+
 =end comment
 
 =cut
