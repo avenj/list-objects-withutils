@@ -111,6 +111,13 @@ sub values {
   )
 }
 
+sub intersection {
+  my %seen;
+  blessed_or_pkg($_[0])->array_type->new(
+    grep {; ++$seen{$_} > $#_ } map {; CORE::keys %$_ } @_
+  )
+}
+
 sub kv {
   blessed_or_pkg($_[0])->array_type->new(
     map {; [ $_, $_[0]->{ $_ } ] } CORE::keys %{ $_[0] }
@@ -256,6 +263,16 @@ for modification:
 
   my $first = hash( foo => 'bar', baz => 'quux' )->inflate;
   my $second = hash( $first->DEFLATE, frobulate => 1 )->inflate;
+
+=head2 intersection
+
+  my $first  = hash(a => 1, b => 2, c => 3);
+  my $second = hash(b => 2, c => 3, d => 4);
+  my $intersection = $first->intersection($second);
+  my @common = $intersection->sort->all;
+
+Returns the list of keys common between all given hash-type objects (including
+the invocant) as an L</array_type> object.
 
 =head2 is_empty
 
