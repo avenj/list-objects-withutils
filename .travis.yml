@@ -1,3 +1,11 @@
+notifications:
+  irc: 
+    channels:
+      - 'irc.cobaltirc.org#eris'
+    on_failure: always
+    on_success: change
+  email: false
+
 language: perl
 
 install:
