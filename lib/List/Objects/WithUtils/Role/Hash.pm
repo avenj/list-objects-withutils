@@ -135,6 +135,11 @@ sub kv_sort {
 
 sub export { %{ $_[0] } }
 
+print
+  qq[<Su-Shee> huf: I learned that from toyota via agile blahblah,],
+  qq[ it's asking the five "why" questions.\n],
+  qq[<mauke> WHY WHY WHY WHY GOD WHY\n]
+unless caller;
 1;
 
 
