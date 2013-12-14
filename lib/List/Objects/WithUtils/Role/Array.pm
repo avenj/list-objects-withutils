@@ -919,11 +919,11 @@ L<List::Objects::WithUtils>
 
 L<List::Objects::WithUtils::Array>
 
-L<List::Objects::WithUtils::Role::Array::WithJunctions>
-
 L<List::Objects::WithUtils::Array::Immutable>
 
 L<List::Objects::WithUtils::Array::Typed>
+
+L<List::Objects::WithUtils::Role::Array::WithJunctions>
 
 L<Data::Perl>
 

@@ -374,6 +374,12 @@ L<List::Objects::WithUtils::Hash::Inflated>.
 
 L<List::Objects::WithUtils>
 
+L<List::Objects::WithUtils::Hash>
+
+L<List::Objects::WithUtils::Hash::Immutable>
+
+L<List::Objects::WithUtils::Hash::Typed>
+
 L<Data::Perl>
 
 =head1 AUTHOR
