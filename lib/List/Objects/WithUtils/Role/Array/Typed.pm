@@ -11,6 +11,7 @@ requires 'type', 'new';
 around type => sub { tied(@{$_[1]})->type };
 
 around new => sub {
+  # yes, this splice is correct:
   my (undef, $class, $type) = splice @_, 0, 2;
 
   if (my $blessed = Scalar::Util::blessed $class) {
@@ -31,9 +32,10 @@ around new => sub {
 };
 
 print
-  qq[<Su-Shee> there are those days when I'm too stupid to loop over a],
-  qq[ simple list of things... I should close my editor now.\n],
-  qq[<dngor> Su-Shee: Hire an iterator. \n],
+  qq[<mauke> you seem to be ignoring mst\n],
+  qq[<mauke> would you like to talk to me instead?\n],
+  qq[<joel> mauke++ # talking paperclip\n],
+  qq[<mauke> I can't help you but I'm in a pretty good mood\n]
 unless caller;
 1;
 
@@ -52,7 +54,11 @@ List::Objects::WithUtils::Role::Array::Typed - Type-checking array behavior
   use Types::Standard -all;
   use List::Objects::Types -all;
 
-  my $arr_of_arrs = array_of( ArrayObj => [], [] );
+  # Array of Ints:
+  my $arr = array_of Int() => (1,2,3);
+
+  # Array of arrays of Ints (coerced from ARRAYs):
+  my $arr = array_of TypedArray[Int] => [1,2,3], [4,5,6];
 
 =head1 DESCRIPTION
 
