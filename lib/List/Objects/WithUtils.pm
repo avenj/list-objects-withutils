@@ -172,6 +172,14 @@ List::Objects::WithUtils - List objects, kitchen sink included
   my $obj = $hash->inflate;
   $snacks = $obj->snacks;
 
+  # Arrays can be inflated to hashes; a set intersection might look like:
+  my @intersects = array(1 .. 10)
+    ->map(sub { $_ => 1 })
+    ->inflate
+    ->intersection( array(5 .. 8)->map(sub { $_ => 1 })->inflate )
+    ->sort
+    ->all;
+
   # Chained method examples; methods that return multiple values
   # typically return new array-type objects:
   my @match_keys = $hash->keys->grep(sub { m/foo/ })->all;
