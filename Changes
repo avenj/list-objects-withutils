@@ -1,5 +1,13 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.003001 2013-12-14
+
+  - Add hash->intersection()
+
+  - Minor optimizations
+
+  - Fix unnecessary List::Objects::Types dep in some tests
+
 2.002005 2013-12-13
 
   - Fix single-arg array->splice()
