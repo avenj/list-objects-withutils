@@ -72,7 +72,10 @@ sub import {
 }
 
 print
-  qq[ * rjbs is patching PAUSE.\n<rjbs> (to reject anything from peregrin)\n]
+  qq[<rjbs> I'll nopaste the whole log in a moment.\n],
+  qq[<rjbs> sigh, I can't get this log out.\n],
+  qq[<mst> rjbs: same problem dhoss was having earlier?\n],
+  qq[<rjbs> mst: Maybe I don't want to know...\n]
 unless caller;
 
 1;
@@ -97,7 +100,7 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
   # Import all of the above plus autoboxing:
   use List::Objects::WithUtils ':all';
-  # Same, but via the 'Lowu' shortcut:
+  # Same as above, but shorter:
   use Lowu;
 
   # Most methods returning lists return new objects; chaining is easy:
@@ -168,20 +171,20 @@ List::Objects::WithUtils - List objects, kitchen sink included
   # consisting of the retrieved key/value pairs:
   my $slice = $hash->sliced('foo', 'pie');
 
-  # Hashes can be inflated to objects:
+  # Hashes inflate to simple objects with accessors:
   my $obj = $hash->inflate;
   $snacks = $obj->snacks;
 
-  # Arrays can be inflated to hashes; a set intersection might look like:
-  my @intersects = array(1 .. 10)
+  # Arrays ->inflate() to hash objects
+  # A (slow) set intersection:
+  my @intersect = array(1 .. 10)
     ->map(sub { $_ => 1 })
     ->inflate
     ->intersection( array(5 .. 8)->map(sub { $_ => 1 })->inflate )
     ->sort
     ->all;
 
-  # Chained method examples; methods that return multiple values
-  # typically return new array-type objects:
+  # Methods returning multiple values typically return new array-type objects:
   my @match_keys = $hash->keys->grep(sub { m/foo/ })->all;
   my @match_vals = $hash->values->grep(sub { m/bar/ })->all;
   
@@ -191,20 +194,18 @@ List::Objects::WithUtils - List objects, kitchen sink included
     ->all;  # ( [ baz => 1 ], [ foo => 2 ], [ bar => 3 ] )
 
   # Perl6-inspired Junctions:
-  if ( $hash->keys->any_items eq 'snacks' ) {
-    ...    
+  if ( $hash->keys->any_items == qr/snacks/ ) {
+    # ... hash has key(s) matching /snacks/ ...
   }
   if ( $hash->values->all_items > 10 ) {
-    ...
+    # ... all hash values greater than 10 ...
   }
 
   # Type-checking arrays via Type::Tiny:
-  use List::Objects::WithUtils 'array_of';
   use Types::Standard -all;
   my $int_arr = array_of Int() => 1 .. 10;
 
   # Type-checking hashes:
-  use List::Objects::WithUtils 'hash_of';
   use Types::Standard -all;
   my $int_hash = hash_of Int() => (foo => 1, bar => 2);
 

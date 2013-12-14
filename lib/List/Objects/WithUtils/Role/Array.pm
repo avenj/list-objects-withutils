@@ -92,12 +92,7 @@ sub type {
   # array() has an empty ->type
 }
 
-sub new {
-  if (my $blessed = Scalar::Util::blessed $_[0]) {
-    return bless [ @_[1 .. $#_] ], $blessed
-  }
-  bless [ @_[1 .. $#_] ], $_[0]
-}
+sub new { bless [ @_[1 .. $#_ ] ], Scalar::Util::blessed($_[0]) || $_[0] }
 
 sub copy {
   my ($self) = @_;
