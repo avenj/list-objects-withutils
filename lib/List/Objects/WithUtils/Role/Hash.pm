@@ -43,10 +43,7 @@ sub unbless { +{ %{ $_[0] } } }
 
 sub clear { %{ $_[0] } = (); $_[0] }
 
-sub copy {
-  my ($self) = @_;
-  blessed_or_pkg($self)->new(%$self)
-}
+sub copy { blessed_or_pkg($_[0])->new(%{ $_[0] }) }
 
 sub inflate {
   my ($self, %params) = @_;
@@ -59,7 +56,7 @@ sub inflate {
 sub defined { CORE::defined $_[0]->{ $_[1] } }
 sub exists  { CORE::exists  $_[0]->{ $_[1] } }
 
-sub is_empty { keys %{ $_[0] } ? 0 : 1 }
+sub is_empty { ! keys %{ $_[0] } }
 
 sub get {
   if (@_ > 2) {
