@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.004001 2013-12-15
+
+  - Add array->rotate(), array->rotate_in_place()
+
+  - Optimize hash->new()
+
 2.003001 2013-12-14
 
   - Add hash->intersection()
