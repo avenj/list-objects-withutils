@@ -314,6 +314,23 @@ sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
 
+sub rotate {
+  my ($self, %params) = @_;
+  if ($params{left} && $params{right}) {
+    Carp::confess "Cannot rotate in both directions!"
+  } elsif ($params{right}) {
+    return blessed_or_pkg($self)->new(
+      $self->[-1], @{ $self }[0 .. ($#$self - 1)]
+    )
+  } else {
+    return blessed_or_pkg($self)->new(
+      @{ $self }[1 .. $#$self], $self->[0]
+    )
+  }
+}
+
+sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
+
 sub items_after {
   blessed_or_pkg($_[0])->new(
     &List::MoreUtils::after( $_[1], @{ $_[0] } )
@@ -527,6 +544,15 @@ Pushes elements to the end of the array.
 
 Returns the array object.
 
+=head3 rotate_in_place
+
+  array(1 .. 3)->rotate_in_place;             # 2, 3, 1
+  array(1 .. 3)->rotate_in_place(right => 1); # 3, 1, 2
+
+Rotates the array in-place. A direction can be given.
+
+Also see L</rotate>.
+
 =head3 set
 
   $array->set( $index, $value );
@@ -722,6 +748,15 @@ Returns a random element from the array.
 =head3 reverse
 
 Returns a new array object consisting of the reversed list of elements.
+
+=head3 rotate
+
+  my $leftwards  = $array->rotate;
+  my $rightwards = $array->rotate(right => 1);
+
+Returns a new array object containing the rotated list.
+
+Also see L</rotate_in_place>.
 
 =head3 shuffle
 

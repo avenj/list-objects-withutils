@@ -20,6 +20,12 @@ use Types::Standard -all;
   ok $arr->type == Int, 'type returned Int ok';
   ok !array->type, 'plain ArrayObj has no type ok';
 
+  $arr->rotate_in_place;
+  is_deeply
+    [ $arr->all ],
+    [ 2, 3, 1 ],
+    'rotate_in_place ok';
+
   eval {; my $bad = array_of( Int() => qw/foo 1 2/) };
   ok $@ =~ /constraint/, 'array_of invalid type died ok' or diag explain $@;
 

@@ -13,11 +13,12 @@ sub _make_unimp {
 
 our @ImmutableMethods = qw/
   clear
-  set
-  pop push
-  shift unshift
   delete delete_when
   insert
+  pop push
+  rotate_in_place
+  set
+  shift unshift
   splice
 /;
 
@@ -83,6 +84,7 @@ The following methods are not available and will throw an exception:
   shift unshift
   delete delete_when
   insert
+  rotate_in_place
   splice
 
 (The backing array is also marked read-only.)
