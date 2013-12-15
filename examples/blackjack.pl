@@ -39,7 +39,7 @@ STDOUT->autoflush(1);
 sub new_deck {
   my $cards = [];
   for my $val (2 .. 10, qw/A J Q K/) {
-    $cards->push( Card->new($_) ) for 1 .. 4
+    $cards->push( Card->new($val) ) for 1 .. 4
   }
   $cards->shuffle
 }
@@ -73,6 +73,7 @@ while (1) {
     " -> 'h'it, 's'tay, 'q'uit:\n> ";
   my $cmd = <STDIN>;
   chomp $cmd;
+  $cmd = 's' unless $cmd;
   CMD: {
     if ($cmd eq 'q' || $cmd eq 'quit') {
       exit 0
