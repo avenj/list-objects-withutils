@@ -84,6 +84,7 @@ The following methods are not available and will throw an exception:
   shift unshift
   delete delete_when
   insert
+  rotate_in_place
   splice
 
 (The backing array is also marked read-only.)

@@ -544,6 +544,15 @@ Pushes elements to the end of the array.
 
 Returns the array object.
 
+=head3 rotate_in_place
+
+  array(1 .. 3)->rotate_in_place;             # 2, 3, 1
+  array(1 .. 3)->rotate_in_place(right => 1); # 3, 1, 2
+
+Rotates the array in-place. A direction can be given.
+
+Also see L</rotate>.
+
 =head3 set
 
   $array->set( $index, $value );
@@ -739,6 +748,15 @@ Returns a random element from the array.
 =head3 reverse
 
 Returns a new array object consisting of the reversed list of elements.
+
+=head3 rotate
+
+  my $leftwards  = $array->rotate;
+  my $rightwards = $array->rotate(right => 1);
+
+Returns a new array object containing the rotated list.
+
+Also see L</rotate_in_place>.
 
 =head3 shuffle
 
