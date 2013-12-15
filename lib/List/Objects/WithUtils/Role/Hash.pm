@@ -33,8 +33,13 @@ sub is_immutable { ! $_[0]->is_mutable }
 
 sub type { }
 
+our %Required;
 sub new {
-  Module::Runtime::require_module( $_[0]->array_type );
+  my $arraytype = $_[0]->array_type;
+  unless (exists $Required{$arraytype}) {
+    Module::Runtime::require_module($arraytype);
+    $Required{$arraytype} = 1
+  }
   bless +{ @_[1 .. $#_] }, Scalar::Util::blessed $_[0] || $_[0]
 }
 
