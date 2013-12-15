@@ -314,6 +314,23 @@ sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
 
+sub rotate {
+  my ($self, %params) = @_;
+  if ($params{left} && $params{right}) {
+    Carp::confess "Cannot rotate in both directions!"
+  } elsif ($params{right}) {
+    return blessed_or_pkg($self)->new(
+      $self->[-1], @{ $self }[0 .. ($#$self - 1)]
+    )
+  } else {
+    return blessed_or_pkg($self)->new(
+      @{ $self }[1 .. $#$self], $self->[0]
+    )
+  }
+}
+
+sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
+
 sub items_after {
   blessed_or_pkg($_[0])->new(
     &List::MoreUtils::after( $_[1], @{ $_[0] } )

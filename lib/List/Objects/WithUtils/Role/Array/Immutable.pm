@@ -13,11 +13,12 @@ sub _make_unimp {
 
 our @ImmutableMethods = qw/
   clear
-  set
-  pop push
-  shift unshift
   delete delete_when
   insert
+  pop push
+  rotate_in_place
+  set
+  shift unshift
   splice
 /;
 
