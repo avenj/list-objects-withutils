@@ -23,7 +23,7 @@ is_deeply
   [ 4, 1, 2, 3 ],
   'rotate rightwards ok';
 
-eval { $arr->rotate(left => 1, right => 1) };
+eval {; $arr->rotate(left => 1, right => 1) };
 like $@, qr/direction/, 'bad opts die ok';
 
 done_testing

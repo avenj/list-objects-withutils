@@ -9,7 +9,7 @@ if (@ARGV) {
   exit 0
 }
 
-say $_ for 
+[
   qq[Hi! I'm a RPN-ish calculator.],
   qq[ - The stack only persists for a single expression.],
   qq[ - Operations reduce the stack recursively.],
@@ -17,7 +17,7 @@ say $_ for
   qq[   'q' quits],
   qq[   'p' prints the current stack],
   qq[   'pFORMAT applies FORMAT to each stack element via (s)printf],
-;
+]->map(sub { say $_ });
 
 STDOUT->autoflush(1);
 
@@ -39,17 +39,21 @@ sub calc {
       next
     }
 
-    if (my ($format) = $item =~ /\Ap(?:rint)?(\S+)\z/) {
+    if (my ($format) = $item =~ /\Ap(?:rint)?(\S+)\Z/) {
       $stack->map(sub { say sprintf $format, $_ });
       next
     }
 
-    if ($item =~ /\A[0-9]+\z/) {
+    if ($item =~ /\A[0-9]+\Z/) {
       $stack->push($item);
       next
     }
 
     next unless $stack->has_any;
+    unless ($stack->count > 1) {
+      warn "Not enough stack elements to perform operations\n";
+      next
+    }
 
     if ($item eq '+') {
       $stack = array( $stack->reduce(sub { shift() + shift() }) );
@@ -67,7 +71,7 @@ sub calc {
       $stack = array( $stack->reduce(sub { shift() / shift() }) );
       next
     }
-    if ($item eq '^') {
+    if ($item eq '^' || $item eq '**') {
       $stack = array( $stack->reduce(sub { shift() ** shift() }) );
       next
     }
