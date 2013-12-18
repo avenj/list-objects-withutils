@@ -7,10 +7,14 @@ BEGIN {
   }
 }
 
+use Test::Without::Module 'List::UtilsBy::XS';
+
 use Test::More;
 use List::Objects::WithUtils;
 
-use Test::Without::Module 'List::UtilsBy::XS';
+
+ok !$List::Objects::WithUtils::Role::Array::UsingUtilsByXS,
+  'List::UtilsBy::XS not loaded';
 
 # sort_by
 my $arr = array(
@@ -42,19 +46,19 @@ is_deeply
 
 # uniq_by
 $arr = array(
-  { id => 1 },
-  { id => 2 },
-  { id => 1 },
-  { id => 3 },
-  { id => 3 },
+  +{ id => 1 },
+  +{ id => 2 },
+  +{ id => 1 },
+  +{ id => 3 },
+  +{ id => 3 },
 );
 my $uniq = $arr->uniq_by(sub { $_->{id} });
 is_deeply
   [ $uniq->all ],
   [
-    { id => 1 },
-    { id => 2 },
-    { id => 3 },
+    +{ id => 1 },
+    +{ id => 2 },
+    +{ id => 3 },
   ],
   'uniq_by ok';
 

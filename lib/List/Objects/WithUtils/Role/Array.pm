@@ -10,7 +10,10 @@ use Module::Runtime ();
 
 use Scalar::Util ();
 
+# This (and relevant tests) can disappear if UtilsBy gains XS:
+our $UsingUtilsByXS = 0;
 if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
+  $UsingUtilsByXS = 1;
   *__sort_by  = *List::UtilsBy::XS::sort_by;
   *__nsort_by = *List::UtilsBy::XS::nsort_by;
   *__uniq_by  = *List::UtilsBy::XS::uniq_by;
@@ -32,7 +35,9 @@ This is some nonsense to support autoboxing; if we aren't blessed, we're
 autoboxed, in which case we appear to have no choice but to cheap out and
 return the basic array type.
 
-(Relatedly, new() methods should be able to operate on a blessed invocant.)
+This should only be called to get your hands on ->new().
+
+->new() methods should be able to operate on a blessed invocant.
 
 =end comment
 

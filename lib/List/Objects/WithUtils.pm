@@ -71,11 +71,36 @@ sub import {
   1
 }
 
-print
-  qq[<rjbs> I'll nopaste the whole log in a moment.\n],
-  qq[<rjbs> sigh, I can't get this log out.\n],
-  qq[<mst> rjbs: same problem dhoss was having earlier?\n],
-  qq[<rjbs> mst: Maybe I don't want to know...\n]
+print <<'_EOB'
+  (CLASS)
+  + (ROLES)
+   -> (SUBCLASS)
+    + (ROLES)
+List::Objects::WithUtils::
+  Array                             (array)
+  + Role::Array
+  + Role::Array::WithJunctions
+   -> Array::Immutable              (immarray)
+      + Role::Array::Immutable
+    -> Array::Immutable::Typed      (immarray_of)
+       + Role::Array::Immutable
+       + Role::Array::Typed
+   -> Array::Junction               (array->{any,all}_items)
+   -> Array::Typed                  (array_of)
+      + Role::Array::Typed
+  Hash                              (hash)
+  + Role::Hash
+   -> Hash::Immutable               (immhash)
+      + Role::Hash::Immutable
+    -> Hash::Immutable::Typed       (immhash_of)
+      + Role::Hash::Immutable
+      + Role::Hash::Typed
+   -> Hash::Typed                   (hash_of)
+      + Role::Array::Typed
+  
+  Hash::Inflated                    (hash->inflate)
+   -> Hash::Inflated::RW            (hash->inflate(rw => 1))
+_EOB
 unless caller;
 
 1;
