@@ -938,6 +938,8 @@ Returns a new array object consisting of the list of elements sorted via a
 stringy comparison using the given sub. 
 See L<List::UtilsBy>.
 
+Uses L<List::UtilsBy::XS> if available.
+
 =head3 nsort_by
 
 Like L</sort_by>, but using numerical comparison.
@@ -960,6 +962,8 @@ array.
 
 Returns a new array object consisting of the list of elements for which the
 given sub returns unique values.
+
+Uses L<List::UtilsBy::XS> if available; falls back to L<List::UtilsBy> if not.
 
 =head1 SEE ALSO
 
