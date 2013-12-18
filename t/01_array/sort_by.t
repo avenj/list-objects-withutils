@@ -1,3 +1,4 @@
+# (also see utilsby_no_xs.t)
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
