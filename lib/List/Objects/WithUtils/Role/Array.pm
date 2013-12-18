@@ -6,23 +6,20 @@ use Carp ();
 use List::Util ();
 use List::MoreUtils ();
 
-{ 
-  if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
-    *__sort_by  = *List::UtilsBy::XS::sort_by;
-    *__nsort_by = *List::UtilsBy::XS::nsort_by;
-    *__uniq_by  = *List::UtilsBy::XS::uniq_by;
-  } else {
-    require List::UtilsBy;
-     *__sort_by  = *List::UtilsBy::sort_by;
-     *__nsort_by = *List::UtilsBy::nsort_by;
-     *__uniq_by  = *List::UtilsBy::uniq_by;
-  }
-
-}
-
 use Module::Runtime ();
 
 use Scalar::Util ();
+
+if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
+  *__sort_by  = *List::UtilsBy::XS::sort_by;
+  *__nsort_by = *List::UtilsBy::XS::nsort_by;
+  *__uniq_by  = *List::UtilsBy::XS::uniq_by;
+} else {
+  require List::UtilsBy;
+  *__sort_by  = *List::UtilsBy::sort_by;
+  *__nsort_by = *List::UtilsBy::nsort_by;
+  *__uniq_by  = *List::UtilsBy::uniq_by;
+}
 
 =pod
 
