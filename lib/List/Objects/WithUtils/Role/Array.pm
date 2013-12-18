@@ -380,8 +380,6 @@ sub uniq {
   )
 }
 
-# FIXME
-#  Install __sort_by etc subs during require phase above instead?
 sub sort_by {
   blessed_or_pkg($_[0])->new(
     __sort_by( $_[1], @{ $_[0] } )
