@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.004002 2013-12-17
+
+  - Use List::UtilsBy::XS if available (TOBYINK rt#91461)
+
 2.004001 2013-12-15
 
   - Add array->rotate(), array->rotate_in_place()
