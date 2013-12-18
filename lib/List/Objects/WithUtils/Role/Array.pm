@@ -6,7 +6,7 @@ use Carp ();
 use List::Util ();
 use List::MoreUtils ();
 
-{ no warnings 'once';
+{ 
   if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
     *__sort_by  = *List::UtilsBy::XS::sort_by;
     *__nsort_by = *List::UtilsBy::XS::nsort_by;
