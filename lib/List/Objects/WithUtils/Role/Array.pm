@@ -204,6 +204,13 @@ sub insert {
   $_[0] 
 }
 
+sub intersection {
+  my %seen;
+  blessed_or_pkg($_[0])->new(
+    grep {; ++$seen{$_} > $#_ } map {; @$_ } @_
+  )
+}
+
 sub join { 
   CORE::join( 
     ( defined $_[1] ? $_[1] : ',' ), 
@@ -894,6 +901,20 @@ If passed a sub, returns boolean true if the sub is true for any element
 of the array; see L<List::MoreUtils/"any">.
 
 C<$_> is set to the element being operated upon.
+
+=head3 intersection
+
+  my $first  = array(qw/ a b c /);
+  my $second = array(qw/ b c d /);
+  my $intersection = $first->intersection($second);
+
+Returns a new array object containing the list of values common between all
+given array-type objects (including the invocant).
+
+The new array object is not sorted in any predictable order.
+
+(It may be worth noting that an intermediate hash is used; objects that
+stringify to the same value will be taken to be the same.)
 
 =head3 items_after
 
