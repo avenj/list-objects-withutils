@@ -1001,6 +1001,11 @@ Like L</sort_by>, but using numerical comparison.
 Returns a new array object containing only unique elements from the original
 array.
 
+(It may be worth noting that this takes place via an intermediate hash;
+objects that stringify to the same value are not unique, even if they are
+different objects. L</uniq_by> plus L<Scalar::Util/"refaddr"> may help you
+there.)
+
 =head3 uniq_by
 
   my $array = array(
