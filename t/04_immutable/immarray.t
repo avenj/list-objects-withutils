@@ -40,6 +40,9 @@ like $@, qr/read-only/, 'element set dies';
 eval {; @$imm = () };
 like $@, qr/read-only/, 'array clear dies';
 
+eval {; $imm->map(sub { $_++ }) };
+like $@, qr/read-only/, 'changing vals via topicalizer dies';
+
 is_deeply
   [ $imm->all ],
   [ 1 .. 4 ],
