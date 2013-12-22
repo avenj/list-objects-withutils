@@ -26,4 +26,11 @@ is_deeply
 ok $first->intersection( [ 1, 2, 3 ] )->is_empty,
   'empty intersection ok';
 
+my $dupes = array( qw/ z z c d / );
+$intersects = $dupes->intersection($first);
+is_deeply
+  [ $intersects->sort->all ],
+  [ qw/ c d / ],
+  'intersection (dupes in one array) ok';
+
 done_testing

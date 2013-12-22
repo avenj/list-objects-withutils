@@ -207,7 +207,9 @@ sub insert {
 sub intersection {
   my %seen;
   blessed_or_pkg($_[0])->new(
-    grep {; ++$seen{$_} > $#_ } map {; @$_ } @_
+    # Well. Probably not the most efficient approach . . .
+    grep {; ++$seen{$_} > $#_ } 
+      map {; List::MoreUtils::uniq @$_ } @_
   )
 }
 
