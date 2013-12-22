@@ -1,5 +1,19 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.005001 2013-12-22
+
+  - Add array->indexes() (from List::MoreUtils)
+
+  - Add array->last_index, array->last_where
+
+  - array->first moved to array->first_where;
+    backwards compatible ->first remains for now, but may be
+    eventually placed in a warn-then-remove deprecation cycle.
+
+  - Add array->first_index (same as ->firstidx);
+    these changes should add some sanity to first/last method naming
+    (first_where, first_index, last_where, last_index)
+
 2.004003 2013-12-19
 
   - Run non-XS List::UtilsBy tests if Test::Without::Module is available
