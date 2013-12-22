@@ -524,10 +524,6 @@ to provide a negative value.
 The opposite of L</is_mutable>. (Subclasses do not need to override so long as
 L</is_mutable> returns a correct value.)
 
-=head3 scalar
-
-See L</count>.
-
 =head3 inflate
 
   my $hash = $array->inflate;
@@ -547,6 +543,10 @@ The class name that objects are blessed into when calling L</inflate>;
 subclasses can override to provide their own hash-type objects.
 
 Defaults to L<List::Objects::WithUtils::Hash>.
+
+=head3 scalar
+
+See L</count>.
 
 =head3 unbless
 
@@ -731,12 +731,6 @@ Similar to L</head>, but returns either the last element and a new array-type
 object containing the remaining list (in list context), or just the last
 element of the list (in scalar context).
 
-=head3 kv
-
-Returns an array-type object containing key/value pairs as (unblessed) ARRAYs;
-this is much like L<List::Objects::WithUtils::Role::Hash/"kv">, except the
-array index is the key.
-
 =head3 join
 
   my $str = $array->join(' ');
@@ -744,6 +738,12 @@ array index is the key.
 Joins the array's elements and returns the joined string.
 
 Defaults to ',' if no delimiter is specified.
+
+=head3 kv
+
+Returns an array-type object containing key/value pairs as (unblessed) ARRAYs;
+this is much like L<List::Objects::WithUtils::Role::Hash/"kv">, except the
+array index is the key.
 
 =head3 mesh
 
