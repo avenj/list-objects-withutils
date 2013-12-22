@@ -266,15 +266,19 @@ sub has_any {
     : !! @{ $_[0] }
 }
 
-sub first { 
-  # Not sure about adding ->last()
-  # Method name is a bit confusing (vs. ->end)
-  # Could go:
-  #   first -> first_where (deprecated first)
-  #   last  -> last_where
-  #   alias first_index -> firstidx
-  #   alias last_index  -> lastidx
+=pod
+
+=for Pod::Coverage first
+
+=cut
+
+{ no warnings 'once'; *first = *first_where }
+sub first_where { 
   &List::Util::first( $_[1], @{ $_[0] } ) 
+}
+
+sub last_where {
+  &List::MoreUtils::lastval( $_[1], @{ $_[0] } )
 }
 
 { no warnings 'once';
@@ -849,30 +853,34 @@ on; you can also use the topicalizer C<$_>.
 Like L</grep>, but returns a new array object consisting of the list of
 B<indexes> for which the given subroutine evaluates to true.
 
-=head3 first
+=head3 first_where
 
   my $arr = array( qw/ ab bc bd de / );
-  my $first = $arr->first(sub { /^b/ });  ## 'bc'
+  my $first = $arr->first_where(sub { /^b/ });  ## 'bc'
 
 Returns the first element of the list for which the given sub evaluates to
 true. C<$_> is set to each element, in turn, until a match is found (or we run
 out of possibles).
 
-=head3 firstidx
-
-Like L</first>, but return the index of the first successful match.
-
 =head3 first_index
 
-An alias for L</firstidx>.
+Like L</first_where>, but return the index of the first successful match.
 
-=head3 lastidx
+=head3 firstidx
 
-Like L</firstidx>, but returns the index of the B<last> successful match.
+An alias for L</first_index>.
+
+=head3 last_where
+
+Like L</first_where>, but returns the B<last> successful match.
 
 =head3 last_index
 
-An alias for L</lastidx>.
+Like L</first_index>, but returns the index of the B<last> successful match.
+
+=head3 lastidx
+
+An alias for L</last_index>.
 
 =head3 has_any
 
