@@ -16,6 +16,13 @@ is_deeply
   'intersection looks ok'
     or diag explain $intersects;
 
+$intersects = $first->intersection($second);
+ok $intersects->count == 2, '2 items in intersection';
+is_deeply
+  [ $intersects->sort->all ],
+  [ qw/ c d / ],
+  'intersection (one array) looks ok';
+
 ok $first->intersection( [ 1, 2, 3 ] )->is_empty,
   'empty intersection ok';
 
