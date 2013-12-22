@@ -1,6 +1,8 @@
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
+# This test sucks. :)
+
 use List::Objects::WithUtils 'autobox';
 
 cmp_ok []->count, '==', 0, 'empty autoboxed count() ok';
