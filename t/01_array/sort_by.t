@@ -5,9 +5,9 @@ use strict; use warnings FATAL => 'all';
 use List::Objects::WithUtils 'array';
 
 if ($List::Objects::WithUtils::Role::Array::UsingUtilsByXS) {
-  diag "Using List::UtilsBy::XS"
+  diag "\nUsing List::UtilsBy::XS\n"
 } else {
-  diag "Using List::UtilsBy (XS not found)"
+  diag "\nUsing List::UtilsBy (XS not found)\n"
 }
 
 my $arr = array(

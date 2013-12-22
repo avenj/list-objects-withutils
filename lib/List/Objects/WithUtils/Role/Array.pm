@@ -231,6 +231,12 @@ sub grep {
   )
 }
 
+sub indexes {
+  blessed_or_pkg($_[0])->new(
+    &List::MoreUtils::indexes($_[1], @{ $_[0] })
+  )
+}
+
 sub sort {
   if (defined $_[1]) {
     return blessed_or_pkg($_[0])->new(
@@ -815,11 +821,18 @@ See: L<Types::Standard>, L<List::Objects::Types>
 
 =head3 grep
 
-  my $matched = $array->grep(sub { $_[0] =~ /foo/ });
+  my $matched = $array->grep(sub { /foo/ });
 
 Returns a new array object consisting of the list of elements for which the
-given subroutine evaluated to true. C<$_[0]> is the element being operated
+given subroutine evaluates to true. C<$_[0]> is the element being operated
 on; you can also use the topicalizer C<$_>.
+
+=head3 indexes
+
+  my $matched = $array->indexes(sub { /foo/ });
+
+Like L</grep>, but returns a new array object consisting of the list of
+B<indexes> for which the given subroutine evaluates to true.
 
 =head3 first
 
