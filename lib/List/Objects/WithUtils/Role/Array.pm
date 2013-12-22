@@ -267,11 +267,26 @@ sub has_any {
 }
 
 sub first { 
+  # Not sure about adding ->last()
+  # Method name is a bit confusing (vs. ->end)
+  # Could go:
+  #   first -> first_where (deprecated first)
+  #   last  -> last_where
+  #   alias first_index -> firstidx
+  #   alias last_index  -> lastidx
   &List::Util::first( $_[1], @{ $_[0] } ) 
 }
 
+{ no warnings 'once';
+  *first_index = *firstidx;
+  *last_index  = *lastidx;
+}
 sub firstidx { 
   &List::MoreUtils::firstidx( $_[1], @{ $_[0] } )
+}
+
+sub lastidx {
+  &List::MoreUtils::lastidx( $_[1], @{ $_[0] } )
 }
 
 sub mesh {
@@ -846,6 +861,18 @@ out of possibles).
 =head3 firstidx
 
 Like L</first>, but return the index of the first successful match.
+
+=head3 first_index
+
+An alias for L</firstidx>.
+
+=head3 lastidx
+
+Like L</firstidx>, but returns the index of the B<last> successful match.
+
+=head3 last_index
+
+An alias for L</lastidx>.
 
 =head3 has_any
 
