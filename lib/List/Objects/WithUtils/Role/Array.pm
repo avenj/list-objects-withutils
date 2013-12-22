@@ -229,7 +229,7 @@ sub map {
 sub mapval {
   my ($self, $sub) = @_;
   my @copy = @$self;
-  blessed_or_pkg($_[0])->new(
+  blessed_or_pkg($self)->new(
     CORE::map {; $sub->($_); $_ } @copy
   )
 }
