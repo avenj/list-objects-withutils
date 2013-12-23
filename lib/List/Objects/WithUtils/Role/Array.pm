@@ -213,6 +213,15 @@ sub intersection {
   )
 }
 
+sub diff {
+  my %seen;
+  my @vals = map {; List::MoreUtils::uniq @$_ } @_;
+  $seen{$_}++ for @vals;
+  blessed_or_pkg($_[0])->new(
+    grep {; $seen{$_} != @_ } List::MoreUtils::uniq @vals
+  )
+}
+
 sub join { 
   CORE::join( 
     ( defined $_[1] ? $_[1] : ',' ), 
@@ -917,6 +926,18 @@ The new array object is not sorted in any predictable order.
 
 (It may be worth noting that an intermediate hash is used; objects that
 stringify to the same value will be taken to be the same.)
+
+=head3 diff
+
+  my $first  = array(qw/ a b c d /);
+  my $second = array(qw/ b c x /);
+  my @diff = $first->diff($second)->sort->all;  # (a, d, x)
+
+The opposite of L</intersection>; returns a new array object containing the
+list of values that are not common between all given array-type objects
+(including the invocant).
+
+The same constraints as L</intersection> apply.
 
 =head3 items_after
 
