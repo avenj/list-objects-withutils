@@ -3,6 +3,7 @@ use strictures 1;
 
 use Module::Runtime ();
 use Scalar::Util ();
+use List::MoreUtils ();
 
 =pod
 
@@ -114,6 +115,15 @@ sub intersection {
   my %seen;
   blessed_or_pkg($_[0])->array_type->new(
     grep {; ++$seen{$_} > $#_ } map {; CORE::keys %$_ } @_
+  )
+}
+
+sub diff {
+  my %seen;
+  my @vals = map {; CORE::keys %$_ } @_;
+  $seen{$_}++ for @vals;
+  blessed_or_pkg($_[0])->array_type->new(
+    grep {; $seen{$_} != @_ } List::MoreUtils::uniq @vals
   )
 }
 
@@ -277,6 +287,12 @@ for modification:
 
 Returns the list of keys common between all given hash-type objects (including
 the invocant) as an L</array_type> object.
+
+=head2 diff
+
+The opposite of L</intersection>; returns the list of keys that are not common
+to all given hash-type objects (including the invocant) as an L</array_type>
+object.
 
 =head2 is_empty
 
