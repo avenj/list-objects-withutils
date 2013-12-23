@@ -114,7 +114,8 @@ sub values {
 sub intersection {
   my %seen;
   blessed_or_pkg($_[0])->array_type->new(
-    grep {; ++$seen{$_} > $#_ } map {; CORE::keys %$_ } @_
+    List::MoreUtils::uniq
+      grep {; ++$seen{$_} > $#_ } map {; CORE::keys %$_ } @_
   )
 }
 
