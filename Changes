@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.006001 2013-12-26
+
+  - Add array->intersection(), array->diff(), hash->diff()
+
 2.005001 2013-12-22
 
   - Add array->indexes() (from List::MoreUtils)
