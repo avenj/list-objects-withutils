@@ -3,6 +3,11 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+is_deeply
+  [ array(1 .. 3)->diff([ 3, 2, 1 ])->all ],
+  [ ],
+  'zero element diff ok';
+
 my $first  = array(qw/a b c d e /);
 my $second =      [qw/a b c x y /];
 

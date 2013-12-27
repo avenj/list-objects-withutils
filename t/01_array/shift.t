@@ -3,6 +3,8 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+ok !defined array->shift, 'empty array shift ok';
+
 my $arr = array( 1 .. 3 );
 my $shifted = $arr->shift;
 ok $shifted == 1, 'shifted value ok';

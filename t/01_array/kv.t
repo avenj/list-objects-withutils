@@ -15,4 +15,6 @@ is_deeply
   ],
   'array kv ok';
 
+ok array->kv->is_empty, 'empty array kv ok';
+
 done_testing;
