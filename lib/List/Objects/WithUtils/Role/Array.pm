@@ -517,7 +517,7 @@ Returns the number of elements in the array.
 
 =head3 end
 
-Returns the last index of the array.
+Returns the last index of the array (or -1 if the array is empty).
 
 =head3 is_empty
 
