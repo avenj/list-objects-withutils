@@ -44,7 +44,7 @@ List::Objects::WithUtils::Autobox - Native data types WithUtils
 
   use List::Objects::WithUtils 'autobox';
 
-  my @upper = [ qw/foo bar baz/ ]->map(sub { uc $_[0] })->all;
+  my @upper = [ qw/foo bar baz/ ]->map(sub { uc })->all;
 
   my @sorted_keys = { foo => 'bar', baz => 'quux' }->keys->sort->all;
 
