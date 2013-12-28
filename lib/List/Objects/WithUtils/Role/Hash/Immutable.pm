@@ -71,6 +71,7 @@ The following methods are not available and will throw an exception:
 
   clear
   set
+  maybe_set
   delete
 
 (The backing hash is also marked read-only.)
