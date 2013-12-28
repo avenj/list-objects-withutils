@@ -95,10 +95,8 @@ sub set {
 
 sub maybe_set {
   my $self = shift;
-  my @keysidx = grep {; not $_ % 2 } 0 .. $#_ ;
-  for (@keysidx) {
-    $self->{ $_[$_] } = $_[$_ + 1]
-      unless exists $self->{ $_[$_] }
+  for (grep {; not $_ % 2 } 0 .. $#_) {
+    $self->{ $_[$_] } = $_[$_ + 1] unless exists $self->{ $_[$_] }
   }
   $self
 }
