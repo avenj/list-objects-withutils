@@ -244,13 +244,8 @@ sub mapval {
 }
 
 sub visit {
-  my ($self, $sub) = @_;
-  my $idx = 0; my $max = @$self;
-  while ($idx < $max) {
-    $sub->(local $_ = $self->[$idx]);
-    $idx++
-  }
-  $self
+  $_[1]->($_) for @{ $_[0] };
+  $_[0]
 }
 
 sub grep {
@@ -1027,9 +1022,6 @@ Executes the given subroutine against each element sequentially; in practice
 this is much like L</map>, except the return value is thrown away.
 
 Returns the original array object.
-
-Unlike L</foreach>, elements are visited one at a time (as opposed to
-constructing and walking the full list, as in C<< for ($arr->all) { ... } >>.
 
 =head2 Methods that sort the list
 
