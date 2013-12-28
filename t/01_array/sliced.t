@@ -16,4 +16,9 @@ is_deeply
   [ 1, 3, 5 ],
   'sliced (3 element) ok';
 
+is_deeply
+  [ $arr->slice(0, 2, 4)->all ],
+  [ $sliced->all ],
+  'slice alias ok';
+
 done_testing

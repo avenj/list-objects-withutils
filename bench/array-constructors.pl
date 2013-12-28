@@ -23,7 +23,7 @@ my $typed_immutable = sub {
   my $arr = immarray_of Num() => @values
 };
 
-my $results = timethese( 300_000 =>
+my $results = timethese( 200_000 =>
   +{
       array       => $basic,
       immarray    => $immutable,

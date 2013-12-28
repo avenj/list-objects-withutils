@@ -73,6 +73,13 @@ sub get {
   $_[0]->{ $_[1] }
 }
 
+=pod
+
+=for Pod::Coverage slice
+
+=cut
+
+{ no warnings 'once'; *slice = *sliced; }
 sub sliced {
   blessed_or_pkg($_[0])->new(
     map {;

@@ -12,4 +12,9 @@ ok $slice->get('a') == 1, 'sliced get ok';
 ok !$slice->exists('z'), 'nonexistant key ignored';
 ok !$slice->get('b'), 'unspecified key ignored';
 
+is_deeply
+  +{ $slice->export },
+  +{ $hr->slice(qw/a c z/)->export },
+  'slice alias ok';
+
 done_testing;
