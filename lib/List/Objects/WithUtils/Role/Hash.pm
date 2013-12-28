@@ -93,6 +93,16 @@ sub set {
   $self
 }
 
+sub maybe_set {
+  my $self = shift;
+  my @keysidx = grep {; not $_ % 2 } 0 .. $#_ ;
+  for (@keysidx) {
+    $self->{ $_[$_] } = $_[$_ + 1]
+      unless exists $self->{ $_[$_] }
+  }
+  $self
+}
+
 sub delete {
   blessed_or_pkg($_[0])->array_type->new(
     CORE::delete @{ $_[0] }{ @_[1 .. $#_] }
@@ -356,6 +366,16 @@ Sets keys in the hash.
 
 As of version 1.007, returns the current hash object.
 The return value of prior versions is unreliable.
+
+=head2 maybe_set
+
+  my $hash = hash(foo => 1, bar => 2, baz => 3);
+  $hash->maybe_set(foo => 2, bar => 3, quux => 4);
+  # $hash = +{ foo => 1, bar => 2, baz => 3, quux => 4 }
+
+Like L</set>, but only sets values that do not already exist in the hash.
+
+Returns the hash object.
 
 =head2 sliced
 

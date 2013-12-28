@@ -14,6 +14,7 @@ sub _make_unimp {
 our @ImmutableMethods = qw/
   clear
   set
+  maybe_set
   delete
 /;
 
