@@ -1025,6 +1025,7 @@ bundled group.
   $rot->();  ## 'cat'
   $rot->();  ## 'sheep'
   $rot->();  ## 'mouse'
+  $rot->();  ## 'cat'
 
 Returns an iterator that, when called, produces the next element in the array;
 when there are no elements left, the iterator returns to the start of the
