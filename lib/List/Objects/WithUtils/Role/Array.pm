@@ -12,16 +12,18 @@ use Scalar::Util ();
 
 # This (and relevant tests) can disappear if UtilsBy gains XS:
 our $UsingUtilsByXS = 0;
-if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
-  $UsingUtilsByXS = 1;
-  *__sort_by  = *List::UtilsBy::XS::sort_by;
-  *__nsort_by = *List::UtilsBy::XS::nsort_by;
-  *__uniq_by  = *List::UtilsBy::XS::uniq_by;
-} else {
-  require List::UtilsBy;
-  *__sort_by  = *List::UtilsBy::sort_by;
-  *__nsort_by = *List::UtilsBy::nsort_by;
-  *__uniq_by  = *List::UtilsBy::uniq_by;
+{ no warnings 'once';
+  if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
+    $UsingUtilsByXS = 1;
+    *__sort_by  = *List::UtilsBy::XS::sort_by;
+    *__nsort_by = *List::UtilsBy::XS::nsort_by;
+    *__uniq_by  = *List::UtilsBy::XS::uniq_by;
+  } else {
+    require List::UtilsBy;
+    *__sort_by  = *List::UtilsBy::sort_by;
+    *__nsort_by = *List::UtilsBy::nsort_by;
+    *__uniq_by  = *List::UtilsBy::uniq_by;
+  }
 }
 
 =pod
@@ -335,6 +337,16 @@ sub natatime {
   }
 }
 
+sub rotator {
+  my @list = @{ $_[0] };
+  my $pos = 0;
+  sub {
+    my $val = $list[$pos++];
+    $pos = 0 if $pos == @list;
+    $val
+  }
+}
+
 sub part {
   my ($self, $code) = @_;
   my @parts;
@@ -614,7 +626,7 @@ Returns the array object.
 
 Rotates the array in-place. A direction can be given.
 
-Also see L</rotate>.
+Also see L</rotate>, L</rotator>.
 
 =head3 set
 
@@ -819,7 +831,7 @@ Returns a new array object consisting of the reversed list of elements.
 
 Returns a new array object containing the rotated list.
 
-Also see L</rotate_in_place>.
+Also see L</rotate_in_place>, L</rotator>.
 
 =head3 shuffle
 
@@ -1006,6 +1018,19 @@ Returns an iterator that, when called, produces a list containing the next
 
 If given a coderef as a second argument, it will be called against each
 bundled group.
+
+=head3 rotator
+
+  my $rot = array(qw/cat sheep mouse/);
+  $rot->();  ## 'cat'
+  $rot->();  ## 'sheep'
+  $rot->();  ## 'mouse'
+
+Returns an iterator that, when called, produces the next element in the array;
+when there are no elements left, the iterator returns to the start of the
+array.
+
+See also L</rotate>, L</rotate_in_place>.
 
 =head3 reduce
 
