@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.007001 2013-12-28
+
+  - Add array->rotator(), array->visit()
+
+  - Add hash->maybe_set()
+
 2.006001 2013-12-26
 
   - Add array->intersection(), array->diff(), hash->diff()
