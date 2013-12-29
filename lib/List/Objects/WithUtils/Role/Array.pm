@@ -256,6 +256,14 @@ sub grep {
   )
 }
 
+
+=pod
+
+=for Pod::Coverage indices
+
+=cut
+
+{ no warnings 'once'; *indices = *indexes; }
 sub indexes {
   blessed_or_pkg($_[0])->new(
     &List::MoreUtils::indexes($_[1], @{ $_[0] })
