@@ -210,8 +210,8 @@ sub intersection {
   my %seen;
   blessed_or_pkg($_[0])->new(
     # Well. Probably not the most efficient approach . . .
-    grep {; ++$seen{$_} > $#_ } 
-      map {; List::MoreUtils::uniq @$_ } @_
+    CORE::grep {; ++$seen{$_} > $#_ } 
+      CORE::map {; List::MoreUtils::uniq @$_ } @_
   )
 }
 
@@ -220,7 +220,7 @@ sub diff {
   my @vals = map {; List::MoreUtils::uniq @$_ } @_;
   $seen{$_}++ for @vals;
   blessed_or_pkg($_[0])->new(
-    grep {; $seen{$_} != @_ } List::MoreUtils::uniq @vals
+    CORE::grep {; $seen{$_} != @_ } List::MoreUtils::uniq @vals
   )
 }
 
