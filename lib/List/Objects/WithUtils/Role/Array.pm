@@ -385,10 +385,12 @@ sub bisect {
 
 sub tuples {
   my ($self, $size, $type) = @_;
-  # Autoboxed? Need to be blessed if we're to _try_coerce
-  $self = blessed_or_pkg($self)->new(@$self)
-    unless Scalar::Util::blessed $self;
   $size = 2 unless defined $size;
+  if (defined $type) {
+    # Autoboxed? Need to be blessed if we're to _try_coerce
+    $self = blessed_or_pkg($self)->new(@$self)
+      unless Scalar::Util::blessed $self;
+  }
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 1;
   my $itr = List::MoreUtils::natatime($size, @$self);
