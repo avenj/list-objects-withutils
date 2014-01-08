@@ -25,7 +25,7 @@ around new => sub {
     && $type->isa('Type::Tiny');
 
   my $self = {};
-  tie(%$self, 'Type::Tie::HASH', $type);
+  tie %$self, 'Type::Tie::HASH', $type;
   %$self = @_;
   bless $self, $class;
 };

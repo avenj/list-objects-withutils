@@ -26,7 +26,7 @@ around new => sub {
     && $type->isa('Type::Tiny');
 
   my $self = [];
-  tie(@$self, 'Type::Tie::ARRAY', $type);
+  tie @$self, 'Type::Tie::ARRAY', $type;
   push @$self, @_;
   bless $self, $class;
 };

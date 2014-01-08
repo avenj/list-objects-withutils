@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Array::Junction;
+## no critic
 
 { package 
     List::Objects::WithUtils::Array::Junction::Base;
