@@ -125,6 +125,9 @@ sub unbless { [ @{ $_[0] } ] }
 
 sub validated {
   my ($self, $type) = @_;
+  # Autoboxed?
+  $self = blessed_or_pkg($self)->new(@$self)
+    unless Scalar::Util::blessed $self;
   blessed_or_pkg($_[0])->new(
     CORE::map {; $self->_try_coerce($type, $_) } @$self
   )
@@ -402,7 +405,7 @@ sub tuples {
     }
     CORE::push @res, [ @nxt ];
   }
-  $self->new(@res)
+  blessed_or_pkg($self)->new(@res)
 }
 
 sub reduce {

@@ -26,4 +26,12 @@ eval {; $valid = $arr->validated(Int) };
 ok $@ =~ /type/i, 'validated(Int) failed with type error'
   or diag explain $@;
 
+{ use Lowu;
+  my $valid = [qw/foo bar baz quux/]->validated(Str);
+  is_deeply
+    [ $valid->all ],
+    [ qw/foo bar baz quux/ ],
+    'autoboxed validated(Str) ok';
+}
+
 done_testing;
