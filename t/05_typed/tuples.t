@@ -40,4 +40,12 @@ ok $@ =~ /type/i, 'ArrayObj check failed on odd tuple ok';
 eval {; $tuples = $arr->tuples(3, 'foo') };
 ok $@ =~ /Type::Tiny/, 'bad type dies ok';
 
+{ use Lowu;
+  $tuples = [ 1, 2, 3, 4 ]->tuples(2, Int);
+  is_deeply
+    [ $tuples->all ],
+    [ [ 1 => 2 ], [ 3 => 4 ] ],
+    'autoboxed ->tuples ok';
+}
+
 done_testing;

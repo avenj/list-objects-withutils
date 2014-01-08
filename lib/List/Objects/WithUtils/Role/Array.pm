@@ -385,6 +385,9 @@ sub bisect {
 
 sub tuples {
   my ($self, $size, $type) = @_;
+  # Autoboxed? Need to be blessed if we're to _try_coerce
+  $self = blessed_or_pkg($self)->new(@$self)
+    unless Scalar::Util::blessed $self;
   $size = 2 unless defined $size;
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 1;
@@ -397,7 +400,7 @@ sub tuples {
     }
     CORE::push @res, [ @nxt ];
   }
-  blessed_or_pkg($self)->new(@res)
+  $self->new(@res)
 }
 
 sub reduce {
