@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.008001 2014-01-11
+
+  - Add hash->kv_map
+
+  - Fix autoboxed []->tuples(), []->validated()
+
 2.007001 2013-12-28
 
   - Add array->rotator(), array->visit()
