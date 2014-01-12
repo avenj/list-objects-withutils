@@ -163,8 +163,9 @@ sub kv_sort {
 }
 
 sub kv_map {
-  blessed_or_pkg($_[0])->array_type->new(
-    List::Util::pairmap {; $_[1]->($a, $b) } %{ $_[0] }
+  my ($self, $sub) = @_;
+  blessed_or_pkg($self)->array_type->new(
+    List::Util::pairmap {; $sub->($a, $b) } %$self
   )
 }
 
