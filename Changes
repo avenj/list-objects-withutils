@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.008002 2014-01-12
+
+  - Fix hash->kv_map on 5.8.x/5.10.0
+
 2.008001 2014-01-11
 
   - Add hash->kv_map
