@@ -67,6 +67,12 @@ Like L<autobox>, the effect is lexical in scope and can be disabled:
   no List::Objects::WithUtils::Autobox;
   [3,2,1]->sort;  # dies
 
+=head2 CAVEATS
+
+You can't call B<new> on autoboxed refs (but that would be a silly thing to do
+anyway -- and if you're really determined, C<< []->copy >> has the same
+effect).
+
 It's worth noting that methods that create new lists will return blessed
 objects, not native data types. This lets you continue passing result
 collections around to other pieces of Perl that wouldn't otherwise know how to

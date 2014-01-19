@@ -13,6 +13,7 @@ ok __PACKAGE__->can( 'immhash' ), 'immhash ok';
 ok __PACKAGE__->can( 'hash_of' ), 'hash_of ok';
 ok __PACKAGE__->can( 'immhash_of' ), 'immhash_of ok';
 
-cmp_ok []->count, '==', 0, 'autobox ok';
+isa_ok []->copy, 'List::Objects::WithUtils::Array', 'autoboxed copy ok';
+cmp_ok []->count, '==', 0, 'autoboxed count ok';
 
 done_testing;
