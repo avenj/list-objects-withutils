@@ -144,6 +144,11 @@ sub diff {
   )
 }
 
+sub iter {
+  my @list = %{ $_[0] };
+  sub { splice @list, 0, 2 }
+}
+
 sub kv {
   blessed_or_pkg($_[0])->array_type->new(
     map {; [ $_, $_[0]->{ $_ } ] } CORE::keys %{ $_[0] }
@@ -343,13 +348,24 @@ Returns the list of keys in the hash as an L</array_type> object.
 
 Returns the list of values in the hash as an L</array_type> object.
 
+=head2 iter
+
+  my $iter = $hash->iter;
+  while (my ($key, $val) = $iter->()) {
+    # ...
+  }
+
+Returns an iterator that, when called, returns ($key, $value) pairs.
+
+The iterator operates on a shallow clone of the current hash.
+
 =head2 kv
 
   for my $pair ($hash->kv->all) {
     my ($key, $val) = @$pair;
   }
 
-Returns an L</array_type> object containing the key/value pairs in the HASH,
+Returns an L</array_type> object containing the key/value pairs in the hash,
 each of which is a two-element ARRAY.
 
 =head2 kv_map
