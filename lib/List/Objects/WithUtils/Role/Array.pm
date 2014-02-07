@@ -945,7 +945,7 @@ An alias for L</last_index>.
     ...
   }
 
-If passed no arguments, returns the same thing as L</count>.
+If passed no arguments, returns boolean true if the array has any elements.
 
 If passed a sub, returns boolean true if the sub is true for any element
 of the array; see L<List::MoreUtils/"any">.
