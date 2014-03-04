@@ -357,7 +357,8 @@ Returns the list of values in the hash as an L</array_type> object.
 
 Returns an iterator that, when called, returns ($key, $value) pairs.
 
-The iterator operates on a shallow clone of the current hash.
+The iterator operates on a shallow clone of the current hash, making it
+(relatively) safe to operate on the original hash while using the iterator.
 
 =head2 kv
 
