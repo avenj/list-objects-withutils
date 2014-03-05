@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.009001 2014-03-05
+
+  - Add hash->iter()
+
+  - POD fixes
+
 2.008002 2014-01-12
 
   - Fix hash->kv_map on 5.8.x/5.10.0
