@@ -393,14 +393,17 @@ Immutable array objects were inspired by L<Const::Fast> by Leon Timmermans
 
 Junctions are adapted from L<Perl6::Junction> by Carl Franks (CPAN: CFRANKS)
 
+Inspiration for a few pieces comes from the "classic" (version 0.33)
+L<List::MoreUtils> -- the development versions (0.4+) are going places I
+don't fully understand, so MoreUtils was dropped from the dependency chain in
+Lowu 2.10.0.
+
 Most of the type-checking code and other useful additions were contributed by
 Toby Inkster (CPAN: TOBYINK)
 
 Much of this code simply wraps other widely-used modules, including:
 
 L<List::Util>
-
-L<List::MoreUtils>
 
 L<List::UtilsBy>
 
