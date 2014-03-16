@@ -372,11 +372,11 @@ sub mesh {
 }
 
 sub natatime {
-  my ($self, $count, $cb) = @_;
-  my @list = @$self;
+  my @list  = @{ $_[0] };
+  my $count = $_[1];
   my $itr = sub { CORE::splice @list, 0, $count };
-  if ($cb) {
-    while (my @nxt = $itr->()) { $cb->(@nxt) }
+  if ($_[2]) {
+    while (my @nxt = $itr->()) { $_[2]->(@nxt) }
   } else { 
     return $itr
   }
@@ -460,38 +460,34 @@ sub rotate {
 sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
 
 sub items_after {
-  my ($self, $cb) = @_;
   my ($started, $lag);
-  blessed_or_pkg($self)->new(
+  blessed_or_pkg($_[0])->new(
     CORE::grep $started ||= do {
-      my $x = $lag; $lag = $cb->(); $x
-    }, @$self
+      my $x = $lag; $lag = $_[1]->(); $x
+    }, @{ $_[0] }
   )
 }
 
 sub items_after_incl {
-  my ($self, $cb) = @_;
   my $started;
-  blessed_or_pkg($self)->new(
-    CORE::grep $started ||= $cb->(), @$self
+  blessed_or_pkg($_[0])->new(
+    CORE::grep $started ||= $_[1]->(), @{ $_[0] }
   )
 }
 
 sub items_before {
-  my ($self, $cb) = @_;
   my $more = 1;
-  blessed_or_pkg($self)->new(
-    CORE::grep $more &&= !$cb->(), @$self
+  blessed_or_pkg($_[0])->new(
+    CORE::grep $more &&= !$_[1]->(), @{ $_[0] }
   )
 }
 
 sub items_before_incl {
-  my ($self, $cb) = @_;
   my $more = 1; my $lag = 1;
-  blessed_or_pkg($self)->new(
+  blessed_or_pkg($_[0])->new(
     CORE::grep $more &&= do {
-      my $x = $lag; $lag = !$cb->(); $x
-    }, @$self
+      my $x = $lag; $lag = !$_[1]->(); $x
+    }, @{ $_[0] }
   )
 }
 
@@ -1009,6 +1005,8 @@ The new array object is not sorted in any predictable order.
 
 (It may be worth noting that an intermediate hash is used; objects that
 stringify to the same value will be taken to be the same.)
+
+For proper set support, perhaps try something like L<Set::Equivalence>.
 
 =head3 diff
 
