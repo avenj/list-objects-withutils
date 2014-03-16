@@ -1,8 +1,6 @@
 package List::Objects::WithUtils::Role::Hash;
 use strictures 1;
 
-use Lowu::Util;
-
 use Module::Runtime ();
 use Scalar::Util    ();
 use List::Util      ();
@@ -129,20 +127,20 @@ sub values {
 }
 
 sub intersection {
-  my %seen;
+  my %seen; my %inner;
   blessed_or_pkg($_[0])->array_type->new(
-    Lowu::Util::uniq(
-      grep {; ++$seen{$_} > $#_ } map {; CORE::keys %$_ } @_
-    )
+    grep {; not $seen{$_}++ }
+      grep {; ++$inner{$_} > $#_ } map {; CORE::keys %$_ } @_
   )
 }
 
 sub diff {
-  my %seen;
+  my %seen; my %inner;
   my @vals = map {; CORE::keys %$_ } @_;
   $seen{$_}++ for @vals;
   blessed_or_pkg($_[0])->array_type->new(
-    grep {; $seen{$_} != @_ } Lowu::Util::uniq(@vals)
+    grep {; $seen{$_} != @_ } 
+      grep {; not $inner{$_}++ } @vals
   )
 }
 

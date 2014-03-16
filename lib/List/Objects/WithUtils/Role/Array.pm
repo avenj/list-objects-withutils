@@ -1,8 +1,6 @@
 package List::Objects::WithUtils::Role::Array;
 use strictures 1;
 
-use Lowu::Util;
-
 use Carp ();
 
 use List::Util ();
@@ -214,16 +212,22 @@ sub intersection {
   blessed_or_pkg($_[0])->new(
     # Well. Probably not the most efficient approach . . .
     CORE::grep {; ++$seen{$_} > $#_ } 
-      CORE::map {; Lowu::Util::uniq(@$_) } @_
+      CORE::map {; 
+        my %s = (); CORE::grep {; not $s{$_}++ } @$_
+      } @_
   )
 }
 
 sub diff {
   my %seen;
-  my @vals = map {; Lowu::Util::uniq(@$_) } @_;
+  my @vals = CORE::map {; 
+    my %s = (); CORE::grep {; not $s{$_}++ } @$_
+  } @_;
   $seen{$_}++ for @vals;
+  my %inner;
   blessed_or_pkg($_[0])->new(
-    CORE::grep {; $seen{$_} != @_ } Lowu::Util::uniq(@vals)
+    CORE::grep {; $seen{$_} != @_ }
+      CORE::grep {; not $inner{$_}++ } @vals
   )
 }
 
@@ -498,8 +502,9 @@ sub shuffle {
 }
 
 sub uniq {
+  my %s;
   blessed_or_pkg($_[0])->new(
-    Lowu::Util::uniq( @{ $_[0] } )
+    grep {; not $s{$_}++ } @{ $_[0] }
   )
 }
 
