@@ -213,16 +213,16 @@ sub intersection {
   blessed_or_pkg($_[0])->new(
     # Well. Probably not the most efficient approach . . .
     CORE::grep {; ++$seen{$_} > $#_ } 
-      CORE::map {; List::MoreUtils::uniq @$_ } @_
+      CORE::map {; &List::MoreUtils::uniq(@$_) } @_
   )
 }
 
 sub diff {
   my %seen;
-  my @vals = map {; List::MoreUtils::uniq @$_ } @_;
+  my @vals = map {; &List::MoreUtils::uniq(@$_) } @_;
   $seen{$_}++ for @vals;
   blessed_or_pkg($_[0])->new(
-    CORE::grep {; $seen{$_} != @_ } List::MoreUtils::uniq @vals
+    CORE::grep {; $seen{$_} != @_ } &List::MoreUtils::uniq(@vals)
   )
 }
 
@@ -304,7 +304,7 @@ sub splice {
 }
 
 sub has_any {
-  defined $_[1] ? &List::MoreUtils::any( $_[1], @{ $_[0] } )
+  defined $_[1] ? !! &List::Util::first( $_[1], @{ $_[0] } )
     : !! @{ $_[0] }
 }
 

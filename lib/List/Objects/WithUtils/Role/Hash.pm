@@ -130,8 +130,9 @@ sub values {
 sub intersection {
   my %seen;
   blessed_or_pkg($_[0])->array_type->new(
-    List::MoreUtils::uniq
+    &List::MoreUtils::uniq(
       grep {; ++$seen{$_} > $#_ } map {; CORE::keys %$_ } @_
+    )
   )
 }
 
@@ -140,7 +141,7 @@ sub diff {
   my @vals = map {; CORE::keys %$_ } @_;
   $seen{$_}++ for @vals;
   blessed_or_pkg($_[0])->array_type->new(
-    grep {; $seen{$_} != @_ } List::MoreUtils::uniq @vals
+    grep {; $seen{$_} != @_ } &List::MoreUtils::uniq(@vals)
   )
 }
 
