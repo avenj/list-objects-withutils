@@ -1,10 +1,11 @@
 package List::Objects::WithUtils::Role::Array;
 use strictures 1;
 
+use Lowu::Util;
+
 use Carp ();
 
 use List::Util ();
-use List::MoreUtils ();
 
 use Module::Runtime ();
 
@@ -213,16 +214,16 @@ sub intersection {
   blessed_or_pkg($_[0])->new(
     # Well. Probably not the most efficient approach . . .
     CORE::grep {; ++$seen{$_} > $#_ } 
-      CORE::map {; &List::MoreUtils::uniq(@$_) } @_
+      CORE::map {; Lowu::Util::uniq(@$_) } @_
   )
 }
 
 sub diff {
   my %seen;
-  my @vals = map {; &List::MoreUtils::uniq(@$_) } @_;
+  my @vals = map {; Lowu::Util::uniq(@$_) } @_;
   $seen{$_}++ for @vals;
   blessed_or_pkg($_[0])->new(
-    CORE::grep {; $seen{$_} != @_ } &List::MoreUtils::uniq(@vals)
+    CORE::grep {; $seen{$_} != @_ } Lowu::Util::uniq(@vals)
   )
 }
 
@@ -267,8 +268,11 @@ sub grep {
 
 { no warnings 'once'; *indices = *indexes; }
 sub indexes {
-  blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::indexes($_[1], @{ $_[0] })
+  my ($self, $cb) = @_;
+  blessed_or_pkg($self)->new(
+    grep {;
+      local *_ = \$self->[$_]; $cb->()
+    } 0 .. $#$self
   )
 }
 
@@ -320,7 +324,15 @@ sub first_where {
 }
 
 sub last_where {
-  &List::MoreUtils::lastval( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  my $i;
+  for ($i = $#$self; $i >= 0; $i--) {
+    local *_ = \$self->[$i];
+    my $ret = $cb->();
+    $self->[$i] = $_;
+    return $_ if $ret;
+  }
+  ()
 }
 
 { no warnings 'once';
@@ -328,11 +340,21 @@ sub last_where {
   *last_index  = *lastidx;
 }
 sub firstidx { 
-  &List::MoreUtils::firstidx( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  for my $i (0 .. $#$self) {
+    local *_ = \$self->[$i];
+    return $i if $cb->();
+  }
+  -1
 }
 
 sub lastidx {
-  &List::MoreUtils::lastidx( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  for my $i (CORE::reverse 0 .. $#$self) {
+    local *_ = \$self->[$i];
+    return $i if $cb->(); 
+  }
+  -1
 }
 
 sub mesh {
@@ -346,9 +368,11 @@ sub mesh {
 }
 
 sub natatime {
-  my $itr = List::MoreUtils::natatime($_[1], @{ $_[0] } );
-  if ($_[2]) {
-    while (my @nxt = $itr->()) { $_[2]->(@nxt) }
+  my ($self, $count, $cb) = @_;
+  my @list = @$self;
+  my $itr = sub { CORE::splice @list, 0, $count };
+  if ($cb) {
+    while (my @nxt = $itr->()) { $cb->(@nxt) }
   } else { 
     return $itr
   }
@@ -395,7 +419,10 @@ sub tuples {
   }
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 1;
-  my $itr = List::MoreUtils::natatime($size, @$self);
+  my $itr = do {
+    my @copy = @$self;
+    sub { CORE::splice @copy, 0, $size }
+  };
   my @res;
   while (my @nxt = $itr->()) {
     if (defined $type) {
@@ -429,26 +456,38 @@ sub rotate {
 sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
 
 sub items_after {
-  blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::after( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  my ($started, $lag);
+  blessed_or_pkg($self)->new(
+    CORE::grep $started ||= do {
+      my $x = $lag; $lag = $cb->(); $x
+    }, @$self
   )
 }
 
 sub items_after_incl {
-  blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::after_incl( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  my $started;
+  blessed_or_pkg($self)->new(
+    CORE::grep $started ||= $cb->(), @$self
   )
 }
 
 sub items_before {
-  blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::before( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  my $more = 1;
+  blessed_or_pkg($self)->new(
+    CORE::grep $more &&= !$cb->(), @$self
   )
 }
 
 sub items_before_incl {
-  blessed_or_pkg($_[0])->new(
-    &List::MoreUtils::before_incl( $_[1], @{ $_[0] } )
+  my ($self, $cb) = @_;
+  my $more = 1; my $lag = 1;
+  blessed_or_pkg($self)->new(
+    CORE::grep $more &&= do {
+      my $x = $lag; $lag = !$cb->(); $x
+    }, @$self
   )
 }
 
@@ -460,7 +499,7 @@ sub shuffle {
 
 sub uniq {
   blessed_or_pkg($_[0])->new(
-    List::MoreUtils::uniq( @{ $_[0] } )
+    Lowu::Util::uniq( @{ $_[0] } )
   )
 }
 
@@ -948,7 +987,7 @@ An alias for L</last_index>.
 If passed no arguments, returns boolean true if the array has any elements.
 
 If passed a sub, returns boolean true if the sub is true for any element
-of the array; see L<List::MoreUtils/"any">.
+of the array.
 
 C<$_> is set to the element being operated upon.
 
@@ -1141,8 +1180,6 @@ L<List::Objects::WithUtils::Role::Array::WithJunctions>
 L<Data::Perl>
 
 L<List::Util>
-
-L<List::MoreUtils>
 
 L<List::UtilsBy>
 
