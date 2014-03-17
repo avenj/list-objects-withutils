@@ -25,6 +25,12 @@ our $UsingUtilsByXS = 0;
   }
 }
 
+our $UsingMoreUtils = 0;
+if (eval {; require List::MoreUtils; 1 } && !$@) {
+  my $vers = List::MoreUtils->VERSION;
+  $UsingMoreUtils = 1 if $vers and $vers =~ /^0.3/;
+}
+
 =pod
 
 =for Pod::Coverage ARRAY_TYPE blessed_or_pkg
@@ -273,7 +279,8 @@ sub grep {
 { no warnings 'once'; *indices = *indexes; }
 sub indexes {
   blessed_or_pkg($_[0])->new(
-    grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
+    $UsingMoreUtils ? &List::MoreUtils::indexes( $_[1], @{ $_[0] } )
+      : grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
   )
 }
 
@@ -497,7 +504,8 @@ sub shuffle {
 sub uniq {
   my %s;
   blessed_or_pkg($_[0])->new(
-    grep {; not $s{$_}++ } @{ $_[0] }
+    $UsingMoreUtils ? &List::MoreUtils::uniq(@{ $_[0] })
+      : grep {; not $s{$_}++ } @{ $_[0] }
   )
 }
 
