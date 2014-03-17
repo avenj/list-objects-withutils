@@ -99,7 +99,7 @@ sub _try_coerce {
 
 =pod
 
-=for Pod::Coverage TO_JSON type
+=for Pod::Coverage TO_JSON damn type
 
 =cut
 
@@ -119,7 +119,7 @@ sub inflate {
 }
 
 sub unbless { [ @{ $_[0] } ] }
-{ no warnings 'once'; *TO_JSON = *unbless; }
+{ no warnings 'once'; *TO_JSON = *unbless; *damn = *unbless; }
 
 sub validated {
   my ($self, $type) = @_;
@@ -272,11 +272,8 @@ sub grep {
 
 { no warnings 'once'; *indices = *indexes; }
 sub indexes {
-  my ($self, $cb) = @_;
-  blessed_or_pkg($self)->new(
-    grep {;
-      local *_ = \$self->[$_]; $cb->()
-    } 0 .. $#$self
+  blessed_or_pkg($_[0])->new(
+    grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
   )
 }
 
@@ -329,8 +326,8 @@ sub first_where {
 
 sub last_where {
   my ($self, $cb) = @_;
-  my $i;
-  for ($i = $#$self; $i >= 0; $i--) {
+  my $i = @$self;
+  while ($i--) {
     local *_ = \$self->[$i];
     my $ret = $cb->();
     $self->[$i] = $_;
