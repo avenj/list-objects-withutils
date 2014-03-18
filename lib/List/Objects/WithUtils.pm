@@ -393,11 +393,6 @@ Immutable array objects were inspired by L<Const::Fast> by Leon Timmermans
 
 Junctions are adapted from L<Perl6::Junction> by Carl Franks (CPAN: CFRANKS)
 
-Inspiration for a few pieces comes from the "classic" (version 0.33)
-L<List::MoreUtils>. The development versions (C<0.4+>) are going places I
-don't fully understand, so MoreUtils was dropped from the required dependency 
-chain in Lowu-C<2.10> and will be reevaluated later.
-
 Most of the type-checking code and other useful additions were contributed by
 Toby Inkster (CPAN: TOBYINK)
 
@@ -408,5 +403,12 @@ L<List::Util>
 L<List::UtilsBy>
 
 L<Type::Tiny>
+
+Inspiration for a few pieces comes from the "classic" (version 0.33)
+L<List::MoreUtils>. The development versions (0.4+) are going places I
+don't fully understand, so MoreUtils was dropped from the required dependency 
+chain in Lowu-2.10 and will be reevaluated later. Users with 0.3x versions of
+L<List::MoreUtils> will see a significant performance boost in performing
+certain array operations.
 
 =cut
