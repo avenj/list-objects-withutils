@@ -288,16 +288,20 @@ Immutable array objects were inspired by [Const::Fast](http://search.cpan.org/pe
 
 Junctions are adapted from [Perl6::Junction](http://search.cpan.org/perldoc?Perl6::Junction) by Carl Franks (CPAN: CFRANKS)
 
-Inspiration for a few pieces comes from the "classic" (version 0.33)
-[List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils) -- the development versions (0.4+) are going places I
-don't fully understand, so MoreUtils was dropped from the dependency chain in
-Lowu 2.10.0.
-
 Most of the type-checking code and other useful additions were contributed by
 Toby Inkster (CPAN: TOBYINK)
 
-Much of this code simply wraps other widely-used modules, including:
+Much of this code simply wraps other widely-used modules, especially:
 
 [List::Util](http://search.cpan.org/perldoc?List::Util)
 
 [List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy)
+
+[Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)
+
+Inspiration for a few pieces comes from the "classic" (version 0.33)
+[List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils). The development versions (0.4+) are going places I
+don't fully understand, so MoreUtils was dropped from the required dependency 
+chain in Lowu-2.10 and will be reevaluated later. Users with 0.3x versions of
+[List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils) will see a significant performance boost in performing
+certain array operations.

@@ -1,5 +1,31 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.010001 2014-03-19
+
+  - Drop List::MoreUtils from required dependencies.
+    
+    List::MoreUtils is used almost everywhere, but is not in core
+    and was a bit abandoned the last few years.
+    
+    It has been adopted upstream, which is wonderful, but the development
+    versions are taking List::MoreUtils in directions I don't understand;
+    rather than the small module providing fast XS implementations of simple
+    and common list operations that I'm used to, this is turning into some
+    sort of behemoth containing confusing "implementation sets" and depending
+    upon half of CPAN.
+
+    Not good, do not want.
+
+    Users with 0.3x versions of List::MoreUtils will still get faster
+    implementations of the following array operations:
+
+      indexes uniq
+      first_index last_index last_where
+      items_after items_after_incl items_before items_before_incl
+
+    Users with 0.4 development versions of List::MoreUtils will fall back to
+    pure-Perl implementations for now.
+
 2.009001 2014-03-05
 
   - Add hash->iter()
