@@ -25,12 +25,10 @@ our $UsingUtilsByXS = 0;
   }
 }
 
-sub USING_LIST_MOREUTILS () {
-  !! eval {; 
-    require List::MoreUtils;
-    (List::MoreUtils->VERSION || '') =~ /^0.3/
-  }
-}
+use constant USING_LIST_MOREUTILS => !! eval {;
+  require List::MoreUtils;
+  (List::MoreUtils->VERSION || '') =~ /^0.3/
+};
 
 =pod
 
