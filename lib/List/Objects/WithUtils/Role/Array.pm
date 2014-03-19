@@ -1021,8 +1021,6 @@ The new array object is not sorted in any predictable order.
 (It may be worth noting that an intermediate hash is used; objects that
 stringify to the same value will be taken to be the same.)
 
-For proper set support, perhaps try something like L<Set::Equivalence>.
-
 =head3 diff
 
   my $first  = array(qw/ a b c d /);
