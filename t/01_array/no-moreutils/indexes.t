@@ -1,11 +1,19 @@
-use Test::More;
 use strict; use warnings FATAL => 'all';
+
+BEGIN {
+  unless (eval {; require Test::Without::Module; 1 } && !$@) {
+    require Test::More;
+    Test::More::plan(skip_all => 'these tests require Test::Without::Module');
+  }
+}
+
+use Test::Without::Module 'List::MoreUtils';
+use Test::More;
 
 use List::Objects::WithUtils 'array';
 
-if (List::Objects::WithUtils::Role::Array::USING_LIST_MOREUTILS) {
-  diag "\nUsing List::MoreUtils\n"
-}
+ok !List::Objects::WithUtils::Role::Array::USING_LIST_MOREUTILS,
+  'not USING_LIST_MOREUTILS';
 
 ok !array->indexes(sub { 1 })->has_any, 'empty indexes ok';
 

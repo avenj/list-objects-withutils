@@ -25,10 +25,11 @@ our $UsingUtilsByXS = 0;
   }
 }
 
-our $UsingMoreUtils = 0;
-if (eval {; require List::MoreUtils; 1 } && !$@) {
-  my $vers = List::MoreUtils->VERSION;
-  $UsingMoreUtils = 1 if $vers and $vers =~ /^0.3/;
+sub USING_LIST_MOREUTILS () {
+  !! eval {; 
+    require List::MoreUtils;
+    (List::MoreUtils->VERSION || '') =~ /^0.3/
+  }
 }
 
 =pod
@@ -279,7 +280,7 @@ sub grep {
 { no warnings 'once'; *indices = *indexes; }
 sub indexes {
   blessed_or_pkg($_[0])->new(
-    $UsingMoreUtils ? &List::MoreUtils::indexes( $_[1], @{ $_[0] } )
+    USING_LIST_MOREUTILS ? &List::MoreUtils::indexes( $_[1], @{ $_[0] } )
       : grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
   )
 }
@@ -327,14 +328,12 @@ sub has_any {
 =cut
 
 { no warnings 'once'; *first = *first_where }
-sub first_where { 
-  &List::Util::first( $_[1], @{ $_[0] } ) 
-}
+sub first_where { &List::Util::first( $_[1], @{ $_[0] } ) }
 
 sub last_where {
   my ($self, $cb) = @_;
 
-  return &List::MoreUtils::lastval($cb, @$self) if $UsingMoreUtils;
+  return &List::MoreUtils::lastval($cb, @$self) if USING_LIST_MOREUTILS;
 
   my $i = @$self;
   while ($i--) {
@@ -353,7 +352,7 @@ sub last_where {
 sub firstidx { 
   my ($self, $cb) = @_;
 
-  return &List::MoreUtils::firstidx($cb, @$self) if $UsingMoreUtils;
+  return &List::MoreUtils::firstidx($cb, @$self) if USING_LIST_MOREUTILS;
 
   for my $i (0 .. $#$self) {
     local *_ = \$self->[$i];
@@ -365,7 +364,7 @@ sub firstidx {
 sub lastidx {
   my ($self, $cb) = @_;
 
-  return &List::MoreUtils::lastidx($cb, @$self) if $UsingMoreUtils;
+  return &List::MoreUtils::lastidx($cb, @$self) if USING_LIST_MOREUTILS;
 
   for my $i (CORE::reverse 0 .. $#$self) {
     local *_ = \$self->[$i];
@@ -475,7 +474,7 @@ sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
 sub items_after {
   my ($started, $lag);
   blessed_or_pkg($_[0])->new(
-    $UsingMoreUtils ? &List::MoreUtils::after($_[1], @{ $_[0] })
+    USING_LIST_MOREUTILS ? &List::MoreUtils::after($_[1], @{ $_[0] })
       : CORE::grep $started ||= do {
           my $x = $lag; $lag = $_[1]->(); $x
       }, @{ $_[0] }
@@ -485,7 +484,7 @@ sub items_after {
 sub items_after_incl {
   my $started;
   blessed_or_pkg($_[0])->new(
-    $UsingMoreUtils ? &List::MoreUtils::after_incl($_[1], @{ $_[0] })
+    USING_LIST_MOREUTILS ? &List::MoreUtils::after_incl($_[1], @{ $_[0] })
       : CORE::grep $started ||= $_[1]->(), @{ $_[0] }
   )
 }
@@ -493,7 +492,7 @@ sub items_after_incl {
 sub items_before {
   my $more = 1;
   blessed_or_pkg($_[0])->new(
-    $UsingMoreUtils ? &List::MoreUtils::before($_[1], @{ $_[0] })
+    USING_LIST_MOREUTILS ? &List::MoreUtils::before($_[1], @{ $_[0] })
       : CORE::grep $more &&= !$_[1]->(), @{ $_[0] }
   )
 }
@@ -501,7 +500,7 @@ sub items_before {
 sub items_before_incl {
   my $more = 1; my $lag = 1;
   blessed_or_pkg($_[0])->new(
-    $UsingMoreUtils ? &List::MoreUtils::before_incl($_[1], @{ $_[0] })
+    USING_LIST_MOREUTILS ? &List::MoreUtils::before_incl($_[1], @{ $_[0] })
       : CORE::grep $more &&= do {
           my $x = $lag; $lag = !$_[1]->(); $x
       }, @{ $_[0] }
@@ -517,7 +516,7 @@ sub shuffle {
 sub uniq {
   my %s;
   blessed_or_pkg($_[0])->new(
-    $UsingMoreUtils ? &List::MoreUtils::uniq(@{ $_[0] })
+    USING_LIST_MOREUTILS ? &List::MoreUtils::uniq(@{ $_[0] })
       : grep {; not $s{$_}++ } @{ $_[0] }
   )
 }
