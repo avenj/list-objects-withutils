@@ -454,11 +454,11 @@ sub rotate {
     Carp::confess "Cannot rotate in both directions!"
   } elsif ($params{right}) {
     return blessed_or_pkg($self)->new(
-      $self->[-1], @{ $self }[0 .. ($#$self - 1)]
+      @$self ? ($self->[-1], @{ $self }[0 .. ($#$self - 1)]) : ()
     )
   } else {
     return blessed_or_pkg($self)->new(
-      @{ $self }[1 .. $#$self], $self->[0]
+      @$self ? (@{ $self }[1 .. $#$self], $self->[0]) : ()
     )
   }
 }
