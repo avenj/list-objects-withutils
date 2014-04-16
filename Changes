@@ -1,5 +1,19 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.010002 2014-04-16
+
+  - Fix array->sliced() to avoid backfilling undefs if requesting position(s)
+    past the end of the array
+
+  - Fix array->insert to backfill undefs if inserting to a position past the
+    end of the array
+
+  - Fix array->rotate on an empty array
+
+  - Fix array->delete_when to localize *_ (not $_) for consistency
+
+  - Expand regression tests for empty array behavior
+
 2.010001 2014-03-19
 
   - Drop List::MoreUtils from required dependencies.
