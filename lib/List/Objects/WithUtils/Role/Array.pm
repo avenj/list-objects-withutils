@@ -300,7 +300,8 @@ sub reverse {
 
 { no warnings 'once'; *slice = *sliced }
 sub sliced {
-  blessed_or_pkg($_[0])->new( @{ $_[0] }[ @_[1 .. $#_] ] )
+  my @safe = @{ $_[0] };
+  blessed_or_pkg($_[0])->new( @safe[ @_[1 .. $#_] ] )
 }
 
 sub splice {

@@ -21,4 +21,12 @@ is_deeply
   [ $sliced->all ],
   'slice alias ok';
 
+my $empty = array;
+is_deeply
+  [ $empty->sliced(2, 4)->all ],
+  [ undef, undef ],
+  'sliced (nonexistant elements) ok';
+ok $empty->is_empty, 'empty array intact after slice ok'
+  or diag explain $empty;
+
 done_testing
