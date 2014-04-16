@@ -12,6 +12,6 @@ is_deeply [ $arr->all ], [ 2, 3, 4 ],
 
 $arr->delete_when(sub { $_[0] == 2 });
 is_deeply [ $arr->all ], [ 3, 4 ],
-  'delete_when using $_[0] ok';
+  'delete_when using @_ ok';
 
 done_testing;
