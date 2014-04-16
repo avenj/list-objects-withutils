@@ -1,13 +1,11 @@
 package List::Objects::WithUtils::Role::Array;
+
 use strictures 1;
 
-use Carp ();
-
-use List::Util ();
-
+use Carp            ();
+use List::Util      ();
 use Module::Runtime ();
-
-use Scalar::Util ();
+use Scalar::Util    ();
 
 # This (and relevant tests) can disappear if UtilsBy gains XS:
 our $UsingUtilsByXS = 0;
@@ -87,6 +85,7 @@ sub inflated_type { 'List::Objects::WithUtils::Hash' }
 sub is_mutable { 1 }
 sub is_immutable { ! $_[0]->is_mutable }
 
+# subclass-mungable (keep me under the Role::Tiny import):
 sub _try_coerce {
   my (undef, $type, @vals) = @_;
     Carp::confess "Expected a Type::Tiny type but got $type"
@@ -137,16 +136,12 @@ sub validated {
 }
 
 sub all { @{ $_[0] } }
+{ no warnings 'once'; *export = *all; *elements  = *all; }
 
 sub count { CORE::scalar @{ $_[0] } }
+{ no warnings 'once'; *scalar = *count;  }
 
 sub end { $#{ $_[0] } }
-
-{ no warnings 'once'; 
-  *scalar = *count; 
-  *export = *all;
-  *elements  = *all;
-}
 
 sub is_empty { ! @{ $_[0] } }
 
