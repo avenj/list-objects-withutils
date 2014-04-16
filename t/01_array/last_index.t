@@ -14,4 +14,7 @@ ok $arr->last_index(sub { /^b/ }) == 2,
 ok $arr->last_index(sub { /d/ }) == -1,
   'negative last_index ok';
 
+ok array->last_index(sub { 1 }) == -1,
+  'last_index on empty array ok';
+
 done_testing;

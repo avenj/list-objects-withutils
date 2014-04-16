@@ -19,4 +19,7 @@ is_deeply
   [ 1 .. 4 ],
   'items_before_incl ok';
 
+ok array->items_before_incl(sub { $_ == 1 })->is_empty,
+  'items_before_incl on empty array ok';
+
 done_testing;

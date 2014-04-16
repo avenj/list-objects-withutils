@@ -24,4 +24,7 @@ ok $arr->first_index(sub { /c/ }) == 3,
 ok $arr->first_index(sub { /d/ }) == -1,
   'negative first_index ok';
 
+ok array->first_index(sub { 1 }) == -1,
+  'empty array first_index ok';
+
 done_testing;

@@ -3,6 +3,11 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+is_deeply
+  [ array->grep(sub { 1 })->all ],
+  [ ],
+  'empty array grep ok';
+
 my $arr = array(qw/ a b c b /);
 
 my $found = $arr->grep(sub { $_ eq 'b' });

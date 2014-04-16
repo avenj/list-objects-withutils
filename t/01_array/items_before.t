@@ -10,4 +10,7 @@ is_deeply
   [ 1 .. 3 ],
   'items_before ok';
 
+ok array->items_before(sub { $_ == 4 })->is_empty,
+  'empty array items_before ok';
+
 done_testing;

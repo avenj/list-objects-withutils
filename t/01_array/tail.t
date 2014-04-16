@@ -15,4 +15,9 @@ is_deeply
   [ qw/ a b / ],
   'list tail second item ok';
 
+ok !defined array->tail , 'empty array scalar tail undef ok';
+($tail, $remains) = array->tail;
+ok !defined $tail, 'empty array list tail first item undef ok';
+ok $remains->is_empty, 'empty array list tail second item is_empty ok';
+
 done_testing;

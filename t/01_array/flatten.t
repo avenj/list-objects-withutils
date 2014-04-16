@@ -3,6 +3,16 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+is_deeply
+  [ array->flatten ],
+  [ ],
+  'empty array flatten with no args ok';
+
+is_deeply
+  [ array->flatten(1) ],
+  [ ],
+  'empty array flatten-to-depth ok';
+
 my $arr = array( 1, 2, [ 3, 4, [ 5, 6 ], 7 ] );
 is_deeply
   [ $arr->flatten ],

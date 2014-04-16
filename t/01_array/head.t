@@ -17,4 +17,9 @@ is_deeply
   [ qw/ b c / ],
   'list head second item ok';
 
+ok !defined array->head, 'empty array head undef ok';
+($head, $tail) = array->head;
+ok !defined $head, 'empty array list head first item undef ok';
+ok $tail->is_empty, 'empty array list head second item is_empty';
+
 done_testing;

@@ -3,6 +3,8 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+ok array->reverse->is_empty, 'empty array reverse ok';
+
 my $arr = array( 1, 2, 3);
 my $reverse = $arr->reverse;
 is_deeply

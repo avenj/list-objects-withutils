@@ -18,4 +18,7 @@ is_deeply
   [ 1, 2, 3 ],
   'original array intact';
 
+
+ok array->shuffle->is_empty, 'empty array shuffle ok';
+
 done_testing;

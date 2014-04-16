@@ -19,6 +19,8 @@ my $default = $arr->tuples;
 is_deeply [ $default->all ], [ $tuples->all ],
   'tuples default 2 ok';
 
+ok array->tuples(2)->is_empty, 'empty array tuples ok';
+
 eval {; $arr->tuples(0) };
 like $@, qr/positive/, 'tuples < 1 dies ok';
 

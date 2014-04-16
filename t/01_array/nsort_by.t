@@ -17,4 +17,6 @@ is_deeply
   [ +{ id => 1 }, +{ id => 2 }, +{ id => 3 } ],
   'nsort_by ok';
 
+ok array->nsort_by(sub { $_->foo })->is_empty, 'empty array nsort_by ok';
+
 done_testing;

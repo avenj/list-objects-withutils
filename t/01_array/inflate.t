@@ -13,4 +13,8 @@ ok $hash->does('List::Objects::WithUtils::Role::Hash'),
 ok $hash->get('foo') == 1 && $hash->get('bar') == 2,
   'inflated hash looks ok';
 
+
+$hash = array->inflate;
+ok $hash->is_empty, 'empty array inflate ok';
+
 done_testing;
