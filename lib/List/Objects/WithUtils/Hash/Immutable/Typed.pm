@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Hash::Immutable::Typed;
+
 use strictures 1;
 
 require Role::Tiny;

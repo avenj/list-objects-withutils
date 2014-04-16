@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Autobox;
+
 use strictures 1;
 require Carp;
 require Module::Runtime;

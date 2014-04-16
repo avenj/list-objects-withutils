@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Array::Immutable;
+
 use strictures 1;
 
 require Role::Tiny;

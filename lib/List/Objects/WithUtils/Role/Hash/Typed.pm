@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Role::Hash::Typed;
+
 use strictures 1;
 
 use Carp ();

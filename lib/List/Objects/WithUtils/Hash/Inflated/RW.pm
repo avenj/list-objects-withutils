@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Hash::Inflated::RW;
+
 use strictures 1;
 use Carp ();
 use Scalar::Util ();

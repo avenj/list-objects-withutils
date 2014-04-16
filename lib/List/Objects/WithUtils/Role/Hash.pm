@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Role::Hash;
+
 use strictures 1;
 
 use Module::Runtime ();

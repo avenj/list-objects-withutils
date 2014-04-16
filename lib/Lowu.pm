@@ -1,4 +1,5 @@
 package Lowu;
+
 use strictures 1;
 
 use parent 'List::Objects::WithUtils';

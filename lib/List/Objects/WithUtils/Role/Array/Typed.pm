@@ -1,4 +1,5 @@
 package List::Objects::WithUtils::Role::Array::Typed;
+
 use strictures 1;
 
 use Carp ();
