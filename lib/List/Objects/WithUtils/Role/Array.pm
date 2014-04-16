@@ -196,8 +196,8 @@ sub delete_when {
   my @removed;
   my $i = @$self;
   while ($i--) {
-    CORE::push @removed, CORE::splice @$self, $i, 1 
-      if $sub->(local $_ = $self->[$i]);
+    local *_ = \$self->[$i];
+    CORE::push @removed, CORE::splice @$self, $i, 1 if $sub->($_);
   }
   blessed_or_pkg($_[0])->new(@removed)
 }
