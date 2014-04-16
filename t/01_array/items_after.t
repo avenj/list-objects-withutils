@@ -10,4 +10,10 @@ is_deeply
   [ 4 .. 7 ],
   'items_after ok';
 
+ok $arr->items_after(sub { $_ > 10 })->is_empty,
+  'items_after empty resultset ok';
+
+ok array->items_after(sub { $_ == 1 })->is_empty,
+  'items_after on empty array ok';
+
 done_testing;

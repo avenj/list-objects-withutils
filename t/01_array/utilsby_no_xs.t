@@ -17,6 +17,7 @@ ok !$List::Objects::WithUtils::Role::Array::UsingUtilsByXS,
   'List::UtilsBy::XS not loaded';
 
 # sort_by
+ok array->sort_by(sub { $_->foo })->is_empty, 'empty array sort_by ok';
 my $arr = array(
   +{ id => 'c' },
   +{ id => 'a' },
@@ -31,6 +32,7 @@ is_deeply
   'sort_by ok';
 
 # nsort_by
+ok array->nsort_by(sub { $_->foo })->is_empty, 'empty array nsort_by ok';
 $arr = array(
   +{ id => 2 },
   +{ id => 1 },
@@ -45,6 +47,7 @@ is_deeply
   'nsort_by ok';
 
 # uniq_by
+ok array->uniq_by(sub { $_->foo })->is_empty, 'empty array uniq_by ok';
 $arr = array(
   +{ id => 1 },
   +{ id => 2 },

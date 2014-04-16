@@ -3,6 +3,8 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
+ok array->map(sub { 1 })->is_empty, 'empty array map ok';
+
 my $arr = array( qw/ a b c / );
 my $upper = $arr->map(sub { uc });
 is_deeply

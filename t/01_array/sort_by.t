@@ -23,4 +23,7 @@ is_deeply
   [ +{ id => 'a' }, +{ id => 'b' }, +{ id => 'c' } ],
   'sort_by ok';
 
+ok array->sort_by(sub { $_->foo })->is_empty,
+  'empty array sort_by ok';
+
 done_testing;

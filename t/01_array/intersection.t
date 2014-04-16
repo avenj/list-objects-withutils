@@ -33,4 +33,7 @@ is_deeply
   [ qw/ c d / ],
   'intersection (dupes in one array) ok';
 
+ok array->intersection(array)->is_empty,
+  'empty array(s) intersection ok';
+
 done_testing

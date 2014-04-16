@@ -19,4 +19,6 @@ is_deeply
   [ 1, 2, 3, 4, 5 ],
   'uniq ok';
 
+ok array->uniq->is_empty, 'empty array uniq ok';
+
 done_testing;

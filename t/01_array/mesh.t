@@ -33,4 +33,7 @@ eval {; array('foo')->mesh('bar') };
 ok $@ =~ /ARRAY/, 'mesh with bad args dies'
   or diag explain $@;
 
+ok array->mesh([], [])->is_empty,
+  'meshing empty arrays ok';
+
 done_testing;

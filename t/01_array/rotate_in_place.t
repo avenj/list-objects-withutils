@@ -24,6 +24,10 @@ is_deeply [ $arr->all ],
   [ 2, 3, 4, 1 ],
   'rotate_in_place leftwards ok';
 
+
+ok array->rotate_in_place->is_empty, 'empty array rotate_in_place ok';
+
+
 eval {; $arr->rotate_in_place(left => 1, right => 1) };
 like $@, qr/direction/, 'bad opts die ok';
 

@@ -21,4 +21,8 @@ is_deeply
   [ 2, 3, 4 ],
   'mapval on $_[0] ok';
 
+
+ok array->mapval(sub { 1 })->is_empty, 'empty array mapval ok';
+
+
 done_testing;

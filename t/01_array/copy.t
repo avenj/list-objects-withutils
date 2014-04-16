@@ -8,4 +8,6 @@ my $copy = $arr->copy;
 ok $copy != $arr, 'copy returned new obj ok';
 is_deeply [ $copy->all ], [ $arr->all ], 'copy ok';
 
+ok array->copy->is_empty, 'empty array copy ok';
+
 done_testing;

@@ -469,10 +469,9 @@ sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
 sub items_after {
   my ($started, $lag);
   blessed_or_pkg($_[0])->new(
-    USING_LIST_MOREUTILS ? &List::MoreUtils::after($_[1], @{ $_[0] })
-      : CORE::grep $started ||= do {
-          my $x = $lag; $lag = $_[1]->(); $x
-      }, @{ $_[0] }
+    CORE::grep $started ||= do { 
+      my $x = $lag; $lag = $_[1]->(); $x 
+    }, @{ $_[0] }
   )
 }
 
@@ -977,6 +976,8 @@ out of possibles).
 =head3 first_index
 
 Like L</first_where>, but return the index of the first successful match.
+
+Returns -1 if no match is found.
 
 =head3 firstidx
 

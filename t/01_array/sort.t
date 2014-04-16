@@ -16,4 +16,6 @@ is_deeply
   [ 1, 2, 3, 4 ],
   'sort with default sub ok';
 
+ok array->sort->is_empty, 'empty array sort ok';
+
 done_testing;

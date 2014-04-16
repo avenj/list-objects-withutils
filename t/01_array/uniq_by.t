@@ -21,4 +21,6 @@ is_deeply
   ],
   'uniq_by ok';
 
+ok array->uniq_by(sub { $_->foo })->is_empty, 'empty array uniq_by ok';
+
 done_testing;

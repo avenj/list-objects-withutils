@@ -11,4 +11,6 @@ is_deeply
   [ 1 .. 4 ],
   'unshift ok';
 
+ok array->unshift(1)->count == 1, 'unshift to empty array ok';
+
 done_testing;

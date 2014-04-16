@@ -22,4 +22,7 @@ ok $arr->last_where(sub { /^c$/ }) eq 'c', 'last_where (end) ok';
 
 ok !$arr->last_where(sub { /d/ }), 'negative last_where ok';
 
+ok !defined array->last_where(sub { 1 }),
+  'last_where on empty array returned undef';
+
 done_testing;
