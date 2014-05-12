@@ -1204,8 +1204,13 @@ L<List::UtilsBy>
 
 Jon Portnoy <avenj@cobaltirc.org>
 
+Portions of this code were contributed by Toby Inkster (CPAN: TOBYINK).
+
 Portions of this code are derived from L<Data::Perl> by Matthew Phillips
-(CPAN: MATTP), haarg et al
+(MATTP), haarg et al.
+
+Portions of this code are inspired by L<List::MoreUtils>-0.33 by Adam Kennedy (ADAMK), 
+Tassilo von Parseval, and Aaron Crane.
 
 Licensed under the same terms as Perl.
 
