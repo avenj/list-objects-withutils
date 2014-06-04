@@ -93,8 +93,11 @@ sub sliced {
 
 sub set {
   my $self = shift;
-  my @keysidx = grep {; not $_ % 2 } 0 .. $#_ ;
-  my @valsidx = grep {; $_ % 2 }     0 .. $#_ ;
+
+  my (@keysidx, @valsidx);
+  for (0 .. $#_) {
+    $_ % 2 ? push @valsidx, $_ : push @keysidx, $_
+  }
 
   @{$self}{ @_[@keysidx] } = @_[@valsidx];
 
