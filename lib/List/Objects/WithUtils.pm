@@ -260,7 +260,7 @@ available methods.
 
 B<immarray> is imported from L<List::Objects::WithUtils::Array::Immutable> and
 operates much like an B<array>, except methods that mutate the list are not
-available; using immutable arrays promotes safer functional patterns.
+available; using immutable arrays promotes safer programming patterns.
 
 B<array_of> provides L<Type::Tiny>-compatible type-checking array objects
 that can coerce and check their values as they are added; see
