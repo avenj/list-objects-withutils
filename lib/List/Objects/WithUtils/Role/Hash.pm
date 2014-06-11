@@ -45,8 +45,9 @@ sub new {
   bless +{ @_[1 .. $#_] }, Scalar::Util::blessed $_[0] || $_[0]
 }
 
+sub export  { %{ $_[0] } }
 sub unbless { +{ %{ $_[0] } } }
-{ no warnings 'once'; *TO_JSON = *unbless; }
+{ no warnings 'once'; *TO_JSON = *unbless; *damn = *unbless; }
 
 sub clear { %{ $_[0] } = (); $_[0] }
 
@@ -177,8 +178,6 @@ sub kv_map {
     List::Util::pairmap {; $sub->($a, $b) } %$self
   )
 }
-
-sub export { %{ $_[0] } }
 
 print
   qq[<Su-Shee> huf: I learned that from toyota via agile blahblah,],
