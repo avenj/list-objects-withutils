@@ -414,9 +414,7 @@ sub bisect {
   my @parts = ( [], [] );
   CORE::push @{ $parts[ $code->($_) ? 0 : 1 ] }, $_ for @$self;
   my $cls = blessed_or_pkg($self);
-  $cls->new(
-    map {; $cls->new(@$_) } @parts
-  )
+  $cls->new( map {; $cls->new(@$_) } @parts )
 }
 
 sub nsect {
@@ -424,14 +422,12 @@ sub nsect {
   my $total = scalar @$self;
   my @parts;
   my $x = 0;
+  $sections = $total if $sections > $total;
   if ($sections && $total) {
-    CORE::push @{ $parts[ int($x++ * $sections / $total) ] }, $_
-      for @$self;
+    CORE::push @{ $parts[ int($x++ * $sections / $total) ] }, $_ for @$self;
   }
   my $cls = blessed_or_pkg($self);
-  $cls->new(
-    map {; $cls->new(defined $_ ? @$_ : () ) } @parts
-  )
+  $cls->new( map {; $cls->new(@$_) } @parts )
 }
 
 
@@ -796,6 +792,8 @@ If there are no items in the list (or no sections are requested),
 an empty array-type object is returned.
 
 If the list divides unevenly, the first set will be the largest.
+
+Inspired by L<List::NSect>.
 
 =head3 elements
 
