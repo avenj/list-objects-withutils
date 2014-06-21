@@ -419,6 +419,21 @@ sub bisect {
   )
 }
 
+sub nsect {
+  my ($self, $sections) = @_;
+  my $total = scalar @$self;
+  my @parts;
+  my $x = 0;
+  if ($sections && $total) {
+    CORE::push @{ $parts[ int($x++ * $sections / $total) ] }, $_
+      for @$self;
+  }
+  my $cls = blessed_or_pkg($self);
+  $cls->new(
+    map {; $cls->new(defined $_ ? @$_ : () ) } @parts
+  )
+}
+
 
 sub tuples {
   my ($self, $size, $type) = @_;
@@ -769,6 +784,13 @@ Returns all elements in the array as a plain list.
 Like L</part>, but creates an array-type object containing two
 partitions; the first contains all items for which the subroutine evaluates to
 true, the second contains the remaining items.
+
+=head3 nsect
+
+  my ($first, $second) = array( 1 .. 10 )->nsect(2)->all;
+  # array( 1 .. 5 ), array( 6 .. 10 )
+
+Like L</bisect>, but takes an (integer) number of sets to create.
 
 =head3 elements
 
