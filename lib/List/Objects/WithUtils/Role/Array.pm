@@ -792,6 +792,11 @@ true, the second contains the remaining items.
 
 Like L</bisect>, but takes an (integer) number of sets to create.
 
+If there are no items in the list (or no sections are requested), 
+an empty array-type object is returned.
+
+If the list divides unevenly, the first set will be the largest.
+
 =head3 elements
 
 Same as L</all>; included for consistency with similar array-type object
