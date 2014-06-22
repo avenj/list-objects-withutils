@@ -430,6 +430,17 @@ sub nsect {
   $cls->new( map {; $cls->new(@$_) } @parts )
 }
 
+sub ssect {
+  my ($self, $per) = @_;
+  my @parts;
+  my $x = 0;
+  if ($per) {
+    CORE::push @{ $parts[ int($x++ / $per) ] }, $_ for @$self;
+  }
+  my $cls = blessed_or_pkg($self);
+  $cls->new( map {; $cls->new(@$_) } @parts )
+}
+
 
 sub tuples {
   my ($self, $size, $type) = @_;
@@ -786,12 +797,25 @@ true, the second contains the remaining items.
   my ($first, $second) = array( 1 .. 10 )->nsect(2)->all;
   # array( 1 .. 5 ), array( 6 .. 10 )
 
-Like L</bisect>, but takes an (integer) number of sets to create.
+Like L</part> and L</bisect>, but takes an (integer) number of sets to create.
 
 If there are no items in the list (or no sections are requested), 
 an empty array-type object is returned.
 
 If the list divides unevenly, the first set will be the largest.
+
+Inspired by L<List::NSect>.
+
+=head3 ssect
+
+  my ($first, $second) = array( 1 .. 10 )->ssect(5)->all;
+  # array( 1 .. 5 ), array( 6 .. 10 );
+
+Like L</nsect> and L</bisect>, but takes an (integer) target number of items
+per set.
+
+If the list divides unevenly, the last set will be smaller than the specified
+target.
 
 Inspired by L<List::NSect>.
 
