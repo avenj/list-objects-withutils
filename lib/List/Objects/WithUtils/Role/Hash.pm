@@ -26,7 +26,7 @@ sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =pod
 
-=for Pod::Coverage TO_JSON type
+=for Pod::Coverage TO_JSON damn type
 
 =cut
 
@@ -47,6 +47,7 @@ sub new {
 
 sub export  { %{ $_[0] } }
 sub unbless { +{ %{ $_[0] } } }
+
 { no warnings 'once'; *TO_JSON = *unbless; *damn = *unbless; }
 
 sub clear { %{ $_[0] } = (); $_[0] }
