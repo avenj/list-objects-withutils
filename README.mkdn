@@ -40,7 +40,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
       ->mesh( array(1 .. 4) )
       ->all;   # ( 'a', 1, 'b', 2, 'c', 3, 'd', 4 )
     
-
     my ($evens, $odds) = array( 1 .. 20 )
       ->part(sub { $_[0] & 1 })
       ->all;
@@ -65,7 +64,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
     # Construct a hash:
     my $hash  = hash( foo => 'bar', snacks => 'cake' );
     
-
     # You can set multiple keys in one call:
     $hash->set( foobar => 'baz', pie => 'cherry' );
 
@@ -101,7 +99,6 @@ List::Objects::WithUtils - List objects, kitchen sink included
     my @match_keys = $hash->keys->grep(sub { m/foo/ })->all;
     my @match_vals = $hash->values->grep(sub { m/bar/ })->all;
     
-
     my @sorted_pairs = hash( foo => 2, bar => 3, baz => 1)
       ->kv
       ->sort_by(sub { $_->[1] })
@@ -133,48 +130,46 @@ List::Objects::WithUtils - List objects, kitchen sink included
       [ 1 .. 10 ]->shuffle;  # dies
     }
 
-
-
 # DESCRIPTION
 
 A set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays with useful utility methods, junctions, type-checking
 ability, and optional autoboxing.
 
-Originally derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl).
+Originally derived from [Data::Perl](https://metacpan.org/pod/Data::Perl).
 
 ## Arrays
 
-__array__ ([List::Objects::WithUtils::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array)) provides basic mutable
+**array** ([List::Objects::WithUtils::Array](https://metacpan.org/pod/List::Objects::WithUtils::Array)) provides basic mutable
 ARRAY-type objects.  Behavior is defined by
-[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array); look there for documentation on
+[List::Objects::WithUtils::Role::Array](https://metacpan.org/pod/List::Objects::WithUtils::Role::Array); look there for documentation on
 available methods.
 
-__immarray__ is imported from [List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) and
-operates much like an __array__, except methods that mutate the list are not
-available; using immutable arrays promotes safer functional patterns.
+**immarray** is imported from [List::Objects::WithUtils::Array::Immutable](https://metacpan.org/pod/List::Objects::WithUtils::Array::Immutable) and
+operates much like an **array**, except methods that mutate the list are not
+available; using immutable arrays promotes safer programming patterns.
 
-__array\_of__ provides [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking array objects
+**array\_of** provides [Type::Tiny](https://metacpan.org/pod/Type::Tiny)-compatible type-checking array objects
 that can coerce and check their values as they are added; see
-[List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed).
+[List::Objects::WithUtils::Array::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Array::Typed).
 
-__immarray\_of__ provides immutable type-checking arrays; see
-[List::Objects::WithUtils::Array::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable::Typed).
+**immarray\_of** provides immutable type-checking arrays; see
+[List::Objects::WithUtils::Array::Immutable::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Array::Immutable::Typed).
 
 ## Hashes
 
-__hash__ is the basic mutable HASH-type object imported from
-[List::Objects::WithUtils::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash); see
-[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation.
+**hash** is the basic mutable HASH-type object imported from
+[List::Objects::WithUtils::Hash](https://metacpan.org/pod/List::Objects::WithUtils::Hash); see
+[List::Objects::WithUtils::Role::Hash](https://metacpan.org/pod/List::Objects::WithUtils::Role::Hash) for documentation.
 
-__immhash__ provides immutable (restricted) hashes; see
-[List::Objects::WithUtils::Hash::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Immutable).
+**immhash** provides immutable (restricted) hashes; see
+[List::Objects::WithUtils::Hash::Immutable](https://metacpan.org/pod/List::Objects::WithUtils::Hash::Immutable).
 
-__hash\_of__ provides [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)\-compatible type-checking hash
-objects; see [List::Objects::WithUtils::Hash::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Typed).
+**hash\_of** provides [Type::Tiny](https://metacpan.org/pod/Type::Tiny)-compatible type-checking hash
+objects; see [List::Objects::WithUtils::Hash::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Hash::Typed).
 
-__immhash\_of__ provides immutable type-checking hashes; see
-[List::Objects::WithUtils::Hash::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Immutable::Typed).
+**immhash\_of** provides immutable type-checking hashes; see
+[List::Objects::WithUtils::Hash::Immutable::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Hash::Immutable::Typed).
 
 ## Importing
 
@@ -184,12 +179,12 @@ imported, e.g.:
 
     use List::Objects::WithUtils 'array_of', 'hash_of';
 
-Importing __autobox__ lexically enables [List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox),
+Importing **autobox** lexically enables [List::Objects::WithUtils::Autobox](https://metacpan.org/pod/List::Objects::WithUtils::Autobox),
 providing methods for native ARRAY and HASH types.
 
-Importing __all__ or __:all__ will import all of the object constructors and
-additionally turn __autobox__ on; `use Lowu;` is a shortcut for importing
-__all__.
+Importing **all** or **:all** will import all of the object constructors and
+additionally turn **autobox** on; `use Lowu;` is a shortcut for importing
+**all**.
 
 ## Subclassing
 
@@ -227,52 +222,51 @@ For example, it's easy to create your own array class with new methods:
 ... in which case you may want to also define your own hash subclass that
 overrides `array_type` to produce your preferred arrays:
 
-    package My::Hash::Object;
-    use Role::Tiny::With;
-    with 'List::Objects::WithUtils::Role::Hash';
+     package My::Hash::Object;
+     use Role::Tiny::With;
+     with 'List::Objects::WithUtils::Role::Hash';
 
-    use Exporter 'import';  our @EXPORT = 'my_hash';
-    sub my_hash { __PACKAGE__->new(@_) }
-    
-
-    sub array_type { 'My::Array::Object' }
+     use Exporter 'import';  our @EXPORT = 'my_hash';
+     sub my_hash { __PACKAGE__->new(@_) }
+     
+     sub array_type { 'My::Array::Object' }
 
      # ...
     
 
 # SEE ALSO
 
-[List::Objects::WithUtils::Role::Array](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array) for documentation on the basic set of
+[List::Objects::WithUtils::Role::Array](https://metacpan.org/pod/List::Objects::WithUtils::Role::Array) for documentation on the basic set of
 `array()` methods.
 
-[List::Objects::WithUtils::Role::Array::WithJunctions](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Array::WithJunctions) for documentation on `array()`
+[List::Objects::WithUtils::Role::Array::WithJunctions](https://metacpan.org/pod/List::Objects::WithUtils::Role::Array::WithJunctions) for documentation on `array()`
 junction-returning methods.
 
-[List::Objects::WithUtils::Role::Hash](http://search.cpan.org/perldoc?List::Objects::WithUtils::Role::Hash) for documentation regarding `hash()`
+[List::Objects::WithUtils::Role::Hash](https://metacpan.org/pod/List::Objects::WithUtils::Role::Hash) for documentation regarding `hash()`
 methods.
 
-[List::Objects::WithUtils::Array::Immutable](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable) for more on `immarray()`
+[List::Objects::WithUtils::Array::Immutable](https://metacpan.org/pod/List::Objects::WithUtils::Array::Immutable) for more on `immarray()`
 immutable arrays.
 
-[List::Objects::WithUtils::Array::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Typed) for more on `array_of()`
+[List::Objects::WithUtils::Array::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Array::Typed) for more on `array_of()`
 type-checking arrays.
 
-[List::Objects::WithUtils::Array::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Array::Immutable::Typed) for more on
+[List::Objects::WithUtils::Array::Immutable::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Array::Immutable::Typed) for more on
 `immarray_of()` immutable type-checking arrays.
 
-[List::Objects::WithUtils::Hash::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Typed) for more on `hash_of()`
+[List::Objects::WithUtils::Hash::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Hash::Typed) for more on `hash_of()`
 type-checking hashes.
 
-[List::Objects::WithUtils::Hash::Immutable::Typed](http://search.cpan.org/perldoc?List::Objects::WithUtils::Hash::Immutable::Typed) for more on
+[List::Objects::WithUtils::Hash::Immutable::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Hash::Immutable::Typed) for more on
 `immhash_of()` immutable type-checking hashes.
 
-[List::Objects::WithUtils::Autobox](http://search.cpan.org/perldoc?List::Objects::WithUtils::Autobox) for details on autoboxing.
+[List::Objects::WithUtils::Autobox](https://metacpan.org/pod/List::Objects::WithUtils::Autobox) for details on autoboxing.
 
-The [Lowu](http://search.cpan.org/perldoc?Lowu) module for a convenient importer shortcut.
+The [Lowu](https://metacpan.org/pod/Lowu) module for a convenient importer shortcut.
 
-[List::Objects::Types](http://search.cpan.org/perldoc?List::Objects::Types) for relevant [Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny) types.
+[List::Objects::Types](https://metacpan.org/pod/List::Objects::Types) for relevant [Type::Tiny](https://metacpan.org/pod/Type::Tiny) types.
 
-[MoopsX::ListObjects](http://search.cpan.org/perldoc?MoopsX::ListObjects) for integration with [Moops](http://search.cpan.org/perldoc?Moops) class-building sugar.
+[MoopsX::ListObjects](https://metacpan.org/pod/MoopsX::ListObjects) for integration with [Moops](https://metacpan.org/pod/Moops) class-building sugar.
 
 # AUTHOR
 
@@ -280,28 +274,28 @@ Jon Portnoy <avenj@cobaltirc.org>
 
 Licensed under the same terms as Perl.
 
-The original Array and Hash roles were derived from [Data::Perl](http://search.cpan.org/perldoc?Data::Perl) by Matthew
+The original Array and Hash roles were derived from [Data::Perl](https://metacpan.org/pod/Data::Perl) by Matthew
 Phillips (CPAN: MATTP), haarg, and others.
 
-Immutable array objects were inspired by [Const::Fast](http://search.cpan.org/perldoc?Const::Fast) by Leon Timmermans
+Immutable array objects were inspired by [Const::Fast](https://metacpan.org/pod/Const::Fast) by Leon Timmermans
 (CPAN: LEONT)
 
-Junctions are adapted from [Perl6::Junction](http://search.cpan.org/perldoc?Perl6::Junction) by Carl Franks (CPAN: CFRANKS)
+Junctions are adapted from [Perl6::Junction](https://metacpan.org/pod/Perl6::Junction) by Carl Franks (CPAN: CFRANKS)
 
 Most of the type-checking code and other useful additions were contributed by
 Toby Inkster (CPAN: TOBYINK)
 
 Much of this code simply wraps other widely-used modules, especially:
 
-[List::Util](http://search.cpan.org/perldoc?List::Util)
+[List::Util](https://metacpan.org/pod/List::Util)
 
-[List::UtilsBy](http://search.cpan.org/perldoc?List::UtilsBy)
+[List::UtilsBy](https://metacpan.org/pod/List::UtilsBy)
 
-[Type::Tiny](http://search.cpan.org/perldoc?Type::Tiny)
+[Type::Tiny](https://metacpan.org/pod/Type::Tiny)
 
 Inspiration for a few pieces comes from the "classic" (version 0.33)
-[List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils). The development versions (0.4+) are going places I
+[List::MoreUtils](https://metacpan.org/pod/List::MoreUtils). The development versions (0.4+) are going places I
 don't fully understand, so MoreUtils was dropped from the required dependency 
 chain in Lowu-2.10 and will be reevaluated later. Users with 0.3x versions of
-[List::MoreUtils](http://search.cpan.org/perldoc?List::MoreUtils) will see a significant performance boost in performing
+[List::MoreUtils](https://metacpan.org/pod/List::MoreUtils) will see a significant performance boost in performing
 certain array operations.

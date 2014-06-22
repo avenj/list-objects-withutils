@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.011001 2014-06-22
+
+  - Add array->nsect(), array->ssect()
+
+  - Optimize hash->set()
+
 2.010002 2014-04-16
 
   - Fix array->sliced() to avoid backfilling undefs if requesting position(s)
