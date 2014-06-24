@@ -312,7 +312,7 @@ sub splice {
 }
 
 sub has_any {
-  defined $_[1] ? !! &List::Util::first( $_[1], @{ $_[0] } )
+  defined $_[1] ? !! &List::Util::any( $_[1], @{ $_[0] } )
     : !! @{ $_[0] }
 }
 

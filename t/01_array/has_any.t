@@ -10,4 +10,7 @@ ok $arr->has_any, 'bare has_any ok';
 ok $arr->has_any(sub { /b/ }), 'has_any ok';
 ok !$arr->has_any(sub { /d/ }), 'negative has_any ok';
 
+ok array(1, 2, undef)->has_any(sub { !defined }),
+  'has_any search for undef ok';
+
 done_testing;
