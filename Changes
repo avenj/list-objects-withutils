@@ -1,14 +1,18 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.011002 2014-06-24
+
+  - Fix array->has_any(sub { !defined })
+
 2.011001 2014-06-22
 
-  - Add array->nsect(), array->ssect()
+  - Add array->nsect, array->ssect
 
-  - Optimize hash->set()
+  - Optimize hash->set
 
 2.010002 2014-04-16
 
-  - Fix array->sliced() to avoid backfilling undefs if requesting position(s)
+  - Fix array->sliced to avoid backfilling undefs if requesting position(s)
     past the end of the array
 
   - Fix array->insert to backfill undefs if inserting to a position past the
@@ -48,7 +52,7 @@ Revision history for Perl module List::Objects::WithUtils
 
 2.009001 2014-03-05
 
-  - Add hash->iter()
+  - Add hash->iter
 
   - POD fixes
 
