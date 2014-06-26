@@ -218,7 +218,7 @@ sub delete_when {
 
 sub insert { 
   $#{$_[0]} = ($_[1]-1) if $_[1] > $#{$_[0]};
-  CORE::splice @{ $_[0] }, $_[1], 0, $_[2];
+  CORE::splice @{ $_[0] }, $_[1], 0, @_[2 .. $#_];
   $_[0] 
 }
 
@@ -713,8 +713,10 @@ Returns a new array object containing the deleted values (possibly none).
 =head3 insert
 
   $array->insert( $position, $value );
+  $array->insert( $position, @values );
 
-Inserts a value at a given position, moving the rest of the array rightwards.
+Inserts values at a given position, moving the rest of the array
+rightwards.
 
 The array will be "backfilled" (with undefs) if $position is past the end of
 the array.

@@ -48,5 +48,10 @@ is_deeply
   [ 0, 1, undef, undef, 3, undef, 5, 2, 7, undef, 9 ],
   'insert first ok';
 
+$arr->insert( 2 => 0, 1, 2 );
+is_deeply
+  [ $arr->all ],
+  [ 0, 1, 0, 1, 2,  undef, undef, 3, undef, 5, 2, 7, undef, 9 ],
+  'insert multiple ok';
 
 done_testing;
