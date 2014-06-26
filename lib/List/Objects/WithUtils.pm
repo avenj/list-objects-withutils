@@ -253,7 +253,7 @@ ability, and optional autoboxing. Originally derived from L<Data::Perl>.
 
 The included objects are useful as-is but are largely intended for use as data
 container types for attributes. This lends a more natural object-oriented
-syntax and is especially convenient in combination with delegated methods,
+syntax; it is particularly convenient in combination with delegated methods,
 as in this example:
 
   package Some::Thing;
@@ -264,8 +264,9 @@ as in this example:
     is      => 'ro',
     builder => sub { array },
     handles => +{
-      add_items => 'push',
-      get_items => 'all',
+      add_items   => 'push',
+      get_items   => 'all',
+      items_where => 'grep',
     },
   );
 
@@ -273,7 +274,7 @@ as in this example:
   my $thing = Some::Thing->new;
   $thing->add_items(@more_items);
   # Operate on all positive items:
-  for my $item ($thing->items->grep(sub { $_ > 0 })->all) {
+  for my $item ($thing->items_where(sub { $_ > 0 })->all) {
     ...
   }
 
@@ -288,9 +289,9 @@ list objects:
 
   has usergroups => (
     is        => 'ro',
-    # +{ group => [ +{ $usr => $id }, ... ] }
+    # +{ group => [ [ $usr => $id ], ... ] }
     # Coerced to objects all the way down:
-    isa       => TypedHash[ TypedArray[ TypedHash[Int] ] ],
+    isa       => TypedHash[ TypedArray[ArrayObj] ],
     coerce    => 1,
     builder   => sub { +{} },
   );
