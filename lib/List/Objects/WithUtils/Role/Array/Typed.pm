@@ -7,9 +7,15 @@ use Scalar::Util ();
 use Type::Tie ();
 
 use Role::Tiny;
-requires 'type', 'new';
+requires 'type', 'untyped', 'new';
 
 around type => sub { tied(@{$_[1]})->type };
+
+around untyped => sub {
+  my (undef, $self) = @_;
+  require List::Objects::WithUtils::Array;
+  List::Objects::WithUtils::Array->new(@$self)
+};
 
 around new => sub {
   # yes, this splice is correct:
@@ -83,6 +89,10 @@ Also see L<Types::Standard>, L<List::Objects::Types>
 =head2 type
 
 Returns the L<Type::Tiny> type the object was created with.
+
+=head2 untyped
+
+Returns a (shallow) clone that is a plain L<List::Objects::WithUtils::Array>.
 
 =head1 AUTHOR
 
