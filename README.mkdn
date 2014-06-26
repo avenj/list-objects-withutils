@@ -134,11 +134,57 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
 A set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays with useful utility methods, junctions, type-checking
-ability, and optional autoboxing.
+ability, and optional autoboxing. Originally derived from [Data::Perl](https://metacpan.org/pod/Data::Perl).
 
-Originally derived from [Data::Perl](https://metacpan.org/pod/Data::Perl).
+## Uses
 
-## Arrays
+The included objects are useful as-is but are largely intended for use as data
+container types for attributes. This lends a more natural object-oriented
+syntax; these are particularly convenient in combination with delegated
+methods, as in this example:
+
+    package Some::Thing;
+    use List::Objects::WithUtils;
+    use Moo;
+
+    has items => (
+      is      => 'ro',
+      builder => sub { array },
+      handles => +{
+        add_items   => 'push',
+        get_items   => 'all',
+        items_where => 'grep',
+      },
+    );
+
+    # ... later ...
+    my $thing = Some::Thing->new;
+    $thing->add_items(@more_items);
+    # Operate on all positive items:
+    for my $item ($thing->items_where(sub { $_ > 0 })->all) {
+      ...
+    }
+
+[List::Objects::Types](https://metacpan.org/pod/List::Objects::Types) provides [Type::Tiny](https://metacpan.org/pod/Type::Tiny)-based types & coercions
+matching the list objects provided by this distribution. These integrate
+nicely with typed or untyped list objects:
+
+    package Accounts;
+    use List::Objects::Types -types;
+    use Moo; use MooX::late;
+
+    has usergroups => (
+      is        => 'ro',
+      # +{ group => [ [ $usr => $id ], ... ] }
+      # Coerced to objects all the way down:
+      isa       => TypedHash[ TypedArray[ArrayObj] ],
+      coerce    => 1,
+      builder   => sub { +{} },
+    );
+
+## Objects
+
+### Arrays
 
 **array** ([List::Objects::WithUtils::Array](https://metacpan.org/pod/List::Objects::WithUtils::Array)) provides basic mutable
 ARRAY-type objects.  Behavior is defined by
@@ -156,7 +202,7 @@ that can coerce and check their values as they are added; see
 **immarray\_of** provides immutable type-checking arrays; see
 [List::Objects::WithUtils::Array::Immutable::Typed](https://metacpan.org/pod/List::Objects::WithUtils::Array::Immutable::Typed).
 
-## Hashes
+### Hashes
 
 **hash** is the basic mutable HASH-type object imported from
 [List::Objects::WithUtils::Hash](https://metacpan.org/pod/List::Objects::WithUtils::Hash); see

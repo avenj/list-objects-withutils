@@ -1,5 +1,13 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.012001 2014-06-26
+
+  - Add array->get_or_else / hash->get_or_else
+
+  - Fix array->insert($pos => @vals)
+
+  - Add ->untyped method for use in method chains involving typed objects
+
 2.011002 2014-06-24
 
   - Fix array->has_any(sub { !defined })
