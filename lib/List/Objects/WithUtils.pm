@@ -251,6 +251,37 @@ ability, and optional autoboxing.
 
 Originally derived from L<Data::Perl>.
 
+The included objects are useful as-is but are largely intended for use as
+attributes, providing a more natural object-oriented syntax:
+
+  package Some::Thing;
+  use List::Objects::WithUtils;
+  use Moo;
+
+  has items => (
+    is      => 'ro',
+    builder => sub { array },
+  );
+
+  # ... later ...
+  my $thing = Some::Thing->new;
+  $thing->items->push(@more_items);
+
+This is especially powerful in combination with L<List::Objects::Types>, which
+provides types & coercions matching the list objects provided by this
+distribution:
+
+  package Some::Thing;
+  use List::Objects::Types -types;
+  use Moo; use MooX::late;
+
+  has items => (
+    is        => 'ro',
+    isa       => ArrayObj,
+    coerce    => 1,
+    builder   => sub { [] },
+  );
+
 =head2 Arrays
 
 B<array> (L<List::Objects::WithUtils::Array>) provides basic mutable
