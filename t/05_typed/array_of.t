@@ -62,6 +62,11 @@ use Types::Standard -all;
   ok $copy->type == $arr->type, 'copy has same type ok';
   is_deeply [ $copy->export ], [ $arr->export ],
     'copy ok';
+
+  my $untyped = $arr->untyped;
+  isa_ok $untyped, 'List::Objects::WithUtils::Array';
+  ok !$untyped->type, 'untyped has no type ok';
+  ok $untyped->push('foo'), 'untyped dropped type ok';
 }
 
 # tied array

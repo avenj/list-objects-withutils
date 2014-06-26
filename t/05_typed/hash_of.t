@@ -34,6 +34,11 @@ use Types::Standard -all;
   ok $copy->type == $h->type, 'copy has same type ok';
   is_deeply +{ $copy->export }, +{ $h->export },
     'copy ok';
+
+  my $untyped = $h->untyped;
+  isa_ok $untyped, 'List::Objects::WithUtils::Hash';
+  ok !$untyped->type, 'untyped has no type ok';
+  ok $untyped->set(baz => 'quux'), 'untyped dropped type ok';
 }
 
 # tied hash

@@ -113,7 +113,14 @@ sub type {
 
 sub new { bless [ @_[1 .. $#_ ] ], Scalar::Util::blessed($_[0]) || $_[0] }
 
+=pod
+
+=for Pod::Coverage untyped
+
+=cut
+
 sub copy { blessed_or_pkg($_[0])->new(@{ $_[0] }) }
+{ no warnings 'once'; *untyped = *copy }
 
 sub inflate {
   my ($self) = @_;
