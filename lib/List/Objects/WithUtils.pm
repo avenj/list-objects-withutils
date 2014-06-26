@@ -253,8 +253,8 @@ ability, and optional autoboxing. Originally derived from L<Data::Perl>.
 
 The included objects are useful as-is but are largely intended for use as data
 container types for attributes. This lends a more natural object-oriented
-syntax; it is particularly convenient in combination with delegated methods,
-as in this example:
+syntax; these are particularly convenient in combination with delegated
+methods, as in this example:
 
   package Some::Thing;
   use List::Objects::WithUtils;
@@ -278,13 +278,12 @@ as in this example:
     ...
   }
 
-L<List::Objects::Types> provides types & coercions matching the list objects
-provided by this distribution. These integrate nicely with typed or untyped
-list objects:
+L<List::Objects::Types> provides L<Type::Tiny>-based types & coercions
+matching the list objects provided by this distribution. These integrate
+nicely with typed or untyped list objects:
 
   package Accounts;
   use List::Objects::Types -types;
-  use Types::Standard -types;
   use Moo; use MooX::late;
 
   has usergroups => (
