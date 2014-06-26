@@ -247,12 +247,12 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
 A set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays with useful utility methods, junctions, type-checking
-ability, and optional autoboxing.
+ability, and optional autoboxing. Originally derived from L<Data::Perl>
 
-Originally derived from L<Data::Perl>.
-
-The included objects are useful as-is but are largely intended for use as
-attributes, providing a more natural object-oriented syntax:
+The included objects are useful as-is but are largely intended for use as data
+container types for attributes, providing a more natural object-oriented
+syntax. This is especially convenient in combination with delegated methods,
+as in this example:
 
   package Some::Thing;
   use List::Objects::WithUtils;
@@ -261,11 +261,19 @@ attributes, providing a more natural object-oriented syntax:
   has items => (
     is      => 'ro',
     builder => sub { array },
+    handles => +{
+      add_items => 'push',
+      get_items => 'all',
+    },
   );
 
   # ... later ...
   my $thing = Some::Thing->new;
-  $thing->items->push(@more_items);
+  $thing->add_items(@more_items);
+  # Operate on all positive items:
+  for my $item ($thing->items->grep(sub { $_ > 0 })->all) {
+    ...
+  }
 
 This is especially powerful in combination with L<List::Objects::Types>, which
 provides types & coercions matching the list objects provided by this
@@ -273,11 +281,12 @@ distribution:
 
   package Some::Thing;
   use List::Objects::Types -types;
+  use Types::Standard -types;
   use Moo; use MooX::late;
 
   has items => (
     is        => 'ro',
-    isa       => ArrayObj,
+    isa       => TypedArray[Int],
     coerce    => 1,
     builder   => sub { [] },
   );
