@@ -247,11 +247,13 @@ List::Objects::WithUtils - List objects, kitchen sink included
 
 A set of roles and classes defining an object-oriented interface to Perl
 hashes and arrays with useful utility methods, junctions, type-checking
-ability, and optional autoboxing. Originally derived from L<Data::Perl>
+ability, and optional autoboxing. Originally derived from L<Data::Perl>.
+
+=head2 Uses
 
 The included objects are useful as-is but are largely intended for use as data
-container types for attributes, providing a more natural object-oriented
-syntax. This is especially convenient in combination with delegated methods,
+container types for attributes. This lends a more natural object-oriented
+syntax and is especially convenient in combination with delegated methods,
 as in this example:
 
   package Some::Thing;
@@ -275,23 +277,27 @@ as in this example:
     ...
   }
 
-This is especially powerful in combination with L<List::Objects::Types>, which
-provides types & coercions matching the list objects provided by this
-distribution:
+L<List::Objects::Types> provides types & coercions matching the list objects
+provided by this distribution. These integrate nicely with typed or untyped
+list objects:
 
-  package Some::Thing;
+  package Accounts;
   use List::Objects::Types -types;
   use Types::Standard -types;
   use Moo; use MooX::late;
 
-  has items => (
+  has usergroups => (
     is        => 'ro',
-    isa       => TypedArray[Int],
+    # +{ group => [ +{ $usr => $id }, ... ] }
+    # Coerced to objects all the way down:
+    isa       => TypedHash[ TypedArray[ TypedHash[Int] ] ],
     coerce    => 1,
-    builder   => sub { [] },
+    builder   => sub { +{} },
   );
 
-=head2 Arrays
+=head2 Objects
+
+=head3 Arrays
 
 B<array> (L<List::Objects::WithUtils::Array>) provides basic mutable
 ARRAY-type objects.  Behavior is defined by
@@ -309,7 +315,7 @@ L<List::Objects::WithUtils::Array::Typed>.
 B<immarray_of> provides immutable type-checking arrays; see
 L<List::Objects::WithUtils::Array::Immutable::Typed>.
 
-=head2 Hashes
+=head3 Hashes
 
 B<hash> is the basic mutable HASH-type object imported from
 L<List::Objects::WithUtils::Hash>; see
