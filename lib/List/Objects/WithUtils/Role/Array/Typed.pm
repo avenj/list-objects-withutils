@@ -94,6 +94,10 @@ Returns the L<Type::Tiny> type the object was created with.
 
 Returns a (shallow) clone that is a plain L<List::Objects::WithUtils::Array>.
 
+Since most methods that return a new list will (attempt to) return a list
+object of the same type as their parent, this can be useful to avoid type
+check failures in a method chain that creates intermediate lists.
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org> with significant contributions from Toby
