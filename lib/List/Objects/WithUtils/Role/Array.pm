@@ -146,6 +146,13 @@ sub end { $#{ $_[0] } }
 sub is_empty { ! @{ $_[0] } }
 
 sub get { $_[0]->[ $_[1] ] }
+
+sub get_or_else {
+  defined $_[0]->[ $_[1] ] ? $_[0]->[ $_[1] ]
+    : (Scalar::Util::reftype $_[2] || '') eq 'CODE' ? $_[2]->($_[0])
+    : $_[2]
+}
+
 sub set { $_[0]->[ $_[1] ] = $_[2] ; $_[0] }
 
 sub random { $_[0]->[ rand @{ $_[0] } ] }
@@ -864,6 +871,21 @@ flattened. Also see L</flatten>.
 =head3 get
 
 Returns the array element corresponding to a specified index.
+
+=head3 get_or_else
+
+  # Expect to find a hash() obj at $pos in $array,
+  # or create an empty one if $pos is undef:
+  my @keys = $array->get_or_else($pos => hash)->keys->all;
+
+  # Or pass a coderef; first arg is the object being operated on:
+  my $item_or_first = $array->get_or_else($pos => sub { shift->get(0) });
+
+Returns the element corresponding to a specified index; optionally takes a
+second argument that is used as a default value if the given index is undef.
+
+If the second argument is a coderef, it is invoked on the object and its
+return value is taken as the default value.
 
 =head3 head
 
