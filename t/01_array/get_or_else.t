@@ -14,11 +14,14 @@ ok !$arr->get_or_else(3),
 cmp_ok $arr->get_or_else(3 => 'foo'), 'eq', 'foo',
   'get_or_else defaults to scalar ok';
 
-my $invoc;
-cmp_ok $arr->get_or_else(3 => sub { $invoc = shift; 'foo' }), 'eq', 'foo',
+my ($invoc, $pos);
+cmp_ok $arr->get_or_else(3 => sub { ($invoc, $pos) = @_; 'foo' }),
+  'eq', 'foo', 
   'get_or_else with coderef ok';
 
 cmp_ok $invoc, '==', $arr,
   'get_or_else coderef invocant ok';
+cmp_ok $pos, '==', 3,
+  'get_or_else coderef index ok';
 
 done_testing;

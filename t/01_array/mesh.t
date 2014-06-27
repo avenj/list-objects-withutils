@@ -36,4 +36,6 @@ ok $@ =~ /ARRAY/, 'mesh with bad args dies'
 ok array->mesh([], [])->is_empty,
   'meshing empty arrays ok';
 
+ok array->zip([], [])->is_empty, 'zip alias for mesh ok';
+
 done_testing;

@@ -85,7 +85,7 @@ sub get {
 
 sub get_or_else {
   exists $_[0]->{ $_[1] } ? $_[0]->{ $_[1] }
-    : (Scalar::Util::reftype $_[2] || '') eq 'CODE' ? $_[2]->($_[0])
+    : (Scalar::Util::reftype $_[2] || '') eq 'CODE' ? $_[2]->(@_[0,1])
     : $_[2]
 }
 
@@ -308,17 +308,17 @@ hash.)
   # or create an empty one if $key doesn't exist:
   my @all = $hash->get_or_else($key => array)->all;
 
-  # Or pass a coderef; first arg is the object being operated on:
+  # Or pass a coderef
+  # First arg is the object being operated on
+  # Second arg is the requested key
   my $item = $hash->get_or_else($key => sub { shift->get($defaultkey) });
 
 Retrieves a key from the hash; optionally takes a second argument that is used
 as a default value if the given key does not exist in the hash.
 
-If the second argument is a coderef, it is invoked on the object and its
-return value is taken as the default value.
-
-If the key is nonexistant and there is no default provided, C<undef> is
-returned.
+If the second argument is a coderef, it is invoked on the object (with the
+requested key as an argument) and its return value is taken as the default
+value.
 
 =head2 inflate
 

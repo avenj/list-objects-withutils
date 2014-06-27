@@ -156,7 +156,7 @@ sub get { $_[0]->[ $_[1] ] }
 
 sub get_or_else {
   defined $_[0]->[ $_[1] ] ? $_[0]->[ $_[1] ]
-    : (Scalar::Util::reftype $_[2] || '') eq 'CODE' ? $_[2]->($_[0])
+    : (Scalar::Util::reftype $_[2] || '') eq 'CODE' ? $_[2]->(@_[0,1])
     : $_[2]
 }
 
@@ -894,14 +894,23 @@ Returns the array element corresponding to a specified index.
   # or create an empty one if $pos is undef:
   my @keys = $array->get_or_else($pos => hash)->keys->all;
 
-  # Or pass a coderef; first arg is the object being operated on:
+  # Or pass a coderef
+  # First arg is the object being operated on:
   my $item_or_first = $array->get_or_else($pos => sub { shift->get(0) });
+  # Second arg is the requested index:
+  my $item  = $array->get_or_else(3 => sub {
+    my (undef, $pos) = @_;
+    my $created = make_value_for( $pos );
+    $array->set($pos => $created);
+    $created
+  });
 
 Returns the element corresponding to a specified index; optionally takes a
 second argument that is used as a default value if the given index is undef.
 
-If the second argument is a coderef, it is invoked on the object and its
-return value is taken as the default value.
+If the second argument is a coderef, it is invoked on the object (with the
+requested index as an argument) and its return value is taken as the default
+value.
 
 =head3 head
 

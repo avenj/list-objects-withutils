@@ -13,9 +13,12 @@ cmp_ok $hr->get_or_else(b => 9), '==', 2,
 cmp_ok $hr->get_or_else(e => 'foo'), 'eq', 'foo',
   'get_or_else defaulted to scalar ok';
 
-my $invoc;
-cmp_ok $hr->get_or_else(e => sub { $invoc = shift; 'foo' }), 'eq', 'foo',
+my ($invoc, $key);
+cmp_ok $hr->get_or_else(e => sub { ($invoc, $key) = @_; 'foo' }),
+  'eq', 'foo',
   'get_or_else executed coderef ok';
+
 cmp_ok $invoc, '==', $hr, 'get_or_else coderef invocant ok';
+cmp_ok $key, 'eq', 'e',   'get_or_else coderef key ok';
 
 done_testing;
