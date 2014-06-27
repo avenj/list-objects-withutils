@@ -382,6 +382,12 @@ sub lastidx {
   -1
 }
 
+=pod
+
+=for Pod::Coverage zip
+
+=cut
+
 sub mesh {
   my $max_idx = -1;
   for (@_) { $max_idx = $#$_ if $max_idx < $#$_ }
@@ -391,6 +397,7 @@ sub mesh {
     } 0 .. $max_idx
   )
 }
+{ no warnings 'once'; *zip = *mesh; }
 
 sub natatime {
   my @list  = @{ $_[0] };
