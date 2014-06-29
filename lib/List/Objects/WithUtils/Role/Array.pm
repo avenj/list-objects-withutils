@@ -152,6 +152,17 @@ sub end { $#{ $_[0] } }
 
 sub is_empty { ! @{ $_[0] } }
 
+sub exists {
+  my $r;
+  $_[1] <= $#{ $_[0] } ? 
+    $_[1] >= 0 ? 1
+    : (($r = $_[1] + @{ $_[0] }) <= $#{ $_[0] } && $r >= 0) ? 1
+      : ()
+  : ()
+}
+
+sub defined { !! defined $_[0]->[ $_[1] ] }
+
 sub get { $_[0]->[ $_[1] ] }
 
 sub get_or_else {
@@ -648,9 +659,17 @@ Returns a shallow clone of the current object.
 
 Returns the number of elements in the array.
 
+=head3 defined
+
+Returns true if the element at the specified position is defined.
+
 =head3 end
 
 Returns the last index of the array (or -1 if the array is empty).
+
+=head3 exists
+
+Returns true if the specified index exists in the array.
 
 =head3 is_empty
 
