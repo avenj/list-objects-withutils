@@ -15,4 +15,9 @@ ok $arr->exists(-2),   'array exists(-2) ok';
 ok $arr->exists(-3),   'array exists(-3) ok';
 ok !$arr->exists(-4),  'array !exists(-4) ok';
 
+ok array(1)->exists(0), 'single-element array exists(0) ok';
+ok !array(1)->exists(1), 'single-element array !exists(1) ok';
+ok array(1)->exists(-1), 'single-element array exists(-1) ok';
+ok !array(1)->exists(-2), 'single-element array exists(-2) ok';
+
 done_testing
