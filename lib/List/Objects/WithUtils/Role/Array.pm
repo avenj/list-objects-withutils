@@ -77,7 +77,7 @@ sub __flatten {
 }
 
 
-use Role::Tiny;
+use Role::Tiny;   # my position relative to subs matters
 
 
 sub inflated_type { 'List::Objects::WithUtils::Hash' }
@@ -85,8 +85,8 @@ sub inflated_type { 'List::Objects::WithUtils::Hash' }
 sub is_mutable { 1 }
 sub is_immutable { ! $_[0]->is_mutable }
 
-# subclass-mungable (keep me under the Role::Tiny import):
 sub _try_coerce {
+  # subclass-mungable (keep me under the Role::Tiny import)
   my (undef, $type, @vals) = @_;
     Carp::confess "Expected a Type::Tiny type but got $type"
       unless Scalar::Util::blessed $type;
@@ -151,6 +151,15 @@ sub count { CORE::scalar @{ $_[0] } }
 sub end { $#{ $_[0] } }
 
 sub is_empty { ! @{ $_[0] } }
+
+sub exists {
+  my $r;
+  $_[1] <= $#{ $_[0] } ? $_[1] >= 0 ? 1
+    : (($r = $_[1] + @{ $_[0] }) <= $#{ $_[0] } && $r >= 0) ? 1 : ()
+    : ()
+}
+
+sub defined { !! defined $_[0]->[ $_[1] ] }
 
 sub get { $_[0]->[ $_[1] ] }
 
@@ -648,9 +657,23 @@ Returns a shallow clone of the current object.
 
 Returns the number of elements in the array.
 
+=head3 defined
+
+Returns true if the element at the specified position is defined.
+
 =head3 end
 
 Returns the last index of the array (or -1 if the array is empty).
+
+=head3 exists
+
+Returns true if the specified index exists in the array.
+
+Negative indices work as you might expect:
+
+  my $arr = array(1, 2, 3);
+  $arr->set(-2 => 'foo') if $arr->exists(-2);
+  # [ 1, 'foo', 3 ]
 
 =head3 is_empty
 
