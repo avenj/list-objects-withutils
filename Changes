@@ -1,5 +1,13 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.013001 2014-07-01
+
+  - Add array->exists($idx) (requested by TOBYINK)
+  
+  - Add array->defined($idx)
+
+  - Pass requested index/key to ->get_or_else() builder subs
+
 2.012001 2014-06-26
 
   - Add array->get_or_else / hash->get_or_else
