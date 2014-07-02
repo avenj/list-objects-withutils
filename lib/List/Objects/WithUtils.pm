@@ -339,7 +339,8 @@ imported, e.g.:
   use List::Objects::WithUtils 'array_of', 'hash_of';
 
 Importing B<autobox> lexically enables L<List::Objects::WithUtils::Autobox>,
-providing methods for native ARRAY and HASH types.
+which provides L<List::Objects::WithUtils::Array> or
+L<List::Objects::WithUtils::Hash> methods for native ARRAY and HASH types.
 
 Importing B<all> or B<:all> will import all of the object constructors and
 additionally turn B<autobox> on; C<use Lowu;> is a shortcut for importing
@@ -388,10 +389,11 @@ For example, it's easy to create your own array class with new methods:
 
   package My::Array::Object;
   use Role::Tiny::With;
+  # Act like List::Objects::WithUtils::Array:
   with 'List::Objects::WithUtils::Role::Array',
        'List::Objects::WithUtils::Role::Array::WithJunctions';
 
-  # An easy way to add your own functional interface:
+  # One way to add your own functional interface:
   use Exporter 'import';  our @EXPORT = 'my_array';
   sub my_array { __PACKAGE__->new(@_) }
 
@@ -409,7 +411,7 @@ overrides C<array_type> to produce your preferred arrays:
   
   sub array_type { 'My::Array::Object' }
 
-  # ...
+  # ... add/override methods ...
  
 =head1 SEE ALSO
 
@@ -419,9 +421,6 @@ C<array()> methods.
 L<List::Objects::WithUtils::Role::Array::WithJunctions> for documentation on C<array()>
 junction-returning methods.
 
-L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
-methods.
-
 L<List::Objects::WithUtils::Array::Immutable> for more on C<immarray()>
 immutable arrays.
 
@@ -430,6 +429,12 @@ type-checking arrays.
 
 L<List::Objects::WithUtils::Array::Immutable::Typed> for more on
 C<immarray_of()> immutable type-checking arrays.
+
+L<List::Objects::WithUtils::Role::Hash> for documentation regarding C<hash()>
+methods.
+
+L<List::Objects::WithUtils::Hash::Immutable> for more on C<immhash()>
+immutable hashes.
 
 L<List::Objects::WithUtils::Hash::Typed> for more on C<hash_of()>
 type-checking hashes.
@@ -454,15 +459,15 @@ Licensed under the same terms as Perl.
 The original Array and Hash roles were derived from L<Data::Perl> by Matthew
 Phillips (CPAN: MATTP), haarg, and others.
 
-Immutable array objects were inspired by L<Const::Fast> by Leon Timmermans
-(CPAN: LEONT)
+Immutable array objects were originally inspired by L<Const::Fast> by Leon
+Timmermans (CPAN: LEONT), but now use C<tie>.
 
 Junctions are adapted from L<Perl6::Junction> by Carl Franks (CPAN: CFRANKS)
 
 Most of the type-checking code and other useful additions were contributed by
 Toby Inkster (CPAN: TOBYINK)
 
-Much of this code simply wraps other widely-used modules, especially:
+A significant portion of this code simply wraps other widely-used modules, especially:
 
 L<List::Util>
 
@@ -471,9 +476,8 @@ L<List::UtilsBy>
 L<Type::Tiny>
 
 Inspiration for a few pieces comes from the "classic" (version 0.33)
-L<List::MoreUtils>. The development versions (0.4+) are going places I
-don't fully understand, so MoreUtils was dropped from the required dependency 
-chain in Lowu-2.10 and will be reevaluated later. Users with 0.3x versions of
+L<List::MoreUtils>. MoreUtils was dropped from the required dependency chain
+in Lowu-2.10 and will be reevaluated later. Users with 0.3x versions of
 L<List::MoreUtils> will see a significant performance boost in performing
 certain array operations.
 
