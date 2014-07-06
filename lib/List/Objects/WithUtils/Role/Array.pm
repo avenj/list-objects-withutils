@@ -145,6 +145,12 @@ sub validated {
 sub all { @{ $_[0] } }
 { no warnings 'once'; *export = *all; *elements  = *all; }
 
+=pod
+
+=for Pod::Coverage size
+
+=cut
+
 sub count { CORE::scalar @{ $_[0] } }
 { no warnings 'once'; *scalar = *count; *size = *count; }
 
