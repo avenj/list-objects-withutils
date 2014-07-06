@@ -146,7 +146,7 @@ sub all { @{ $_[0] } }
 { no warnings 'once'; *export = *all; *elements  = *all; }
 
 sub count { CORE::scalar @{ $_[0] } }
-{ no warnings 'once'; *scalar = *count;  }
+{ no warnings 'once'; *scalar = *count; *size = *count; }
 
 sub end { $#{ $_[0] } }
 
@@ -899,8 +899,8 @@ This works with both ARRAY-type references and array objects:
   my @flat = array( 1, 2, [ 3, 4, array( 5, 6 ) ] )->flatten(2);
   #  @flat = ( 1, 2, 3, 4, 5, 6 );
 
-(Specifically, consumers of this role are flattened; other ARRAY-type objects
-are left alone.)
+(Specifically, consumers of this role and plain ARRAYs are flattened; other
+ARRAY-type objects are left alone.)
 
 See L</flatten_all> for flattening to an unlimited depth.
 
