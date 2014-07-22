@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.014001 2014-07-22
+
+  - Add hash->inverted
+
+  - Alias array->size -> array->count
+
 2.013001 2014-07-01
 
   - Add array->exists($idx) (requested by TOBYINK)
