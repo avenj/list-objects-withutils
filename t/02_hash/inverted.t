@@ -19,9 +19,9 @@ for my $idx (1,2,3) {
   ok $inv->get($idx)->has_any, "key $idx has elements";
 }
 
-is_deeply 
-  [ $inv->get(1)->export ],
-  [ 'a', 'b' ],
+is_deeply
+  +{ map {; $_ => 1 } $inv->get(1)->all },
+  +{ map {; $_ => 1 } qw/a b/ },
   'inverted multiples ok';
 
 is_deeply
