@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.014002 2014-07-23
+
+  - Fix hash->inverted test
+
 2.014001 2014-07-22
 
   - Add hash->inverted
