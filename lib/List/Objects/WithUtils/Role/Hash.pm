@@ -262,80 +262,45 @@ In addition to the methods documented below, these objects provide a
 C<TO_JSON> method exporting a plain HASH-type reference for convenience when
 feeding L<JSON::Tiny> or similar.
 
-=head2 new
+=head2 Basic hash methods
+
+=head3 new
 
 Constructs a new HASH-type object.
 
-=head2 export
-
-  my %hash = $hash->export;
-
-Returns a raw key/value list.
-
-=head2 clear
-
-Clears the current hash entirely.
-
-Returns the hash object (as of version 1.013).
-
-=head2 copy
+=head3 copy
 
 Creates a shallow clone of the current object.
 
-=head2 unbless
-
-Returns a plain C</HASH> reference (shallow clone).
-
-=head2 defined
+=head3 defined
 
   if ( $hash->defined($key) ) { ... }
 
 Returns boolean true if the key has a defined value.
 
-=head2 delete
-
-  $hash->delete( @keys );
-
-Deletes keys from the hash.
-
-Returns an L</array_type> object containing the deleted values.
-
-=head2 exists
+=head3 exists
 
   if ( $hash->exists($key) ) { ... }
 
 Returns boolean true if the key exists.
 
-=head2 get
+=head3 export
 
-  my $val  = $hash->get($key);
-  my @vals = $hash->get(@keys)->all;
+  my %hash = $hash->export;
 
-Retrieves a key or list of keys from the hash.
+Returns a raw key/value list.
 
-If we're taking a slice (multiple keys were specified), values are returned
-as an L</array_type> object. (See L</sliced> if you'd rather generate a new
-hash.)
+=head3 array_type
 
-=head2 get_or_else
+The class name of array-type objects that will be used to contain the results
+of methods returning a list.
 
-  # Expect to find an array() obj at $key in $hash,
-  # or create an empty one if $key doesn't exist:
-  my @all = $hash->get_or_else($key => array)->all;
+Defaults to L<List::Objects::WithUtils::Array>.
 
-  # Or pass a coderef
-  # First arg is the object being operated on
-  # Second arg is the requested key
-  my $item = $hash->get_or_else($key => sub { shift->get($defaultkey) });
+Subclasses can override C<array_type> to produce different types of array
+objects.
 
-Retrieves a key from the hash; optionally takes a second argument that is used
-as a default value if the given key does not exist in the hash.
-
-If the second argument is a coderef, it is invoked on the object (with the
-requested key as an argument) and its return value is taken as the default
-value.
-
-=head2 inflate
+=head3 inflate
 
   my $obj = hash(foo => 'bar', baz => 'quux')->inflate;
   my $baz = $obj->baz; 
@@ -357,95 +322,54 @@ for modification:
   my $first = hash( foo => 'bar', baz => 'quux' )->inflate;
   my $second = hash( $first->DEFLATE, frobulate => 1 )->inflate;
 
-=head2 intersection
+=head3 inflated_type
 
-  my $first  = hash(a => 1, b => 2, c => 3);
-  my $second = hash(b => 2, c => 3, d => 4);
-  my $intersection = $first->intersection($second);
-  my @common = $intersection->sort->all;
+The class name that objects are blessed into when calling L</inflate>.
 
-Returns the list of keys common between all given hash-type objects (including
-the invocant) as an L</array_type> object.
+Defaults to L<List::Objects::WithUtils::Hash::Inflated>.
 
-=head2 diff
+=head3 inflated_rw_type
 
-The opposite of L</intersection>; returns the list of keys that are not common
-to all given hash-type objects (including the invocant) as an L</array_type>
-object.
+The class name that objects are blessed into when calling L</inflate> with
+C<rw => 1>.
 
-=head2 is_empty
+Defaults to L<List::Objects::WithUtils::Hash::Inflated::RW>, a subclass of
+L<List::Objects::WithUtils::Hash::Inflated>.
+
+=head3 is_empty
 
 Returns boolean true if the hash has no keys.
 
-=head2 is_mutable
+=head3 is_mutable
 
 Returns boolean true if the hash is mutable; immutable subclasses can override
 to provide a negative value.
 
-=head2 is_immutable
+=head3 is_immutable
 
 The opposite of L</is_mutable>.
 
-=head2 keys
+=head3 unbless
 
-  my @keys = $hash->keys->all;
+Returns a plain C</HASH> reference (shallow clone).
 
-Returns the list of keys in the hash as an L</array_type> object.
+=head2 Methods that manipulate the hash
 
-=head2 values
+=head3 clear
 
-  my @vals = $hash->values->all;
+Clears the current hash entirely.
 
-Returns the list of values in the hash as an L</array_type> object.
+Returns the hash object.
 
-=head2 iter
+=head3 delete
 
-  my $iter = $hash->iter;
-  while (my ($key, $val) = $iter->()) {
-    # ...
-  }
+  $hash->delete( @keys );
 
-Returns an iterator that, when called, returns ($key, $value) pairs.
+Deletes the given keys from the hash.
 
-The iterator operates on a shallow clone of the current hash, making it
-(relatively) safe to operate on the original hash while using the iterator.
+Returns an L</array_type> object containing the deleted values.
 
-=head2 kv
-
-  for my $pair ($hash->kv->all) {
-    my ($key, $val) = @$pair;
-  }
-
-Returns an L</array_type> object containing the key/value pairs in the hash,
-each of which is a two-element ARRAY.
-
-=head2 kv_map
-
-  # Add 1 to each value, get back an array-type object:
-  my $kvs = hash(a => 2, b => 2, c => 3)
-    ->kv_map(sub { ($_[0], $_[1] + 1) });
-
-Like C<map>, but operates on pairs. See L<List::Util/"pairmap">. 
-
-Returns an L</array_type> object containing the results of the map.
-
-=head2 kv_sort
-
-  my $kvs = hash(a => 1, b => 2, c => 3)->kv_sort;
-  # $kvs = array(
-  #          [ a => 1 ], 
-  #          [ b => 2 ], 
-  #          [ c => 3 ]
-  #        )
-
-  my $reversed = hash(a => 1, b => 2, c => 3)
-    ->kv_sort(sub { $_[1] cmp $_[0] });
-  # Reverse result as above
-
-Like L</kv>, but sorted by key. A sort routine can be provided; C<$_[0]> and
-C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>.
-
-=head2 set
+=head3 set
 
   $hash->set(
     key1 => $val,
@@ -454,10 +378,9 @@ C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>.
 
 Sets keys in the hash.
 
-As of version 1.007, returns the current hash object.
-The return value of prior versions is unreliable.
+Returns the current hash object.
 
-=head2 maybe_set
+=head3 maybe_set
 
   my $hash = hash(foo => 1, bar => 2, baz => 3);
   $hash->maybe_set(foo => 2, bar => 3, quux => 4);
@@ -467,15 +390,50 @@ Like L</set>, but only sets values that do not already exist in the hash.
 
 Returns the hash object.
 
-=head2 sliced
+=head2 Methods that retrieve items
 
-  my $newhash = $hash->sliced(@keys);
+=head3 get
 
-Returns a new hash object built from the specified set of keys.
+  my $val  = $hash->get($key);
+  my @vals = $hash->get(@keys)->all;
 
-(See L</get> if you only need the values.)
+Retrieves a key or list of keys from the hash.
 
-=head2 inverted
+If we're taking a slice (multiple keys were specified), values are returned
+as an L</array_type> object. (See L</sliced> if you'd rather generate a new
+hash.)
+
+=head3 get_or_else
+
+  # Expect to find an array() obj at $key in $hash,
+  # or create an empty one if $key doesn't exist:
+  my @all = $hash->get_or_else($key => array)->all;
+
+  # Or pass a coderef
+  # First arg is the object being operated on
+  # Second arg is the requested key
+  my $item = $hash->get_or_else($key => sub { shift->get($defaultkey) });
+
+Retrieves a key from the hash; optionally takes a second argument that is used
+as a default value if the given key does not exist in the hash.
+
+If the second argument is a coderef, it is invoked on the object (with the
+requested key as an argument) and its return value is taken as the default
+value.
+
+=head3 keys
+
+  my @keys = $hash->keys->all;
+
+Returns the list of keys in the hash as an L</array_type> object.
+
+=head3 values
+
+  my @vals = $hash->values->all;
+
+Returns the list of values in the hash as an L</array_type> object.
+
+=head3 inverted
 
   my $hash = hash(
     a => 1,
@@ -495,32 +453,78 @@ for each unique value.
 
 (This is a bit like reversing the hash, but lossless.)
 
-=head2 array_type
+=head3 iter
 
-The class name of array-type objects that will be used to contain the results
-of methods returning a list.
+  my $iter = $hash->iter;
+  while (my ($key, $val) = $iter->()) {
+    # ...
+  }
 
-Defaults to L<List::Objects::WithUtils::Array>.
+Returns an iterator that, when called, returns ($key, $value) pairs.
 
-Subclasses can override C<array_type> to produce different types of array
-objects; the method can also be queried to find out what kind of array object
-will be returned:
+The iterator operates on a shallow clone of the current hash, making it
+(relatively) safe to operate on the original hash while using the iterator.
 
-  my $type = $hash->array_type;
+=head3 kv
 
-=head2 inflated_type
+  for my $pair ($hash->kv->all) {
+    my ($key, $val) = @$pair;
+  }
 
-The class name that objects are blessed into when calling L</inflate>.
+Returns an L</array_type> object containing the key/value pairs in the hash,
+each of which is a two-element ARRAY.
 
-Defaults to L<List::Objects::WithUtils::Hash::Inflated>.
+=head3 kv_map
 
-=head2 inflated_rw_type
+  # Add 1 to each value, get back an array-type object:
+  my $kvs = hash(a => 2, b => 2, c => 3)
+    ->kv_map(sub { ($_[0], $_[1] + 1) });
 
-The class name that objects are blessed into when calling L</inflate> with
-C<rw => 1>.
+Like C<map>, but operates on pairs. See L<List::Util/"pairmap">. 
 
-Defaults to L<List::Objects::WithUtils::Hash::Inflated::RW>, a subclass of
-L<List::Objects::WithUtils::Hash::Inflated>.
+Returns an L</array_type> object containing the results of the map.
+
+=head3 kv_sort
+
+  my $kvs = hash(a => 1, b => 2, c => 3)->kv_sort;
+  # $kvs = array(
+  #          [ a => 1 ], 
+  #          [ b => 2 ], 
+  #          [ c => 3 ]
+  #        )
+
+  my $reversed = hash(a => 1, b => 2, c => 3)
+    ->kv_sort(sub { $_[1] cmp $_[0] });
+  # Reverse result as above
+
+Like L</kv>, but sorted by key. A sort routine can be provided; C<$_[0]> and
+C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>.
+
+=head3 sliced
+
+  my $newhash = $hash->sliced(@keys);
+
+Returns a new hash object built from the specified set of keys.
+
+(See L</get> if you only need the values.)
+
+=head2 Methods that compare hashes
+
+=head3 intersection
+
+  my $first  = hash(a => 1, b => 2, c => 3);
+  my $second = hash(b => 2, c => 3, d => 4);
+  my $intersection = $first->intersection($second);
+  my @common = $intersection->sort->all;
+
+Returns the list of keys common between all given hash-type objects (including
+the invocant) as an L</array_type> object.
+
+=head3 diff
+
+The opposite of L</intersection>; returns the list of keys that are not common
+to all given hash-type objects (including the invocant) as an L</array_type>
+object.
 
 =head1 SEE ALSO
 
