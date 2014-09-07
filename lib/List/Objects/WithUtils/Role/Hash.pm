@@ -42,7 +42,7 @@ sub new {
     Module::Runtime::require_module($arraytype);
     $Required{$arraytype} = 1
   }
-  bless +{ @_[1 .. $#_] }, Scalar::Util::blessed $_[0] || $_[0]
+  bless +{ @_[1 .. $#_] }, Scalar::Util::blessed($_[0]) || $_[0]
 }
 
 sub export  { %{ $_[0] } }
@@ -98,11 +98,7 @@ sub get_or_else {
 { no warnings 'once'; *slice = *sliced; }
 sub sliced {
   blessed_or_pkg($_[0])->new(
-    map {;
-      exists $_[0]->{$_} ? 
-        ( $_ => $_[0]->{$_} )
-        : ()
-    } @_[1 .. $#_]
+    map {; exists $_[0]->{$_} ? ( $_ => $_[0]->{$_} ) : () } @_[1 .. $#_]
   )
 }
 
@@ -178,11 +174,11 @@ sub kv_sort {
   if (defined $_[1]) {
     return blessed_or_pkg($_[0])->array_type->new(
       map {; [ $_, $_[0]->{ $_ } ] }
-        CORE::sort {; $_[1]->($a, $b) } CORE::keys %{ $_[0] }
+        sort {; $_[1]->($a, $b) } CORE::keys %{ $_[0] }
     )
   }
   blessed_or_pkg($_[0])->array_type->new(
-    map {; [ $_, $_[0]->{ $_ } ] } CORE::sort( CORE::keys %{ $_[0] } )
+    map {; [ $_, $_[0]->{ $_ } ] } sort( CORE::keys %{ $_[0] } )
   )
 }
 
