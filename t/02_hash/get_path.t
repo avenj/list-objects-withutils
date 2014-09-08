@@ -47,4 +47,7 @@ ok !$hr->exists('foo'), 'no autoviv ok';
 eval {; $hr->get_path(qw/hashobj d foo /) };
 ok $@, 'attempting to access array as hash dies';
 
+eval {; $hr->get_path(hashobj => c => [1]) };
+ok $@, 'attempting to access hash as array dies';
+
 done_testing
