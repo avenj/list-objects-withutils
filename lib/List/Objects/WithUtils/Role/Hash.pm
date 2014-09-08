@@ -89,6 +89,14 @@ sub get_or_else {
     : $_[2]
 }
 
+sub get_path {
+  my $ref = shift;
+  while ( defined(my $part = shift) ) {
+    $ref = $ref->{$part} || return undef
+  }
+  $ref
+}
+
 =pod
 
 =for Pod::Coverage slice
