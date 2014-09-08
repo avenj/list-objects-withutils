@@ -3,6 +3,8 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'hash';
 
+my $someref = +{};
+
 my $hr = hash(
   scalar => 1,
 
@@ -14,7 +16,8 @@ my $hr = hash(
   },
 
   hashobj => hash(
-    c => 2,
+    c => $someref,
+    d => [],
   ),
 );
 
@@ -24,8 +27,18 @@ cmp_ok $hr->get_path('scalar'), '==', 1,
 cmp_ok $hr->get_path(qw/hash b x/), '==', 10,
   'deep get_path ok';
 
-cmp_ok $hr->get_path(qw/hashobj c/), '==', 2,
+cmp_ok $hr->get_path(qw/hashobj c/), '==', $someref,
   'hash obj get_path ok';
 
+ok !defined $hr->get_path(qw/hashobj c foo/),
+  'nonexistant element at end of path returned undef';
+
+ok !defined $hr->get_path(qw/foo bar baz/),
+  'nonexistant element at start of path returned undef';
+
+ok !$hr->exists('foo'), 'no autoviv ok';
+
+eval {; $hr->get_path(qw/hashobj d foo /) };
+ok $@, 'attempting to access array as hash dies';
 
 done_testing
