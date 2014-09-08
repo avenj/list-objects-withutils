@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.015001 2014-09-08
+
+  - Add hash->get_path
+
+  - Reorganize Role::Hash POD
+
 2.014002 2014-07-23
 
   - Fix hash->inverted test
