@@ -92,7 +92,9 @@ sub get_or_else {
 sub get_path {
   my $ref = shift;
   while ( defined(my $part = shift) ) {
-    $ref = $ref->{$part} || return undef
+    $ref = ref $part eq 'ARRAY' ?
+      $ref->[ $part->[0] ] : $ref->{$part};
+    return undef unless defined $ref;
   }
   $ref
 }
@@ -410,6 +412,37 @@ Retrieves a key or list of keys from the hash.
 If we're taking a slice (multiple keys were specified), values are returned
 as an L</array_type> object. (See L</sliced> if you'd rather generate a new
 hash.)
+
+=head3 get_path
+
+  my $hash = hash(
+    foo => +{
+      bar => +{
+        baz => 1
+      }
+    },
+    quux => [
+      +{ weeble => 'snork' }
+    ],
+  );
+
+  my $item = $hash->get_path(qw/foo bar baz/);        # 1
+
+Attempt to retrieve a scalar item from a 'deep' hash (without risking
+autovivification).
+
+If an element of the given path is a (plain) array reference, as in this
+example:
+
+  my $item = $hash->get_path('quux', [1], 'weeble');  # "snork"
+
+... then it is taken as the index of an array or array-type object in the
+path.
+
+Returns undef if any of the path elements are nonexistant.
+
+An exception is thrown if an invalid access is attempted, such as trying to
+use a hash-type object as if it were an array.
 
 =head3 get_or_else
 

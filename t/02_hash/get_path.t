@@ -18,6 +18,9 @@ my $hr = hash(
   hashobj => hash(
     c => $someref,
     d => [],
+    e => [
+      1, { z => 9 },
+    ],
   ),
 );
 
@@ -35,6 +38,9 @@ ok !defined $hr->get_path(qw/hashobj c foo/),
 
 ok !defined $hr->get_path(qw/foo bar baz/),
   'nonexistant element at start of path returned undef';
+
+cmp_ok $hr->get_path( 'hashobj', 'e', [1], 'z' ), '==', 9,
+  'get_path with array elements ok';
 
 ok !$hr->exists('foo'), 'no autoviv ok';
 
