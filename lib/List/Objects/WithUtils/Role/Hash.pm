@@ -90,10 +90,9 @@ sub get_or_else {
 }
 
 sub get_path {
-  my $ref = shift;
-  while ( defined(my $part = shift) ) {
-    $ref = ref $part eq 'ARRAY' ?
-      $ref->[ $part->[0] ] : $ref->{$part};
+  my $ref = $_[0];
+  for my $part (@_[1 .. $#_]) {
+    $ref = ref $part eq 'ARRAY' ? $ref->[ $part->[0] ] : $ref->{$part};
     return undef unless defined $ref;
   }
   $ref
@@ -440,7 +439,7 @@ example:
 path.
 
 Returns undef if any of the path elements are nonexistant.
-
+  
 An exception is thrown if an invalid access is attempted, such as trying to
 use a hash-type object as if it were an array.
 
