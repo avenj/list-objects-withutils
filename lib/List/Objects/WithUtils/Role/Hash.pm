@@ -512,7 +512,7 @@ The iterator operates on a shallow clone of the current hash, making it
   }
 
 Returns an L</array_type> object containing the key/value pairs in the hash,
-each of which is a two-element ARRAY.
+each of which is a two-element (unblessed) ARRAY.
 
 =head3 kv_map
 
