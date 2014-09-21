@@ -443,6 +443,8 @@ Returns undef if any of the path elements are nonexistant.
 An exception is thrown if an invalid access is attempted, such as trying to
 use a hash-type object as if it were an array.
 
+(Available from v2.15.1)
+
 =head3 get_or_else
 
   # Expect to find an array() obj at $key in $hash,
@@ -491,7 +493,9 @@ Returns the list of values in the hash as an L</array_type> object.
 Inverts the hash, creating L</array_type> objects containing one or more keys
 for each unique value.
 
-(This is a bit like reversing the hash, but lossless.)
+This is a bit like reversing the hash, but lossless.
+
+(Available from v2.14.1)
 
 =head3 iter
 
@@ -504,6 +508,8 @@ Returns an iterator that, when called, returns ($key, $value) pairs.
 
 The iterator operates on a shallow clone of the current hash, making it
 (relatively) safe to operate on the original hash while using the iterator.
+
+(Available from v2.9.1)
 
 =head3 kv
 
@@ -523,6 +529,8 @@ each of which is a two-element (unblessed) ARRAY.
 Like C<map>, but operates on pairs. See L<List::Util/"pairmap">. 
 
 Returns an L</array_type> object containing the results of the map.
+
+(Available from v2.8.1)
 
 =head3 kv_sort
 

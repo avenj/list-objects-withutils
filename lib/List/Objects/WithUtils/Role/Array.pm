@@ -669,6 +669,8 @@ Returns the number of elements in the array.
 
 Returns true if the element at the specified position is defined.
 
+(Available from v2.13.1)
+
 =head3 end
 
 Returns the last index of the array (or -1 if the array is empty).
@@ -682,6 +684,8 @@ Negative indices work as you might expect:
   my $arr = array(1, 2, 3);
   $arr->set(-2 => 'foo') if $arr->exists(-2);
   # [ 1, 'foo', 3 ]
+
+(Available from v2.13.1)
 
 =head3 is_empty
 
@@ -760,6 +764,8 @@ The array will be "backfilled" (with undefs) if $position is past the end of
 the array.
 
 Returns the array object.
+
+(Available from v2.12.1)
 
 =head3 pop
 
@@ -860,6 +866,8 @@ If the list divides unevenly, the first set will be the largest.
 
 Inspired by L<List::NSect>.
 
+(Available from v2.11.1)
+
 =head3 ssect
 
   my ($first, $second) = array( 1 .. 10 )->ssect(5)->all;
@@ -872,6 +880,8 @@ If the list divides unevenly, the last set will be smaller than the specified
 target.
 
 Inspired by L<List::NSect>.
+
+(Available from v2.11.1)
 
 =head3 elements
 
