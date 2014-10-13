@@ -103,7 +103,7 @@ sub _try_coerce {
 
 =pod
 
-=for Pod::Coverage TO_JSON damn type
+=for Pod::Coverage TO_JSON TO_ZPL damn type
 
 =cut
 
@@ -130,7 +130,11 @@ sub inflate {
 }
 
 sub unbless { [ @{ $_[0] } ] }
-{ no warnings 'once'; *TO_JSON = *unbless; *damn = *unbless; }
+{ no warnings 'once'; 
+  *TO_JSON  = *unbless; 
+  *TO_ZPL   = *unbless;
+  *damn     = *unbless; 
+}
 
 sub validated {
   my ($self, $type) = @_;

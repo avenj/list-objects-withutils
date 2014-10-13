@@ -26,7 +26,7 @@ sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
 
 =pod
 
-=for Pod::Coverage TO_JSON damn type
+=for Pod::Coverage TO_JSON TO_ZPL damn type
 
 =cut
 
@@ -48,7 +48,11 @@ sub new {
 sub export  { %{ $_[0] } }
 sub unbless { +{ %{ $_[0] } } }
 
-{ no warnings 'once'; *TO_JSON = *unbless; *damn = *unbless; }
+{ no warnings 'once'; 
+  *TO_JSON  = *unbless; 
+  *TO_ZPL   = *unbless;
+  *damn     = *unbless; 
+}
 
 sub clear { %{ $_[0] } = (); $_[0] }
 
@@ -415,16 +419,9 @@ hash.)
 =head3 get_path
 
   my $hash = hash(
-    foo => +{
-      bar => +{
-        baz => 1
-      }
-    },
-    quux => [
-      +{ weeble => 'snork' }
-    ],
+    foo  => +{ bar => +{ baz => 1 } },
+    quux => [ +{ weeble => 'snork' } ],
   );
-
   my $item = $hash->get_path(qw/foo bar baz/);        # 1
 
 Attempt to retrieve a scalar item from a 'deep' hash (without risking
