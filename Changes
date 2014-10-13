@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.016001 2014-10-13
+
+  - Add TO_ZPL for Text::ZPL compatibility
+
 2.015001 2014-09-08
 
   - Add hash->get_path
