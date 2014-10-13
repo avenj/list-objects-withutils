@@ -12,14 +12,14 @@ our $UsingUtilsByXS = 0;
 { no warnings 'once';
   if (eval {; require List::UtilsBy::XS; 1 } && !$@) {
     $UsingUtilsByXS = 1;
-    *__sort_by  = *List::UtilsBy::XS::sort_by;
-    *__nsort_by = *List::UtilsBy::XS::nsort_by;
-    *__uniq_by  = *List::UtilsBy::XS::uniq_by;
+    *__sort_by  = \&List::UtilsBy::XS::sort_by;
+    *__nsort_by = \&List::UtilsBy::XS::nsort_by;
+    *__uniq_by  = \&List::UtilsBy::XS::uniq_by;
   } else {
     require List::UtilsBy;
-    *__sort_by  = *List::UtilsBy::sort_by;
-    *__nsort_by = *List::UtilsBy::nsort_by;
-    *__uniq_by  = *List::UtilsBy::uniq_by;
+    *__sort_by  = \&List::UtilsBy::sort_by;
+    *__nsort_by = \&List::UtilsBy::nsort_by;
+    *__uniq_by  = \&List::UtilsBy::uniq_by;
   }
 }
 
