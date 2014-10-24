@@ -13,7 +13,6 @@ requires "List::UtilsBy"            => "0.09";
 recommends "List::UtilsBy::XS"      => "0.03";
 
 on 'test' => sub {
-  requires "File::Spec" => "0";
   requires "Test::More" => "0.88";
 
   recommends "JSON::PP" => "0";
