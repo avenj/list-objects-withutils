@@ -13,4 +13,11 @@ ok !defined array->reduce($sum), 'empty array reduce ok';
 cmp_ok array(6, 3, 2)->reduce(sub { $_[0] / $_[1] }), '==', 1,
   'reduce folds left';
 
+cmp_ok array(6, 3, 2)->foldl(sub { $_[0] / $_[1] }), '==', 1,
+  'foldl folds left';
+
+cmp_ok array(2, 3, 6)->foldr(sub { $_[0] / $_[1] }), '==', 1,
+  'foldr folds right';
+ok !defined array->foldr($sum), 'empty array foldr ok';
+
 done_testing;
