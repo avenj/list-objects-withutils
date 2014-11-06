@@ -10,4 +10,7 @@ cmp_ok $arr->reduce($sum), '==', 6, 'reduce ok';
 cmp_ok array(1)->reduce($sum), '==', 1, 'array with one element reduce ok';
 ok !defined array->reduce($sum), 'empty array reduce ok';
 
+cmp_ok array(6, 3, 2)->reduce(sub { $_[0] / $_[1] }), '==', 1,
+  'reduce folds left';
+
 done_testing;

@@ -509,9 +509,24 @@ sub tuples {
   blessed_or_pkg($self)->new(@res)
 }
 
+=for Pod::Coverage fold_left fold_right
+
+=cut
+
+# FIXME
+#   accept identity value:
+#     $l->reduce(sub {}, 0)
+#      prepended to reduce/foldl
+#      appended to foldr?
 sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
+{ no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
+
+sub foldr {
+  List::Util::reduce { $_[1]->($a, $b) } reverse @{ $_[0] }
+}
+{ no warnings 'once'; *fold_right = *foldr; }
 
 sub rotate {
   my ($self, %params) = @_;
