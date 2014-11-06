@@ -511,7 +511,7 @@ sub tuples {
 
 =pod
 
-=for Pod::Coverage fold_left fold_right
+=for Pod::Coverage fold_left foldl fold_right
 
 =cut
 
