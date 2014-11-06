@@ -1274,6 +1274,8 @@ Reduces the array by calling the given subroutine for each element of the
 list. The first argument passed to the subroutine is the accumulated value;
 the second argument is the current element. See L<List::Util/"reduce">.
 
+An empty list reduces to C<undef>.
+
 This is a "left fold" -- B<foldl> is an alias for L</reduce>.
 
 See also: L</foldr>
@@ -1287,6 +1289,8 @@ list starting at the end (the opposite of L</reduce>).
 
 Unlike L</reduce> (foldl), the first argument passed to the subroutine is the
 current element; the second argument is the accumulated value.
+
+An empty list reduces to C<undef>.
 
 =head3 visit
 
