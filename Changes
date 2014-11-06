@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.017001 2014-11-06
+
+  - Add array->foldr($sub), alias array->foldl to array->reduce
+
+  - Switch to 'cpanfile' dependency management
+
 2.016001 2014-10-13
 
   - Add TO_ZPL for Text::ZPL compatibility
