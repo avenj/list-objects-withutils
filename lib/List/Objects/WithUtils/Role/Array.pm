@@ -522,7 +522,7 @@ sub reduce {
 { no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
 
 sub foldr {
-  List::Util::reduce { $_[1]->($a, $b) } CORE::reverse @{ $_[0] }
+  List::Util::reduce { $_[1]->($b, $a) } CORE::reverse @{ $_[0] }
 }
 { no warnings 'once'; *fold_right = *foldr; }
 
@@ -1271,7 +1271,8 @@ See also L</rotate>, L</rotate_in_place>.
   my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
 
 Reduces the array by calling the given subroutine for each element of the
-list. See L<List::Util/"reduce">.
+list. The first argument passed to the subroutine is the accumulated value;
+the second argument is the current element. See L<List::Util/"reduce">.
 
 This is a "left fold" -- B<foldl> is an alias for L</reduce>.
 
@@ -1279,10 +1280,13 @@ See also: L</foldr>
 
 =head3 foldr
 
-  my $result = array(2,3,6)->foldr(sub { $_[0] / $_[1] });  # 1
+  my $result = array(2,3,6)->foldr(sub { $_[1] / $_[0] });  # 1
 
 Reduces the array by calling the given subroutine for each element of the
 list starting at the end (the opposite of L</reduce>).
+
+Unlike L</reduce> (foldl), the first argument passed to the subroutine is the
+current element; the second argument is the accumulated value.
 
 =head3 visit
 
