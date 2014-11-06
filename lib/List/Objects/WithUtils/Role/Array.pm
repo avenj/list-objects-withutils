@@ -515,11 +515,7 @@ sub tuples {
 
 =cut
 
-# FIXME
-#   accept identity value:
-#     $l->reduce(sub {}, 0)
-#      prepended to reduce/foldl
-#      appended to foldr?
+# TODO consider accepting identity vals for reduce/foldr?
 sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
@@ -1276,6 +1272,17 @@ See also L</rotate>, L</rotate_in_place>.
 
 Reduces the array by calling the given subroutine for each element of the
 list. See L<List::Util/"reduce">.
+
+This is a "left fold" -- B<foldl> is an alias for L</reduce>.
+
+See also: L</foldr>
+
+=head3 foldr
+
+  my $result = array(2,3,6)->foldr(sub { $_[0] / $_[1] });  # 1
+
+Reduces the array by calling the given subroutine for each element of the
+list starting at the end (the opposite of L</reduce>).
 
 =head3 visit
 
