@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.017002 2014-11-06
+
+  - cpanfile fixes; explicitly require autobox
+
 2.017001 2014-11-06
 
   - Add array->foldr($sub), alias array->foldl to array->reduce
