@@ -509,6 +509,8 @@ sub tuples {
   blessed_or_pkg($self)->new(@res)
 }
 
+=pod
+
 =for Pod::Coverage fold_left fold_right
 
 =cut
@@ -524,7 +526,7 @@ sub reduce {
 { no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
 
 sub foldr {
-  List::Util::reduce { $_[1]->($a, $b) } reverse @{ $_[0] }
+  List::Util::reduce { $_[1]->($a, $b) } CORE::reverse @{ $_[0] }
 }
 { no warnings 'once'; *fold_right = *foldr; }
 
