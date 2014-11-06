@@ -1266,6 +1266,8 @@ array.
 
 See also L</rotate>, L</rotate_in_place>.
 
+(Available from v2.7.1)
+
 =head3 reduce
 
   my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
@@ -1276,7 +1278,7 @@ the second argument is the current element. See L<List::Util/"reduce">.
 
 An empty list reduces to C<undef>.
 
-This is a "left fold" -- B<foldl> is an alias for L</reduce>.
+This is a "left fold" -- B<foldl> is an alias for L</reduce> (as of v2.17.1).
 
 See also: L</foldr>
 
@@ -1292,6 +1294,8 @@ current element; the second argument is the accumulated value.
 
 An empty list reduces to C<undef>.
 
+(Available from v2.17.1)
+
 =head3 visit
 
   $arr->visit(sub { warn "array contains: $_" });
@@ -1300,6 +1304,8 @@ Executes the given subroutine against each element sequentially; in practice
 this is much like L</map>, except the return value is thrown away.
 
 Returns the original array object.
+
+(Available from v2.7.1)
 
 =head2 Methods that sort the list
 
