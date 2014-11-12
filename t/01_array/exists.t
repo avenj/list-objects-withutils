@@ -6,6 +6,8 @@ use List::Objects::WithUtils 'array';
 my $arr = array(1 .. 3);
 
 ok $arr->exists(0), 'array->exists ok';
+ok $arr->exists(1), 'array exists(1) ok';
+ok $arr->exists(2), 'array exists(2) ok';
 ok !$arr->exists(3), '!array->exists ok';
 
 ok !array->exists(0),   'empty array !exists(0) ok';
