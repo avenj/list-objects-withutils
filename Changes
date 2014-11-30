@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.019001 2014-11-30
+
+  - Support $a/$b variables for use with hash->kv_sort
+
+  - Kill 'used only once' warnings for $a/$b for all array and hash types
+
 2.018001 2014-11-30
 
   - Support $a/$b variables for use with array->sort/reduce/foldr
