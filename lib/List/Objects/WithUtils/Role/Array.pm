@@ -1287,13 +1287,14 @@ See also L</rotate>, L</rotate_in_place>.
 
 =head3 reduce
 
-FIXME document $a/$b in 2.18.1+
-
-  my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
+  my $sum = array(1,2,3)->reduce(sub { $a + $b });
 
 Reduces the array by calling the given subroutine for each element of the
-list. The first argument passed to the subroutine is the accumulated value;
-the second argument is the current element. See L<List::Util/"reduce">.
+list. C<$a> is the accumulated value; C<$b> is the current element. See
+L<List::Util/"reduce">.
+
+Prior to v2.18.1, C<$_[0]> and C<$_[1]> must be used in place of C<$a> and
+C<$b>, respectively.
 
 An empty list reduces to C<undef>.
 
