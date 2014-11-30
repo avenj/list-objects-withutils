@@ -521,6 +521,7 @@ sub tuples {
 =cut
 
 # TODO consider accepting identity vals for reduce/foldr?
+# FIXME reduce & foldr should use $a/$b like v2.18+ sort
 sub reduce {
   List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
 }
@@ -1316,11 +1317,13 @@ Returns the original array object.
 
 =head3 sort
 
-  my $sorted = $array->sort(sub { $_[0] cmp $_[1] });
+  my $sorted = $array->sort(sub { $a cmp $b });
 
 Returns a new array object consisting of the list sorted by the given
-subroutine. C<$_[0]> and C<$_[1]> are equivalent to C<$a> and C<$b> in a
-normal sort() call.
+subroutine.
+
+Prior to version 2.18.1, C<$_[0]> and C<$_[1]> must be used in place of C<$a>
+and C<$b>, respectively.
 
 =head3 sort_by
 
