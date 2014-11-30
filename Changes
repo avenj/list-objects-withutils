@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.018001 2014-11-30
+
+  - Support $a/$b variables for use with array->sort/reduce/foldr
+
 2.017002 2014-11-06
 
   - cpanfile fixes; explicitly require autobox
