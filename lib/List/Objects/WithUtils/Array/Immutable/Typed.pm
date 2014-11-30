@@ -12,8 +12,18 @@ Role::Tiny->apply_roles_to_package( __PACKAGE__,
   /,
 );
 
-use Exporter 'import';
+use Exporter ();
 our @EXPORT = 'immarray_of';
+
+sub import {
+  my $pkg = caller;
+  { no strict 'refs';
+    ${"${pkg}::a"} = ${"${pkg}::a"};
+    ${"${pkg}::b"} = ${"${pkg}::b"};
+  }
+  goto &Exporter::import
+}
+
 sub immarray_of { __PACKAGE__->new(@_) }
 
 1;

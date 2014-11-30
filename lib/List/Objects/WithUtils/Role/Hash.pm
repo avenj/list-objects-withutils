@@ -187,6 +187,7 @@ sub kv_sort {
   if (defined $_[1]) {
     return blessed_or_pkg($_[0])->array_type->new(
       map {; [ $_, $_[0]->{ $_ } ] }
+      # FIXME this sort should use $a/$b like array->sort ->
         sort {; $_[1]->($a, $b) } CORE::keys %{ $_[0] }
     )
   }
