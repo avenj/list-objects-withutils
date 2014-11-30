@@ -549,7 +549,7 @@ Returns an L</array_type> object containing the results of the map.
 
 Like L</kv>, but sorted by key. A sort routine can be provided.
 
-In versions prior to v2.18.1, C<$_[0]> and
+In versions prior to v2.19.1, C<$_[0]> and
 C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>
 respectively.
 
