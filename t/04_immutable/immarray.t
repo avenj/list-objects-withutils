@@ -60,4 +60,10 @@ ok( $with_hash->get(0)->get('foo') eq 'bar', 'hash in immarray ok' );
 ok( $with_hash->get(0)->set(foo => 'baz'), 'hash->set in immarray ok' );
 ok( $with_hash->get(0)->get('foo') eq 'baz', 'hash->get in immarray ok' );
 
+{
+  my $warned; local $SIG{__WARN__} = sub { $warned++ };
+  immarray(3,2,1)->sort(sub { $a <=> $b });
+  ok !$warned, 'immarray imported $a/$b vars ok';
+}
+
 done_testing;

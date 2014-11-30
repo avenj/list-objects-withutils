@@ -26,6 +26,12 @@ use Types::Standard -all;
     [ 2, 3, 1 ],
     'rotate_in_place ok';
 
+  {
+    my $warned; local $SIG{__WARN__} = sub { $warned++ };
+    $arr->sort(sub { $a <=> $b });
+    ok !$warned, 'array_of imported $a/$b vars ok';
+  }
+
   eval {; my $bad = array_of( Int() => qw/foo 1 2/) };
   ok $@ =~ /constraint/, 'array_of invalid type died ok' or diag explain $@;
 

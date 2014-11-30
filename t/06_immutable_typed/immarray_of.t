@@ -55,5 +55,10 @@ ok $@ =~ /read-only/, 'attempted extend dies';
 eval {; $immof->[0] = 10 };
 ok $@ =~ /read-only/, 'element set dies';
 
+{
+  my $warned; local $SIG{__WARN__} = sub { $warned++ };
+  $immof->sort(sub { $a <=> $b });
+  ok !$warned, 'immarray_of imported $a/$b vars ok';
+}
 
 done_testing;
