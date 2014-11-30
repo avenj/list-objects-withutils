@@ -521,14 +521,25 @@ sub tuples {
 =cut
 
 # TODO consider accepting identity vals for reduce/foldr?
-# FIXME reduce & foldr should use $a/$b like v2.18+ sort
 sub reduce {
-  List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
+  my $pkg = caller;
+  no strict 'refs';
+  my $cb = $_[1];
+  List::Util::reduce { 
+    local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$a, \$b);
+    $a->$cb($b)
+  } @{ $_[0] }
 }
 { no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
 
 sub foldr {
-  List::Util::reduce { $_[1]->($b, $a) } CORE::reverse @{ $_[0] }
+  my $pkg = caller;
+  no strict 'refs';
+  my $cb = $_[1];
+  List::Util::reduce {
+    local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$b, \$a);
+    $a->$cb($b)
+  } CORE::reverse @{ $_[0] }
 }
 { no warnings 'once'; *fold_right = *foldr; }
 
@@ -1275,6 +1286,8 @@ See also L</rotate>, L</rotate_in_place>.
 (Available from v2.7.1)
 
 =head3 reduce
+
+FIXME document $a/$b in 2.18.1+
 
   my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
 
