@@ -18,7 +18,6 @@ is_deeply
   'sort with default sub ok';
 
 
-no warnings 'once';
 $sorted = $arr->sort(sub { $a <=> $b });
 is_deeply
   [ $sorted->all ],
