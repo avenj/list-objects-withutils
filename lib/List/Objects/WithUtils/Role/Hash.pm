@@ -184,11 +184,14 @@ sub kv {
 }
 
 sub kv_sort {
-  if (defined $_[1]) {
+  if (defined $_[1] && (my $cb = $_[1])) {
+    my $pkg = caller;
+    no strict 'refs';
     return blessed_or_pkg($_[0])->array_type->new(
-      map {; [ $_, $_[0]->{ $_ } ] }
-      # FIXME this sort should use $a/$b like array->sort ->
-        sort {; $_[1]->($a, $b) } CORE::keys %{ $_[0] }
+      map {; [ $_, $_[0]->{ $_ } ] } sort {;
+        local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$a, \$b);
+        $a->$cb($b)
+      } CORE::keys %{ $_[0] }
     )
   }
   blessed_or_pkg($_[0])->array_type->new(
@@ -541,11 +544,14 @@ Returns an L</array_type> object containing the results of the map.
   #        )
 
   my $reversed = hash(a => 1, b => 2, c => 3)
-    ->kv_sort(sub { $_[1] cmp $_[0] });
+    ->kv_sort(sub { $b cmp $a });
   # Reverse result as above
 
-Like L</kv>, but sorted by key. A sort routine can be provided; C<$_[0]> and
-C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>.
+Like L</kv>, but sorted by key. A sort routine can be provided.
+
+In versions prior to v2.18.1, C<$_[0]> and
+C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>
+respectively.
 
 =head3 sliced
 

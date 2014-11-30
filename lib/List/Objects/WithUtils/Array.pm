@@ -16,8 +16,7 @@ our @EXPORT = 'array';
 sub import {
   my $pkg = caller;
   { no strict 'refs';
-    ${"${pkg}::a"} = ${"${pkg}::a"};
-    ${"${pkg}::b"} = ${"${pkg}::b"};
+    ${"${pkg}::a"} = ${"${pkg}::a"}; ${"${pkg}::b"} = ${"${pkg}::b"};
   }
   goto &Exporter::import
 }

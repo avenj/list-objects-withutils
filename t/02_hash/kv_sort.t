@@ -22,6 +22,17 @@ is_deeply
     [ b => 1 ],
     [ a => 1 ],
   ],
-  'kv_sort with sub ok';
+  'kv_sort with positional args ok';
+
+is_deeply
+  [ $hr->kv_sort(sub { $b cmp $a })->all ],
+  [
+    [ d => 1 ],
+    [ c => 1 ],
+    [ b => 1 ],
+    [ a => 1 ],
+  ],
+  'kv_sort with named args ok';
+
 
 done_testing;
