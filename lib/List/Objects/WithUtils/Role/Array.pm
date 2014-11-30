@@ -521,14 +521,25 @@ sub tuples {
 =cut
 
 # TODO consider accepting identity vals for reduce/foldr?
-# FIXME reduce & foldr should use $a/$b like v2.18+ sort
 sub reduce {
-  List::Util::reduce { $_[1]->($a, $b) } @{ $_[0] }
+  my $pkg = caller;
+  no strict 'refs';
+  my $cb = $_[1];
+  List::Util::reduce { 
+    local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$a, \$b);
+    $a->$cb($b)
+  } @{ $_[0] }
 }
 { no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
 
 sub foldr {
-  List::Util::reduce { $_[1]->($b, $a) } CORE::reverse @{ $_[0] }
+  my $pkg = caller;
+  no strict 'refs';
+  my $cb = $_[1];
+  List::Util::reduce {
+    local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$b, \$a);
+    $a->$cb($b)
+  } CORE::reverse @{ $_[0] }
 }
 { no warnings 'once'; *fold_right = *foldr; }
 
@@ -1276,11 +1287,14 @@ See also L</rotate>, L</rotate_in_place>.
 
 =head3 reduce
 
-  my $sum = array(1,2,3)->reduce(sub { $_[0] + $_[1] });
+  my $sum = array(1,2,3)->reduce(sub { $a + $b });
 
 Reduces the array by calling the given subroutine for each element of the
-list. The first argument passed to the subroutine is the accumulated value;
-the second argument is the current element. See L<List::Util/"reduce">.
+list. C<$a> is the accumulated value; C<$b> is the current element. See
+L<List::Util/"reduce">.
+
+Prior to v2.18.1, C<$_[0]> and C<$_[1]> must be used in place of C<$a> and
+C<$b>, respectively.
 
 An empty list reduces to C<undef>.
 
