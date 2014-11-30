@@ -50,4 +50,10 @@ use Types::Standard -all;
   ok $@ =~ /type/, 'invalid type set died ok';
 }
 
+{ my $warned; local $SIG{__WARN__} = sub { $warned = shift };
+  my $h = hash_of Int() => (a => 1, b => 2, c => 3);
+  $h->kv_sort(sub { $a cmp $b });
+  ok !$warned, 'hash_of imported $a/$b vars ok';
+}
+
 done_testing;

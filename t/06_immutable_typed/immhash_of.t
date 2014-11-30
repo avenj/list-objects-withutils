@@ -38,4 +38,11 @@ ok $@ =~ /read-only/, 'hash item delete dies';
 eval {; $immh->{quux} = 4 };
 ok $@ =~ /read-only/, 'hash item insert dies';
 
+{ my $warned; local $SIG{__WARN__} = sub { $warned = shift };
+  $immh->kv_sort(sub { $a cmp $b });
+  ok !$warned, 'immhash_of imported $a/$b vars ok';
+}
+
+
+
 done_testing;

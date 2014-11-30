@@ -24,6 +24,9 @@ is_deeply
   ],
   'kv_sort with positional args ok';
 
+my $warned;
+$SIG{__WARN__} = sub { $warned = shift };
+
 is_deeply
   [ $hr->kv_sort(sub { $b cmp $a })->all ],
   [
@@ -34,5 +37,7 @@ is_deeply
   ],
   'kv_sort with named args ok';
 
+ok !$warned, 'using $a/$b produced no warnings'
+  or fail 'using $a/$b produced warning: '.$warned;
 
 done_testing;

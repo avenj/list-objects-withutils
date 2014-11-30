@@ -38,4 +38,9 @@ ok $imm->get('foo') == 1 && $imm->get('bar') == 2,
 
 ok !$imm->get('nonexistant'), 'retrieving nonexistant key ok';
 
+{ my $warned; local $SIG{__WARN__} = sub { $warned = shift };
+  $imm->kv_sort(sub { $a cmp $b });
+  ok !$warned, 'immhash imported $a/$b vars ok';
+}
+
 done_testing;
