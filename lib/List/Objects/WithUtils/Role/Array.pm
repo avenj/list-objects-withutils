@@ -664,7 +664,7 @@ List::Objects::WithUtils::Role::Array - Array manipulation methods
     ...
   }
 
-  my $sum = array(1 .. 10)->reduce(sub { $_[0] + $_[1] });
+  my $sum = array(1 .. 10)->reduce(sub { $a + $b });
 
   # See below for full list of methods
 
