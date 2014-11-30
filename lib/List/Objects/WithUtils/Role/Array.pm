@@ -315,9 +315,14 @@ sub indexes {
 }
 
 sub sort {
-  if (defined $_[1]) {
+  if (defined $_[1] && (my $cb = $_[1])) {
+    my $pkg = caller;
+    no strict 'refs';
     return blessed_or_pkg($_[0])->new(
-      CORE::sort {; $_[1]->($a, $b) } @{ $_[0] }
+      CORE::sort {; 
+        local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$a, \$b);
+        $a->$cb($b) 
+      } @{ $_[0] }
     )
   }
   return blessed_or_pkg($_[0])->new( CORE::sort @{ $_[0] } )
