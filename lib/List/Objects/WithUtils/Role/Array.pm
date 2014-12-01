@@ -227,12 +227,12 @@ sub clear  { @{ $_[0] } = (); $_[0] }
 sub delete { scalar CORE::splice @{ $_[0] }, $_[1], 1 }
 
 sub delete_when {
-  my ($self, $sub) = @_;
+  my ($self, $cb) = @_;
   my @removed;
   my $i = @$self;
   while ($i--) {
     local *_ = \$self->[$i];
-    CORE::push @removed, CORE::splice @$self, $i, 1 if $sub->($_);
+    CORE::push @removed, CORE::splice @$self, $i, 1 if $cb->($_);
   }
   blessed_or_pkg($_[0])->new(@removed)
 }
@@ -281,10 +281,10 @@ sub map {
 }
 
 sub mapval {
-  my ($self, $sub) = @_;
+  my ($self, $cb) = @_;
   my @copy = @$self;
   blessed_or_pkg($self)->new(
-    CORE::map {; $sub->($_); $_ } @copy
+    CORE::map {; $cb->($_); $_ } @copy
   )
 }
 

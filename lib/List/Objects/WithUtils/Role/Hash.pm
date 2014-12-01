@@ -557,9 +557,8 @@ C<$a> and C<$b>, respectively.
 
 Like L</kv>, but sorted by key. A sort routine can be provided.
 
-In versions prior to v2.19.1, C<$_[0]> and
-C<$_[1]> are equivalent to the usual sort variables C<$a> and C<$b>
-respectively.
+In versions prior to v2.19.1, C<$_[0]> and C<$_[1]> must be used in place of
+C<$a> and C<$b>, respectively.
 
 =head3 sliced
 
