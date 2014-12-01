@@ -1294,7 +1294,14 @@ list. C<$a> is the accumulated value; C<$b> is the current element. See
 L<List::Util/"reduce">.
 
 Prior to v2.18.1, C<$_[0]> and C<$_[1]> must be used in place of C<$a> and
-C<$b>, respectively.
+C<$b>, respectively. Using positional arguments may make for cleaner syntax in
+some cases:
+
+  my $divide = sub {
+    my ($acc, $next) = @_;
+    $acc / $next
+  };
+  my $q = $array->reduce($divide);
 
 An empty list reduces to C<undef>.
 
