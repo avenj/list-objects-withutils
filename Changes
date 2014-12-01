@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.020001 2014-12-01
+
+  - Support $a/$b variables for use with hash->kv_map
+
+  - Add simple Moo attribute example to examples/
+
 2.019001 2014-11-30
 
   - Support $a/$b variables for use with hash->kv_sort
