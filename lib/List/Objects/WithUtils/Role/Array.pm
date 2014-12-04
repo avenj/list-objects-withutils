@@ -520,7 +520,6 @@ sub tuples {
 
 =cut
 
-# TODO consider accepting identity vals for reduce/foldr?
 sub reduce {
   my $pkg = caller;
   no strict 'refs';

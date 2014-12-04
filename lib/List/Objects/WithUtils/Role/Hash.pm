@@ -211,6 +211,18 @@ sub kv_map {
   )
 }
 
+sub kv_grep {
+  my ($self, $cb) = @_;
+  my $pkg = caller;
+  no strict 'refs';
+  blessed_or_pkg($self)->new(
+    List::Util::pairgrep {; 
+      local (*{"${pkg}::a"}, *{"${pkg}::b"}) = (\$a, \$b);
+      $a->$cb($b)
+    } %$self
+  )
+}
+
 =pod
 
 =for Pod::Coverage invert
@@ -526,6 +538,17 @@ The iterator operates on a shallow clone of the current hash, making it
 
 Returns an L</array_type> object containing the key/value pairs in the hash,
 each of which is a two-element (unblessed) ARRAY.
+
+=head3 kv_grep
+
+  my $positive_vals = $hash->kv_grep(sub { $b > 0 });
+
+Like C<grep>, but operates on pairs. See L<List::Util/"pairgrep">.
+
+Returns a hash-type object consisting of the key/value pairs for which the
+given block returned true.
+
+(Available from v2.21.1)
 
 =head3 kv_map
 
