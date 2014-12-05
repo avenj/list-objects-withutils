@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.021001 2014-12-05
+
+  - Add hash->kv_grep
+
 2.020001 2014-12-01
 
   - Support $a/$b variables for use with hash->kv_map
