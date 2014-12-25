@@ -1342,8 +1342,8 @@ Returns the original array object.
 Returns a new array object consisting of the list sorted by the given
 subroutine.
 
-Prior to version 2.18.1, C<$_[0]> and C<$_[1]> must be used in place of C<$a>
-and C<$b>, respectively.
+Prior to version 2.18.1, positional arguments (C<$_[0]> and C<$_[1]>) must be
+used in place of C<$a> and C<$b>, respectively. 
 
 =head3 sort_by
 
