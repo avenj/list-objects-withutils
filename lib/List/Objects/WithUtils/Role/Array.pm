@@ -429,11 +429,11 @@ sub natatime {
   my @list  = @{ $_[0] };
   my $count = $_[1];
   my $itr = sub { CORE::splice @list, 0, $count };
-  if ($_[2]) {
+  if (defined $_[2]) {
     while (my @nxt = $itr->()) { $_[2]->(@nxt) }
-  } else { 
-    return $itr
+    return
   }
+  $itr
 }
 
 sub rotator {
