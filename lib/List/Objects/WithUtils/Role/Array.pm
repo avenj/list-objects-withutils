@@ -557,7 +557,10 @@ sub rotate {
   }
 }
 
-sub rotate_in_place { $_[0] = $_[0]->rotate(@_[1 .. $#_]) }
+sub rotate_in_place {
+  $_[0] = Scalar::Util::blessed $_[0] ?
+    $_[0]->rotate(@_[1 .. $#_]) : rotate(@_)
+}
 
 sub items_after {
   my ($started, $lag);

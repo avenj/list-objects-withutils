@@ -124,4 +124,12 @@ isa_ok $rest, 'List::Objects::WithUtils::Array', 'autoboxed tail() produced obj'
   ok $@, 'lexical scoping seems ok';
 }
 
+my $pre_rot = [1,2,3];
+my $rot = $pre_rot->rotate_in_place;
+ok $pre_rot == $rot, 'autoboxed rotate_in_place returned same obj';
+is_deeply
+  [ $rot->all ],
+  [ 2, 3, 1 ],
+  'autoboxed rotate_in_palce ok';
+
 done_testing;
