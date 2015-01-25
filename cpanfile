@@ -24,3 +24,7 @@ on 'test' => sub {
   recommends "JSON::PP" => "0";
   recommends "Test::Without::Module" => "0";
 };
+
+on 'develop' => sub {
+  recommends "Text::ZPL" => "0";
+};
