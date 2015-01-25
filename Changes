@@ -1,5 +1,11 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.021002 2015-01-25
+
+  - Fix autoboxed []->rotate_in_place
+
+  - Minor array->natatime optimizations
+
 2.021001 2014-12-05
 
   - Add hash->kv_grep
