@@ -1,11 +1,18 @@
 # https://github.com/travis-perl/helpers
 
+notifications:
+  irc:
+    channels:
+      - 'irc.cobaltirc.org#eris'
+    on_failure: always
+    on_success: change
+
 language: perl
 
 env:
   global:
     - COVERAGE=0
-#    - AUTHOR_TESTING=0
+#    - AUTHOR_TESTING=0   # includes xt/
 
 perl:
   - "5.10"
@@ -21,7 +28,7 @@ env:
 matrix:
 #  include:
 #    - perl: 5.18
-#      env: COVERAGE=1         # enables coverage+coveralls reporting
+#      env: COVERAGE=1        # enables coverage+coveralls reporting
   allow_failures:
     - perl: "blead"           # ignore failures for blead perl
 
@@ -31,17 +38,17 @@ before_install:
   - build-perl
   - perl -V
   - build-dist
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
+  - cd $BUILD_DIR             # set by the build-dist command
 
 install:
-  - cpan-install --deps       # installs prereqs, including recommends
+  - cpan-install --deps       # includes recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
 
 before_script:
   - coverage-setup
 
 script:
-  - prove -l -j$((SYSTEM_CORES + 1)) $(test-dirs)   # parallel testing
+  - prove -lrv -j$((SYSTEM_CORES + 1)) $(test-dirs)
 
 after_success:
   - coverage-report
