@@ -268,9 +268,7 @@ List::Objects::WithUtils::Role::Hash - Hash manipulation methods
     pie => 'tasty',
   );
 
-  my @matches = $hash->keys->grep(sub {
-    $_[0] =~ /foo/
-  })->all;
+  my @matches = $hash->keys->grep(sub { $_[0] =~ /foo/ })->all;
 
   my $pie = $hash->get('pie')
     if $hash->exists('pie');
@@ -587,9 +585,10 @@ C<$a> and C<$b>, respectively.
 
   my $newhash = $hash->sliced(@keys);
 
-Returns a new hash object built from the specified set of keys.
+Returns a new hash object built from the specified set of keys (see L</get> if
+you only need the values.)
 
-(See L</get> if you only need the values.)
+If a given key is not found in the hash, it is omitted from the result.
 
 =head2 Methods that compare hashes
 
