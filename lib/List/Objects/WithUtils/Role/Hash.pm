@@ -97,7 +97,7 @@ sub get_path {
   my $ref = $_[0];
   for my $part (@_[1 .. $#_]) {
     $ref = ref $part eq 'ARRAY' ? $ref->[ $part->[0] ] : $ref->{$part};
-    return unless defined $ref;
+    return undef unless defined $ref;
   }
   $ref
 }
