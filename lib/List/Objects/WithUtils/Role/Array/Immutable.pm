@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Array::Immutable;
 
-use strictures 1;
+use strictures 2;
 use Carp ();
 use Tie::Array ();
 

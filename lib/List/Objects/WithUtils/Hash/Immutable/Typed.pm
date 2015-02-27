@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Hash::Immutable::Typed;
 
-use strictures 1;
+use strictures 2;
 
 require Role::Tiny;
 Role::Tiny->apply_roles_to_package( __PACKAGE__,

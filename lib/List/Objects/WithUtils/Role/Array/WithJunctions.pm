@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Array::WithJunctions;
 
-use strictures 1;
+use strictures 2;
 
 use List::Objects::WithUtils::Array::Junction ();
 

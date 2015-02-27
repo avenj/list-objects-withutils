@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Hash::Typed;
 
-use strictures 1;
+use strictures 2;
 
 use Carp ();
 use Scalar::Util ();

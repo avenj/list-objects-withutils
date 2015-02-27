@@ -3,7 +3,7 @@ requires "Carp"                     => "0";
 requires "Exporter"                 => "0";
 requires "overload"                 => "0";
 requires "parent"                   => "0";
-requires "strictures"               => "1";
+requires "strictures"               => "2";
 
 requires "Scalar::Util"             => "0";
 requires "List::Util"               => "1.33";

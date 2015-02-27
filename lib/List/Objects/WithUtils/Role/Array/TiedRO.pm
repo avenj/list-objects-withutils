@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Array::TiedRO;
 
-use strictures 1;
+use strictures 2;
 use Carp ();
 
 # This role can be applied to the objects backing tied arrays

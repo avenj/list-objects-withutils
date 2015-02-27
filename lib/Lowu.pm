@@ -1,6 +1,6 @@
 package Lowu;
 
-use strictures 1;
+use strictures 2;
 
 use parent 'List::Objects::WithUtils';
 

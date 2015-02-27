@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Array;
 
-use strictures 1;
+use strictures 2;
 
 use Carp            ();
 use List::Util      ();

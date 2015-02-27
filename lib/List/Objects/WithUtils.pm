@@ -1,7 +1,7 @@
 package List::Objects::WithUtils;
 
 use Carp;
-use strictures 1;
+use strictures 2;
 
 our %ImportMap = (
   array       => 'Array',

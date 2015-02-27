@@ -4,7 +4,7 @@ package List::Objects::WithUtils::Array::Junction;
 
 { package 
     List::Objects::WithUtils::Array::Junction::Base;
-  use strictures 1;
+  use strictures 2;
   use parent 'List::Objects::WithUtils::Array';
   use overload
     '=='   => 'num_eq',
@@ -284,3 +284,5 @@ L<Syntax::Keyword::Junction>; the original author is Carl Franks, based on the
 Perl6 design documentation.
 
 Adapted to L<List::Objects::WithUtils> by Jon Portnoy <avenj@cobaltirc.org>
+
+=cut

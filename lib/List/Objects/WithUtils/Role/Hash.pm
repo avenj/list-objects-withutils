@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Hash;
 
-use strictures 1;
+use strictures 2;
 
 use Module::Runtime ();
 use Scalar::Util    ();
