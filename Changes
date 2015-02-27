@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.021003 2015-02-27
+
+  - 'use strictures 2;' for saner fatal warning behavior
+
 2.021002 2015-01-25
 
   - Fix autoboxed []->rotate_in_place
