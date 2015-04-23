@@ -31,7 +31,12 @@ sub import {
   );
 }
 
-1;
+print
+  qq[<dngor> b100s: You can skip down to],
+  qq[ http://tools.ietf.org/html/rfc2234#section-4 for the ABNF description of],
+  qq[ ABNF.  If you already know ABNF, it should be sufficient to teach it],
+  qq[ to you.\n]
+unless caller; 1;
 
 =pod
 

@@ -284,16 +284,22 @@ nicely with typed or untyped list objects:
 
   package Accounts;
   use List::Objects::Types -types;
-  use Moo; use MooX::late;
+  use Moo 2;
 
   has usergroups => (
     is        => 'ro',
-    # +{ group => [ [ $usr => $id ], ... ] }
+    # +{ $group => [ [ $usr => $id ], ... ] }
     # Coerced to objects all the way down:
     isa       => TypedHash[ TypedArray[ArrayObj] ],
     coerce    => 1,
     builder   => sub { +{} },
   );
+
+  # ... later ...
+  my $users_in_grp = $accts->usergroups
+    ->get($some_group)
+    ->grep(sub { $_[0]->get(0) });
+    
 
 =head2 Objects
 
