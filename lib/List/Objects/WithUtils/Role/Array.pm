@@ -325,7 +325,7 @@ sub sort {
       } @{ $_[0] }
     )
   }
-  return blessed_or_pkg($_[0])->new( CORE::sort @{ $_[0] } )
+  blessed_or_pkg($_[0])->new( CORE::sort @{ $_[0] } )
 }
 
 sub reverse {
