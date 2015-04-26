@@ -3,10 +3,6 @@ use strict; use warnings FATAL => 'all';
 
 use List::Objects::WithUtils 'array';
 
-if (List::Objects::WithUtils::Role::Array::USING_LIST_MOREUTILS) {
-  diag "\nUsing List::MoreUtils\n"
-}
-
 ok !array->indexes(sub { 1 })->has_any, 'empty indexes ok';
 
 my $arr = array(qw/foo bar baz/);
