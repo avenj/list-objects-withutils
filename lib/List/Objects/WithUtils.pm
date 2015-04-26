@@ -482,9 +482,6 @@ L<List::UtilsBy>
 L<Type::Tiny>
 
 Inspiration for a few pieces comes from the "classic" (version 0.33)
-L<List::MoreUtils>. MoreUtils was dropped from the required dependency chain
-in Lowu-2.10 and will be reevaluated later. Users with 0.3x versions of
-L<List::MoreUtils> will see a significant performance boost in performing
-certain array operations.
+L<List::MoreUtils>. 
 
 =cut

@@ -23,11 +23,6 @@ our $UsingUtilsByXS = 0;
   }
 }
 
-use constant USING_LIST_MOREUTILS => !! eval {;
-  require List::MoreUtils;
-  (List::MoreUtils->VERSION || '') =~ /^0.3/
-};
-
 =pod
 
 =for Pod::Coverage ARRAY_TYPE blessed_or_pkg
@@ -309,8 +304,7 @@ sub grep {
 { no warnings 'once'; *indices = *indexes; }
 sub indexes {
   blessed_or_pkg($_[0])->new(
-    USING_LIST_MOREUTILS ? &List::MoreUtils::indexes( $_[1], @{ $_[0] } )
-      : grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
+    grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
   )
 }
 
@@ -367,9 +361,6 @@ sub first_where { &List::Util::first( $_[1], @{ $_[0] } ) }
 
 sub last_where {
   my ($self, $cb) = @_;
-
-  return &List::MoreUtils::lastval($cb, @$self) if USING_LIST_MOREUTILS;
-
   my $i = @$self;
   while ($i--) {
     local *_ = \$self->[$i];
@@ -386,9 +377,6 @@ sub last_where {
 }
 sub firstidx { 
   my ($self, $cb) = @_;
-
-  return &List::MoreUtils::firstidx($cb, @$self) if USING_LIST_MOREUTILS;
-
   for my $i (0 .. $#$self) {
     local *_ = \$self->[$i];
     return $i if $cb->();
@@ -398,9 +386,6 @@ sub firstidx {
 
 sub lastidx {
   my ($self, $cb) = @_;
-
-  return &List::MoreUtils::lastidx($cb, @$self) if USING_LIST_MOREUTILS;
-
   for my $i (CORE::reverse 0 .. $#$self) {
     local *_ = \$self->[$i];
     return $i if $cb->(); 
@@ -574,26 +559,22 @@ sub items_after {
 sub items_after_incl {
   my $started;
   blessed_or_pkg($_[0])->new(
-    USING_LIST_MOREUTILS ? &List::MoreUtils::after_incl($_[1], @{ $_[0] })
-      : CORE::grep $started ||= $_[1]->(), @{ $_[0] }
+    CORE::grep $started ||= $_[1]->(), @{ $_[0] }
   )
 }
 
 sub items_before {
   my $more = 1;
   blessed_or_pkg($_[0])->new(
-    USING_LIST_MOREUTILS ? &List::MoreUtils::before($_[1], @{ $_[0] })
-      : CORE::grep $more &&= !$_[1]->(), @{ $_[0] }
+    CORE::grep $more &&= !$_[1]->(), @{ $_[0] }
   )
 }
 
 sub items_before_incl {
   my $more = 1; my $lag = 1;
   blessed_or_pkg($_[0])->new(
-    USING_LIST_MOREUTILS ? &List::MoreUtils::before_incl($_[1], @{ $_[0] })
-      : CORE::grep $more &&= do {
-          my $x = $lag; $lag = !$_[1]->(); $x
-      }, @{ $_[0] }
+    CORE::grep $more &&= do { my $x = $lag; $lag = !$_[1]->(); $x }, 
+      @{ $_[0] }
   )
 }
 
@@ -605,10 +586,7 @@ sub shuffle {
 
 sub uniq {
   my %s;
-  blessed_or_pkg($_[0])->new(
-    USING_LIST_MOREUTILS ? &List::MoreUtils::uniq(@{ $_[0] })
-      : grep {; not $s{$_}++ } @{ $_[0] }
-  )
+  blessed_or_pkg($_[0])->new( CORE::grep {; not $s{$_}++ } @{ $_[0] } )
 }
 
 sub sort_by {
