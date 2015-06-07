@@ -865,7 +865,7 @@ Returns all elements in the array as a plain list.
 
 Like L</part>, but creates an array-type object containing two
 partitions; the first contains all items for which the subroutine evaluates to
-true, the second contains the remaining items.
+true, the second contains items for which the subroutine evaluates to false.
 
 =head3 nsect
 
