@@ -21,4 +21,8 @@ $idx = $arr->indexes(sub { $_ % 2 == 0 });
 is_deeply [ $idx->all ], [ 1, 3, 5, 7, 9 ],
   'indexes (multiple) ok';
 
+$idx = $arr->indexes;
+is_deeply [ $idx->all ], [ 0 .. 9 ],
+  'indexes (no arguments) ok';
+
 done_testing

@@ -303,9 +303,11 @@ sub grep {
 
 { no warnings 'once'; *indices = *indexes; }
 sub indexes {
-  blessed_or_pkg($_[0])->new(
-    grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
-  )
+  $_[1] ? 
+    blessed_or_pkg($_[0])->new(
+      grep {; local *_ = \$_[0]->[$_]; $_[1]->() } 0 .. $#{ $_[0] }
+    )
+    : blessed_or_pkg($_[0])->new( 0 .. $#{ $_[0] } )
 }
 
 sub sort {
@@ -1113,8 +1115,13 @@ on; you can also use the topicalizer C<$_>.
 
   my $matched = $array->indexes(sub { /foo/ });
 
-Like L</grep>, but returns a new array object consisting of the list of
-B<indexes> for which the given subroutine evaluates to true.
+If passed a reference to a subroutine, C<indexes> behaves like L</grep>, but
+returns a new array object consisting of the list of array indexes for which
+the given subroutine evaluates to true.
+
+If no subroutine is provided, returns a new array object consisting of the
+full list of indexes (like L</keys> on an array in perl-5.12+). This feature
+was added in C<v2.022>.
 
 =head3 first_where
 
@@ -1273,7 +1280,7 @@ Reduces the array by calling the given subroutine for each element of the
 list. C<$a> is the accumulated value; C<$b> is the current element. See
 L<List::Util/"reduce">.
 
-Prior to v2.18.1, C<$_[0]> and C<$_[1]> must be used in place of C<$a> and
+Prior to C<v2.18.1>, C<$_[0]> and C<$_[1]> must be used in place of C<$a> and
 C<$b>, respectively. Using positional arguments may make for cleaner syntax in
 some cases:
 
