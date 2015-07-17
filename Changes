@@ -1,5 +1,12 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.022001 2015-07-16
+
+  - array->indexes without arguments returns the complete list of available
+    indexes
+
+  - Drop List::MoreUtils support
+
 2.021003 2015-02-27
 
   - 'use strictures 2;' for saner fatal warning behavior
