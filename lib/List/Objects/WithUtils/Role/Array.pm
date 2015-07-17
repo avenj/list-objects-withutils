@@ -1120,7 +1120,7 @@ returns a new array object consisting of the list of array indexes for which
 the given subroutine evaluates to true.
 
 If no subroutine is provided, returns a new array object consisting of the
-full list of indexes (like L</keys> on an array in perl-5.12+). This feature
+full list of indexes (like C<keys> on an array in perl-5.12+). This feature
 was added in C<v2.022>.
 
 =head3 first_where
