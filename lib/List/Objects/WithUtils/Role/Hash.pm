@@ -384,7 +384,7 @@ The opposite of L</is_mutable>.
 
 =head3 unbless
 
-Returns a plain C</HASH> reference (shallow clone).
+Returns a plain C<HASH> reference (shallow clone).
 
 =head2 Methods that manipulate the hash
 
