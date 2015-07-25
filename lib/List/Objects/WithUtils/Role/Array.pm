@@ -395,12 +395,6 @@ sub lastidx {
   -1
 }
 
-=pod
-
-=for Pod::Coverage zip
-
-=cut
-
 sub mesh {
   my $max_idx = -1;
   for (@_) { $max_idx = $#$_ if $max_idx < $#$_ }
@@ -1001,6 +995,8 @@ Returns an array-type object containing key/value pairs as (unblessed) ARRAYs;
 this is much like L<List::Objects::WithUtils::Role::Hash/"kv">, except the
 array index is the key.
 
+=head3 zip
+
 =head3 mesh
 
   my $meshed = array(qw/ a b c /)->mesh(
@@ -1018,6 +1014,8 @@ You can mix and match references and objects freely:
     array( 1 .. 3 ),
     [ qw/ foo bar baz / ],
   );
+
+(C<zip> is an alias for C<mesh>.)
 
 =head3 part
 
