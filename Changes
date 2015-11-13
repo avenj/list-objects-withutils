@@ -1,5 +1,12 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.023001 2015-11-13
+
+  - Add array->part_to_hash
+    (Inspired by YANICK in List::MoreUtils PR#15)
+
+  - Documentation fixes; explicitly document array->zip alias for array->mesh
+
 2.022001 2015-07-16
 
   - array->indexes without arguments returns the complete list of available
