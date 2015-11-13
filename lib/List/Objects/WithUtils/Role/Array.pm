@@ -437,6 +437,16 @@ sub part {
   )
 }
 
+sub part_to_hash {
+  my ($self, $code) = @_;
+  my %parts;
+  CORE::push @{ $parts{ $code->($_) } }, $_ for @$self;
+  my $cls = blessed_or_pkg($self);
+  Module::Runtime::require_module( $cls->inflated_type );
+  @parts{keys %parts} = map {; $cls->new(@$_) } values %parts;
+  $cls->inflated_type->new(%parts)
+}
+
 sub bisect {
   my ($self, $code) = @_;
   my @parts = ( [], [] );
@@ -720,7 +730,7 @@ L</is_mutable> returns a correct value.)
 
 Inflates an array-type object to a hash-type object.
 
-Returns an L</inflated_type> object; by default this is a
+Returns an object of type L</inflated_type>; by default this is a
 L<List::Objects::WithUtils::Hash>.
 
 Throws an exception if the array contains an odd number of elements.
@@ -731,6 +741,9 @@ The class name that objects are blessed into when calling L</inflate>;
 subclasses can override to provide their own hash-type objects.
 
 Defaults to L<List::Objects::WithUtils::Hash>.
+
+A consumer returning an C<inflated_type> that is not a hash-type object will
+result in undefined behavior.
 
 =head3 scalar
 
@@ -1043,6 +1056,20 @@ topicalizer C<$_>:
     ->part(sub { m/^[0-9]+$/ ? 0 : 1 })
     ->get(1)
     ->all;   # 'foo', 'bar', 'baz'
+
+=head3 part_to_hash
+
+  my $people = array(qw/ann andy bob fred frankie/);
+  my $parts  = $people->part_to_hash(sub { ucfirst substr $_, 0, 1 });
+  $parts->get('A')->all;  # 'ann', 'andy'
+
+Like L</part>, but partitions values into a hash-type object using the result
+of the given subroutine as the hash key; the values are array-type objects.
+
+The returned object is of type L</inflated_type>; by default this is a
+L<List::Objects::WithUtils::Hash>.
+
+(Available from C<v2.23.1>)
 
 =head3 random
 
@@ -1401,10 +1428,13 @@ Jon Portnoy <avenj@cobaltirc.org>
 Portions of this code were contributed by Toby Inkster (CPAN: TOBYINK).
 
 Portions of this code are derived from L<Data::Perl> by Matthew Phillips
-(MATTP), haarg et al.
+(MATTP), Graham Knop (HAARG) et al.
 
 Portions of this code are inspired by L<List::MoreUtils>-0.33 by Adam Kennedy (ADAMK), 
 Tassilo von Parseval, and Aaron Crane.
+
+L</part_to_hash> was inspired by Yanick Champoux in
+L<https://github.com/perl5-utils/List-MoreUtils/pull/15>
 
 Licensed under the same terms as Perl.
 
