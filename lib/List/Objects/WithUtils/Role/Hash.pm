@@ -68,9 +68,9 @@ sub copy { blessed_or_pkg($_[0])->new(%{ $_[0] }) }
 sub inflate {
   my ($self, %params) = @_;
   my $type = $params{rw} ? 'inflated_rw_type' : 'inflated_type';
-  my $pkg = blessed_or_pkg($self);
-  Module::Runtime::require_module( $pkg->$type );
-  $pkg->$type->new( %$self )
+  my $cls = blessed_or_pkg($self);
+  Module::Runtime::require_module( $cls->$type );
+  $cls->$type->new( %$self )
 }
 
 sub defined { CORE::defined $_[0]->{ $_[1] } }
@@ -231,13 +231,13 @@ sub kv_grep {
 
 sub inverted {
   my ($self) = @_;
-  my $pkg = blessed_or_pkg($self);
+  my $cls = blessed_or_pkg($self);
   my %new;
   List::Util::pairmap {;
     exists $new{$b} ?
-      $new{$b}->push($a) : ( $new{$b} = $pkg->array_type->new($a) )
+      $new{$b}->push($a) : ( $new{$b} = $cls->array_type->new($a) )
   } %$self;
-  $pkg->new(%new)
+  $cls->new(%new)
 }
 { no warnings 'once'; *invert = *inverted; }
 

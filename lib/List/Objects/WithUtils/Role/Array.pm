@@ -119,9 +119,9 @@ sub copy { blessed_or_pkg($_[0])->new(@{ $_[0] }) }
 
 sub inflate {
   my ($self) = @_;
-  my $pkg = blessed_or_pkg($self);
-  Module::Runtime::require_module( $pkg->inflated_type );
-  $pkg->inflated_type->new(@$self)
+  my $cls = blessed_or_pkg($self);
+  Module::Runtime::require_module( $cls->inflated_type );
+  $cls->inflated_type->new(@$self)
 }
 
 sub unbless { [ @{ $_[0] } ] }
