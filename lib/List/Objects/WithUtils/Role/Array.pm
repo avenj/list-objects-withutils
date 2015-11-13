@@ -443,10 +443,8 @@ sub part_to_hash {
   CORE::push @{ $parts{ $code->($_) } }, $_ for @$self;
   my $cls = blessed_or_pkg($self);
   Module::Runtime::require_module( $cls->inflated_type );
-  my $i = 0;
-  $cls->inflated_type->new(
-    map {; ($i++ & 1) ? $cls->new(@$_) : $_ } %parts
-  )
+  @parts{keys %parts} = map {; $cls->new(@$_) } values %parts;
+  $cls->inflated_type->new(%parts)
 }
 
 sub bisect {
