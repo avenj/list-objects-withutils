@@ -11,7 +11,9 @@ isa_ok $hs, 'List::Objects::WithUtils::Hash';
 
 ok $hs->keys->count == 3, 'part_to_hash created 3 keys';
 
-isa_ok $hs->get('A'), 'List::Objects::WithUtils::Array';
+for (qw/A B F/) {
+  isa_ok $hs->get($_), 'List::Objects::WithUtils::Array', "part '$_'";
+}
 
 is_deeply +{ $hs->export },
   +{ A => [qw/ann andy/], B => ['bob'], F => [qw/fred frankie/] },
