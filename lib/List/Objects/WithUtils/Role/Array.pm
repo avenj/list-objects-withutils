@@ -114,8 +114,8 @@ sub new { bless [ @_[1 .. $#_ ] ], Scalar::Util::blessed($_[0]) || $_[0] }
 
 =cut
 
-sub copy { blessed_or_pkg($_[0])->new(@{ $_[0] }) }
 { no warnings 'once'; *untyped = *copy }
+sub copy { blessed_or_pkg($_[0])->new(@{ $_[0] }) }
 
 sub inflate {
   my ($self) = @_;
@@ -124,12 +124,12 @@ sub inflate {
   $cls->inflated_type->new(@$self)
 }
 
-sub unbless { [ @{ $_[0] } ] }
 { no warnings 'once'; 
   *TO_JSON  = *unbless; 
   *TO_ZPL   = *unbless;
   *damn     = *unbless; 
 }
+sub unbless { [ @{ $_[0] } ] }
 
 sub validated {
   my ($self, $type) = @_;
@@ -395,6 +395,7 @@ sub lastidx {
   -1
 }
 
+{ no warnings 'once'; *zip = *mesh; }
 sub mesh {
   my $max_idx = -1;
   for (@_) { $max_idx = $#$_ if $max_idx < $#$_ }
@@ -404,7 +405,6 @@ sub mesh {
     } 0 .. $max_idx
   )
 }
-{ no warnings 'once'; *zip = *mesh; }
 
 sub natatime {
   my @list  = @{ $_[0] };
@@ -479,7 +479,6 @@ sub ssect {
   $cls->new( map {; $cls->new(@$_) } @parts )
 }
 
-
 sub tuples {
   my ($self, $size, $type) = @_;
   $size = 2 unless defined $size;
@@ -511,6 +510,7 @@ sub tuples {
 
 =cut
 
+{ no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
 sub reduce {
   my $pkg = caller;
   no strict 'refs';
@@ -520,8 +520,8 @@ sub reduce {
     $a->$cb($b)
   } @{ $_[0] }
 }
-{ no warnings 'once'; *foldl = *reduce; *fold_left = *reduce; }
 
+{ no warnings 'once'; *fold_right = *foldr; }
 sub foldr {
   my $pkg = caller;
   no strict 'refs';
@@ -531,7 +531,6 @@ sub foldr {
     $a->$cb($b)
   } CORE::reverse @{ $_[0] }
 }
-{ no warnings 'once'; *fold_right = *foldr; }
 
 sub rotate {
   my ($self, %params) = @_;
