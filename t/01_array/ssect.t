@@ -14,4 +14,9 @@ is_deeply [ $threeper->get(0)->all ], [ 1 .. 3 ],
 is_deeply [ $threeper->get(3)->all ], [ 10 ],
   'ssect(3) last set ok' or diag explain $threeper;
 
+my $zeroarg = array(1..10)->ssect;
+isa_ok $zeroarg, 'List::Objects::WithUtils::Array';
+ok $zeroarg->is_empty, 'zero arg ssect produced empty array obj'
+  or diag explain $zeroarg;
+
 done_testing;
