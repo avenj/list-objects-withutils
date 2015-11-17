@@ -33,4 +33,7 @@ isa_ok $zeroarg, 'List::Objects::WithUtils::Array';
 ok $zeroarg->is_empty, 'zero arg nsect produced empty array obj'
   or diag explain $zeroarg;
 
+my $too_many = array(1..3)->nsect(5);
+ok $too_many->count == 3, 'total sections limited to array count';
+
 done_testing;
