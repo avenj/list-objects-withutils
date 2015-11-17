@@ -460,7 +460,7 @@ sub nsect {
   my $total = scalar @$self;
   my @parts;
   my $x = 0;
-  $sections = $total if $sections > $total;
+  $sections = $total if (defined $sections ? $sections : 0) > $total;
   if ($sections && $total) {
     CORE::push @{ $parts[ int($x++ * $sections / $total) ] }, $_ for @$self;
   }

@@ -28,4 +28,9 @@ is_deeply [ $thrice->get(1)->all ], [ 5 .. 7 ],
 is_deeply [ $thrice->get(2)->all ], [ 8 .. 10 ],
   'nsect(4) third set ok' or diag explain $thrice;
 
+my $zeroarg = array(1..10)->nsect;
+isa_ok $zeroarg, 'List::Objects::WithUtils::Array';
+ok $zeroarg->is_empty, 'zero arg nsect produced empty array obj'
+  or diag explain $zeroarg;
+
 done_testing;
