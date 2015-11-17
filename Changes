@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.023002 2015-11-17
+
+  - Fix array->nsect without arguments
+
 2.023001 2015-11-13
 
   - Add array->part_to_hash
