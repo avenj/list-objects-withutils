@@ -19,4 +19,6 @@ isa_ok $zeroarg, 'List::Objects::WithUtils::Array';
 ok $zeroarg->is_empty, 'zero arg ssect produced empty array obj'
   or diag explain $zeroarg;
 
+ok array->ssect(3)->is_empty, 'ssect on empty array produced empty array';
+
 done_testing;
