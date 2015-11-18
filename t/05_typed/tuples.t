@@ -11,6 +11,8 @@ BEGIN {
   }
 }
 
+# also see t/01_array/tuples.t
+
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
@@ -41,10 +43,10 @@ eval {; $tuples = $arr->tuples(3, 'foo') };
 ok $@ =~ /Type::Tiny/, 'bad type dies ok';
 
 { use Lowu;
-  $tuples = [ 1, 2, 3, 4 ]->tuples(2, Int);
+  $tuples = [ 1 .. 4 ]->tuples(2, Int);
   is_deeply
     [ $tuples->all ],
-    [ [ 1 => 2 ], [ 3 => 4 ] ],
+    [ [ 1, 2 ], [ 3, 4 ] ],
     'autoboxed ->tuples ok';
 }
 
