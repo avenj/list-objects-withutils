@@ -15,6 +15,6 @@ $arr->natatime(3, sub { ++$counted });
 is $counted, 3, 'natatime with coderef ok';
 
 $itr = array->natatime(2);
-ok !$itr->(), 'empty array itr returned false';
+ok !defined $itr->(), 'empty array itr returned undef';
 
 done_testing;

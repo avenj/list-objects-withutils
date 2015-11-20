@@ -1068,7 +1068,7 @@ of the given subroutine as the hash key; the values are array-type objects.
 The returned object is of type L</inflated_type>; by default this is a
 L<List::Objects::WithUtils::Hash>.
 
-(Available from C<v2.23.1>)
+(Available from v2.23.1)
 
 =head3 random
 

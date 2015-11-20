@@ -117,14 +117,11 @@ sub sliced {
 
 sub set {
   my $self = shift;
-
   my (@keysidx, @valsidx);
   for (0 .. $#_) {
     $_ % 2 ? push @valsidx, $_ : push @keysidx, $_
   }
-
   @{$self}{ @_[@keysidx] } = @_[@valsidx];
-
   $self
 }
 
@@ -392,13 +389,13 @@ Returns a plain C<HASH> reference (shallow clone).
 
 Clears the current hash entirely.
 
-Returns the hash object.
+Returns the (same, but now empty) hash object.
 
 =head3 delete
 
-  $hash->delete( @keys );
+  $hash->delete(@keys);
 
-Deletes the given keys from the hash.
+Deletes the given key(s) from the hash.
 
 Returns an L</array_type> object containing the deleted values.
 
@@ -421,7 +418,7 @@ Returns the current hash object.
 
 Like L</set>, but only sets values that do not already exist in the hash.
 
-Returns the hash object.
+Returns the current hash object.
 
 =head2 Methods that retrieve items
 
