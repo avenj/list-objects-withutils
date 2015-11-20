@@ -534,17 +534,15 @@ sub foldr {
 
 sub rotate {
   my ($self, %params) = @_;
-  if ($params{left} && $params{right}) {
+  $params{left} && $params{right} ?
     Carp::confess "Cannot rotate in both directions!"
-  } elsif ($params{right}) {
-    return blessed_or_pkg($self)->new(
+  : $params{right} ?
+    blessed_or_pkg($self)->new(
       @$self ? ($self->[-1], @{ $self }[0 .. ($#$self - 1)]) : ()
     )
-  } else {
-    return blessed_or_pkg($self)->new(
+  : blessed_or_pkg($self)->new(
       @$self ? (@{ $self }[1 .. $#$self], $self->[0]) : ()
     )
-  }
 }
 
 sub rotate_in_place {

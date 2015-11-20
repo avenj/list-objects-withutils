@@ -23,6 +23,20 @@ is_deeply
   [ 4, 1, 2, 3 ],
   'rotate rightwards ok';
 
+$arr = array(1 .. 2);
+$left = $arr->rotate;
+is_deeply [ $left->all ], [ 2, 1 ],
+  'rotated leftwards once';
+$left = $left->rotate;
+is_deeply [ $left->all ], [ 1, 2 ],
+  'rotated full-circle (left)';
+
+my $right = $arr->rotate(right => 1);
+is_deeply [ $right->all ], [ 2, 1 ],
+  'rotated rightwards once';
+$right = $right->rotate;
+is_deeply [ $right->all ], [ 1, 2 ],
+  'rotated full-circle (right)';
 
 ok array->rotate(left => 1)->is_empty,  'empty array rotate left ok';
 ok array->rotate(right => 1)->is_empty, 'empty array rotate right ok';
