@@ -480,12 +480,12 @@ sub ssect {
 }
 
 sub tuples {
-  my ($self, $size, $type) = @_;
+  my ($self, $size, $type, $bless) = @_;
   $size = 2 unless defined $size;
+  my $cls = blessed_or_pkg($self);
   if (defined $type) {
     # Autoboxed? Need to be blessed if we're to _try_coerce
-    $self = blessed_or_pkg($self)->new(@$self)
-      unless Scalar::Util::blessed $self;
+    $self = $cls->new(@$self) unless Scalar::Util::blessed $self;
   }
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 1;
@@ -499,9 +499,9 @@ sub tuples {
       @nxt = CORE::map {; $self->_try_coerce($type, $_) }
         @nxt[0 .. ($size-1)]
     }
-    CORE::push @res, [ @nxt ];
+    CORE::push @res, $bless ? $cls->new(@nxt) : [ @nxt ];
   }
-  blessed_or_pkg($self)->new(@res)
+  $cls->new(@res)
 }
 
 =pod
@@ -1111,8 +1111,8 @@ from the specified indexes.
   #    [ 7 ],
   #  )
 
-Simple sugar for L</natatime>; returns a new array object consisting of tuples
-(unblessed ARRAY references) of the specified size (defaults to 2).
+Returns a new array object consisting of tuples (unblessed ARRAY references)
+of the specified size (defaults to 2). 
 
 C<tuples> accepts L<Type::Tiny> types as an optional second parameter; if
 specified, items in tuples are checked against the type and a coercion is
@@ -1122,6 +1122,13 @@ attempted if the initial type-check fails:
   my $tuples = array(1 .. 7)->tuples(2 => Int);
 
 A stack-trace is thrown if a value in a tuple cannot be made to validate.
+
+As of v2.24.1, it's possible to make the returned tuples blessed array-type
+objects (of the type of the original class) by passing a boolean true third
+parameter:
+
+  # bless()'d tuples, no type validation or coercion:
+  my $tuples = array(1 .. 7)->tuples(2, undef, 'bless');
 
 See: L<Types::Standard>, L<List::Objects::Types>
 
