@@ -38,10 +38,8 @@ sub type { }
 our %Required;
 sub new {
   my $arraytype = $_[0]->array_type;
-  unless (exists $Required{$arraytype}) {
-    Module::Runtime::require_module($arraytype);
-    $Required{$arraytype} = 1
-  }
+  $Required{$arraytype} = Module::Runtime::require_module($arraytype)
+    unless exists $Required{$arraytype};
   bless +{ @_[1 .. $#_] }, Scalar::Util::blessed($_[0]) || $_[0]
 }
 
