@@ -18,7 +18,7 @@ my $typed = sub { my $arr = array_of Num() => @values };
 
 my $typed_immutable = sub { my $arr = immarray_of Num() => @values };
 
-my $results = timethese( 200_000 =>
+my $results = timethese( 100_000 =>
   +{
       array       => $basic,
       immarray    => $immutable,
@@ -38,7 +38,7 @@ $immutable = sub { my $hash = immhash %hsh };
 $typed = sub { my $hash = hash_of Num() => %hsh };
 $typed_immutable = sub { my $hash = immhash_of Num() => %hsh };
 
-my $hash_results = timethese( 200_000 =>
+my $hash_results = timethese( 100_000 =>
   +{
       hash       => $basic,
       immhash    => $immutable,
