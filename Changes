@@ -1,5 +1,13 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.024001 2015-11-23
+
+  - Add support for returning blessed array-type objects from array->tuples
+
+  - Minor array->rotate optimization
+
+  - Minor constructor optimizations
+
 2.023002 2015-11-17
 
   - Fix array->nsect without arguments
