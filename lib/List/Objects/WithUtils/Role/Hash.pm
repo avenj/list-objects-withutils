@@ -316,7 +316,9 @@ Returns boolean true if the key exists.
 
   my %hash = $hash->export;
 
-Returns a raw key/value list.
+Returns a raw key => value list.
+
+For a plain HASH-type reference, see: L</unbless>
 
 =head3 array_type
 
@@ -434,12 +436,12 @@ hash.)
 =head3 get_path
 
   my $hash = hash(
-    foo  => +{ bar => +{ baz => 1 } },
+    foo  => +{ bar => +{ baz => 'bork'  } },
     quux => [ +{ weeble => 'snork' } ],
   );
-  my $item = $hash->get_path(qw/foo bar baz/);        # 1
+  my $item = $hash->get_path(qw/foo bar baz/);  # 'bork'
 
-Attempt to retrieve a scalar item from a 'deep' hash (without risking
+Attempt to retrieve a value from a 'deep' hash (without risking
 autovivification).
 
 If an element of the given path is a (plain) array reference, as in this
