@@ -35,13 +35,11 @@ around new => sub {
   # SvREADONLY behavior is not very reliable.
   # Remove mutable behavior from our backing tied array instead:
 
-  unless (tied @$self) {
-    # If we're already tied, something else is going on,
-    # like we're a typed array.
-    # Otherwise, tie a StdArray & push items.
-    tie @$self, 'Tie::StdArray';
-    push @$self, @_
-  }
+  # If we're already tied, something else is going on,
+  # like we're a typed array.
+  # Otherwise, tie a StdArray & push items.
+  tie @$self, 'Tie::StdArray' and push @$self, @_
+    unless tied @$self;
 
   Role::Tiny->apply_roles_to_object( tied(@$self),
     'List::Objects::WithUtils::Role::Array::TiedRO'

@@ -28,16 +28,12 @@ around new => sub {
   my ($orig, $class) = splice @_, 0, 2;
   my $self = $class->$orig(@_);
 
-
   # This behavior changed in c. 45f59a73 --
   # we can revert back if Hash::Util gains the flexibility discussed on p5p
   # (lock_keys without an exception on unknown key retrieval)
   # For now, take the tie performance hit :(
-
-  unless (tied %$self) {
-    tie %$self, 'Tie::StdHash';
-    %$self = @_;
-  }
+  tie %$self, 'Tie::StdHash' and %$self = @_
+    unless tied %$self;
 
   Role::Tiny->apply_roles_to_object( tied(%$self),
     'List::Objects::WithUtils::Role::Hash::TiedRO'
