@@ -23,7 +23,6 @@ our $UsingUtilsByXS = 0;
   }
 }
 
-=pod
 
 =for Pod::Coverage ARRAY_TYPE blessed_or_pkg
 
@@ -96,7 +95,6 @@ sub _try_coerce {
   } @vals
 }
 
-=pod
 
 =for Pod::Coverage TO_JSON TO_ZPL damn type
 
@@ -108,7 +106,6 @@ sub type {
 
 sub new { bless [ @_[1 .. $#_ ] ], Scalar::Util::blessed($_[0]) || $_[0] }
 
-=pod
 
 =for Pod::Coverage untyped
 
@@ -144,7 +141,6 @@ sub validated {
 sub all { @{ $_[0] } }
 { no warnings 'once'; *export = *all; *elements  = *all; }
 
-=pod
 
 =for Pod::Coverage size
 
@@ -295,7 +291,6 @@ sub grep {
 }
 
 
-=pod
 
 =for Pod::Coverage indices
 
@@ -328,7 +323,6 @@ sub reverse {
   blessed_or_pkg($_[0])->new( CORE::reverse @{ $_[0] } )
 }
 
-=pod
 
 =for Pod::Coverage slice
 
@@ -352,7 +346,6 @@ sub has_any {
     : !! @{ $_[0] }
 }
 
-=pod
 
 =for Pod::Coverage first
 
@@ -504,7 +497,6 @@ sub tuples {
   $cls->new(@res)
 }
 
-=pod
 
 =for Pod::Coverage fold_left foldl fold_right
 

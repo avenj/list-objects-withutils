@@ -6,8 +6,6 @@ use Module::Runtime ();
 use Scalar::Util    ();
 use List::Util      ();
 
-=pod
-
 =for Pod::Coverage HASH_TYPE blessed_or_pkg
 
 =cut
@@ -23,8 +21,6 @@ use Role::Tiny;
 sub array_type       { 'List::Objects::WithUtils::Array' }
 sub inflated_type    { 'List::Objects::WithUtils::Hash::Inflated' }
 sub inflated_rw_type { 'List::Objects::WithUtils::Hash::Inflated::RW' }
-
-=pod
 
 =for Pod::Coverage TO_JSON TO_ZPL damn type
 
@@ -53,8 +49,6 @@ sub unbless { +{ %{ $_[0] } } }
 }
 
 sub clear { %{ $_[0] } = (); $_[0] }
-
-=pod
 
 =for Pod::Coverage untyped
 
@@ -99,8 +93,6 @@ sub get_path {
   }
   $ref
 }
-
-=pod
 
 =for Pod::Coverage slice
 
@@ -217,8 +209,6 @@ sub kv_grep {
     } %$self
   )
 }
-
-=pod
 
 =for Pod::Coverage invert
 
