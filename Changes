@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.025001 2015-11-26
+
+  - Allow use of any Type::API-conforming object with array_of/hash_of
+
 2.024001 2015-11-23
 
   - Add support for returning blessed array-type objects from array->tuples
