@@ -57,7 +57,8 @@ List::Objects::WithUtils::Role::Hash::Typed - Type-checking hash behavior
 This role makes use of L<Type::Tie> to add type-checking behavior to
 L<List::Objects::WithUtils::Role::Hash> consumers.
 
-The first argument passed to the constructor should be a L<Type::Tiny> type:
+The first argument passed to the constructor should be a L<Type::Tiny> type
+(or other object conforming to L<Type::API>, as of C<v2.25>):
 
   use Types::Standard -all;
   my $arr = hash_of ArrayRef() => (foo => [], bar => []);
