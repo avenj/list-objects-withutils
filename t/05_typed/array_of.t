@@ -8,6 +8,13 @@ BEGIN {
   }
 }
 
+{ package AlwaysTrue; sub new { bless [], shift } sub check { 1 } }
+{ package AlwaysFalse; 
+  sub new { bless [], shift }
+  sub check { 0 }
+  sub get_message { "failed type constraint" }
+}
+
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
@@ -16,9 +23,16 @@ use Types::Standard -all;
 # array_of
 {
   use List::Objects::WithUtils 'array', 'array_of';
+
   my $arr = array_of Int() => 1 .. 3;
   ok $arr->type == Int, 'type returned Int ok';
   ok !array->type, 'plain ArrayObj has no type ok';
+
+  my $customtype = array_of( AlwaysTrue->new, 1 .. 3 );
+  ok $customtype->count == 3, 'non-TT type ok (true)';
+  eval {; $customtype = array_of( AlwaysFalse->new, 1 .. 3 ) };
+  ok $@ =~ /constraint/, 'non-TT type ok (false)'
+    or diag explain $@;
 
   $arr->rotate_in_place;
   is_deeply

@@ -8,6 +8,14 @@ BEGIN {
   }
 }
 
+
+{ package AlwaysTrue; sub new { bless [], shift } sub check { 1 } }
+{ package AlwaysFalse;
+  sub new { bless [], shift }
+  sub check { 0 }
+  sub get_message { "failed type constraint" }
+}
+
 use Test::More;
 use strict; use warnings FATAL => 'all';
 
@@ -20,6 +28,12 @@ use Types::Standard -all;
   my $h = hash_of Int() => (foo => 1, bar => 2);
   ok $h->type == Int, 'type returned Int ok';
   ok !hash->type, 'plain HashObj has no type ok';
+
+  my $customtype = hash_of( AlwaysTrue->new, foo => 1, bar => 2 );
+  ok $customtype->keys->count == 2, 'non-TT type ok (true)';
+  eval {; $customtype = hash_of( AlwaysFalse->new, foo => 1 ) };
+  ok $@ =~ /constraint/, 'non-TT type ok (false)'
+    or diag explain $@;
 
   eval {; my $bad = hash_of( Int() => qw/foo 1 bar baz/) };
   ok $@ =~ /constraint/, 'array_of invalid type died ok' or diag explain $@;
