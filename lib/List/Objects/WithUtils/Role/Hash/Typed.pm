@@ -27,11 +27,7 @@ around new => sub {
     $type = shift;
   }
 
-  Carp::confess "Expected a Type::Tiny type but got '$type'"
-    unless Scalar::Util::blessed($type)
-    && $type->isa('Type::Tiny');
-
-  my $self = {};
+  my $self = +{};
   tie %$self, 'Type::Tie::HASH', $type;
   %$self = @_;
   bless $self, $class;
