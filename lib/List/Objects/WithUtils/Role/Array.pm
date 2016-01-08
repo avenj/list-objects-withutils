@@ -597,6 +597,10 @@ sub shuffle {
   )
 }
 
+=for Pod::Coverage squish
+
+=cut
+
 { no warnings 'once'; *squish = *squished; }
 sub squished {
   my (@last, @res);
