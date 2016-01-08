@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.027001 2016-01-08
+
+  - Add array->squished
+
 2.026001 2016-01-07
 
   - Add array->pick
