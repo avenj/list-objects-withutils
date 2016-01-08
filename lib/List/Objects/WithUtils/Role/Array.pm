@@ -597,6 +597,28 @@ sub shuffle {
   )
 }
 
+{ no warnings 'once'; *squish = *squished; }
+sub squished {
+  my (@last, @res);
+  ITEM: for (@{ $_[0] }) {
+    if (!@last) {
+      # No items seen yet.
+      $last[0] = $_; CORE::push @res, $_; next ITEM
+    } elsif (!defined $_) {
+      # Possibly two undefs in a row:
+      next ITEM if not defined $last[0];
+      # .. or not:
+      $last[0] = $_; CORE::push @res, $_; next ITEM
+    } elsif (!defined $last[0]) {
+      # Previous was an undef:
+      $last[0] = $_; CORE::push @res, $_; next ITEM
+    }
+    next ITEM if $_ eq $last[0];
+    $last[0] = $_; CORE::push @res, $_;
+  }
+  blessed_or_pkg($_[0])->new(@res)
+}
+
 sub uniq {
   my %s;
   blessed_or_pkg($_[0])->new( CORE::grep {; not $s{$_}++ } @{ $_[0] } )
@@ -1428,6 +1450,17 @@ elements.
 (The same constraints apply with regards to stringification; see L</uniq>)
 
 (Available from v2.26.1)
+
+=head3 squished
+
+  my $squished = array(qw/a a b a b b/)->squished;
+  # $squished = array( 'a', 'b', 'a', 'b' );
+
+Similar to L</uniq>, but only consecutively repeated values are removed from
+the returned (new) array object.
+
+The same constraints as L</uniq> apply with regards to stringification, but
+multiple C<undef>s in a row will also be squished.
 
 =head3 uniq
 
