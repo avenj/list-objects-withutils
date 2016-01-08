@@ -602,6 +602,11 @@ sub uniq {
   blessed_or_pkg($_[0])->new( CORE::grep {; not $s{$_}++ } @{ $_[0] } )
 }
 
+sub repeated {
+  my %s;
+  blessed_or_pkg($_[0])->new( CORE::grep {; $s{$_}++ == 1 } @{ $_[0] } )
+}
+
 sub sort_by {
   blessed_or_pkg($_[0])->new(
     __sort_by( $_[1], @{ $_[0] } )
@@ -1408,6 +1413,17 @@ Uses L<List::UtilsBy::XS> if available.
 =head3 nsort_by
 
 Like L</sort_by>, but using numerical comparison.
+
+=head3 repeated
+
+  my $repeats = $array->repeated;
+
+The opposite of L</uniq>; returns a new array object containing only repeated
+elements.
+
+(The same constraints apply with regards to stringification; see L</uniq>)
+
+(Available from v2.26.1)
 
 =head3 uniq
 
