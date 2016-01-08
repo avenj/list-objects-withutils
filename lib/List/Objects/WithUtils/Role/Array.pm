@@ -614,7 +614,7 @@ sub squished {
       # .. or not:
       $last[0] = $_; CORE::push @res, $_; next ITEM
     } elsif (!defined $last[0]) {
-      # Previous was an undef:
+      # Previous was an undef (but this isn't)
       $last[0] = $_; CORE::push @res, $_; next ITEM
     }
     next ITEM if $_ eq $last[0];
