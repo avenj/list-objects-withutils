@@ -573,6 +573,15 @@ sub items_before_incl {
   )
 }
 
+sub pick {
+  return $_[0]->shuffle if $_[1] >= @{ $_[0] };
+  my %idx;
+  $idx{ int rand @{ $_[0] } } = 1 until keys %idx == $_[1];
+  blessed_or_pkg($_[0])->new(
+    @{ $_[0] }[keys %idx]
+  )
+}
+
 sub shuffle {
   blessed_or_pkg($_[0])->new(
     List::Util::shuffle( @{ $_[0] } )
@@ -1059,6 +1068,18 @@ The returned object is of type L</inflated_type>; by default this is a
 L<List::Objects::WithUtils::Hash>.
 
 (Available from v2.23.1)
+
+=head3 pick
+
+  my $picked = array('a' .. 'f')->pick(3);
+
+Returns a new array object containing the specified number of elements chosen
+randomly and without repetition.
+
+If the given number is equal to or greater than the number of elements in the
+list, C<pick> will return a shuffled list (same as calling L</shuffle>).
+
+(Available from v2.26.1)
 
 =head3 random
 
