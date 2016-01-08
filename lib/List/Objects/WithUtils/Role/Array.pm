@@ -1462,6 +1462,8 @@ the returned (new) array object.
 The same constraints as L</uniq> apply with regards to stringification, but
 multiple C<undef>s in a row will also be squished.
 
+(Available from v2.27.1)
+
 =head3 uniq
 
   my $unique = $array->uniq;
