@@ -582,6 +582,15 @@ sub pick {
   )
 }
 
+sub roll {
+  blessed_or_pkg($_[0])->new(
+    @{ $_[0] }[ 
+      map {; int rand @{ $_[0] } }
+        0 ..  (defined $_[1] ? $_[1] : @{ $_[0] }) - 1
+    ]
+  )
+}
+
 sub shuffle {
   blessed_or_pkg($_[0])->new(
     List::Util::shuffle( @{ $_[0] } )
@@ -1088,6 +1097,12 @@ Returns a random element from the array.
 =head3 reverse
 
 Returns a new array object consisting of the reversed list of elements.
+
+=head3 roll
+
+Like L</pick>, but allow repeated entries in the resultant list.
+
+(Available from v2.26.1)
 
 =head3 rotate
 
