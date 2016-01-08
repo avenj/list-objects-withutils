@@ -3,7 +3,7 @@ use strict; use warnings;
 
 use List::Objects::WithUtils 'array';
 
-my $arr = array('a' ... 'f');
+my $arr = array('a' .. 'f');
 my %as_hash = ( map {; $_ => 1 } $arr->all );
 
 my $picked = $arr->pick(4);
