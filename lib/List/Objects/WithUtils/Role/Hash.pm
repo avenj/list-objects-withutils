@@ -589,10 +589,14 @@ C<$a> and C<$b>, respectively.
 
   my $newhash = $hash->sliced(@keys);
 
-Returns a new hash object built from the specified set of keys (see L</get> if
-you only need the values.)
+Returns a new hash object built from the specified set of keys and their
+respective values.
 
-If a given key is not found in the hash, it is omitted from the result.
+If a given key is not found in the hash, it is omitted from the result (this
+is different than C<perl-5.20+> hash slice syntax, which sets unknown keys to
+C<undef> in the slice).
+
+If you only need the values, see L</get>.
 
 =head2 Methods that compare hashes
 
