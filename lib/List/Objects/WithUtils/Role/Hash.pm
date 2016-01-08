@@ -99,10 +99,27 @@ sub get_path {
 =cut
 
 { no warnings 'once'; *slice = *sliced; }
-sub sliced {
-  blessed_or_pkg($_[0])->new(
-    map {; exists $_[0]->{$_} ? ( $_ => $_[0]->{$_} ) : () } @_[1 .. $#_]
-  )
+if ($] >= 5.020) {
+  local $@;
+  eval q[
+    sub sliced {
+      blessed_or_pkg($_[0])->new( 
+        %{ $_[0] }{ grep {; exists $_[0]->{$_} } @_[1 .. $#_] } 
+      )
+    }
+  ];
+  die $@ if $@;
+} else {
+  local $@;
+  eval q[
+    sub sliced {
+      blessed_or_pkg($_[0])->new(
+        map {; exists $_[0]->{$_} ? ($_ => $_[0]->{$_}) : () } 
+          @_[1 .. $#_]
+      )
+    }
+  ];
+  die $@ if $@;
 }
 
 sub set {
