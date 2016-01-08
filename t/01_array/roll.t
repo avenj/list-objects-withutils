@@ -12,4 +12,10 @@ for my $item ($rolled->all) {
   ok exists $as_hash{$item}, "rolled item '$item' ok";
 }
 
+$rolled = $arr->roll(8);
+ok $rolled->count == 8, 'rolled more than size of array';
+for my $item ($rolled->all) {
+  ok exists $as_hash{$item}, "rolled item '$item' ok";
+}
+
 done_testing

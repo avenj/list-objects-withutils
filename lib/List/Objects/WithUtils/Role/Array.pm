@@ -1105,7 +1105,11 @@ Returns a new array object consisting of the reversed list of elements.
 
 =head3 roll
 
-Like L</pick>, but allow repeated entries in the resultant list.
+Much like L</pick>, but repeated entries in the resultant list are allowed,
+and the number of entries to return may be larger than the size of the array.
+
+If the number of elements to return is not specified, the size of the original
+array is used.
 
 (Available from v2.26.1)
 
