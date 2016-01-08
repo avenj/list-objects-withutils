@@ -615,6 +615,35 @@ The opposite of L</intersection>; returns the list of keys that are not common
 to all given hash-type objects (including the invocant) as an L</array_type>
 object.
 
+=head1 NOTES FOR CONSUMERS
+
+If creating your own consumer of this role, some extra effort is required to
+make C<$a> and C<$b> work in sort statements without warnings; an example with
+a custom exported constructor might look something like:
+
+  package My::Custom::Hash;
+  use strictures 2;
+  require Role::Tiny;
+  Role::Tiny->apply_roles_to_package( __PACKAGE__,
+    qw/
+      List::Objects::WithUtils::Role::Hash
+      My::Custom::Hash::Role
+    /
+  );
+
+  use Exporter ();
+  our @EXPORT = 'myhash';
+  sub import {
+    my $pkg = caller;
+    { no strict 'refs';
+      ${"${pkg}::a"} = ${"${pkg}::a"};
+      ${"${pkg}::b"} = ${"${pkg}::b"};
+    }
+    goto &Exporter::import
+  }
+
+  sub myhash { __PACKAGE__->new(@_) }
+
 =head1 SEE ALSO
 
 L<List::Objects::WithUtils>

@@ -1494,6 +1494,36 @@ given sub returns unique values.
 
 Uses L<List::UtilsBy::XS> if available; falls back to L<List::UtilsBy> if not.
 
+=head1 NOTES FOR CONSUMERS
+
+If creating your own consumer of this role, some extra effort is required to
+make C<$a> and C<$b> work in sort statements without warnings; an example with
+a custom exported constructor (and junction support) might look something like:
+
+  package My::Custom::Array;
+  use strictures 2;
+  require Role::Tiny;
+  Role::Tiny->apply_roles_to_package( __PACKAGE__,
+    qw/
+      List::Objects::WithUtils::Role::Array
+      List::Objects::WithUtils::Role::Array::WithJunctions
+      My::Custom::Hash::Role
+     /
+  );
+
+  use Exporter ();
+  our @EXPORT = 'myarray';
+  sub import {
+    my $pkg = caller;
+    { no strict 'refs';
+      ${"${pkg}::a"} = ${"${pkg}::a"};
+      ${"${pkg}::b"} = ${"${pkg}::b"};
+    }
+    goto &Exporter::import
+  }
+
+  sub myarray { __PACKAGE__->new(@_) }
+
 =head1 SEE ALSO
 
 L<List::Objects::WithUtils>
