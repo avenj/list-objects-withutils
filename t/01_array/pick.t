@@ -25,4 +25,6 @@ is_deeply
   \%as_hash,
   'pick (gt element count) ok';
 
+ok array->pick(3)->is_empty, 'pick on empty array ok';
+
 done_testing

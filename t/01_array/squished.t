@@ -24,4 +24,6 @@ $arr = array('a', 'b', 'c');
 is_deeply [ $arr->squished->all ], [ 'a', 'b', 'c' ],
   'squished (no squished values) ok';
 
+ok array->squished->is_empty, 'squished on empty array ok';
+
 done_testing

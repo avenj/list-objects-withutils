@@ -18,4 +18,10 @@ for my $item ($rolled->all) {
   ok exists $as_hash{$item}, "rolled item '$item' ok";
 }
 
+$rolled = array->roll(3);
+ok $rolled->grep(sub { !defined }) && $rolled->count == 3,
+  'roll on empty array ok'
+  or diag explain $rolled;
+
+
 done_testing
