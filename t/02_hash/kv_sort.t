@@ -15,6 +15,13 @@ is_deeply
   'kv_sort default ok';
 
 is_deeply
+  [ $hr->kv_sort(undef)->all ],
+  [ $hr->kv_sort->all ],
+  'kv_sort non-subroutine (false) arg ok';
+eval {; $hr->kv_sort(1) };
+ok $@, 'kv_sort non-subroutine (true) arg dies ok';
+
+is_deeply
   [ $hr->kv_sort(sub { $_[1] cmp $_[0] })->all ],
   [
     [ d => 1 ],
