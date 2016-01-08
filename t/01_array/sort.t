@@ -19,6 +19,10 @@ is_deeply
   [ 1, 2, 3, 4 ],
   'sort with default sub ok';
 
+is_deeply [ $arr->sort(undef)->all ], [ $arr->sort->all ],
+  'sort non-subroutine (false) arg ok';
+eval {; $arr->sort(1) };
+ok $@, 'sort non-subroutine (true) arg dies ok';
 
 my $warned;
 $SIG{__WARN__} = sub { $warned = shift };
