@@ -1507,13 +1507,14 @@ a custom exported constructor (and junction support) might look something like:
     qw/
       List::Objects::WithUtils::Role::Array
       List::Objects::WithUtils::Role::Array::WithJunctions
-      My::Custom::Hash::Role
+      My::Custom::Array::Role
      /
   );
 
   use Exporter ();
   our @EXPORT = 'myarray';
   sub import {
+    # touch $a/$b in caller to avoid 'used only once' warnings:
     my $pkg = caller;
     { no strict 'refs';
       ${"${pkg}::a"} = ${"${pkg}::a"};
