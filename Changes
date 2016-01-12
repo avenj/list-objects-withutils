@@ -1,5 +1,13 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.027002 2016-01-12
+
+  - Use perl-5.20+ hash slice syntax for hash->sliced if available
+
+  - Add documentation regarding installing '$a'/'$b' from custom types
+
+  - Expand test coverage
+
 2.027001 2016-01-08
 
   - Add array->squished
