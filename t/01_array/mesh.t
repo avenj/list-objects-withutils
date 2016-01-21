@@ -9,7 +9,13 @@ my $meshed = $arr->mesh( array(1, 2, 3, 4) );
 is_deeply
   [ $meshed->all ],
   [ a => 1, b => 2, c => 3, d => 4 ],
-  'mesh on even list ok';
+  'mesh on even lists ok';
+
+$meshed = $arr->mesh([1,2]);
+is_deeply
+  [ $meshed->all ],
+  [ 'a', 1, 'b', 2, 'c', undef, 'd', undef ],
+  'mesh on uneven lists ok';
 
 my @holey; $#holey = 9;
 $meshed = array( 1 .. 10 )->mesh( array(@holey) );
