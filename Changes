@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.028001 2016-01-25
+
+  - Add hash->random_kv / random_key / random_value
+
 2.027002 2016-01-12
 
   - Use perl-5.20+ hash slice syntax for hash->sliced if available
