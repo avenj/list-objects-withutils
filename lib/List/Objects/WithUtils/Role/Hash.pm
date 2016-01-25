@@ -602,13 +602,19 @@ C<$a> and C<$b>, respectively.
 
 Returns a random key/value pair from the hash as an C<ARRAY>-type reference.
 
+(Available from v2.28.1)
+
 =head3 random_key
 
 Returns a random key from the hash.
 
+(Available from v2.28.1)
+
 =head3 random_value
 
 Returns a random value from the hash.
+
+(Available from v2.28.1)
 
 =head3 sliced
 
