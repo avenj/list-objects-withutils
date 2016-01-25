@@ -245,7 +245,7 @@ sub inverted {
 
 sub random_kv {
   my $key = (CORE::keys %{ $_[0] })[rand CORE::keys %{ $_[0] }];
-  [ $key => $_[0]->{$key} ]
+  $key ? [ $key => $_[0]->{$key} ] : ()
 }
 
 sub random_key {
