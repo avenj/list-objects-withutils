@@ -243,6 +243,20 @@ sub inverted {
 { no warnings 'once'; *invert = *inverted; }
 
 
+sub random_kv {
+  my $key = (CORE::keys %{ $_[0] })[rand CORE::keys %{ $_[0] }];
+  [ $key => $_[0]->{$key} ]
+}
+
+sub random_key {
+  (CORE::keys %{ $_[0] })[rand CORE::keys %{ $_[0] }]
+}
+
+sub random_value {
+  [@_ = %{ $_[0] }]->[1|rand @_]
+}
+
+
 print
   qq[<Su-Shee> huf: I learned that from toyota via agile blahblah,],
   qq[ it's asking the five "why" questions.\n],
@@ -583,6 +597,18 @@ Like L</kv>, but sorted by key. A sort routine can be provided.
 
 In versions prior to v2.19.1, C<$_[0]> and C<$_[1]> must be used in place of
 C<$a> and C<$b>, respectively.
+
+=head3 random_kv
+
+Returns a random key/value pair from the hash as an C<ARRAY>-type reference.
+
+=head3 random_key
+
+Returns a random key from the hash.
+
+=head3 random_value
+
+Returns a random value from the hash.
 
 =head3 sliced
 
