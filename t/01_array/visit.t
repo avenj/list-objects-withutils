@@ -8,7 +8,8 @@ my $res = [];
 array->visit(sub { push @$res, $_ });
 is_deeply $res, [], 'empty array visit ok';
 
-$arr->visit(sub { push @$res, $_ });
+my $ret = $arr->visit(sub { push @$res, $_ });
+ok $ret == $arr, 'visit returned invocant';
 is_deeply $res, [ 1, 2, 3 ], 'visit ok'
   or diag explain $res;
 
