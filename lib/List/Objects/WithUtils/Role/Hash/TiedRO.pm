@@ -1,5 +1,9 @@
 package List::Objects::WithUtils::Role::Hash::TiedRO;
 
+=for Pod::Coverage .*
+
+=cut
+
 use strictures 2;
 use Carp ();
 
