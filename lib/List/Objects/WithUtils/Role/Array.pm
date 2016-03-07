@@ -603,6 +603,7 @@ sub shuffle {
 
 { no warnings 'once'; *squish = *squished; }
 sub squished {
+  # @last is a single-item array to make tracking undefs saner ->
   my (@last, @res);
   ITEM: for (@{ $_[0] }) {
     if (!@last) {
@@ -993,11 +994,11 @@ Returns the array element corresponding to a specified index.
 
 =head3 get_or_else
 
-  # Expect to find a hash() obj at $pos in $array,
-  # or create an empty one if $pos is undef:
+  # Expect to find an object at $pos in $array,
+  # or return an empty one if $pos is undef:
   my @keys = $array->get_or_else($pos => hash)->keys->all;
 
-  # Or pass a coderef
+  # Or pass a coderef that provides a default return value;
   # First arg is the object being operated on:
   my $item_or_first = $array->get_or_else($pos => sub { shift->get(0) });
   # Second arg is the requested index:
@@ -1009,11 +1010,11 @@ Returns the array element corresponding to a specified index.
   });
 
 Returns the element corresponding to a specified index; optionally takes a
-second argument that is used as a default value if the given index is undef.
+second argument that is used as a default return value if the given index is
+undef (the array remains unmodified).
 
 If the second argument is a coderef, it is invoked on the object (with the
-requested index as an argument) and its return value is taken as the default
-value.
+requested index as an argument) and its return value is taken as the default.
 
 =head3 head
 

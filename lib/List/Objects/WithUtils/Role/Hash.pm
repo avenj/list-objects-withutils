@@ -355,7 +355,8 @@ objects.
   my $obj = hash(foo => 'bar', baz => 'quux')->inflate;
   my $baz = $obj->baz; 
 
-Inflates a simple object providing accessors for a hash.
+Inflates the hash-type object into a simple struct-like object with accessor
+methods matching the keys of the hash.
 
 By default, accessors are read-only; specifying C<rw => 1> allows setting new
 values:
@@ -374,14 +375,14 @@ for modification:
 
 =head3 inflated_type
 
-The class name that objects are blessed into when calling L</inflate>.
+The class that objects are blessed into when calling L</inflate>.
 
 Defaults to L<List::Objects::WithUtils::Hash::Inflated>.
 
 =head3 inflated_rw_type
 
-The class name that objects are blessed into when calling L</inflate> with
-C<rw => 1>.
+The class that objects are blessed into when calling L</inflate> with
+C<rw => 1> specified.
 
 Defaults to L<List::Objects::WithUtils::Hash::Inflated::RW>, a subclass of
 L<List::Objects::WithUtils::Hash::Inflated>.
