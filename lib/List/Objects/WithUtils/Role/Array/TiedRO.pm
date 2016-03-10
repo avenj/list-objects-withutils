@@ -1,6 +1,6 @@
 package List::Objects::WithUtils::Role::Array::TiedRO;
 
-=for Pod::Coverage .*
+=for Pod::Coverage *EVERYTHING*
 
 =cut
 

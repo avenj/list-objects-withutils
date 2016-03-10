@@ -346,7 +346,7 @@ The [Lowu](https://metacpan.org/pod/Lowu) module for a convenient importer short
 
 # AUTHOR
 
-Jon Portnoy <avenj@cobaltirc.org>
+Jon Portnoy &lt;avenj@cobaltirc.org>
 
 Licensed under the same terms as Perl.
 

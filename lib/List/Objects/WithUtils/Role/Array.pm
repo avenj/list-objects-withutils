@@ -1043,9 +1043,9 @@ Defaults to ',' if no delimiter is specified.
 
 =head3 kv
 
-Returns an array-type object containing key/value pairs as (unblessed) ARRAYs;
+Returns an array-type object containing index/value pairs as (unblessed) ARRAYs;
 this is much like L<List::Objects::WithUtils::Role::Hash/"kv">, except the
-array index is the key.
+array index is the "key."
 
 =head3 zip
 
