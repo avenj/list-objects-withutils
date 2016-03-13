@@ -1176,7 +1176,7 @@ of the specified size (defaults to 2).
 
 C<tuples> accepts L<Type::Tiny> types as an optional second parameter; if
 specified, items in tuples are checked against the type and a coercion is
-attempted if the initial type-check fails:
+attempted (if available for the given type) if the initial type-check fails:
 
   use Types::Standard -all;
   my $tuples = array(1 .. 7)->tuples(2 => Int);
