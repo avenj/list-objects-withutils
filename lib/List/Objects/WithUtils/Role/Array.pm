@@ -475,13 +475,14 @@ sub ssect {
 sub tuples {
   my ($self, $size, $type, $bless) = @_;
   $size = 2 unless defined $size;
-  my $cls = blessed_or_pkg($self);
-  if (defined $type) {
-    # Autoboxed? Need to be blessed if we're to _try_coerce
-    $self = $cls->new(@$self) unless Scalar::Util::blessed $self;
-  }
   Carp::confess "Expected a positive integer size but got $size"
     if $size < 1;
+
+  # Autoboxed? Need to be blessed if we're to _try_coerce:
+  my $cls = blessed_or_pkg($self);
+  $self = $cls->new(@$self)
+    if defined $type and not Scalar::Util::blessed $self;
+
   my $itr = do {
     my @copy = @$self;
     sub { CORE::splice @copy, 0, $size }
@@ -492,6 +493,7 @@ sub tuples {
       if defined $type;
     CORE::push @res, $bless ? $cls->new(@nxt) : [ @nxt ];
   }
+
   $cls->new(@res)
 }
 
