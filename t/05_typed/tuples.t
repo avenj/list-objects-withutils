@@ -36,8 +36,9 @@ $arr = array( [], [], [], [] );
 $tuples = $arr->tuples(2, ArrayObj);
 ok $tuples->shift->[0]->count == 0, 'ArrayObj coerced in tuple';
 
-$arr = array(1.4, 1.6, 2.1, 2.2, 2.5);
+$arr = immarray(1.4, 1.6, 2.1, 2.2, 2.5);
 $tuples = $arr->tuples(2, Int->plus_coercions(Num, sub { int }));
+ok $tuples->is_immutable, 'tuples on immutable list produced immutable list';
 is_deeply [ $tuples->all ],
   [ [1,1], [2,2], [2] ],
   'type coercion on uneven tuples ok';
