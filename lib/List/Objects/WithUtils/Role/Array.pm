@@ -488,10 +488,8 @@ sub tuples {
   };
   my @res;
   while (my @nxt = $itr->()) {
-    if (defined $type) {
-      @nxt = CORE::map {; $self->_try_coerce($type, $_) }
-        @nxt[0 .. ($size-1)]
-    }
+    @nxt = CORE::map {; $self->_try_coerce($type, $_) } @nxt
+      if defined $type;
     CORE::push @res, $bless ? $cls->new(@nxt) : [ @nxt ];
   }
   $cls->new(@res)

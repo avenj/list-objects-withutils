@@ -36,8 +36,11 @@ $arr = array( [], [], [], [] );
 $tuples = $arr->tuples(2, ArrayObj);
 ok $tuples->shift->[0]->count == 0, 'ArrayObj coerced in tuple';
 
-eval {; $tuples = $arr->tuples(3, ArrayObj) };
-ok $@ =~ /type/i, 'ArrayObj check failed on odd tuple ok';
+$arr = array(1.4, 1.6, 2.1, 2.2, 2.5);
+$tuples = $arr->tuples(2, Int->plus_coercions(Num, sub { int }));
+is_deeply [ $tuples->all ],
+  [ [1,1], [2,2], [2] ],
+  'type coercion on uneven tuples ok';
 
 eval {; $tuples = $arr->tuples(3, 'foo') };
 ok $@ =~ /Type::Tiny/, 'bad type dies ok';
