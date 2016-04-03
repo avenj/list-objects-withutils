@@ -12,6 +12,7 @@ my ($key, $val) = @$kv;
 ok $hs->exists($key), 'randomly retrieved key exists';
 cmp_ok $hs->get($key), '==', $val, 'retrieved value matches key';
 
-ok !defined hash->random_kv, 'empty hash returns undef random_kv';
+my @r = hash->random_kv;
+ok @r == 1 && !defined $r[0], 'empty hash returns undef random_kv';
 
 done_testing

@@ -8,6 +8,7 @@ my $rev = $hs->inverted;
 my $val = $hs->random_value;
 ok $rev->exists($val), 'random_value exists in hash';
 
-ok !defined hash->random_value, 'empty hash returns undef random_value';
+my @r = hash->random_value;
+ok @r == 1 && !defined $r[0], 'empty hash returns undef random_value';
 
 done_testing

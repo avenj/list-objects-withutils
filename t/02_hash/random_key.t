@@ -7,6 +7,7 @@ my $hs = hash(a => 1, b => 2, c => 3, d => 4);
 my $key = $hs->random_key;
 ok $hs->exists($key), 'random_key returned key from hash';
 
-ok !defined hash->random_key, 'empty hash returns undef random_key';
+my @r = hash->random_key;
+ok @r == 1 && !defined $r[0], 'empty hash returns undef random_key';
 
 done_testing
