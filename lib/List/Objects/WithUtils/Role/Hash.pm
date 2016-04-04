@@ -450,7 +450,7 @@ Returns the current hash object.
 
 Retrieves a key or list of keys from the hash.
 
-If we're taking a slice (multiple keys were specified), values are returned
+If taking a slice (multiple keys were specified), values are returned
 as an L</array_type> object. (See L</sliced> if you'd rather generate a new
 hash.)
 
@@ -525,10 +525,12 @@ Returns the list of values in the hash as an L</array_type> object.
   #   3 => array('d'),
   # }
 
-Inverts the hash, creating L</array_type> objects containing one or more keys
-for each unique value.
+Inverts the hash; the values of the original hash become keys in the new
+object. Their corresponding values are L</array_type> objects containing the
+key(s) that mapped to the original value.
 
-This is a bit like reversing the hash, but lossless.
+This is a bit like reversing the hash, but lossless with regards to non-unique
+values.
 
 (Available from v2.14.1)
 
@@ -540,9 +542,10 @@ This is a bit like reversing the hash, but lossless.
   }
 
 Returns an iterator that, when called, returns ($key, $value) pairs.
+When the list is exhausted, an empty list is returned.
 
-The iterator operates on a shallow clone of the current hash, making it
-(relatively) safe to operate on the original hash while using the iterator.
+The iterator operates on a shallow clone of the hash, making it safe to
+operate on the original hash while using the iterator.
 
 (Available from v2.9.1)
 
@@ -576,10 +579,8 @@ Like C<map>, but operates on pairs. See L<List::Util/"pairmap">.
 
 Returns an L</array_type> object containing the results of the map.
 
-In versions prior to v2.20.1, C<$_[0]> and C<$_[1]> must be used in place of
-C<$a> and C<$b>, respectively.
-
-(Available from v2.8.1)
+(Available from v2.8.1; in versions prior to v2.20.1, C<$_[0]> and C<$_[1]>
+must be used in place of C<$a> and C<$b>, respectively.)
 
 =head3 kv_sort
 
@@ -603,17 +604,23 @@ C<$a> and C<$b>, respectively.
 
 Returns a random key/value pair from the hash as an C<ARRAY>-type reference.
 
+Returns undef if the hash is empty.
+
 (Available from v2.28.1)
 
 =head3 random_key
 
 Returns a random key from the hash.
 
+Returns undef if the hash is empty.
+
 (Available from v2.28.1)
 
 =head3 random_value
 
 Returns a random value from the hash.
+
+Returns undef if the hash is empty.
 
 (Available from v2.28.1)
 
