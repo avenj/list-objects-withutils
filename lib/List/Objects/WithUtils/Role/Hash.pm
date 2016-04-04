@@ -249,9 +249,7 @@ sub random_kv {
 }
 
 sub random_key {
-  CORE::keys %{ $_[0] } ? 
-    (CORE::keys %{ $_[0] })[rand CORE::keys %{ $_[0] }]
-    : undef
+  (CORE::keys %{ $_[0] })[rand (CORE::keys %{ $_[0] } || return undef)]
 }
 
 sub random_value {
