@@ -71,12 +71,9 @@ sub exists  { CORE::exists  $_[0]->{ $_[1] } }
 sub is_empty { ! keys %{ $_[0] } }
 
 sub get {
-  if (@_ > 2) {
-    return blessed_or_pkg($_[0])->array_type->new(
-      @{ $_[0] }{ @_[1 .. $#_] }
-    )
-  }
-  $_[0]->{ $_[1] }
+  @_ > 2 ? 
+    blessed_or_pkg($_[0])->array_type->new( @{ $_[0] }{ @_[1 .. $#_] } )
+    : $_[0]->{ $_[1] }
 }
 
 sub get_or_else {
