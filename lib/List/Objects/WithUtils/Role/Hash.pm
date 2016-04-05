@@ -124,9 +124,7 @@ sub get_path {
 sub set {
   my $self = shift;
   my (@keysidx, @valsidx);
-  for (0 .. $#_) {
-    $_ % 2 ? push @valsidx, $_ : push @keysidx, $_
-  }
+  $_ % 2 ? push @valsidx, $_ : push @keysidx, $_ for 0 .. $#_;
   @{$self}{ @_[@keysidx] } = @_[@valsidx];
   $self
 }
