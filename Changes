@@ -1,5 +1,15 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.028002 2016-04-04
+
+  - Fix hash->random_kv & hash->random_key to return explicit undef when
+    called on empty lists
+
+  - array->tuples with a type specified will no longer fail type
+    checks/coercions on incomplete tuples
+
+  - Various optimizations wrt array->tuples, hash->set
+
 2.028001 2016-01-25
 
   - Add hash->random_kv / random_key / random_value
