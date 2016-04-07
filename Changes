@@ -1,5 +1,9 @@
 Revision history for Perl module List::Objects::WithUtils
 
+2.028003 2016-04-07
+
+  - Minor hash->get optimization
+
 2.028002 2016-04-04
 
   - Fix hash->random_kv & hash->random_key to return explicit undef when
