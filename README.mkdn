@@ -344,7 +344,7 @@ The [Lowu](https://metacpan.org/pod/Lowu) module for a convenient importer short
 
 [MoopsX::ListObjects](https://metacpan.org/pod/MoopsX::ListObjects) for integration with [Moops](https://metacpan.org/pod/Moops) class-building sugar.
 
-# AUTHOR
+# AUTHOR AND LICENSE
 
 Jon Portnoy &lt;avenj@cobaltirc.org>
 
