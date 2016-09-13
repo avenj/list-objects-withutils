@@ -456,7 +456,7 @@ L<List::Objects::Types> for relevant L<Type::Tiny> types.
 
 L<MoopsX::ListObjects> for integration with L<Moops> class-building sugar.
 
-=head1 AUTHOR
+=head1 AUTHOR AND LICENSE
 
 Jon Portnoy <avenj@cobaltirc.org>
 
